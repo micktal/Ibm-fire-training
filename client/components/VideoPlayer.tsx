@@ -1,19 +1,40 @@
-import { useState, useRef } from "react";
-import { Play, Pause, Volume2, VolumeX, Maximize2 } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Play, Pause, Volume2, VolumeX, Maximize2, Subtitles } from "lucide-react";
 
 interface VideoPlayerProps {
   url: string;
   title?: string;
+  captionsVtt?: string;
   onComplete?: () => void;
 }
 
-export default function VideoPlayer({ url, title, onComplete }: VideoPlayerProps) {
+export default function VideoPlayer({ url, title, captionsVtt, onComplete }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [completed, setCompleted] = useState(false);
+  const [captionsOn, setCaptionsOn] = useState(true);
+  const [captionsBlobUrl, setCaptionsBlobUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!captionsVtt) return;
+    const blob = new Blob([captionsVtt], { type: "text/vtt" });
+    const blobUrl = URL.createObjectURL(blob);
+    setCaptionsBlobUrl(blobUrl);
+    return () => URL.revokeObjectURL(blobUrl);
+  }, [captionsVtt]);
+
+  // Sync captions visibility with track mode
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const tracks = video.textTracks;
+    for (let i = 0; i < tracks.length; i++) {
+      tracks[i].mode = captionsOn ? "showing" : "hidden";
+    }
+  }, [captionsOn, captionsBlobUrl]);
 
   // Detect if URL is YouTube/Vimeo embed
   const isYoutube = url.includes("youtube.com") || url.includes("youtu.be");
@@ -136,7 +157,18 @@ export default function VideoPlayer({ url, title, onComplete }: VideoPlayerProps
           onLoadedMetadata={() => setDuration(videoRef.current?.duration || 0)}
           onEnded={() => { setPlaying(false); setCompleted(true); onComplete?.(); }}
           muted={muted}
-        />
+          crossOrigin="anonymous"
+        >
+          {captionsBlobUrl && (
+            <track
+              kind="subtitles"
+              src={captionsBlobUrl}
+              srcLang="fr"
+              label="Français"
+              default
+            />
+          )}
+        </video>
         {/* Play overlay */}
         {!playing && (
           <button
@@ -183,12 +215,24 @@ export default function VideoPlayer({ url, title, onComplete }: VideoPlayerProps
               {videoRef.current ? formatTime(videoRef.current.currentTime) : "0:00"} / {formatTime(duration)}
             </span>
           </div>
-          <button
-            onClick={() => videoRef.current?.requestFullscreen()}
-            className="text-white hover:opacity-70 transition-opacity"
-          >
-            <Maximize2 size={15} />
-          </button>
+          <div className="flex items-center gap-3">
+            {captionsVtt && (
+              <button
+                onClick={() => setCaptionsOn(!captionsOn)}
+                className="transition-opacity hover:opacity-80"
+                title={captionsOn ? "Masquer les sous-titres" : "Afficher les sous-titres"}
+                style={{ color: captionsOn ? "#0f62fe" : "rgba(255,255,255,0.4)" }}
+              >
+                <Subtitles size={16} />
+              </button>
+            )}
+            <button
+              onClick={() => videoRef.current?.requestFullscreen()}
+              className="text-white hover:opacity-70 transition-opacity"
+            >
+              <Maximize2 size={15} />
+            </button>
+          </div>
         </div>
       </div>
     </div>

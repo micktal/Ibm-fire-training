@@ -28,6 +28,7 @@ export interface CourseModule {
   duration: string;
   image: string;
   videoUrl?: string;
+  captionsVtt?: string;
   content: ModuleContent[];
   quiz: QuizQuestion[];
   locked: boolean;
@@ -67,6 +68,120 @@ export const MODULES: CourseModule[] = [
     objective: "Identifier un départ de feu en moins de 10 secondes.",
     duration: "8 min",
     image: `${CDN}1428f65fac8147e090a970c03ba942a4?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/ibm%20intro%20(2).mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL2libSBpbnRybyAoMikubXA0IiwiaWF0IjoxNzc1MjQxMjI3LCJleHAiOjE4Njk4NDkyMjd9.RBEu401aURzjAUFnNv6l8Miao-DYiC2QvtucX5cGiNA",
+    captionsVtt: `WEBVTT
+
+STYLE
+::cue {
+  color: white;
+  background-color: rgba(56,57,67,0.64);
+}
+
+00:00:00.600 --> 00:00:01.575
+Bonjour.
+
+00:00:01.725 --> 00:00:05.579
+Je suis votre formatrice pour ce module IBM Santé et Sécurité.
+
+00:00:05.829 --> 00:00:12.563
+Aujourd'hui, une question simple : si un câble prend feu sous le bureau de votre collègue en ce moment... savez-vous
+
+00:00:12.563 --> 00:00:15.442
+exactement quoi faire dans les 10 prochaines secondes ?
+
+00:00:15.692 --> 00:00:18.014
+Ce module va vous donner cette réponse.
+
+00:00:19.214 --> 00:00:21.721
+Un départ de feu se détecte avant qu'on le voit.
+
+00:00:21.871 --> 00:00:25.215
+Quatre signaux d'alerte que vous devez reconnaître immédiatement.
+
+00:00:25.465 --> 00:00:27.740
+Une — l'odeur de plastique brûlé.
+
+00:00:27.890 --> 00:00:30.166
+Deux — une fumée fine, même blanche.
+
+00:00:30.316 --> 00:00:33.242
+Trois — une chaleur anormale sur un équipement.
+
+00:00:33.392 --> 00:00:35.667
+Quatre — des grésillements électriques.
+
+00:00:35.917 --> 00:00:37.961
+Ces signaux ne sont jamais normaux.
+
+00:00:38.111 --> 00:00:41.594
+Dès que vous en détectez un : vous avez 30 secondes pour agir.
+
+00:00:42.794 --> 00:00:47.484
+Pour agir efficacement, comprendre le triangle du feu est essentiel.
+
+00:00:47.734 --> 00:00:48.802
+La Chaleur.
+
+00:00:48.952 --> 00:00:50.067
+le Combustible.
+
+00:00:50.217 --> 00:00:51.378
+et l'Oxygène.
+
+00:00:51.528 --> 00:00:54.871
+Ces trois éléments ensemble créent et entretiennent le feu.
+
+00:00:55.021 --> 00:00:57.250
+Supprimez-en un seul, puis, le feu s'éteint.
+
+00:00:57.500 --> 00:01:01.680
+Chez IBM, la règle absolue : jamais d'eau sur un feu électrique.
+
+00:01:01.830 --> 00:01:05.731
+Serveurs, câblage, data centers — CO2 uniquement.
+
+00:01:06.932 --> 00:01:09.439
+La procédure IBM en cas de départ de feu.
+
+00:01:09.689 --> 00:01:11.361
+Dix secondes d'observation.
+
+00:01:11.511 --> 00:01:12.858
+Vous localisez,
+
+00:01:13.858 --> 00:01:15.019
+vous évaluez,
+
+00:01:16.019 --> 00:01:17.133
+vous décidez.
+
+00:01:17.383 --> 00:01:24.721
+Et bien sûr composez le 22 22 pour prévenir le service de sécurité IBM avant le 18 et avant le 15.
+
+00:01:25.921 --> 00:01:27.128
+Un dernier point.
+
+00:01:27.378 --> 00:01:30.489
+Marc dit que sa multiprise a toujours chauffé comme ça.
+
+00:01:30.639 --> 00:01:32.125
+Que c'est normal...
+
+00:01:32.375 --> 00:01:33.769
+Ce n'est jamais normal.
+
+00:01:33.919 --> 00:01:37.262
+Un câble qui chauffe chroniquement accumule des micro-dommages.
+
+00:01:37.656 --> 00:01:40.245
+L'absence d'incident passé ne prédit pas l'avenir.
+
+00:01:40.495 --> 00:01:45.418
+Vous avez le droit — et le devoir — d'agir, même sans l'accord de votre collègue.
+
+00:01:45.818 --> 00:01:50.926
+La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs est en jeu.
+`,
     content: [
       {
         type: "intro",

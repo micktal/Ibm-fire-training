@@ -387,7 +387,7 @@ export default function ModulePage() {
               <div className="text-xs font-semibold mb-2" style={{ color: "#8d95aa", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                 Vidéo pédagogique
               </div>
-              <VideoPlayer url={mod.videoUrl} title={mod.title} />
+              <VideoPlayer url={mod.videoUrl} title={mod.title} captionsVtt={mod.captionsVtt} />
             </div>
           )}
 
