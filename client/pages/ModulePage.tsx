@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import IBMTopbar from "@/components/IBMTopbar";
 import VideoPlayer from "@/components/VideoPlayer";
+import FactCard from "@/components/FactCard";
 import HotspotImage from "@/components/interactions/HotspotImage";
 import DragAndDrop from "@/components/interactions/DragAndDrop";
 import BranchingScenario from "@/components/interactions/BranchingScenario";
@@ -576,6 +577,17 @@ export default function ModulePage() {
               </div>
             </div>
           </FadeIn>
+
+          {/* Fun facts */}
+          {mod.funFacts && mod.funFacts.length > 0 && (
+            <FadeIn delay={0.08}>
+              <div className="flex flex-col gap-2.5">
+                {mod.funFacts.map((fact, i) => (
+                  <FactCard key={i} fact={fact} delay={i * 0.07} />
+                ))}
+              </div>
+            </FadeIn>
+          )}
 
           {/* Video player */}
           {mod.videoUrl && (

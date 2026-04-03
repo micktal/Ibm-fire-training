@@ -17,6 +17,13 @@ export interface ModuleContent {
   highlight?: string;
 }
 
+export interface FunFact {
+  stat: string;        // ex: "30 secondes"
+  label: string;       // ex: "pour maîtriser un départ de feu"
+  detail: string;      // phrase explicative
+  icon: "flame" | "clock" | "alert" | "shield" | "zap" | "eye";
+}
+
 export interface CourseModule {
   id: string;
   chapter: 1 | 2;
@@ -29,6 +36,7 @@ export interface CourseModule {
   image: string;
   videoUrl?: string;
   captionsVtt?: string;
+  funFacts?: FunFact[];
   content: ModuleContent[];
   quiz: QuizQuestion[];
   locked: boolean;
@@ -182,6 +190,11 @@ Vous avez le droit — et le devoir — d'agir, même sans l'accord de votre col
 00:01:45.818 --> 00:01:50.926
 La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs est en jeu.
 `,
+    funFacts: [
+      { stat: "90 secondes", label: "pour doubler de taille", detail: "Un départ de feu double de volume toutes les 90 secondes. Après 3 minutes, une pièce de bureau est entièrement embrasée.", icon: "flame" },
+      { stat: "30 secondes", label: "pour agir efficacement", detail: "Dès qu'un signal d'alerte est détecté, vous disposez de 30 secondes pour évaluer et déclencher la procédure IBM.", icon: "clock" },
+      { stat: "80%", label: "des feux de bureau démarrent la nuit", detail: "La plupart des incendies en entreprise se déclarent hors des heures de présence. La prévention passe par le débranchement systématique.", icon: "eye" },
+    ],
     content: [
       {
         type: "intro",
@@ -249,6 +262,10 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     objective: "Comprendre comment casser le triangle du feu et stopper la combustion.",
     duration: "6 min",
     image: `${CDN}03282479c89b48dea9e157db2b4d6588?format=webp&width=800`,
+    funFacts: [
+      { stat: "200 gaz", label: "toxiques libérés par un câble PVC", detail: "La combustion d'un seul câble PVC libère plus de 200 composés toxiques. La fumée tue avant les flammes.", icon: "alert" },
+      { stat: "3 éléments", label: "suffisent à créer un incendie", detail: "Chaleur + combustible + oxygène. Supprimez-en un seul, le feu s'éteint. C'est le principe de toute intervention.", icon: "flame" },
+    ],
     content: [
       {
         type: "intro",
@@ -301,6 +318,10 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     objective: "Comprendre l'impact direct d'une action sur la propagation du feu.",
     duration: "10 min",
     image: `${CDN}420fe533d58f4bcea4ab6851d6cc9ab6?format=webp&width=800`,
+    funFacts: [
+      { stat: "5×", label: "plus rapide que les flammes", detail: "La fumée se propage 5 fois plus vite que le feu dans un couloir. Elle est la première cause de décès dans les incendies de bureau.", icon: "zap" },
+      { stat: "5 min", label: "pour enflammer une pièce entière", detail: "Sans intervention, une pièce de bureau standard peut être totalement embrasée en moins de 5 minutes après le départ de feu.", icon: "clock" },
+    ],
     content: [
       {
         type: "intro",
@@ -355,6 +376,10 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     objective: "Choisir le bon type d'extincteur selon la classe du feu.",
     duration: "7 min",
     image: `${CDN}fe758a5b35224b1bae42de1253d3aa38?format=webp&width=800`,
+    funFacts: [
+      { stat: "6 classes", label: "de feux — 1 erreur peut être mortelle", detail: "Utiliser un extincteur inadapté peut être plus dangereux que de ne pas intervenir. Eau sur feu électrique = risque d'électrocution.", icon: "alert" },
+      { stat: "95%", label: "des feux de bureau : classe A ou électrique", detail: "Connaître ces 2 classes vous prépare à 95% des situations réelles en entreprise.", icon: "shield" },
+    ],
     content: [
       {
         type: "intro",
@@ -410,6 +435,10 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     objective: "Savoir identifier le bon extincteur et l'utiliser en sécurité.",
     duration: "9 min",
     image: `${CDN}11cdce1f8e754ca18f408758ae5ad7b9?format=webp&width=800`,
+    funFacts: [
+      { stat: "8-12 sec", label: "autonomie d'un extincteur CO2", detail: "Un extincteur CO2 standard se vide en 8 à 12 secondes. Chaque geste doit être précis et immédiat — pas de place à l'improvisation.", icon: "clock" },
+      { stat: "-78°C", label: "température du cône CO2", detail: "Ne jamais tenir le cône d'un extincteur CO2 à mains nues. Le froid extrême provoque des brûlures en moins d'une seconde.", icon: "alert" },
+    ],
     content: [
       {
         type: "intro",
@@ -477,6 +506,10 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     objective: "Savoir trancher la décision intervenir/évacuer en quelques secondes.",
     duration: "10 min",
     image: `${CDN}8e074d1b7bdf4b8fa872d5fd2451fbfe?format=webp&width=800`,
+    funFacts: [
+      { stat: "10 sec", label: "pour prendre la décision critique", detail: "IBM fixe un délai de 10 secondes d'observation. Au-delà, la décision doit être prise : intervenir ou évacuer. Pas de troisième option.", icon: "clock" },
+      { stat: "70%", label: "des victimes auraient pu évacuer", detail: "70% des décès par incendie en entreprise concernent des personnes qui avaient encore le temps d'évacuer mais ont hésité.", icon: "alert" },
+    ],
     content: [
       {
         type: "intro",
@@ -532,6 +565,10 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     objective: "Valider l'ensemble des compétences du chapitre en conditions proches du réel.",
     duration: "12 min",
     image: `${CDN}dfd2975e7d864d029e522928a710aa05?format=webp&width=800`,
+    funFacts: [
+      { stat: "40%", label: "de réduction du temps d'évacuation", detail: "Les entreprises qui organisent des exercices incendie réguliers réduisent leur temps d'évacuation de 40% en moyenne.", icon: "shield" },
+      { stat: "2×/an", label: "exercices IBM obligatoires par site", detail: "IBM France organise 2 exercices incendie annuels par site. Chaque collaborateur doit y participer — l'absence est signalée aux RH.", icon: "eye" },
+    ],
     content: [
       {
         type: "intro",
@@ -591,6 +628,10 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     objective: "Savoir identifier le bon moment pour activer l'alarme et localiser les points d'alerte.",
     duration: "6 min",
     image: `${CDN}2482acaedcdd4b2abad18b1011a424c6?format=webp&width=800`,
+    funFacts: [
+      { stat: "6 m²", label: "de propagation par seconde de retard", detail: "Chaque seconde de retard à déclencher l'alarme représente en moyenne 6m² de surface supplémentaire touchée par le feu.", icon: "flame" },
+      { stat: "22 22", label: "le numéro IBM à composer EN PREMIER", detail: "Avant le 18 et le 15, composez le 22 22. La sécurité IBM connaît le plan des bâtiments et peut intervenir plus rapidement.", icon: "shield" },
+    ],
     content: [
       {
         type: "intro",
@@ -647,6 +688,10 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     objective: "Adopter un comportement clair pour aider les autres à évacuer.",
     duration: "7 min",
     image: `${CDN}73ee73f4c5c54adb943d454c10b797a9?format=webp&width=800`,
+    funFacts: [
+      { stat: "3×", label: "la panique ralentit l'évacuation", detail: "Une évacuation désordonnée et paniquée est 3 fois plus lente. Le sang-froid et les consignes claires sauvent des vies.", icon: "alert" },
+      { stat: "1 voix", label: "suffit pour structurer 20 personnes", detail: "Un collaborateur formé qui prend le commandement vocal peut structurer une évacuation de 20 personnes en moins de 30 secondes.", icon: "zap" },
+    ],
     content: [
       {
         type: "intro",
@@ -694,6 +739,10 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     objective: "Intégrer la fermeture systématique des portes pour limiter la propagation.",
     duration: "5 min",
     image: `${CDN}0385f320d59547b2b6d08166e29ab8f3?format=webp&width=800`,
+    funFacts: [
+      { stat: "20%", label: "reviennent chercher leurs affaires", detail: "20% des décès lors d'incendies surviennent chez des personnes revenues chercher leurs effets personnels. Rien ne vaut une vie.", icon: "alert" },
+      { stat: "3 min", label: "les plus dangereuses de l'évacuation", detail: "Les 3 premières minutes d'évacuation concentrent 80% des risques. Une sortie rapide et ordonnée est la seule priorité.", icon: "clock" },
+    ],
     content: [
       {
         type: "intro",
@@ -741,6 +790,10 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     objective: "Effectuer une vérification rapide et sécurisée avant d'évacuer.",
     duration: "8 min",
     image: `${CDN}b5ca9823c0ba42e492f17a707fd14708?format=webp&width=800`,
+    funFacts: [
+      { stat: "3×", label: "la fumée tue plus que les flammes", detail: "L'inhalation de fumée toxique tue 3 fois plus que les brûlures directes. Se baisser sous 1m réduit l'exposition de 80%.", icon: "alert" },
+      { stat: "1 m", label: "la hauteur de survie en fumée dense", detail: "En dessous de 1 mètre, l'air est 80% plus respirable qu'en position debout lors d'un incendie avec fumée dense.", icon: "shield" },
+    ],
     content: [
       {
         type: "intro",
@@ -790,6 +843,10 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     objective: "Adopter les bons réflexes dans un environnement enfumé.",
     duration: "8 min",
     image: `${CDN}cc5ab29f9fd543a2aff682cdd54297ad?format=webp&width=800`,
+    funFacts: [
+      { stat: "0.3 sec", label: "inhalation létale de certains gaz", detail: "Certains gaz issus de plastiques brûlés peuvent causer une perte de conscience en moins de 0.3 seconde à forte concentration.", icon: "zap" },
+      { stat: "40°C", label: "la chaleur de la fumée à hauteur des yeux", detail: "À hauteur debout, la fumée peut atteindre 40 à 60°C lors d'un incendie de bureau — suffisant pour brûler les voies respiratoires.", icon: "flame" },
+    ],
     content: [
       {
         type: "intro",
@@ -845,6 +902,10 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     objective: "Trouver rapidement le bon chemin d'évacuation.",
     duration: "7 min",
     image: `${CDN}48e0cc79ee294fbbaf81f10232959ffb?format=webp&width=800`,
+    funFacts: [
+      { stat: "100%", label: "des décès en ascenseur sont évitables", detail: "L'ascenseur en cas d'incendie est un piège : coupure électrique, enfumage, portes bloquées. Escaliers uniquement, toujours.", icon: "alert" },
+      { stat: "4×", label: "plus lent en ascenseur qu'en escalier", detail: "Le temps d'évacuation via ascenseur est en moyenne 4 fois plus long qu'une évacuation ordonnée par les escaliers de secours.", icon: "clock" },
+    ],
     content: [
       {
         type: "intro",
@@ -894,6 +955,10 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     objective: "Valider la maîtrise de toute la procédure d'évacuation en situation simulée.",
     duration: "12 min",
     image: `${CDN}2ee3c4ada85544aa87e2f4f440dc1a94?format=webp&width=800`,
+    funFacts: [
+      { stat: "85%", label: "de réduction du risque de décès", detail: "Une formation incendie bien exécutée et régulièrement pratiquée réduit le risque de décès de 85% en situation réelle.", icon: "shield" },
+      { stat: "14 modules", label: "pour être pleinement opérationnel", detail: "Vous terminez les 14 modules IBM. Chaque réflexe appris ici peut faire la différence entre une évacuation réussie et une tragédie.", icon: "zap" },
+    ],
     content: [
       {
         type: "intro",

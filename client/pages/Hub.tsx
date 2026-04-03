@@ -1,234 +1,300 @@
 import { useNavigate } from "react-router-dom";
-import {
-  Lock, CheckCircle2, ChevronRight, Clock, Target, Flame,
-  DoorOpen, BarChart3, Award, Play,
-} from "lucide-react";
+import { Lock, CheckCircle2, Clock, Play, Flame, Shield, ChevronRight, Award } from "lucide-react";
 import IBMTopbar from "@/components/IBMTopbar";
 import { useUser } from "@/lib/userContext";
-import { MODULES, getChapterModules, CourseModule } from "@/lib/courseData";
+import { getChapterModules, CourseModule } from "@/lib/courseData";
 
 const CDN = "https://cdn.builder.io/api/v1/image/assets%2Fd93d9a0ec7824aa1ac4d890a1f90a2ec%2F";
-
 const CH1_HERO = `${CDN}dfd2975e7d864d029e522928a710aa05?format=webp&width=800`;
 const CH2_HERO = `${CDN}2ee3c4ada85544aa87e2f4f440dc1a94?format=webp&width=800`;
 
-function ModuleCard({ mod, unlocked, completed, score }: {
+// ── Module row in journey timeline ───────────────────────────────
+function ModuleRow({
+  mod,
+  unlocked,
+  completed,
+  score,
+  isLast,
+  index,
+}: {
   mod: CourseModule;
   unlocked: boolean;
   completed: boolean;
   score: number;
+  isLast: boolean;
+  index: number;
 }) {
   const navigate = useNavigate();
 
-  const statusColor = completed
-    ? "#198038"
+  const dotColor = completed ? "#198038" : unlocked ? "#0043ce" : "#c8cdd8";
+  const cardBorder = completed
+    ? "rgba(25,128,56,0.25)"
     : unlocked
-    ? "#0043ce"
-    : "#8d95aa";
-
-  const borderColor = completed
-    ? "rgba(25,128,56,0.35)"
-    : unlocked
-    ? "rgba(0,67,206,0.25)"
-    : "#e4e7f0";
-
-  const bgColor = completed
+    ? "rgba(0,67,206,0.2)"
+    : "#e8eaf2";
+  const cardBg = completed
     ? "rgba(25,128,56,0.03)"
     : unlocked
     ? "#fff"
-    : "#fafbfc";
+    : "rgba(248,249,252,0.9)";
 
   return (
-    <div
-      onClick={() => unlocked && navigate(`/module/${mod.id}`)}
-      className="rounded-lg overflow-hidden flex flex-col transition-all duration-200"
-      style={{
-        border: `1.5px solid ${borderColor}`,
-        background: bgColor,
-        cursor: unlocked ? "pointer" : "not-allowed",
-        opacity: !unlocked ? 0.58 : 1,
-        boxShadow: unlocked && !completed ? "0 2px 10px rgba(0,67,206,0.08)" : "none",
-      }}
-      onMouseEnter={(e) => {
-        if (unlocked) (e.currentTarget as HTMLDivElement).style.transform = "translateY(-2px)";
-        if (unlocked) (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 24px rgba(0,0,0,0.1)";
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
-        (e.currentTarget as HTMLDivElement).style.boxShadow = unlocked && !completed ? "0 2px 10px rgba(0,67,206,0.08)" : "none";
-      }}
-    >
-      {/* Image */}
-      <div className="relative overflow-hidden" style={{ height: "110px" }}>
-        <img
-          src={mod.image}
-          alt={mod.title}
-          className="w-full h-full object-cover"
-          style={{ filter: !unlocked ? "grayscale(0.8) brightness(0.7)" : "brightness(0.85)" }}
-        />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.55))" }} />
-
-        {/* Status badge top-right */}
-        <div className="absolute top-2 right-2">
-          {completed ? (
-            <div className="w-7 h-7 rounded-full flex items-center justify-center" style={{ background: "#198038" }}>
-              <CheckCircle2 size={15} color="#fff" />
-            </div>
-          ) : !unlocked ? (
-            <div className="w-7 h-7 rounded-full flex items-center justify-center" style={{ background: "rgba(0,0,0,0.5)" }}>
-              <Lock size={12} color="rgba(255,255,255,0.7)" />
-            </div>
-          ) : (
-            <div className="w-7 h-7 rounded-full flex items-center justify-center" style={{ background: "#0043ce" }}>
-              <Play size={12} color="#fff" fill="#fff" style={{ marginLeft: "1px" }} />
-            </div>
-          )}
-        </div>
-
-        {/* Module number */}
+    <div className="flex gap-0">
+      {/* Timeline column */}
+      <div className="flex flex-col items-center" style={{ width: "44px", flexShrink: 0 }}>
+        {/* Dot */}
         <div
-          className="absolute bottom-2 left-2 font-mono text-xs px-2 py-0.5 rounded"
+          className="flex items-center justify-center rounded-full z-10 flex-shrink-0"
           style={{
-            fontFamily: "'IBM Plex Mono', monospace",
-            color: "rgba(255,255,255,0.85)",
-            background: "rgba(0,0,0,0.45)",
-            fontSize: "0.6rem",
-            letterSpacing: "0.1em",
+            width: "32px",
+            height: "32px",
+            background: completed
+              ? "#198038"
+              : unlocked
+              ? "#0043ce"
+              : "#e8eaf2",
+            border: `3px solid ${completed ? "#198038" : unlocked ? "#0043ce" : "#d0d4e2"}`,
+            boxShadow: unlocked && !completed ? "0 0 0 4px rgba(0,67,206,0.12)" : "none",
+            transition: "all 0.3s ease",
+            marginTop: "12px",
           }}
         >
-          MODULE {mod.number.toString().padStart(2, "0")}
+          {completed
+            ? <CheckCircle2 size={15} color="#fff" />
+            : unlocked
+            ? <Play size={11} color="#fff" fill="#fff" style={{ marginLeft: "1px" }} />
+            : <Lock size={11} color="#adb3c8" />
+          }
         </div>
+        {/* Line below */}
+        {!isLast && (
+          <div
+            style={{
+              width: "2px",
+              flex: 1,
+              minHeight: "24px",
+              background: completed
+                ? "linear-gradient(to bottom, #198038, rgba(25,128,56,0.15))"
+                : "linear-gradient(to bottom, #e4e7f0, #e4e7f0)",
+              marginTop: "4px",
+            }}
+          />
+        )}
       </div>
 
-      {/* Content */}
-      <div className="p-4 flex-1 flex flex-col">
-        <h3
-          className="font-bold mb-1 leading-tight"
-          style={{ fontSize: "0.85rem", color: "#161616", lineHeight: "1.3" }}
+      {/* Card */}
+      <div className="flex-1 pb-4" style={{ paddingLeft: "12px" }}>
+        <div
+          onClick={() => unlocked && navigate(`/module/${mod.id}`)}
+          className="rounded-2xl overflow-hidden transition-all duration-200"
+          style={{
+            border: `1.5px solid ${cardBorder}`,
+            background: cardBg,
+            cursor: unlocked ? "pointer" : "default",
+            opacity: !unlocked ? 0.6 : 1,
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)",
+            boxShadow: unlocked && !completed
+              ? "0 2px 16px rgba(0,67,206,0.07)"
+              : completed
+              ? "0 2px 12px rgba(25,128,56,0.08)"
+              : "none",
+          }}
+          onMouseEnter={(e) => {
+            if (unlocked) {
+              (e.currentTarget as HTMLDivElement).style.transform = "translateX(3px)";
+              (e.currentTarget as HTMLDivElement).style.boxShadow = "0 6px 24px rgba(0,0,0,0.1)";
+            }
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLDivElement).style.transform = "translateX(0)";
+            (e.currentTarget as HTMLDivElement).style.boxShadow = unlocked && !completed
+              ? "0 2px 16px rgba(0,67,206,0.07)"
+              : completed
+              ? "0 2px 12px rgba(25,128,56,0.08)"
+              : "none";
+          }}
         >
-          {mod.title}
-        </h3>
-        <p className="text-xs mb-3 flex-1 leading-relaxed" style={{ color: "#6f7897" }}>
-          {mod.subtitle}
-        </p>
+          <div className="flex gap-0">
+            {/* Image strip */}
+            <div className="relative overflow-hidden flex-shrink-0" style={{ width: "90px" }}>
+              <img
+                src={mod.image}
+                alt={mod.title}
+                className="w-full h-full object-cover"
+                style={{
+                  minHeight: "90px",
+                  filter: !unlocked ? "grayscale(0.9) brightness(0.65)" : "brightness(0.8)",
+                }}
+              />
+              <div
+                className="absolute inset-0"
+                style={{ background: "linear-gradient(to right, transparent 50%, " + cardBg + ")" }}
+              />
+            </div>
 
-        {/* Meta */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1" style={{ color: "#8d95aa" }}>
-            <Clock size={11} />
-            <span className="font-mono text-xs" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>
-              {mod.duration}
-            </span>
+            {/* Content */}
+            <div className="flex-1 px-4 py-3">
+              <div className="flex items-start justify-between gap-2 mb-1">
+                <div>
+                  <div
+                    className="font-mono text-xs mb-0.5"
+                    style={{
+                      fontFamily: "'IBM Plex Mono', monospace",
+                      color: completed ? "#198038" : unlocked ? "#0043ce" : "#adb3c8",
+                      letterSpacing: "0.08em",
+                      fontSize: "10px",
+                    }}
+                  >
+                    M{mod.number.toString().padStart(2, "0")}
+                  </div>
+                  <h3
+                    className="font-bold leading-tight"
+                    style={{ fontSize: "0.875rem", color: unlocked ? "#161616" : "#9aa0b8", lineHeight: "1.3" }}
+                  >
+                    {mod.title}
+                  </h3>
+                </div>
+
+                {completed && (
+                  <span
+                    className="font-mono text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0"
+                    style={{
+                      fontFamily: "'IBM Plex Mono', monospace",
+                      color: "#198038",
+                      background: "rgba(25,128,56,0.1)",
+                      border: "1px solid rgba(25,128,56,0.25)",
+                    }}
+                  >
+                    {score}%
+                  </span>
+                )}
+              </div>
+
+              <p
+                className="text-xs leading-relaxed mb-2"
+                style={{ color: unlocked ? "#6f7897" : "#adb3c8", lineHeight: "1.45" }}
+              >
+                {mod.subtitle}
+              </p>
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1" style={{ color: "#adb3c8" }}>
+                  <Clock size={11} />
+                  <span className="font-mono text-xs" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>
+                    {mod.duration}
+                  </span>
+                </div>
+
+                {unlocked && !completed && (
+                  <div className="flex items-center gap-1" style={{ color: "#0043ce" }}>
+                    <span className="text-xs font-semibold">Commencer</span>
+                    <ChevronRight size={12} />
+                  </div>
+                )}
+                {!unlocked && (
+                  <div className="flex items-center gap-1" style={{ color: "#c8cdd8" }}>
+                    <Lock size={11} />
+                    <span className="text-xs">Verrouillé</span>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
-
-          {completed ? (
-            <span
-              className="font-mono text-xs font-semibold px-2 py-0.5 rounded-full"
-              style={{
-                fontFamily: "'IBM Plex Mono', monospace",
-                color: "#198038",
-                background: "rgba(25,128,56,0.08)",
-                border: "1px solid rgba(25,128,56,0.2)",
-              }}
-            >
-              {score}%
-            </span>
-          ) : unlocked ? (
-            <div className="flex items-center gap-1" style={{ color: "#0043ce" }}>
-              <span className="text-xs font-semibold">Commencer</span>
-              <ChevronRight size={13} />
-            </div>
-          ) : (
-            <div className="flex items-center gap-1" style={{ color: "#8d95aa" }}>
-              <Lock size={11} />
-              <span className="text-xs">Verrouillé</span>
-            </div>
-          )}
         </div>
       </div>
     </div>
   );
 }
 
-function ChapterSection({ chapter, heroImg, title, subtitle, description }: {
+// ── Chapter header ───────────────────────────────────────────────
+function ChapterHeader({
+  chapter,
+  heroImg,
+  label,
+  title,
+  description,
+  completedCount,
+}: {
   chapter: 1 | 2;
   heroImg: string;
+  label: string;
   title: string;
-  subtitle: string;
   description: string;
+  completedCount: number;
 }) {
-  const { isModuleUnlocked, progress } = useUser();
-  const mods = getChapterModules(chapter);
-  const completedCount = mods.filter((m) => progress[m.id]?.completed).length;
-
+  const isComplete = completedCount === 7;
   return (
-    <section className="mb-8">
-      {/* Chapter hero */}
+    <div className="relative rounded-2xl overflow-hidden mb-5" style={{ height: "150px" }}>
+      <img src={heroImg} alt={title} className="w-full h-full object-cover" style={{ filter: "brightness(0.42)" }} />
+      {/* Glassmorphism overlay */}
       <div
-        className="relative rounded-xl overflow-hidden mb-5"
-        style={{ height: "160px", border: "1px solid #e4e7f0" }}
-      >
-        <img src={heroImg} alt={title} className="w-full h-full object-cover" style={{ filter: "brightness(0.5)" }} />
-        <div className="absolute inset-0 flex flex-col justify-end p-6">
+        className="absolute inset-0"
+        style={{
+          background: chapter === 1
+            ? "linear-gradient(135deg, rgba(218,30,40,0.25) 0%, rgba(0,10,30,0.5) 100%)"
+            : "linear-gradient(135deg, rgba(0,67,206,0.3) 0%, rgba(0,10,30,0.55) 100%)",
+        }}
+      />
+      {/* Blue IBM accent line */}
+      <div className="absolute bottom-0 left-0 right-0" style={{ height: "2px", background: chapter === 1 ? "#ff6b1a" : "#0f62fe" }} />
+
+      <div className="absolute inset-0 flex flex-col justify-end p-5">
+        <div className="flex items-end justify-between">
+          <div>
+            <div
+              className="font-mono text-xs mb-1 flex items-center gap-1.5"
+              style={{
+                fontFamily: "'IBM Plex Mono', monospace",
+                color: "rgba(255,255,255,0.5)",
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                fontSize: "9px",
+              }}
+            >
+              {chapter === 1 ? <Flame size={10} /> : <Shield size={10} />}
+              {label}
+            </div>
+            <h2 className="text-xl font-bold text-white" style={{ letterSpacing: "-0.02em", lineHeight: "1.15" }}>
+              {title}
+            </h2>
+          </div>
           <div
-            className="font-mono text-xs mb-1.5"
+            className="font-mono text-sm font-bold px-3 py-1.5 rounded-xl flex-shrink-0"
             style={{
               fontFamily: "'IBM Plex Mono', monospace",
-              color: "rgba(255,255,255,0.5)",
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
+              background: isComplete ? "rgba(25,128,56,0.4)" : "rgba(255,255,255,0.12)",
+              color: isComplete ? "#6fdc8c" : "rgba(255,255,255,0.85)",
+              border: `1px solid ${isComplete ? "rgba(25,128,56,0.5)" : "rgba(255,255,255,0.18)"}`,
+              backdropFilter: "blur(8px)",
             }}
           >
-            {chapter === 1 ? "Chapitre 1 — Lutte Incendie" : "Chapitre 2 — Évacuation"}
+            {completedCount}/7
           </div>
-          <h2 className="text-2xl font-bold text-white mb-1" style={{ letterSpacing: "-0.025em" }}>
-            {title}
-          </h2>
-          <p className="text-sm" style={{ color: "rgba(255,255,255,0.65)", maxWidth: "540px" }}>
-            {description}
-          </p>
-        </div>
-        {/* Progress pill */}
-        <div
-          className="absolute top-4 right-4 font-mono text-xs font-semibold px-3 py-1 rounded-full"
-          style={{
-            fontFamily: "'IBM Plex Mono', monospace",
-            background: completedCount === 7 ? "#198038" : "rgba(255,255,255,0.15)",
-            color: "#fff",
-            border: "1px solid rgba(255,255,255,0.2)",
-            backdropFilter: "blur(6px)",
-          }}
-        >
-          {completedCount}/7 modules
         </div>
       </div>
-
-      {/* Module grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-        {mods.map((mod) => (
-          <ModuleCard
-            key={mod.id}
-            mod={mod}
-            unlocked={isModuleUnlocked(mod.id)}
-            completed={!!progress[mod.id]?.completed}
-            score={progress[mod.id]?.score ?? 0}
-          />
-        ))}
-      </div>
-    </section>
+    </div>
   );
 }
 
+// ── Main Hub ─────────────────────────────────────────────────────
 export default function Hub() {
   const navigate = useNavigate();
   const { user, globalScore, totalCompleted, progress } = useUser();
 
-  const completedCh1 = getChapterModules(1).filter((m) => progress[m.id]?.completed).length;
-  const completedCh2 = getChapterModules(2).filter((m) => progress[m.id]?.completed).length;
+  const ch1Mods = getChapterModules(1);
+  const ch2Mods = getChapterModules(2);
+  const { isModuleUnlocked } = useUser();
+
+  const completedCh1 = ch1Mods.filter((m) => progress[m.id]?.completed).length;
+  const completedCh2 = ch2Mods.filter((m) => progress[m.id]?.completed).length;
   const passed = globalScore >= 80;
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "#f5f6f8", fontFamily: "'IBM Plex Sans', sans-serif" }}>
+    <div
+      className="min-h-screen flex flex-col"
+      style={{ background: "#f2f3f7", fontFamily: "'IBM Plex Sans', sans-serif" }}
+    >
       <IBMTopbar
         title="Parcours de formation"
         subtitle="HSE · Lutte Incendie & Évacuation"
@@ -236,106 +302,210 @@ export default function Hub() {
         backLabel="Accueil"
       />
 
-      <main className="flex-1 overflow-y-auto">
-        {/* Stats band */}
-        <div className="bg-white border-b px-6 py-4" style={{ borderColor: "#e4e7f0" }}>
-          <div className="max-w-5xl mx-auto flex flex-wrap items-center gap-6">
+      <main className="flex-1 overflow-y-auto pb-4">
+        {/* Hero stats band */}
+        <div
+          className="px-5 py-5"
+          style={{
+            background: "linear-gradient(135deg, #0a0e1a 0%, #0d1b35 100%)",
+            borderBottom: "1px solid rgba(255,255,255,0.07)",
+          }}
+        >
+          <div className="max-w-2xl mx-auto">
+            {/* Greeting */}
             {user && (
-              <div>
-                <div className="text-xs font-semibold" style={{ color: "#8d95aa" }}>Apprenant</div>
-                <div className="text-sm font-bold" style={{ color: "#161616" }}>
+              <div className="mb-4">
+                <div
+                  className="font-mono text-xs mb-0.5"
+                  style={{ color: "rgba(255,255,255,0.35)", fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.1em" }}
+                >
+                  BONJOUR,
+                </div>
+                <div className="text-xl font-bold text-white" style={{ letterSpacing: "-0.02em" }}>
                   {user.prenom} {user.nom}
                 </div>
-                <div className="font-mono text-xs" style={{ color: "#8d95aa", fontFamily: "'IBM Plex Mono', monospace" }}>
-                  {user.campus}
+                <div className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
+                  {user.campus} · {user.email}
                 </div>
               </div>
             )}
 
-            <div className="h-8 w-px" style={{ background: "#e4e7f0" }} />
-
-            {[
-              { icon: <BarChart3 size={14} style={{ color: "#0043ce" }} />, label: "Score global", value: `${globalScore}%`, sub: globalScore >= 80 ? "Objectif atteint" : "Objectif : 80%" },
-              { icon: <CheckCircle2 size={14} style={{ color: "#198038" }} />, label: "Modules complétés", value: `${totalCompleted}/14`, sub: "Progression" },
-              { icon: <Flame size={14} style={{ color: "#b45309" }} />, label: "Chapitre 1", value: `${completedCh1}/7`, sub: "Lutte Incendie" },
-              { icon: <DoorOpen size={14} style={{ color: "#0043ce" }} />, label: "Chapitre 2", value: `${completedCh2}/7`, sub: "Évacuation" },
-            ].map((stat, i) => (
-              <div key={i} className="flex items-center gap-2.5">
+            {/* Stat pills */}
+            <div className="flex gap-3 flex-wrap">
+              {/* Global score */}
+              <div
+                className="flex-1 min-w-[120px] rounded-2xl p-4"
+                style={{
+                  background: "rgba(255,255,255,0.06)",
+                  backdropFilter: "blur(12px)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                }}
+              >
                 <div
-                  className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-                  style={{ background: "#f5f6f8", border: "1px solid #e4e7f0" }}
+                  className="font-mono font-bold mb-0.5"
+                  style={{
+                    fontSize: "2rem",
+                    lineHeight: 1,
+                    color: globalScore >= 80 ? "#6fdc8c" : globalScore > 0 ? "#0f62fe" : "rgba(255,255,255,0.3)",
+                    fontFamily: "'IBM Plex Mono', monospace",
+                  }}
                 >
-                  {stat.icon}
+                  {globalScore}%
                 </div>
-                <div>
-                  <div className="text-xs" style={{ color: "#8d95aa" }}>{stat.label}</div>
-                  <div className="font-mono text-sm font-bold" style={{ color: "#161616", fontFamily: "'IBM Plex Mono', monospace" }}>
-                    {stat.value}
-                  </div>
-                  <div className="text-xs" style={{ color: passed && stat.label === "Score global" ? "#198038" : "#8d95aa" }}>
-                    {stat.sub}
-                  </div>
+                <div className="text-xs" style={{ color: "rgba(255,255,255,0.45)" }}>Score global</div>
+              </div>
+
+              {/* Progress */}
+              <div
+                className="flex-1 min-w-[120px] rounded-2xl p-4"
+                style={{
+                  background: "rgba(255,255,255,0.06)",
+                  backdropFilter: "blur(12px)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                }}
+              >
+                <div
+                  className="font-mono font-bold mb-0.5"
+                  style={{
+                    fontSize: "2rem",
+                    lineHeight: 1,
+                    color: totalCompleted > 0 ? "#fff" : "rgba(255,255,255,0.3)",
+                    fontFamily: "'IBM Plex Mono', monospace",
+                  }}
+                >
+                  {totalCompleted}<span style={{ fontSize: "1rem", color: "rgba(255,255,255,0.35)" }}>/14</span>
+                </div>
+                <div className="text-xs" style={{ color: "rgba(255,255,255,0.45)" }}>Modules complétés</div>
+              </div>
+
+              {/* Chapter 1 */}
+              <div
+                className="flex-1 min-w-[100px] rounded-2xl p-4"
+                style={{
+                  background: "rgba(255,107,26,0.10)",
+                  backdropFilter: "blur(12px)",
+                  border: "1px solid rgba(255,107,26,0.2)",
+                }}
+              >
+                <div className="flex items-center gap-1 mb-1">
+                  <Flame size={12} color="#ff6b1a" />
+                  <span className="font-mono text-xs" style={{ color: "#ff6b1a", fontFamily: "'IBM Plex Mono', monospace", fontSize: "9px", letterSpacing: "0.08em" }}>CH.1</span>
+                </div>
+                <div className="font-mono font-bold" style={{ fontSize: "1.5rem", lineHeight: 1, color: "#fff", fontFamily: "'IBM Plex Mono', monospace" }}>
+                  {completedCh1}<span style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.4)" }}>/7</span>
                 </div>
               </div>
-            ))}
 
-            {totalCompleted === 14 && (
-              <>
-                <div className="h-8 w-px ml-auto" style={{ background: "#e4e7f0" }} />
-                <div
-                  className="flex items-center gap-2 font-semibold text-sm px-4 py-2 rounded-lg"
-                  style={{
-                    color: "#fff",
-                    background: "#198038",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => navigate("/results")}
-                >
-                  <Award size={15} />
-                  Voir les résultats
+              {/* Chapter 2 */}
+              <div
+                className="flex-1 min-w-[100px] rounded-2xl p-4"
+                style={{
+                  background: "rgba(15,98,254,0.12)",
+                  backdropFilter: "blur(12px)",
+                  border: "1px solid rgba(15,98,254,0.25)",
+                }}
+              >
+                <div className="flex items-center gap-1 mb-1">
+                  <Shield size={12} color="#0f62fe" />
+                  <span className="font-mono text-xs" style={{ color: "#0f62fe", fontFamily: "'IBM Plex Mono', monospace", fontSize: "9px", letterSpacing: "0.08em" }}>CH.2</span>
                 </div>
-              </>
+                <div className="font-mono font-bold" style={{ fontSize: "1.5rem", lineHeight: 1, color: "#fff", fontFamily: "'IBM Plex Mono', monospace" }}>
+                  {completedCh2}<span style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.4)" }}>/7</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Overall progress bar */}
+            {totalCompleted > 0 && (
+              <div className="mt-4">
+                <div className="flex justify-between items-center mb-1.5">
+                  <span className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>Progression globale</span>
+                  <span className="font-mono text-xs" style={{ color: "rgba(255,255,255,0.55)", fontFamily: "'IBM Plex Mono', monospace" }}>
+                    {Math.round((totalCompleted / 14) * 100)}%
+                  </span>
+                </div>
+                <div className="rounded-full overflow-hidden" style={{ height: "5px", background: "rgba(255,255,255,0.1)" }}>
+                  <div
+                    className="h-full rounded-full"
+                    style={{
+                      width: `${(totalCompleted / 14) * 100}%`,
+                      background: "linear-gradient(90deg, #0f62fe, #6fdc8c)",
+                      transition: "width 0.8s ease",
+                    }}
+                  />
+                </div>
+              </div>
             )}
           </div>
         </div>
 
-        {/* Score bar */}
-        {totalCompleted > 0 && (
-          <div className="px-6 py-2 bg-white border-b" style={{ borderColor: "#e4e7f0" }}>
-            <div className="max-w-5xl mx-auto flex items-center gap-3">
-              <span className="text-xs font-semibold" style={{ color: "#8d95aa" }}>Progression globale</span>
-              <div className="flex-1 rounded-full h-1.5" style={{ background: "#e4e7f0" }}>
-                <div
-                  className="h-full rounded-full transition-all duration-700"
-                  style={{
-                    width: `${(totalCompleted / 14) * 100}%`,
-                    background: globalScore >= 80 ? "#198038" : "#0043ce",
-                  }}
-                />
-              </div>
-              <span className="font-mono text-xs font-semibold" style={{ color: "#0043ce", fontFamily: "'IBM Plex Mono', monospace" }}>
-                {totalCompleted}/14
-              </span>
+        {/* Certification banner (if passed) */}
+        {passed && (
+          <div
+            className="mx-4 mt-4 rounded-2xl px-5 py-4 flex items-center gap-4"
+            style={{
+              background: "rgba(25,128,56,0.08)",
+              border: "1.5px solid rgba(25,128,56,0.25)",
+              backdropFilter: "blur(8px)",
+            }}
+          >
+            <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: "#198038" }}>
+              <Award size={20} color="#fff" />
+            </div>
+            <div className="flex-1">
+              <div className="font-bold text-sm" style={{ color: "#0e6027" }}>Formation certifiée IBM — {globalScore}%</div>
+              <div className="text-xs" style={{ color: "#6f7897" }}>Vous avez validé l'ensemble des modules avec un score supérieur à 80%</div>
             </div>
           </div>
         )}
 
-        {/* Chapters */}
-        <div className="max-w-5xl mx-auto px-6 py-6">
-          <ChapterSection
+        {/* Journey */}
+        <div className="max-w-2xl mx-auto px-4 pt-5">
+          {/* Chapter 1 */}
+          <ChapterHeader
             chapter={1}
             heroImg={CH1_HERO}
-            title="Agir dès les premiers signes de feu"
-            subtitle="Lutte Incendie"
-            description="7 modules interactifs : comprendre le feu, triangle du feu, propagation, classes de feu, extincteurs, décisions, simulation."
+            label="Chapitre 1 — Lutte Incendie"
+            title="Agir dès les premiers signes"
+            description="Détecter, intervenir et décider en moins de 30 secondes"
+            completedCount={completedCh1}
           />
-          <ChapterSection
+          <div className="mb-8">
+            {ch1Mods.map((mod, idx) => (
+              <ModuleRow
+                key={mod.id}
+                mod={mod}
+                unlocked={isModuleUnlocked(mod.id)}
+                completed={!!progress[mod.id]?.completed}
+                score={progress[mod.id]?.score ?? 0}
+                isLast={idx === ch1Mods.length - 1}
+                index={idx}
+              />
+            ))}
+          </div>
+
+          {/* Chapter 2 */}
+          <ChapterHeader
             chapter={2}
             heroImg={CH2_HERO}
+            label="Chapitre 2 — Évacuation"
             title="Garder son calme et sauver des vies"
-            subtitle="Évacuation"
-            description="7 modules dédiés à l'alarme, le calme, les portes, la vérification, la fumée, les escaliers et la procédure complète."
+            description="Maîtriser les procédures d'évacuation dans chaque situation"
+            completedCount={completedCh2}
           />
+          <div>
+            {ch2Mods.map((mod, idx) => (
+              <ModuleRow
+                key={mod.id}
+                mod={mod}
+                unlocked={isModuleUnlocked(mod.id)}
+                completed={!!progress[mod.id]?.completed}
+                score={progress[mod.id]?.score ?? 0}
+                isLast={idx === ch2Mods.length - 1}
+                index={idx}
+              />
+            ))}
+          </div>
         </div>
       </main>
     </div>
