@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 export default function Index() {
+  const navigate = useNavigate();
   return (
     <div
       className="fixed inset-0 overflow-hidden flex flex-col items-center justify-center"
@@ -118,6 +121,7 @@ export default function Index() {
 
         {/* CTA Button */}
         <button
+          onClick={() => navigate("/form")}
           className="animate-d5 group inline-flex items-center gap-3 font-semibold cursor-pointer transition-all hover:-translate-y-0.5"
           style={{
             transitionDuration: "220ms",
