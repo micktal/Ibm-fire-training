@@ -42,47 +42,31 @@ export default function Index() {
       {/* Center content */}
       <div className="relative z-10 flex flex-col items-center text-center px-8 w-full" style={{ maxWidth: "700px" }}>
 
-        {/* IBM logo — ink diffusion reveal */}
+        {/* IBM logo officiel — ink diffusion reveal */}
         <div
-          className="flex items-end justify-center gap-[6px] mb-3"
           style={{
-            height: "56px",
             opacity: inkReady ? 1 : 0,
-            filter: inkReady ? "blur(0px)" : "blur(8px)",
-            transform: inkReady ? "scale(1)" : "scale(0.92)",
-            transition: "opacity 0.7s ease, filter 0.9s ease, transform 0.7s ease",
+            filter: inkReady ? "blur(0px)" : "blur(12px)",
+            transform: inkReady ? "scale(1)" : "scale(0.88)",
+            transition: "opacity 0.8s ease, filter 1s ease, transform 0.8s cubic-bezier(0.34,1.2,0.64,1)",
+            marginBottom: "2rem",
           }}
         >
-          {[28, 56, 22, 46, 32].map((h, i) => (
-            <span
-              key={i}
-              className="block rounded-[2.5px]"
-              style={{
-                width: "8px",
-                height: `${h}px`,
-                background: "#0f62fe",
-                opacity: inkReady ? 1 : 0,
-                transform: inkReady ? "scaleY(1)" : "scaleY(0)",
-                transformOrigin: "bottom",
-                transition: `opacity 0.4s ease ${0.1 + i * 0.08}s, transform 0.5s cubic-bezier(0.34,1.56,0.64,1) ${0.1 + i * 0.08}s`,
-              }}
+          <div
+            className="rounded-2xl flex items-center justify-center"
+            style={{
+              background: "rgba(255,255,255,0.96)",
+              boxShadow: "0 8px 40px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.2)",
+              padding: "16px 28px",
+              backdropFilter: "blur(4px)",
+            }}
+          >
+            <img
+              src="https://cdn.builder.io/api/v1/image/assets%2Fd93d9a0ec7824aa1ac4d890a1f90a2ec%2F9aa60c43bcc14b8ea45bf737749a3708?format=webp&width=400"
+              alt="IBM"
+              style={{ height: "52px", width: "auto", display: "block" }}
             />
-          ))}
-        </div>
-
-        {/* IBM Wordmark — ink blur reveal */}
-        <div
-          className="text-white font-mono font-bold leading-none mb-8"
-          style={{
-            fontFamily: "'IBM Plex Mono', monospace",
-            fontSize: "4.5rem",
-            letterSpacing: "-0.01em",
-            opacity: inkReady ? 1 : 0,
-            filter: inkReady ? "blur(0px)" : "blur(20px)",
-            transition: "opacity 0.9s ease 0.2s, filter 1.1s ease 0.2s",
-          }}
-        >
-          IBM
+          </div>
         </div>
 
         {/* Tag line */}
