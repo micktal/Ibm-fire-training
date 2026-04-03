@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { ArrowRight } from "lucide-react";
+import IBMLogo from "@/components/IBMLogo";
 
 const TITLE = "Formation Sécurité Incendie";
 
@@ -42,31 +43,17 @@ export default function Index() {
       {/* Center content */}
       <div className="relative z-10 flex flex-col items-center text-center px-8 w-full" style={{ maxWidth: "700px" }}>
 
-        {/* IBM logo officiel — ink diffusion reveal */}
+        {/* IBM logo officiel — ink diffusion reveal, fond sombre = logo blanc */}
         <div
           style={{
             opacity: inkReady ? 1 : 0,
             filter: inkReady ? "blur(0px)" : "blur(12px)",
             transform: inkReady ? "scale(1)" : "scale(0.88)",
             transition: "opacity 0.8s ease, filter 1s ease, transform 0.8s cubic-bezier(0.34,1.2,0.64,1)",
-            marginBottom: "2rem",
+            marginBottom: "2.2rem",
           }}
         >
-          <div
-            className="rounded-2xl flex items-center justify-center"
-            style={{
-              background: "rgba(255,255,255,0.96)",
-              boxShadow: "0 8px 40px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.2)",
-              padding: "16px 28px",
-              backdropFilter: "blur(4px)",
-            }}
-          >
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets%2Fd93d9a0ec7824aa1ac4d890a1f90a2ec%2F9aa60c43bcc14b8ea45bf737749a3708?format=webp&width=400"
-              alt="IBM"
-              style={{ height: "52px", width: "auto", display: "block" }}
-            />
-          </div>
+          <IBMLogo variant="dark" height={56} />
         </div>
 
         {/* Tag line */}

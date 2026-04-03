@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, Shield } from "lucide-react";
 import { useUser } from "@/lib/userContext";
+import IBMLogo from "@/components/IBMLogo";
 
 interface IBMTopbarProps {
   title?: string;
@@ -56,23 +57,8 @@ export default function IBMTopbar({
           <div className="w-px h-4" style={{ background: "#e4e7f0" }} />
         )}
 
-        {/* IBM bars */}
-        <div className="flex items-end gap-0.5" style={{ height: "14px" }}>
-          {[8, 14, 6, 12, 8].map((h, i) => (
-            <span
-              key={i}
-              className="block rounded-sm"
-              style={{ width: "2px", height: `${h}px`, background: "#0f62fe" }}
-            />
-          ))}
-        </div>
-
-        <span
-          className="font-mono font-bold text-sm tracking-wide"
-          style={{ color: "#0f62fe", fontFamily: "'IBM Plex Mono', monospace" }}
-        >
-          IBM
-        </span>
+        {/* IBM logo officiel */}
+        <IBMLogo variant="light" height={20} />
 
         {(title || subtitle) && (
           <>
