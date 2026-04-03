@@ -187,7 +187,6 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         type: "intro",
         title: "Les premiers signaux d'alerte",
         body: "Un départ de feu dans un environnement de bureau ne ressemble pas toujours à de grandes flammes visibles. Les signaux précoces sont souvent discrets : une odeur de brûlé, une légère fumée, un bruit électrique anormal ou une chaleur localisée.",
-        image: `${CDN}1428f65fac8147e090a970c03ba942a4?format=webp&width=800`,
       },
       {
         type: "list",

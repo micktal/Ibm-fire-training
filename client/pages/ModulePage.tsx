@@ -416,7 +416,7 @@ export default function ModulePage() {
                     <div className="text-xs font-semibold mb-0.5" style={{ color: "#8d95aa", textTransform: "uppercase", letterSpacing: "0.08em" }}>
                       {typeLabel[section.type]}
                     </div>
-                    <div className="text-sm font-bold" style={{ color: "#161616" }}>
+                    <div className="text-base font-bold" style={{ color: "#161616" }}>
                       {section.title || mod.title}
                     </div>
                   </div>
@@ -447,7 +447,7 @@ export default function ModulePage() {
                     )}
 
                     {/* Body text */}
-                    <p className="text-sm leading-relaxed mb-4" style={{ color: "#4a5068" }}>
+                    <p className="text-base leading-relaxed mb-4" style={{ color: "#4a5068" }}>
                       {section.body}
                     </p>
 
@@ -460,7 +460,7 @@ export default function ModulePage() {
                               className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5"
                               style={{ background: "#0043ce" }}
                             />
-                            <span className="text-sm" style={{ color: "#4a5068", lineHeight: "1.55" }}>{b}</span>
+                            <span className="text-base" style={{ color: "#4a5068", lineHeight: "1.6" }}>{b}</span>
                           </li>
                         ))}
                       </ul>
