@@ -77,7 +77,12 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const node = exercise.nodes[currentId];
+  const node = exercise.nodes[currentId] ?? exercise.nodes[exercise.startNode];
+
+  // Reset to start if node is still undefined (stale state after HMR)
+  useEffect(() => {
+    if (!exercise.nodes[currentId]) setCurrentId(exercise.startNode);
+  }, [exercise.startNode]);
 
   // Timer
   useEffect(() => {
