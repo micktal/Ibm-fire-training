@@ -75,7 +75,6 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
   const [done, setDone] = useState(false);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
 
   const node = exercise.nodes[currentId] ?? exercise.nodes[exercise.startNode];
 
@@ -123,7 +122,6 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
         setCurrentId(choice.nextNode);
         setChosenIdx(null);
         setTimeLeft(null);
-        scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
       } else {
         // End
         setDone(true);
@@ -252,7 +250,7 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
   const consequenceStyle = currentChoice ? CONSEQUENCE_STYLE[currentChoice.consequenceType] : null;
 
   return (
-    <div ref={scrollRef} className="rounded-xl overflow-hidden" style={{ border: "1.5px solid #e4e7f0" }}>
+    <div className="rounded-xl overflow-hidden" style={{ border: "1.5px solid #e4e7f0" }}>
       {/* Header */}
       <div className="px-5 py-3.5 flex items-center justify-between" style={{ background: "#161616" }}>
         <div className="flex items-center gap-2">
