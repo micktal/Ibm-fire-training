@@ -97,7 +97,7 @@ export default function Form() {
     transition: "border-color 0.2s, box-shadow 0.2s",
   };
 
-  const inputErr = { ...inputBase, borderColor: "#da1e28" };
+  const inputErr = { ...inputBase, border: "1.5px solid #da1e28" };
 
   return (
     <div
