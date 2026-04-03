@@ -354,6 +354,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         highlight: "Ne jamais ouvrir une porte chaude. Rebrousser chemin, alerter, utiliser un autre itinéraire.",
       },
     ],
+    keyPoints: [
+      "Chaleur + Combustible + Oxygène = Triangle du feu. Supprimez un seul élément pour éteindre.",
+      "La fumée voyage 5× plus vite que les flammes — c'est elle qui tue en premier.",
+      "Un feu peut envahir une pièce entière en moins de 5 minutes sans intervention.",
+    ],
     quiz: [
       {
         id: "q1",
@@ -413,6 +418,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         highlight: "Feu électrique + papier = extincteur CO2. Ne jamais utiliser l'eau sur du matériel sous tension.",
       },
     ],
+    keyPoints: [
+      "6 classes de feu — en bureau IBM : classe A (papier/bois) et électrique sont les plus fréquentes.",
+      "Eau sur feu électrique = risque d'électrocution immédiat. CO2 uniquement sur équipements IBM.",
+      "Identifier la bonne classe avant d'intervenir — une erreur peut aggraver la situation.",
+    ],
     quiz: [
       {
         id: "q1",
@@ -470,6 +480,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         image: `${CDN}65b652843ba640ae94a5ffd9b614c5b0?format=webp&width=800`,
         highlight: "Si le feu ne recule pas en 30 secondes : reculez, alertez, évacuez.",
       },
+    ],
+    keyPoints: [
+      "PASS : Pointer, Allumer, Serrer, Souffler — 4 étapes dans cet ordre, sans exception.",
+      "Un extincteur CO2 s'épuise en 8 à 12 secondes — chaque geste doit être précis.",
+      "Si le feu ne recule pas après 30 secondes d'intervention : évacuez immédiatement.",
     ],
     quiz: [
       {
@@ -543,6 +558,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         highlight: "Réponse : ÉVACUER. Porte chaude + fumée dense = feu développé. Ne jamais ouvrir.",
       },
     ],
+    keyPoints: [
+      "Si le feu dépasse la taille d'une corbeille à papier : n'intervenez pas — évacuez.",
+      "La règle IBM des 10 secondes : observer, évaluer, décider. Pas de troisième tentative.",
+      "70% des victimes d'incendie avaient encore le temps d'évacuer — l'hésitation est l'ennemi.",
+    ],
     quiz: [
       {
         id: "q1",
@@ -589,6 +609,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         image: `${CDN}b18156d7c7644f34a12cfbc171ae4907?format=webp&width=800`,
         highlight: "Vous avez 5 secondes pour chaque décision. Faites confiance à vos réflexes.",
       },
+    ],
+    keyPoints: [
+      "Simulation complète Chapitre 1 : détecter → alerter → intervenir ou évacuer en séquence.",
+      "Chaque décision a une conséquence directe — les réflexes s'ancrent par la pratique.",
+      "Les exercices réguliers réduisent le temps d'évacuation de 40% — IBM impose 2 exercices/an.",
     ],
     quiz: [
       {
@@ -666,6 +691,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         highlight: "Après déclenchement : ne pas bloquer les issues et commencer l'évacuation.",
       },
     ],
+    keyPoints: [
+      "Composer le 22 22 EN PREMIER — avant le 18 et le 15. La sécurité IBM connaît le bâtiment.",
+      "Chaque seconde de retard à déclencher l'alarme = 6 m² de surface supplémentaire en feu.",
+      "L'alarme manuelle n'attend pas les détecteurs — déclenchez-la dès confirmation du feu.",
+    ],
     quiz: [
       {
         id: "q1",
@@ -717,6 +747,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         ],
       },
     ],
+    keyPoints: [
+      "La panique collective divise par 3 la vitesse d'évacuation — restez calme et prenez le commandement.",
+      "Une seule voix structure suffit pour guider 20 personnes vers la sortie en 30 secondes.",
+      "Consignes d'évacuation IBM : voix ferme, gestes clairs, désigner les sorties de secours.",
+    ],
     quiz: [
       {
         id: "q1",
@@ -767,6 +802,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         ],
         highlight: "Ne jamais laisser une porte ouverte lors d'une évacuation.",
       },
+    ],
+    keyPoints: [
+      "SOS : Sortir, Ouvrir/fermer les portes, Signaler — la séquence d'évacuation IBM en 3 actes.",
+      "Fermer toutes les portes derrière soi ralentit la propagation du feu et de la fumée.",
+      "20% des décès surviennent chez des personnes revenues chercher leurs affaires — ne jamais revenir.",
     ],
     quiz: [
       {
@@ -820,6 +860,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         ],
         highlight: "Si vous ne pouvez pas vérifier en sécurité, signalez-le aux secours à l'extérieur.",
       },
+    ],
+    keyPoints: [
+      "Au point de rassemblement : se signaler au référent évacuation, ne pas repartir seul.",
+      "Vérifier visuellement les collègues présents — signaler les absences aux secours, pas à voix haute.",
+      "Le point de rassemblement IBM est défini par site — mémorisez le vôtre avant cet exercice.",
     ],
     quiz: [
       {
@@ -880,6 +925,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         highlight: "Se baisser sous la fumée et progresser rapidement vers la sortie.",
       },
     ],
+    keyPoints: [
+      "La fumée tue 3× plus que les flammes — se baisser sous 1 m réduit l'exposition de 80%.",
+      "En présence de fumée dense : protégez-vous le nez et la bouche, progressez en rampant si nécessaire.",
+      "Ne jamais courir dans la fumée — la respiration s'accélère et l'inhalation devient fatale.",
+    ],
     quiz: [
       {
         id: "q1",
@@ -933,6 +983,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         highlight: "Espace d'attente sécurisé (EAS) : zone protégée avec communication avec les secours.",
       },
     ],
+    keyPoints: [
+      "Escaliers uniquement — l'ascenseur en incendie est un piège : coupure électrique, enfumage, portes bloquées.",
+      "L'ascenseur rallonge le temps d'évacuation de 4× par rapport aux escaliers de secours.",
+      "En cas d'impossibilité de descendre : EAS (espace d'attente sécurisé) et signaler sa position.",
+    ],
     quiz: [
       {
         id: "q1",
@@ -979,6 +1034,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         image: `${CDN}b5ca9823c0ba42e492f17a707fd14708?format=webp&width=800`,
         highlight: "Votre objectif : tout le monde au point de rassemblement en moins de 3 minutes.",
       },
+    ],
+    keyPoints: [
+      "Simulation finale : alarme → évacuation ordonnée → point de rassemblement en moins de 3 minutes.",
+      "Une formation complète réduit le risque de décès de 85% — vous avez atteint ce niveau.",
+      "Votre certification IBM HSE est valide 2 ans — participez aux exercices annuels pour la maintenir.",
     ],
     quiz: [
       {
