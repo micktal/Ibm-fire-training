@@ -33,8 +33,10 @@ export default function CountdownOverlay({ onComplete, moduleImage }: Props) {
   }, [step]);
 
   const current = SEQUENCE[step];
+  if (current === undefined) return null; // sequence finished, waiting for unmount
+
   const isGo = current === 0;
-  const progress = ((5 - (current ?? 0)) / 5) * 100;
+  const progress = ((5 - current) / 5) * 100;
 
   // Color shifts from blue → orange → green as urgency builds
   const numColor = isGo
@@ -98,7 +100,7 @@ export default function CountdownOverlay({ onComplete, moduleImage }: Props) {
               strokeWidth="5"
               strokeLinecap="round"
               strokeDasharray={circumference}
-              strokeDashoffset={circumference * (1 - (isGo ? 1 : (5 - current) / 5))}
+              strokeDashoffset={circumference * (isGo ? 0 : 1 - (5 - current) / 5)}
               style={{ transition: "stroke-dashoffset 0.7s ease, stroke 0.3s ease" }}
             />
           </svg>
