@@ -39,27 +39,27 @@ const MODULE_ORDER = [
 export function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUserState] = useState<UserData | null>(() => {
     try {
-      const stored = sessionStorage.getItem("ibm_user");
+      const stored = localStorage.getItem("ibm_user");
       return stored ? JSON.parse(stored) : null;
     } catch { return null; }
   });
 
   const [progress, setProgressState] = useState<Record<string, ModuleProgress>>(() => {
     try {
-      const stored = sessionStorage.getItem("ibm_progress");
+      const stored = localStorage.getItem("ibm_progress");
       return stored ? JSON.parse(stored) : {};
     } catch { return {}; }
   });
 
   const setUser = (userData: UserData) => {
     setUserState(userData);
-    sessionStorage.setItem("ibm_user", JSON.stringify(userData));
+    localStorage.setItem("ibm_user", JSON.stringify(userData));
   };
 
   const setModuleProgress = (moduleId: string, prog: ModuleProgress) => {
     const updated = { ...progress, [moduleId]: prog };
     setProgressState(updated);
-    sessionStorage.setItem("ibm_progress", JSON.stringify(updated));
+    localStorage.setItem("ibm_progress", JSON.stringify(updated));
   };
 
   const isModuleUnlocked = (moduleId: string): boolean => {

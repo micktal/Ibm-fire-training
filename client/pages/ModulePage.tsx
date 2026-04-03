@@ -8,6 +8,7 @@ import {
 import IBMTopbar from "@/components/IBMTopbar";
 import VideoPlayer from "@/components/VideoPlayer";
 import FactCard from "@/components/FactCard";
+import CompletionCelebration from "@/components/CompletionCelebration";
 import HotspotImage from "@/components/interactions/HotspotImage";
 import DragAndDrop from "@/components/interactions/DragAndDrop";
 import BranchingScenario from "@/components/interactions/BranchingScenario";
@@ -197,7 +198,7 @@ function QuizBlock({
   const pct = ((current) / questions.length) * 100;
 
   if (done) {
-    const passed = finalScore >= 50;
+    const passed = finalScore >= 80;
     return (
       <div
         className="rounded-2xl overflow-hidden"
@@ -469,6 +470,7 @@ export default function ModulePage() {
   const [quizDone, setQuizDone] = useState(false);
   const [quizScore, setQuizScore] = useState(0);
   const [activeSection, setActiveSection] = useState<number | null>(0);
+  const [showCelebration, setShowCelebration] = useState(false);
 
   const mod = id ? getModuleById(id) : null;
 
@@ -484,6 +486,7 @@ export default function ModulePage() {
   const handleQuizComplete = (score: number, correct: number) => {
     setQuizScore(score);
     setQuizDone(true);
+    setShowCelebration(true);
     setModuleProgress(mod.id, {
       moduleId: mod.id,
       completed: true,
@@ -688,6 +691,39 @@ export default function ModulePage() {
             </FadeIn>
           )}
 
+          {/* Key points recap before quiz */}
+          {mod.keyPoints && mod.keyPoints.length > 0 && (
+            <FadeIn delay={0.12}>
+              <div
+                className="rounded-2xl p-5"
+                style={{
+                  background: "linear-gradient(135deg, rgba(0,67,206,0.05) 0%, rgba(15,98,254,0.03) 100%)",
+                  border: "1.5px solid rgba(0,67,206,0.15)",
+                }}
+              >
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-6 h-6 rounded-lg flex items-center justify-center" style={{ background: "rgba(0,67,206,0.1)" }}>
+                    <BookOpen size={13} style={{ color: "#0043ce" }} />
+                  </div>
+                  <span className="font-bold text-sm" style={{ color: "#0043ce" }}>À retenir avant le quiz</span>
+                </div>
+                <div className="flex flex-col gap-2.5">
+                  {mod.keyPoints.map((point, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <span
+                        className="font-mono text-xs font-bold flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5"
+                        style={{ background: "#0043ce", color: "#fff", fontSize: "10px", fontFamily: "'IBM Plex Mono', monospace" }}
+                      >
+                        {i + 1}
+                      </span>
+                      <span style={{ color: "#2d3148", fontSize: "0.875rem", lineHeight: "1.55", fontWeight: 500 }}>{point}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </FadeIn>
+          )}
+
           {/* Quiz section */}
           <FadeIn delay={0.15}>
             <div>
@@ -744,14 +780,14 @@ export default function ModulePage() {
               <div
                 className="flex flex-col sm:flex-row items-center gap-4 rounded-2xl p-5"
                 style={{
-                  background: quizScore >= 50 || alreadyDone ? "rgba(25,128,56,0.05)" : "rgba(218,30,40,0.04)",
-                  border: `2px solid ${quizScore >= 50 || alreadyDone ? "rgba(25,128,56,0.22)" : "rgba(218,30,40,0.22)"}`,
+                  background: quizScore >= 80 || alreadyDone ? "rgba(25,128,56,0.05)" : "rgba(218,30,40,0.04)",
+                  border: `2px solid ${quizScore >= 80 || alreadyDone ? "rgba(25,128,56,0.22)" : "rgba(218,30,40,0.22)"}`,
                 }}
               >
                 <div className="flex-1">
                   <div className="font-bold mb-0.5" style={{ color: "#161616", fontSize: "0.9375rem" }}>
                     {quizDone
-                      ? quizScore >= 50 ? "Bien joué — module validé !" : "Module à retravailler"
+                      ? quizScore >= 80 ? "Bien joué — module validé !" : "Score insuffisant — réessayez le quiz"
                       : "Module déjà complété"}
                   </div>
                   <div className="text-sm" style={{ color: "#6f7897" }}>
@@ -773,6 +809,18 @@ export default function ModulePage() {
           )}
         </div>
       </main>
+
+      {/* Celebration overlay */}
+      {showCelebration && (
+        <CompletionCelebration
+          score={quizScore}
+          moduleName={mod.title}
+          onContinue={() => {
+            setShowCelebration(false);
+            if (quizScore >= 80) navigate("/hub");
+          }}
+        />
+      )}
     </div>
   );
 }

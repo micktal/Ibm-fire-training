@@ -37,6 +37,7 @@ export interface CourseModule {
   videoUrl?: string;
   captionsVtt?: string;
   funFacts?: FunFact[];
+  keyPoints?: string[];   // 3 bullet points shown before quiz
   content: ModuleContent[];
   quiz: QuizQuestion[];
   locked: boolean;
@@ -219,6 +220,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         image: `${CDN}9cef8b4c4b544ccba1f46d55903ffdb8?format=webp&width=800`,
         highlight: "Règle d'or : tout signal de fumée = traiter comme un départ de feu réel.",
       },
+    ],
+    keyPoints: [
+      "Tout signal d'alerte (odeur, fumée, chaleur, grésil) doit être traité comme un départ de feu réel — jamais ignoré",
+      "Les 3 réflexes dans l'ordre : Débrancher → Déclencher l'alarme (22 22) → Évacuer",
+      "Jamais d'eau sur un feu électrique — CO2 uniquement pour les serveurs, câbles et data centers IBM",
     ],
     quiz: [
       {
