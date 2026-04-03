@@ -1,4 +1,4 @@
-const SRC = "https://cdn.builder.io/api/v1/image/assets%2Fd93d9a0ec7824aa1ac4d890a1f90a2ec%2F9aa60c43bcc14b8ea45bf737749a3708?format=webp&width=400";
+const SRC = "https://cdn.builder.io/api/v1/image/assets%2Fd93d9a0ec7824aa1ac4d890a1f90a2ec%2F1ac059a1aaf744118c1cadad8da9b861?format=webp&width=400";
 
 interface Props {
   /** "dark" = logo blanc sur fond sombre | "light" = logo bleu sur fond clair */
