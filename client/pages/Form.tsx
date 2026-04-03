@@ -4,6 +4,32 @@ import { AlertCircle, ArrowRight, Info, User, Mail, MapPin, Building2, Layers, L
 import { useUser } from "@/lib/userContext";
 import { IBM_SITES } from "@/lib/courseData";
 
+function Field({
+  id, label, required, error, children,
+}: {
+  id: string; label: string; required?: boolean; error?: string; children: React.ReactNode;
+}) {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <label
+        htmlFor={id}
+        className="text-xs font-semibold flex items-center gap-1"
+        style={{ color: "#4a5068" }}
+      >
+        {label}
+        {required && <span style={{ color: "#da1e28" }}>*</span>}
+      </label>
+      {children}
+      {error && (
+        <span className="flex items-center gap-1 text-xs" style={{ color: "#da1e28" }}>
+          <AlertCircle size={11} />
+          {error}
+        </span>
+      )}
+    </div>
+  );
+}
+
 export default function Form() {
   const navigate = useNavigate();
   const { setUser } = useUser();
@@ -72,30 +98,6 @@ export default function Form() {
   };
 
   const inputErr = { ...inputBase, borderColor: "#da1e28" };
-
-  const Field = ({
-    id, label, required, error, children,
-  }: {
-    id: string; label: string; required?: boolean; error?: string; children: React.ReactNode;
-  }) => (
-    <div className="flex flex-col gap-1.5">
-      <label
-        htmlFor={id}
-        className="text-xs font-semibold flex items-center gap-1"
-        style={{ color: "#4a5068" }}
-      >
-        {label}
-        {required && <span style={{ color: "#da1e28" }}>*</span>}
-      </label>
-      {children}
-      {error && (
-        <span className="flex items-center gap-1 text-xs" style={{ color: "#da1e28" }}>
-          <AlertCircle size={11} />
-          {error}
-        </span>
-      )}
-    </div>
-  );
 
   return (
     <div
