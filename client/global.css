@@ -88,3 +88,16 @@
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* Gentle breathing glow on CTA button */
+@keyframes breathePulse {
+  0%   { box-shadow: 0 4px 24px rgba(0,67,206,0.35); }
+  50%  { box-shadow: 0 4px 40px rgba(0,67,206,0.65), 0 0 0 6px rgba(0,67,206,0.10); }
+  100% { box-shadow: 0 4px 24px rgba(0,67,206,0.35); }
+}
+
+/* Typewriter cursor blink */
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}

@@ -296,7 +296,20 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
             style={{ filter: "brightness(0.7)" }}
           />
           <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.6))" }} />
-          {/* Timer overlay */}
+
+          {/* Smoke fog — fills progressively as timer runs down */}
+          {timeLeft !== null && node.timed && (
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: `radial-gradient(ellipse at 50% 110%, rgba(80,80,80,0) 0%, rgba(30,30,30,${Math.min(0.72, ((node.timed - timeLeft) / node.timed) * 0.8)}) 100%)`,
+                backdropFilter: `blur(${Math.min(3, ((node.timed - timeLeft) / node.timed) * 4)}px)`,
+                transition: "background 1s linear, backdrop-filter 1s linear",
+              }}
+            />
+          )}
+
+          {/* Timer badge */}
           {timeLeft !== null && (
             <div
               className="absolute top-3 right-3 flex items-center gap-1.5 font-mono font-bold text-sm px-3 py-1.5 rounded-full"

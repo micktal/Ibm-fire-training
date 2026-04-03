@@ -11,6 +11,7 @@ import Form from "./pages/Form";
 import Hub from "./pages/Hub";
 import ModulePage from "./pages/ModulePage";
 import NotFound from "./pages/NotFound";
+import BottomNav from "./components/BottomNav";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ export default function App() {
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <BottomNav />
           </BrowserRouter>
         </UserProvider>
       </TooltipProvider>
