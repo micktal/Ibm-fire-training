@@ -82,7 +82,7 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
   // Reset to start if node is still undefined (stale state after HMR)
   useEffect(() => {
     if (!exercise.nodes[currentId]) setCurrentId(exercise.startNode);
-  }, [exercise.startNode]);
+  }, [exercise.startNode, currentId, exercise.nodes]);
 
   // Timer
   useEffect(() => {
@@ -244,6 +244,9 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
       </div>
     );
   }
+
+  // Hard guard — if node is still undefined after fallback, bail out cleanly
+  if (!node) return null;
 
   const currentChoice = chosenIdx !== null ? node.choices[chosenIdx] : null;
   const consequenceStyle = currentChoice ? CONSEQUENCE_STYLE[currentChoice.consequenceType] : null;
