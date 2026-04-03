@@ -9,6 +9,8 @@ import IBMTopbar from "@/components/IBMTopbar";
 import VideoPlayer from "@/components/VideoPlayer";
 import FactCard from "@/components/FactCard";
 import CompletionCelebration from "@/components/CompletionCelebration";
+import ModuleIntroOverlay from "@/components/ModuleIntroOverlay";
+import CountdownOverlay from "@/components/CountdownOverlay";
 import HotspotImage from "@/components/interactions/HotspotImage";
 import DragAndDrop from "@/components/interactions/DragAndDrop";
 import BranchingScenario from "@/components/interactions/BranchingScenario";
@@ -467,6 +469,7 @@ export default function ModulePage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { setModuleProgress, progress } = useUser();
+  const [phase, setPhase] = useState<"intro" | "countdown" | "module">("intro");
   const [quizDone, setQuizDone] = useState(false);
   const [quizScore, setQuizScore] = useState(0);
   const [activeSection, setActiveSection] = useState<number | null>(0);
@@ -809,6 +812,22 @@ export default function ModulePage() {
           )}
         </div>
       </main>
+
+      {/* Intro overlay */}
+      {phase === "intro" && (
+        <ModuleIntroOverlay
+          mod={mod}
+          onStart={() => setPhase("countdown")}
+        />
+      )}
+
+      {/* Countdown overlay */}
+      {phase === "countdown" && (
+        <CountdownOverlay
+          moduleImage={mod.image}
+          onComplete={() => setPhase("module")}
+        />
+      )}
 
       {/* Celebration overlay */}
       {showCelebration && (
