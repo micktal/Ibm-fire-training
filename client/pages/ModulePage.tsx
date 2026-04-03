@@ -7,8 +7,19 @@ import {
 } from "lucide-react";
 import IBMTopbar from "@/components/IBMTopbar";
 import VideoPlayer from "@/components/VideoPlayer";
+import HotspotImage from "@/components/interactions/HotspotImage";
+import DragAndDrop from "@/components/interactions/DragAndDrop";
+import BranchingScenario from "@/components/interactions/BranchingScenario";
 import { getModuleById, QuizQuestion } from "@/lib/courseData";
+import { MODULE_INTERACTIONS, AnyExercise } from "@/lib/interactionData";
 import { useUser } from "@/lib/userContext";
+
+function InteractionBlock({ exercise }: { exercise: AnyExercise }) {
+  if (exercise.type === "hotspot") return <HotspotImage exercise={exercise} />;
+  if (exercise.type === "dragdrop") return <DragAndDrop exercise={exercise} />;
+  if (exercise.type === "branching") return <BranchingScenario exercise={exercise} />;
+  return null;
+}
 
 // ── Quiz component ──────────────────────────────────────────────
 function QuizBlock({
@@ -481,6 +492,37 @@ export default function ModulePage() {
               </div>
             ))}
           </div>
+
+          {/* Interactive exercises */}
+          {MODULE_INTERACTIONS[mod.id]?.length > 0 && (
+            <div className="flex flex-col gap-4">
+              <div
+                className="flex items-center gap-2 pb-3"
+                style={{ borderBottom: "1.5px solid #e4e7f0" }}
+              >
+                <div className="w-5 h-5 rounded flex items-center justify-center" style={{ background: "rgba(0,67,206,0.1)" }}>
+                  <Target size={12} style={{ color: "#0043ce" }} />
+                </div>
+                <span className="text-sm font-bold" style={{ color: "#161616" }}>
+                  Exercices interactifs
+                </span>
+                <span
+                  className="ml-auto font-mono text-xs px-2 py-0.5 rounded-full"
+                  style={{
+                    fontFamily: "'IBM Plex Mono', monospace",
+                    color: "#0043ce",
+                    background: "rgba(0,67,206,0.07)",
+                    border: "1px solid rgba(0,67,206,0.15)",
+                  }}
+                >
+                  {MODULE_INTERACTIONS[mod.id].length} exercice{MODULE_INTERACTIONS[mod.id].length > 1 ? "s" : ""}
+                </span>
+              </div>
+              {MODULE_INTERACTIONS[mod.id].map((exercise, idx) => (
+                <InteractionBlock key={idx} exercise={exercise} />
+              ))}
+            </div>
+          )}
 
           {/* Quiz section */}
           <div>
