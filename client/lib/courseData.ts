@@ -222,7 +222,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         type: "scenario",
         title: "Scénario : Feu ou pas feu ?",
         body: "Vous êtes dans l'open space IBM. Une légère fumée sort d'une multiprise sous un bureau. L'alarme n'a pas encore sonné. Que faites-vous ?",
-        image: `${CDN}9cef8b4c4b544ccba1f46d55903ffdb8?format=webp&width=800`,
+        image: `${CDN}4a7961a4c4d640dcb8b3ee7c4a1db951?format=webp&width=800`,
         highlight: "Règle d'or : tout signal de fumée = traiter comme un départ de feu réel.",
       },
     ],

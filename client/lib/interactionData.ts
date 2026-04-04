@@ -163,12 +163,12 @@ const m2_dragdrop: DragDropExercise = {
   context: "Glissez chaque méthode d'extinction vers l'élément qu'elle neutralise dans le triangle du feu.",
   successMessage: "Parfait — vous maîtrisez les mécanismes d'extinction !",
   items: [
-    { id: "i1", label: "Extincteur CO2", emoji: "🧯", correctZone: "comburant" },
-    { id: "i2", label: "Eau pulvérisée", emoji: "💧", correctZone: "chaleur" },
-    { id: "i3", label: "Éloigner les papiers", emoji: "📄", correctZone: "combustible" },
-    { id: "i4", label: "Couverture anti-feu", emoji: "🟦", correctZone: "comburant" },
-    { id: "i5", label: "Poudre ABC", emoji: "⬜", correctZone: "comburant" },
-    { id: "i6", label: "Débrancher l'appareil", emoji: "🔌", correctZone: "chaleur" },
+    { id: "i1", label: "Extincteur CO2", sublabel: "Gaz inerte — asphyxie la flamme", icon: "Wind", correctZone: "comburant" },
+    { id: "i2", label: "Eau pulvérisée", sublabel: "Abaisse la température", icon: "Droplet", correctZone: "chaleur" },
+    { id: "i3", label: "Éloigner les papiers", sublabel: "Supprime le combustible", icon: "FileText", correctZone: "combustible" },
+    { id: "i4", label: "Couverture anti-feu", sublabel: "Prive le feu d'oxygène", icon: "Layers", correctZone: "comburant" },
+    { id: "i5", label: "Poudre ABC", sublabel: "Stoppe la réaction chimique", icon: "Package", correctZone: "comburant" },
+    { id: "i6", label: "Débrancher l'appareil", sublabel: "Coupe la source de chaleur", icon: "Zap", correctZone: "chaleur" },
   ],
   zones: [
     {
@@ -915,12 +915,12 @@ const ch2m3_dragdrop: DragDropExercise = {
   context: "La séquence correcte est essentielle. Glissez chaque action dans la bonne catégorie.",
   successMessage: "Séquence 'Sors — Ferme — Signale' parfaitement maîtrisée !",
   items: [
-    { id: "i1", label: "Sortir de la pièce rapidement", emoji: "🚶", correctZone: "sors" },
-    { id: "i2", label: "Vérifier qu'il n'y a personne", emoji: "👁️", correctZone: "sors" },
-    { id: "i3", label: "Fermer la porte (sans verrouiller)", emoji: "🚪", correctZone: "ferme" },
-    { id: "i4", label: "S'assurer que la porte est bien fermée", emoji: "✋", correctZone: "ferme" },
-    { id: "i5", label: "Signaler aux secours les zones vérifiées", emoji: "📢", correctZone: "signale" },
-    { id: "i6", label: "Rejoindre le point de rassemblement", emoji: "📍", correctZone: "signale" },
+    { id: "i1", label: "Sortir de la pièce rapidement", sublabel: "Évacuer sans attendre", icon: "LogOut", correctZone: "sors" },
+    { id: "i2", label: "Vérifier qu'il n'y a personne", sublabel: "Contrôler la pièce avant de partir", icon: "ScanEye", correctZone: "sors" },
+    { id: "i3", label: "Fermer la porte (sans verrouiller)", sublabel: "Ralentit la propagation du feu", icon: "DoorClosed", correctZone: "ferme" },
+    { id: "i4", label: "S'assurer que la porte est bien fermée", sublabel: "Barrière contre la fumée", icon: "ShieldCheck", correctZone: "ferme" },
+    { id: "i5", label: "Signaler aux secours les zones vérifiées", sublabel: "Informer le responsable évacuation", icon: "Bell", correctZone: "signale" },
+    { id: "i6", label: "Rejoindre le point de rassemblement", sublabel: "Se rendre au point désigné", icon: "MapPin", correctZone: "signale" },
   ],
   zones: [
     {

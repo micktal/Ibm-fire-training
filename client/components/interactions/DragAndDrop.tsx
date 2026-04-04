@@ -3,6 +3,7 @@ import {
   CheckCircle2, XCircle, RotateCcw, Layers,
   FileText, Server, Droplet, Armchair, Zap, FlaskConical, Flame, Laptop,
   Shirt, Package, Car, Printer, Lightbulb, Wrench, Coffee, Wind,
+  LogOut, ScanEye, DoorClosed, ShieldCheck, Bell, MapPin,
 } from "lucide-react";
 
 const ICON_MAP: Record<string, React.ReactNode> = {
@@ -22,6 +23,12 @@ const ICON_MAP: Record<string, React.ReactNode> = {
   Wrench: <Wrench size={15} />,
   Coffee: <Coffee size={15} />,
   Wind: <Wind size={15} />,
+  LogOut: <LogOut size={15} />,
+  ScanEye: <ScanEye size={15} />,
+  DoorClosed: <DoorClosed size={15} />,
+  ShieldCheck: <ShieldCheck size={15} />,
+  Bell: <Bell size={15} />,
+  MapPin: <MapPin size={15} />,
 };
 
 export interface DragItem {
@@ -185,8 +192,6 @@ export default function DragAndDrop({ exercise, onComplete }: Props) {
                     <span style={{ color: "#4a5068", display: "flex", alignItems: "center" }}>
                       {ICON_MAP[item.icon]}
                     </span>
-                  ) : item.emoji ? (
-                    <span style={{ fontSize: "1.1rem" }}>{item.emoji}</span>
                   ) : null}
                   <div>
                     <span className="text-sm font-semibold" style={{ color: "#161616" }}>
@@ -267,8 +272,6 @@ export default function DragAndDrop({ exercise, onComplete }: Props) {
                       >
                         {(item.icon && ICON_MAP[item.icon]) ? (
                           <span style={{ color: "#4a5068", display: "flex", alignItems: "center" }}>{ICON_MAP[item.icon]}</span>
-                        ) : item.emoji ? (
-                          <span style={{ fontSize: "0.9rem" }}>{item.emoji}</span>
                         ) : null}
                         <span className="text-xs font-semibold" style={{ color: "#161616" }}>
                           {item.label}

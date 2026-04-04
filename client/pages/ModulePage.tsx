@@ -595,12 +595,14 @@ const typeLabel: Record<string, string> = {
   list: "Points clés",
 };
 
-const typeAccent: Record<string, { border: string; icon: string; headerBg: string }> = {
-  intro:    { border: "#0043ce", icon: "rgba(0,67,206,0.1)",   headerBg: "#fff" },
-  visual:   { border: "#0043ce", icon: "rgba(0,67,206,0.1)",   headerBg: "#fff" },
-  info:     { border: "#0043ce", icon: "rgba(0,67,206,0.1)",   headerBg: "#fff" },
-  scenario: { border: "#f59e0b", icon: "rgba(245,158,11,0.1)", headerBg: "#fffbf0" },
-  list:     { border: "#198038", icon: "rgba(25,128,56,0.1)",  headerBg: "#f7fdf9" },
+const typeAccent: Record<string, { border: string; icon: string; headerBg: string; labelColor: string }> = {
+  intro:      { border: "#0D47A1", icon: "rgba(13,71,161,0.1)",   headerBg: "#fff",    labelColor: "#0D47A1" },
+  visual:     { border: "#0D47A1", icon: "rgba(13,71,161,0.1)",   headerBg: "#fff",    labelColor: "#0D47A1" },
+  info:       { border: "#0D47A1", icon: "rgba(13,71,161,0.1)",   headerBg: "#fff",    labelColor: "#0D47A1" },
+  scenario:   { border: "#b45309", icon: "rgba(180,83,9,0.1)",    headerBg: "#fffbf0", labelColor: "#92400e" },
+  list:       { border: "#198038", icon: "rgba(25,128,56,0.1)",   headerBg: "#f7fdf9", labelColor: "#0e6027" },
+  casefigure: { border: "#7c3aed", icon: "rgba(124,58,237,0.1)",  headerBg: "#faf5ff", labelColor: "#5b21b6" },
+  comparison: { border: "#198038", icon: "rgba(25,128,56,0.1)",   headerBg: "#f7fdf9", labelColor: "#0e6027" },
 };
 
 // ── Main Module page ────────────────────────────────────────────
@@ -661,45 +663,45 @@ export default function ModulePage() {
       />
 
       <main className="flex-1 overflow-y-auto">
-        {/* Hero */}
-        <div className="relative overflow-hidden" style={{ height: "260px" }}>
-          <img
-            src={mod.image}
-            alt={mod.title}
-            className="w-full h-full object-cover"
-            style={{ filter: "brightness(0.5)" }}
-          />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(160deg, rgba(0,10,30,0.6) 0%, rgba(0,0,0,0.55) 100%)" }} />
-          {/* IBM blue accent bar */}
-          <div className="absolute bottom-0 left-0 right-0" style={{ height: "3px", background: "linear-gradient(90deg, #0f62fe, #0043ce 60%, transparent)" }} />
-
-          <div className="absolute bottom-0 left-0 right-0 p-6 max-w-4xl mx-auto">
-            <div
-              className="font-mono text-xs mb-3 flex items-center gap-2"
-              style={{ color: "rgba(255,255,255,0.5)", fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.12em", textTransform: "uppercase" }}
-            >
-              <span>Chapitre {mod.chapter}</span>
-              <span style={{ color: "rgba(255,255,255,0.22)" }}>·</span>
-              <span>Module {mod.number.toString().padStart(2, "0")}</span>
-              <span style={{ color: "rgba(255,255,255,0.22)" }}>·</span>
-              <Clock size={11} />
-              <span>{mod.duration}</span>
-            </div>
-            <h1 className="text-2xl font-bold text-white mb-1.5" style={{ letterSpacing: "-0.025em", lineHeight: "1.15" }}>
-              {mod.title}
-            </h1>
-            <p style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.9375rem" }}>{mod.subtitle}</p>
+        {/* Hero — geometric IBM blue header */}
+        <div className="relative overflow-hidden" style={{ minHeight: "180px" }}>
+          <div className="absolute inset-0" style={{ background: "linear-gradient(145deg, #0A3882 0%, #0D47A1 45%, #1565C0 100%)" }}>
+            <div style={{ position: "absolute", top: 0, right: 0, width: "55%", height: "100%", background: "#0E4DB8", clipPath: "polygon(20% 0, 100% 0, 100% 100%, 0 100%)" }} />
+            <div style={{ position: "absolute", top: "10%", left: "5%", width: "50%", height: "80%", background: "#1565C0", clipPath: "polygon(0 0, 100% 0, 85% 100%, 0 90%)" }} />
+            <div style={{ position: "absolute", bottom: 0, right: "10%", width: "35%", height: "45%", background: "rgba(255,255,255,0.04)", clipPath: "polygon(10% 0, 100% 0, 90% 100%, 0 100%)" }} />
           </div>
 
-          {alreadyDone && (
+          <div className="relative z-10 flex gap-4 px-5 py-5 max-w-4xl mx-auto items-center">
             <div
-              className="absolute top-4 right-4 flex items-center gap-2 font-semibold text-xs px-3 py-1.5 rounded-full"
-              style={{ background: "#198038", color: "#fff", boxShadow: "0 2px 8px rgba(25,128,56,0.4)" }}
+              className="flex-shrink-0 rounded-xl overflow-hidden"
+              style={{ width: "88px", height: "88px", border: "3px solid rgba(255,255,255,0.22)", boxShadow: "0 8px 24px rgba(0,0,0,0.3)" }}
             >
-              <CheckCircle2 size={13} />
-              Complété · {existingProgress.score}%
+              <img src={mod.image} alt={mod.title} className="w-full h-full object-cover" style={{ filter: "brightness(0.88)" }} />
             </div>
-          )}
+
+            <div className="flex-1">
+              <div className="flex flex-wrap gap-1.5 mb-2">
+                {[`Ch.${mod.chapter}`, `M${mod.number.toString().padStart(2, "0")}`, mod.duration].map((tag) => (
+                  <span key={tag} className="font-mono text-xs px-2 py-0.5 rounded" style={{ background: "rgba(255,255,255,0.14)", color: "rgba(255,255,255,0.8)", fontFamily: "'IBM Plex Mono', monospace", fontSize: "9px", letterSpacing: "0.08em" }}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <h1 className="font-bold text-white mb-1" style={{ fontSize: "clamp(1.05rem, 3vw, 1.35rem)", letterSpacing: "-0.02em", lineHeight: "1.2" }}>
+                {mod.title}
+              </h1>
+              <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.82rem", lineHeight: "1.45" }}>{mod.subtitle}</p>
+              {alreadyDone && (
+                <div className="inline-flex items-center gap-1.5 mt-2 text-xs font-semibold px-2.5 py-1 rounded-full"
+                  style={{ background: "rgba(25,128,56,0.3)", color: "#6fdc8c", border: "1px solid rgba(111,220,140,0.3)" }}
+                >
+                  <CheckCircle2 size={11} />
+                  Complété · {existingProgress.score}%
+                </div>
+              )}
+            </div>
+          </div>
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "18px", background: "#F0F4FA", clipPath: "ellipse(55% 100% at 50% 100%)" }} />
         </div>
 
         {/* Content */}
@@ -709,23 +711,18 @@ export default function ModulePage() {
           <FadeIn delay={0.05}>
             <div
               className="flex items-start gap-4 rounded-2xl p-5"
-              style={{
-                background: "#fff",
-                border: "1.5px solid rgba(0,67,206,0.18)",
-                boxShadow: "0 2px 12px rgba(0,67,206,0.06)",
-              }}
+              style={{ background: "linear-gradient(135deg, #0D47A1 0%, #1565C0 100%)", boxShadow: "0 4px 20px rgba(13,71,161,0.25)" }}
             >
-              <div
-                className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{ background: "rgba(0,67,206,0.08)", border: "1.5px solid rgba(0,67,206,0.12)" }}
+              <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ background: "rgba(255,255,255,0.15)", border: "1.5px solid rgba(255,255,255,0.2)" }}
               >
-                <Target size={19} style={{ color: "#0043ce" }} />
+                <Target size={19} style={{ color: "#fff" }} />
               </div>
               <div>
-                <div className="text-xs font-semibold mb-1" style={{ color: "#0043ce", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                <div className="text-xs font-semibold mb-1 uppercase" style={{ color: "rgba(255,255,255,0.65)", letterSpacing: "0.12em" }}>
                   Objectif du module
                 </div>
-                <div className="font-medium" style={{ color: "#161616", fontSize: "0.9375rem", lineHeight: "1.6" }}>
+                <div className="font-semibold text-white" style={{ fontSize: "0.9375rem", lineHeight: "1.55" }}>
                   {mod.objective}
                 </div>
               </div>
@@ -756,58 +753,58 @@ export default function ModulePage() {
           )}
 
           {/* Content sections */}
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-2.5">
             {mod.content.map((section, idx) => {
               const accent = typeAccent[section.type] ?? typeAccent.intro;
               const isOpen = activeSection === idx;
               return (
                 <FadeIn key={idx} delay={0.05 + idx * 0.05}>
                   <div
-                    className="rounded-2xl overflow-hidden transition-shadow"
+                    className="rounded-2xl overflow-hidden transition-all duration-200"
                     style={{
-                      border: `1.5px solid ${isOpen ? accent.border : "#e4e7f0"}`,
+                      border: `2px solid ${isOpen ? accent.border : "#e4e7f0"}`,
                       background: "#fff",
-                      boxShadow: isOpen ? `0 4px 20px rgba(0,0,0,0.06)` : "0 1px 4px rgba(0,0,0,0.03)",
+                      boxShadow: isOpen ? "0 6px 24px rgba(0,0,0,0.09)" : "0 1px 4px rgba(0,0,0,0.04)",
                     }}
                   >
-                    {/* Colored top accent line when open */}
-                    {isOpen && (
-                      <div style={{ height: "2px", background: accent.border, opacity: 0.7 }} />
-                    )}
-
-                    {/* Header button */}
-                    <button
-                      className="w-full flex items-center gap-3 px-5 py-4 text-left"
-                      style={{ background: isOpen ? accent.headerBg : "#fff", transition: "background 0.2s" }}
-                      onClick={() => setActiveSection(isOpen ? null : idx)}
-                    >
-                      <div
-                        className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                        style={{ background: accent.icon }}
-                      >
-                        <ContentIcon type={section.type} />
-                      </div>
+                    <div className="flex">
+                      {/* Left color sidebar */}
+                      <div style={{ width: "4px", flexShrink: 0, background: isOpen ? accent.border : "#e4e7f0", transition: "background 0.2s" }} />
                       <div className="flex-1">
-                        <div className="text-xs font-semibold mb-0.5" style={{ color: "#9aa0b8", textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                          {typeLabel[section.type]}
-                        </div>
-                        <div className="font-bold" style={{ color: "#161616", fontSize: "0.9375rem" }}>
-                          {section.title || mod.title}
-                        </div>
+                        <button
+                          className="w-full flex items-center gap-3 px-4 py-3.5 text-left"
+                          style={{ background: isOpen ? accent.headerBg : "#fff", transition: "background 0.2s" }}
+                          onClick={() => setActiveSection(isOpen ? null : idx)}
+                        >
+                          <div
+                            className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                            style={{ background: isOpen ? accent.icon : "#f2f3f7", transition: "background 0.2s" }}
+                          >
+                            <ContentIcon type={section.type} />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="text-xs font-bold uppercase mb-0.5"
+                              style={{ color: isOpen ? accent.labelColor : "#adb3c8", letterSpacing: "0.1em", transition: "color 0.2s" }}
+                            >
+                              {typeLabel[section.type] ?? section.type}
+                            </div>
+                            <div className="font-bold truncate" style={{ color: "#0a2052", fontSize: "0.9rem" }}>
+                              {section.title || mod.title}
+                            </div>
+                          </div>
+                          <ChevronDown
+                            size={17}
+                            style={{
+                              color: isOpen ? accent.border : "#adb3c8",
+                              transform: isOpen ? "rotate(180deg)" : "rotate(0)",
+                              transition: "transform 0.25s, color 0.2s",
+                              flexShrink: 0,
+                            }}
+                          />
+                        </button>
+                        {isOpen && <SectionBody section={section} />}
                       </div>
-                      <ChevronDown
-                        size={17}
-                        style={{
-                          color: isOpen ? accent.border : "#adb3c8",
-                          transform: isOpen ? "rotate(180deg)" : "rotate(0)",
-                          transition: "transform 0.25s, color 0.2s",
-                          flexShrink: 0,
-                        }}
-                      />
-                    </button>
-
-                    {/* Body */}
-                    {isOpen && <SectionBody section={section} />}
+                    </div>
                   </div>
                 </FadeIn>
               );
@@ -818,19 +815,15 @@ export default function ModulePage() {
           {MODULE_INTERACTIONS[mod.id]?.length > 0 && (
             <FadeIn delay={0.1}>
               <div className="flex flex-col gap-4">
-                <div className="flex items-center gap-2.5 pb-3" style={{ borderBottom: "2px solid #e4e7f0" }}>
-                  <div className="w-6 h-6 rounded-lg flex items-center justify-center" style={{ background: "rgba(0,67,206,0.1)" }}>
-                    <Zap size={13} style={{ color: "#0043ce" }} />
+                <div className="flex items-center gap-3 px-4 py-3 rounded-xl"
+                  style={{ background: "linear-gradient(135deg, #0D47A1, #1565C0)", boxShadow: "0 4px 16px rgba(13,71,161,0.2)" }}
+                >
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(255,255,255,0.15)" }}>
+                    <Zap size={14} style={{ color: "#fff" }} />
                   </div>
-                  <span className="font-bold" style={{ color: "#161616", fontSize: "0.9375rem" }}>Exercices interactifs</span>
-                  <span
-                    className="ml-auto font-mono text-xs px-2.5 py-1 rounded-full"
-                    style={{
-                      fontFamily: "'IBM Plex Mono', monospace",
-                      color: "#0043ce",
-                      background: "rgba(0,67,206,0.07)",
-                      border: "1px solid rgba(0,67,206,0.15)",
-                    }}
+                  <span className="font-bold text-white uppercase" style={{ fontSize: "0.85rem", letterSpacing: "0.08em" }}>Exercices interactifs</span>
+                  <span className="ml-auto font-mono text-xs px-2.5 py-1 rounded-full"
+                    style={{ fontFamily: "'IBM Plex Mono', monospace", color: "#fff", background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.25)" }}
                   >
                     {MODULE_INTERACTIONS[mod.id].length} exercice{MODULE_INTERACTIONS[mod.id].length > 1 ? "s" : ""}
                   </span>
@@ -845,29 +838,26 @@ export default function ModulePage() {
           {/* Key points recap before quiz */}
           {mod.keyPoints && mod.keyPoints.length > 0 && (
             <FadeIn delay={0.12}>
-              <div
-                className="rounded-2xl p-5"
-                style={{
-                  background: "linear-gradient(135deg, rgba(0,67,206,0.05) 0%, rgba(15,98,254,0.03) 100%)",
-                  border: "1.5px solid rgba(0,67,206,0.15)",
-                }}
-              >
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-6 h-6 rounded-lg flex items-center justify-center" style={{ background: "rgba(0,67,206,0.1)" }}>
-                    <BookOpen size={13} style={{ color: "#0043ce" }} />
+              <div className="rounded-2xl overflow-hidden" style={{ border: "2px solid rgba(13,71,161,0.25)", boxShadow: "0 2px 12px rgba(13,71,161,0.07)" }}>
+                <div className="flex items-center gap-2.5 px-5 py-3"
+                  style={{ background: "rgba(13,71,161,0.07)", borderBottom: "1px solid rgba(13,71,161,0.12)" }}
+                >
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "rgba(13,71,161,0.12)" }}>
+                    <BookOpen size={14} style={{ color: "#0D47A1" }} />
                   </div>
-                  <span className="font-bold text-sm" style={{ color: "#0043ce" }}>À retenir avant le quiz</span>
+                  <span className="font-bold text-sm uppercase" style={{ color: "#0D47A1", letterSpacing: "0.08em" }}>À retenir avant le quiz</span>
                 </div>
-                <div className="flex flex-col gap-2.5">
+                <div className="flex flex-col bg-white">
                   {mod.keyPoints.map((point, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <span
-                        className="font-mono text-xs font-bold flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5"
-                        style={{ background: "#0043ce", color: "#fff", fontSize: "10px", fontFamily: "'IBM Plex Mono', monospace" }}
+                    <div key={i} className="flex items-start gap-3 px-5 py-3"
+                      style={{ borderBottom: i < mod.keyPoints!.length - 1 ? "1px solid #f0f2f8" : "none" }}
+                    >
+                      <span className="font-mono text-xs font-bold flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center mt-0.5"
+                        style={{ background: "#0D47A1", color: "#fff", fontSize: "10px", fontFamily: "'IBM Plex Mono', monospace" }}
                       >
                         {i + 1}
                       </span>
-                      <span style={{ color: "#2d3148", fontSize: "0.875rem", lineHeight: "1.55", fontWeight: 500 }}>{point}</span>
+                      <span style={{ color: "#0a2052", fontSize: "0.875rem", lineHeight: "1.55", fontWeight: 500 }}>{point}</span>
                     </div>
                   ))}
                 </div>
@@ -878,19 +868,15 @@ export default function ModulePage() {
           {/* Quiz section */}
           <FadeIn delay={0.15}>
             <div>
-              <div className="flex items-center gap-2.5 mb-4 pb-3" style={{ borderBottom: "2px solid #e4e7f0" }}>
-                <div className="w-6 h-6 rounded-lg flex items-center justify-center" style={{ background: "rgba(0,67,206,0.1)" }}>
-                  <Shield size={13} style={{ color: "#0043ce" }} />
+              <div className="flex items-center gap-3 px-4 py-3 rounded-xl mb-4"
+                style={{ background: "linear-gradient(135deg, #0D47A1, #1565C0)", boxShadow: "0 4px 16px rgba(13,71,161,0.2)" }}
+              >
+                <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(255,255,255,0.15)" }}>
+                  <Shield size={14} style={{ color: "#fff" }} />
                 </div>
-                <span className="font-bold" style={{ color: "#161616", fontSize: "0.9375rem" }}>Évaluation du module</span>
-                <span
-                  className="ml-auto font-mono text-xs px-2.5 py-1 rounded-full"
-                  style={{
-                    fontFamily: "'IBM Plex Mono', monospace",
-                    color: "#0043ce",
-                    background: "rgba(0,67,206,0.07)",
-                    border: "1px solid rgba(0,67,206,0.15)",
-                  }}
+                <span className="font-bold text-white uppercase" style={{ fontSize: "0.85rem", letterSpacing: "0.08em" }}>Évaluation du module</span>
+                <span className="ml-auto font-mono text-xs px-2.5 py-1 rounded-full"
+                  style={{ fontFamily: "'IBM Plex Mono', monospace", color: "#fff", background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.25)" }}
                 >
                   {mod.quiz.length} question{mod.quiz.length > 1 ? "s" : ""}
                 </span>
@@ -957,9 +943,9 @@ export default function ModulePage() {
                   <button
                     onClick={() => navigate("/hub")}
                     className="flex items-center gap-1.5 font-semibold px-4 py-2.5 rounded-xl transition-all"
-                    style={{ background: "rgba(0,67,206,0.07)", color: "#0043ce", border: "1.5px solid rgba(0,67,206,0.2)", cursor: "pointer", fontSize: "0.875rem" }}
-                    onMouseEnter={(e) => (e.currentTarget as HTMLButtonElement).style.background = "rgba(0,67,206,0.12)"}
-                    onMouseLeave={(e) => (e.currentTarget as HTMLButtonElement).style.background = "rgba(0,67,206,0.07)"}
+                    style={{ background: "rgba(13,71,161,0.07)", color: "#0D47A1", border: "1.5px solid rgba(13,71,161,0.2)", cursor: "pointer", fontSize: "0.875rem" }}
+                    onMouseEnter={(e) => (e.currentTarget as HTMLButtonElement).style.background = "rgba(13,71,161,0.12)"}
+                    onMouseLeave={(e) => (e.currentTarget as HTMLButtonElement).style.background = "rgba(13,71,161,0.07)"}
                   >
                     <ChevronLeft size={15} />
                     Tableau de bord
@@ -967,9 +953,9 @@ export default function ModulePage() {
                   <button
                     onClick={() => navigate("/hub")}
                     className="flex-1 flex items-center justify-center gap-2 font-semibold px-6 py-2.5 rounded-xl transition-all whitespace-nowrap"
-                    style={{ background: "#0043ce", color: "#fff", border: "none", cursor: "pointer", fontSize: "0.9375rem" }}
-                    onMouseEnter={(e) => (e.currentTarget as HTMLButtonElement).style.background = "#0031a9"}
-                    onMouseLeave={(e) => (e.currentTarget as HTMLButtonElement).style.background = "#0043ce"}
+                    style={{ background: "#0D47A1", color: "#fff", border: "none", cursor: "pointer", fontSize: "0.9375rem" }}
+                    onMouseEnter={(e) => (e.currentTarget as HTMLButtonElement).style.background = "#0A3882"}
+                    onMouseLeave={(e) => (e.currentTarget as HTMLButtonElement).style.background = "#0D47A1"}
                   >
                     Module suivant
                     <ChevronRight size={16} />
