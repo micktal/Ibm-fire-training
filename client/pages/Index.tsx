@@ -45,7 +45,7 @@ export default function Index() {
 
         {/* IBM logo — direct, sans animation */}
         <div style={{ marginBottom: "2.2rem" }}>
-          <IBMLogo variant="dark" height={56} />
+          <IBMLogo variant="dark" height={80} />
         </div>
 
         {/* Tag line */}
