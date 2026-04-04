@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLanguage } from "@/lib/languageContext";
 import {
   Flame, Clock, AlertTriangle, Shield, Zap, Eye,
   Timer, Target, CheckSquare, DoorClosed, ArrowRight,

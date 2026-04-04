@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useLanguage } from "@/lib/languageContext";
 import {
   CheckCircle2, XCircle, RotateCcw, Layers,
   FileText, Server, Droplet, Armchair, Zap, FlaskConical, Flame, Laptop,
