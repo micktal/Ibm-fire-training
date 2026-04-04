@@ -57,6 +57,8 @@ function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 function SectionBody({ section }: { section: ModuleContent }) {
   const isScenario = section.type === "scenario";
   const isList = section.type === "list";
+  const isCaseFigure = section.type === "casefigure";
+  const isComparison = section.type === "comparison";
 
   return (
     <div className="px-5 pb-6 pt-1">
@@ -111,7 +113,7 @@ function SectionBody({ section }: { section: ModuleContent }) {
       )}
 
       {/* Non-list bullets */}
-      {!isList && section.bullets && (
+      {!isList && !isCaseFigure && !isComparison && section.bullets && (
         <ul className="flex flex-col gap-2 mb-5">
           {section.bullets.map((b, bi) => (
             <li key={bi} className="flex items-start gap-3">
@@ -120,6 +122,92 @@ function SectionBody({ section }: { section: ModuleContent }) {
             </li>
           ))}
         </ul>
+      )}
+
+      {/* ── Cas de figures ── */}
+      {isCaseFigure && section.cases && (
+        <div className="flex flex-col gap-3 mb-5">
+          {section.cases.map((c, i) => (
+            <div
+              key={i}
+              className="rounded-xl overflow-hidden"
+              style={{ border: `1.5px solid ${c.correct ? "rgba(25,128,56,0.3)" : "rgba(218,30,40,0.3)"}` }}
+            >
+              {/* Case header */}
+              <div
+                className="flex items-center gap-2 px-4 py-2.5"
+                style={{
+                  background: c.correct ? "rgba(25,128,56,0.07)" : "rgba(218,30,40,0.06)",
+                  borderBottom: `1px solid ${c.correct ? "rgba(25,128,56,0.15)" : "rgba(218,30,40,0.15)"}`,
+                }}
+              >
+                {c.correct
+                  ? <CheckCircle2 size={14} style={{ color: "#198038" }} />
+                  : <XCircle size={14} style={{ color: "#da1e28" }} />}
+                <span
+                  className="text-xs font-bold uppercase tracking-wide"
+                  style={{ color: c.correct ? "#0e6027" : "#a2191f", fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.08em" }}
+                >
+                  Cas {i + 1} — {c.correct ? "Bonne décision" : "Erreur à éviter"}
+                </span>
+              </div>
+              {/* Case body */}
+              <div className="px-4 py-3" style={{ background: "#fafbfc" }}>
+                <div className="text-xs font-semibold uppercase mb-1" style={{ color: "#8d95aa", letterSpacing: "0.06em" }}>Situation</div>
+                <div className="text-sm mb-3" style={{ color: "#3d4259", lineHeight: "1.6" }}>{c.situation}</div>
+                <div className="text-xs font-semibold uppercase mb-1" style={{ color: "#8d95aa", letterSpacing: "0.06em" }}>Action</div>
+                <div
+                  className="text-sm font-semibold mb-2"
+                  style={{ color: c.correct ? "#198038" : "#da1e28" }}
+                >
+                  {c.action}
+                </div>
+                <div className="flex items-start gap-2">
+                  <ArrowRight size={13} style={{ color: "#8d95aa", flexShrink: 0, marginTop: "2px" }} />
+                  <span className="text-xs" style={{ color: "#6f7897", lineHeight: "1.5" }}>{c.result}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* ── Comparaison À faire / À éviter ── */}
+      {isComparison && (section.doList || section.dontList) && (
+        <div className="grid grid-cols-2 gap-3 mb-5">
+          {section.doList && (
+            <div className="rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(25,128,56,0.3)" }}>
+              <div className="flex items-center gap-2 px-3 py-2.5" style={{ background: "rgba(25,128,56,0.07)", borderBottom: "1px solid rgba(25,128,56,0.15)" }}>
+                <CheckCircle2 size={13} style={{ color: "#198038" }} />
+                <span className="text-xs font-bold uppercase" style={{ color: "#0e6027", letterSpacing: "0.08em" }}>À faire</span>
+              </div>
+              <div className="px-3 py-3 flex flex-col gap-2.5">
+                {section.doList.map((item, i) => (
+                  <div key={i} className="flex items-start gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5" style={{ background: "#198038" }} />
+                    <span className="text-xs leading-relaxed" style={{ color: "#1a3a25" }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          {section.dontList && (
+            <div className="rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(218,30,40,0.3)" }}>
+              <div className="flex items-center gap-2 px-3 py-2.5" style={{ background: "rgba(218,30,40,0.06)", borderBottom: "1px solid rgba(218,30,40,0.15)" }}>
+                <XCircle size={13} style={{ color: "#da1e28" }} />
+                <span className="text-xs font-bold uppercase" style={{ color: "#a2191f", letterSpacing: "0.08em" }}>À éviter</span>
+              </div>
+              <div className="px-3 py-3 flex flex-col gap-2.5">
+                {section.dontList.map((item, i) => (
+                  <div key={i} className="flex items-start gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5" style={{ background: "#da1e28" }} />
+                    <span className="text-xs leading-relaxed" style={{ color: "#3a1a1a" }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       )}
 
       {/* Highlight box */}
@@ -155,6 +243,8 @@ function ContentIcon({ type }: { type: string }) {
     info: <Info size={15} style={{ color: "#0043ce" }} />,
     scenario: <Zap size={15} style={{ color: "#b45309" }} />,
     list: <List size={15} style={{ color: "#198038" }} />,
+    casefigure: <Zap size={15} style={{ color: "#7c3aed" }} />,
+    comparison: <ArrowRight size={15} style={{ color: "#198038" }} />,
   };
   return <>{icons[type] ?? <FileText size={15} style={{ color: "#0043ce" }} />}</>;
 }

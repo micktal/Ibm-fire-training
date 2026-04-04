@@ -9,12 +9,17 @@ export interface QuizQuestion {
 }
 
 export interface ModuleContent {
-  type: "intro" | "visual" | "info" | "scenario" | "list";
+  type: "intro" | "visual" | "info" | "scenario" | "list" | "casefigure" | "comparison";
   title?: string;
   body: string;
   image?: string;
   bullets?: string[];
   highlight?: string;
+  // casefigure: mini case studies showing good/bad decisions
+  cases?: { situation: string; action: string; result: string; correct: boolean }[];
+  // comparison: do / don't side-by-side table
+  doList?: string[];
+  dontList?: string[];
 }
 
 export interface FunFact {
@@ -280,20 +285,46 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         image: `${CDN}d3c9b22a88e644d98bd46cd69cd9cf30?format=webp&width=800`,
       },
       {
-        type: "list",
-        title: "Comment casser le triangle ?",
-        body: "Chaque type d'extincteur agit sur un ou plusieurs éléments du triangle :",
-        bullets: [
-          "Retirer le combustible — éloigner les matières inflammables du feu",
-          "Éliminer le comburant — étouffer le feu (CO2, mousse, poudre)",
-          "Abaisser la température — refroidir avec de l'eau (feux de classe A)",
+        type: "comparison",
+        title: "Casser le triangle : ce qui marche vs ce qui aggrave",
+        body: "Agir sur le triangle du feu, c'est retirer l'un de ses trois éléments. Choisir la mauvaise méthode peut aggraver la situation.",
+        doList: [
+          "Retirer le combustible — éloigner les matières inflammables",
+          "Étouffer avec CO2 ou mousse — prive le feu d'oxygène",
+          "Refroidir avec de l'eau — uniquement sur feux solides (classe A)",
+          "Couper l'alimentation électrique avant toute intervention",
+        ],
+        dontList: [
+          "Jamais d'eau sur feu électrique — risque d'électrocution immédiat",
+          "Ne pas ventiler la pièce — apporte de l'oxygène et accélère le feu",
+          "Ne pas ouvrir portes/fenêtres — même effet d'alimentation en air",
+          "Ne pas utiliser poudre sur matériel informatique — dommages irréversibles",
         ],
       },
       {
-        type: "scenario",
-        title: "Cas pratique : feu de poubelle",
-        body: "Dans la salle de reprographie, une poubelle prend feu. Quel élément du triangle faut-il supprimer en priorité ?",
-        highlight: "Réponse : étouffer (supprimer l'oxygène) avec un extincteur CO2 ou poudre.",
+        type: "casefigure",
+        title: "Cas de figure — lequel du triangle casser ?",
+        body: "Analysez chaque situation et identifiez le bon élément à supprimer.",
+        cases: [
+          {
+            situation: "Câble PVC brûle dans un rack IBM. Matériel sous tension.",
+            action: "Extincteur CO2 — agit sur l'oxygène (comburant)",
+            result: "Correct. Le CO2 chasse l'oxygène sans endommager les équipements ni conduire l'électricité.",
+            correct: true,
+          },
+          {
+            situation: "Poubelle papier prend feu, loin de tout équipement électrique.",
+            action: "Extincteur eau pulvérisée — abaisse la température",
+            result: "Correct. L'eau refroidit le combustible en dessous du point d'ignition. Classe A = eau autorisée.",
+            correct: true,
+          },
+          {
+            situation: "Feu de câbles électriques. L'agent utilise un extincteur à eau.",
+            action: "Extincteur eau sur feu électrique",
+            result: "Erreur fatale. L'eau conduit l'électricité — risque d'électrocution immédiat pour l'utilisateur.",
+            correct: false,
+          },
+        ],
       },
     ],
     quiz: [
@@ -336,22 +367,40 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         image: `${CDN}26706b11880d4b55b61df8e668695b14?format=webp&width=800`,
       },
       {
-        type: "list",
-        title: "Actions qui accélèrent la propagation",
-        body: "À éviter absolument :",
-        bullets: [
-          "Ouvrir une porte sans vérifier sa température — introduit de l'oxygène frais",
-          "Ventiler la pièce — alimente le feu en comburant",
-          "Laisser les portes ouvertes en fuyant — facilite la propagation de la fumée",
-          "Attendre sans alerter — laisse le feu grossir",
+        type: "comparison",
+        title: "Propagation : les bons vs mauvais réflexes",
+        body: "Chaque geste pendant un incendie a un impact direct sur la vitesse de propagation. Voici ce qui fait la différence.",
+        doList: [
+          "Fermer chaque porte derrière soi en évacuant",
+          "Vérifier la température d'une porte avec le dos de la main avant d'ouvrir",
+          "Se baisser sous la fumée pour progresser vers la sortie",
+          "Déclencher l'alarme immédiatement sans attendre confirmation",
+        ],
+        dontList: [
+          "Ouvrir une porte chaude — aspire le feu comme un soufflet",
+          "Ventiler ou ouvrir fenêtres — alimente le feu en oxygène frais",
+          "Laisser les portes ouvertes en fuyant — la fumée s'engouffre",
+          "Retourner chercher ses affaires — chaque seconde compte",
         ],
       },
       {
-        type: "scenario",
-        title: "Situation critique : porte chaude",
-        body: "Vous êtes dans un couloir. La porte au fond est chaude au toucher. Des fumées noires passent par en dessous.",
-        image: `${CDN}0385f320d59547b2b6d08166e29ab8f3?format=webp&width=800`,
-        highlight: "Ne jamais ouvrir une porte chaude. Rebrousser chemin, alerter, utiliser un autre itinéraire.",
+        type: "casefigure",
+        title: "Cas de figure — bonne ou mauvaise décision ?",
+        body: "Deux collègues IBM face à la même situation. Leurs choix ont des conséquences radicalement différentes.",
+        cases: [
+          {
+            situation: "Fumée noire sous une porte dans le couloir. La porte est chaude au toucher.",
+            action: "Rebrousse chemin, actionne l'alarme, emprunte l'escalier de secours.",
+            result: "Décision parfaite. Porte chaude = feu développé derrière. Ne jamais ouvrir. L'escalier de secours est la bonne issue.",
+            correct: true,
+          },
+          {
+            situation: "En quittant son bureau, la personne laisse la porte entrouverte 'pour que les collègues puissent passer'.",
+            action: "Laisse la porte ouverte et évacue rapidement.",
+            result: "Erreur grave. Une porte ouverte permet à la fumée et aux flammes de progresser dans le couloir. Chaque porte fermée = résistance au feu de 20 à 30 min.",
+            correct: false,
+          },
+        ],
       },
     ],
     keyPoints: [
@@ -411,11 +460,35 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         ],
       },
       {
-        type: "scenario",
-        title: "Cas IBM : salle de reprographie",
-        body: "Un feu démarre dans la salle de reprographie : la photocopieuse fume, des documents papier brûlent près d'elle. L'appareil est sous tension.",
-        image: `${CDN}290bce1f95984a91a3748bfc3245141d?format=webp&width=800`,
-        highlight: "Feu électrique + papier = extincteur CO2. Ne jamais utiliser l'eau sur du matériel sous tension.",
+        type: "casefigure",
+        title: "Cas de figure — choisir le bon extincteur",
+        body: "Dans chacun de ces cas IBM, identifiez le bon extincteur. Une erreur peut être mortelle.",
+        cases: [
+          {
+            situation: "Rack serveur IBM en feu dans la salle IT. Équipement sous tension, câbles visiblement brûlés.",
+            action: "Extincteur CO2 — agit sur le comburant, ne conduit pas l'électricité.",
+            result: "Correct. Le CO2 est le seul agent sûr sur du matériel sous tension. L'eau ou la mousse provoqueraient une électrocution.",
+            correct: true,
+          },
+          {
+            situation: "Poubelle en papier en feu dans un bureau, loin de tout équipement électrique.",
+            action: "Extincteur eau pulvérisée — classe A, feu de solides.",
+            result: "Correct. Papier = classe A. L'eau est efficace et sans danger sur ce type de combustible.",
+            correct: true,
+          },
+          {
+            situation: "Photocopieuse sous tension qui fume dans la salle de reprographie. Un agent utilise un extincteur eau.",
+            action: "Extincteur eau sur équipement électrique sous tension.",
+            result: "Erreur critique. L'eau conduit l'électricité. Risque d'électrocution immédiate. CO2 obligatoire sur tout matériel IBM sous tension.",
+            correct: false,
+          },
+          {
+            situation: "Huile de la machine à café déborde et s'enflamme. Un agent tente d'éteindre avec de l'eau.",
+            action: "Eau sur un feu de graisse (classe F).",
+            result: "Erreur fatale. L'eau au contact d'une huile à 300°C provoque une explosion de vapeur brûlante. Extincteur classe F ou étouffement uniquement.",
+            correct: false,
+          },
+        ],
       },
     ],
     keyPoints: [
@@ -551,11 +624,29 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         ],
       },
       {
-        type: "scenario",
-        title: "Cas critique : fumée dans une salle serveur",
-        body: "Fumée dense dans la salle serveur IBM. La porte est chaude. Vous avez un CO2 dans le couloir.",
-        image: `${CDN}0a014c78f73a47e0bede94510887ef36?format=webp&width=800`,
-        highlight: "Réponse : ÉVACUER. Porte chaude + fumée dense = feu développé. Ne jamais ouvrir.",
+        type: "casefigure",
+        title: "Cas de figure — intervenir ou évacuer ?",
+        body: "Ces situations réelles IBM illustrent les critères de décision. Analysez chaque contexte.",
+        cases: [
+          {
+            situation: "Poubelle en papier qui s'enflamme dans un bureau. Feu limité à la corbeille. CO2 disponible à 2 mètres. Sortie dans votre dos.",
+            action: "Intervention avec le CO2. Séquence PASS, 2 mètres de distance, sortie libre.",
+            result: "Intervention justifiée. Toutes les conditions sont réunies : feu petit, extincteur adapté, sortie accessible. Durée maximale : 30 secondes.",
+            correct: true,
+          },
+          {
+            situation: "Fumée épaisse noire dans le couloir. Porte chaude. Vous ne voyez pas la sortie. Pas d'extincteur à portée.",
+            action: "Évacuation immédiate. Alarme déclenchée. Porte fermée. Sortie de secours.",
+            result: "Décision correcte. Fumée épaisse + porte chaude = feu développé. Toute intervention est trop dangereuse. La vie prime sur tout.",
+            correct: true,
+          },
+          {
+            situation: "Feu important dans la salle serveur. L'agent hésite 45 secondes avant de décider.",
+            action: "Tentative d'intervention après 45 secondes d'hésitation.",
+            result: "Erreur grave. Le délai d'observation IBM est de 10 secondes maximum. Après 45 secondes, le feu a progressé de plusieurs mètres carrés. L'évacuation aurait dû être immédiate.",
+            correct: false,
+          },
+        ],
       },
     ],
     keyPoints: [
