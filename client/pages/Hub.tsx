@@ -315,7 +315,7 @@ export default function Hub() {
           <div className="max-w-2xl mx-auto">
             {/* IBM logo dans le hero */}
             <div className="mb-4">
-              <IBMLogo variant="dark" height={32} />
+              <IBMLogo variant="dark" height={52} />
             </div>
             {/* Greeting */}
             {user && (
