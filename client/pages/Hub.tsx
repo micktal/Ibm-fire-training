@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Lock, CheckCircle2, Clock, Play, Flame, Shield, ChevronRight, Award } from "lucide-react";
 import IBMTopbar from "@/components/IBMTopbar";
+import IBMLogo from "@/components/IBMLogo";
 import { useUser } from "@/lib/userContext";
 import { getChapterModules, CourseModule } from "@/lib/courseData";
 
@@ -312,6 +313,10 @@ export default function Hub() {
           }}
         >
           <div className="max-w-2xl mx-auto">
+            {/* IBM logo dans le hero */}
+            <div className="mb-4">
+              <IBMLogo variant="dark" height={32} />
+            </div>
             {/* Greeting */}
             {user && (
               <div className="mb-4">

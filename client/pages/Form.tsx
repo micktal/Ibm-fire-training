@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AlertCircle, ArrowRight, Info, User, Mail, MapPin, Building2, Layers, LayoutGrid } from "lucide-react";
+import { AlertCircle, ArrowRight, ChevronLeft, Info, User, Mail, MapPin, Building2, Layers, LayoutGrid } from "lucide-react";
+import IBMLogo from "@/components/IBMLogo";
 import { useUser } from "@/lib/userContext";
 import { IBM_SITES } from "@/lib/courseData";
 
@@ -104,21 +105,26 @@ export default function Form() {
       className="min-h-screen flex flex-col"
       style={{ background: "#f5f6f8", fontFamily: "'IBM Plex Sans', sans-serif" }}
     >
-      {/* Minimal topbar */}
+      {/* Topbar */}
       <header
         className="flex-shrink-0 bg-white border-b flex items-center justify-between px-5 h-12"
-        style={{ borderColor: "#e4e7f0" }}
+        style={{ borderColor: "#e4e7f0", boxShadow: "0 1px 4px rgba(0,0,0,0.06)" }}
       >
-        <div className="flex items-center gap-2.5">
-          <div className="flex items-end gap-0.5" style={{ height: "14px" }}>
-            {[8, 14, 6, 12, 8].map((h, i) => (
-              <span key={i} className="block rounded-sm" style={{ width: "2px", height: `${h}px`, background: "#0f62fe" }} />
-            ))}
-          </div>
-          <span className="font-mono font-bold text-sm tracking-wide" style={{ color: "#0f62fe", fontFamily: "'IBM Plex Mono', monospace" }}>IBM</span>
-          <div className="w-px h-4 mx-1" style={{ background: "#e4e7f0" }} />
-          <span className="text-xs" style={{ color: "#8d95aa", fontFamily: "'IBM Plex Mono', monospace" }}>
-            Formation obligatoire · Chapitre 1
+        <div className="flex items-center gap-3">
+          {/* Bouton retour */}
+          <button
+            onClick={() => navigate("/")}
+            className="flex items-center gap-1.5 text-sm font-semibold transition-opacity hover:opacity-70"
+            style={{ color: "#0043ce", background: "none", border: "none", cursor: "pointer", padding: 0 }}
+          >
+            <ChevronLeft size={16} strokeWidth={2.5} />
+            <span className="hidden sm:inline">Accueil</span>
+          </button>
+          <div className="w-px h-4" style={{ background: "#e4e7f0" }} />
+          <IBMLogo variant="light" height={20} />
+          <div className="w-px h-4" style={{ background: "#e4e7f0" }} />
+          <span className="text-xs hidden sm:inline" style={{ color: "#8d95aa", fontFamily: "'IBM Plex Mono', monospace" }}>
+            Formation obligatoire
           </span>
         </div>
         <span

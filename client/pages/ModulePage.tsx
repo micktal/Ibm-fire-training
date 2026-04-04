@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
-  ChevronRight, CheckCircle2, XCircle, Target, Clock,
+  ChevronRight, ChevronLeft, CheckCircle2, XCircle, Target, Clock,
   Info, AlertTriangle, List, Eye, ChevronDown, Award,
-  ArrowRight, RotateCcw, Zap, BookOpen, FileText, Shield,
+  ArrowRight, RotateCcw, Zap, BookOpen, FileText, Shield, Save,
 } from "lucide-react";
 import IBMTopbar from "@/components/IBMTopbar";
 import VideoPlayer from "@/components/VideoPlayer";
@@ -837,33 +837,53 @@ export default function ModulePage() {
           {/* Post-quiz navigation */}
           {(quizDone || alreadyDone) && (
             <FadeIn delay={0}>
-              <div
-                className="flex flex-col sm:flex-row items-center gap-4 rounded-2xl p-5"
+              <div className="flex flex-col gap-3 rounded-2xl p-5"
                 style={{
                   background: quizScore >= 80 || alreadyDone ? "rgba(25,128,56,0.05)" : "rgba(218,30,40,0.04)",
                   border: `2px solid ${quizScore >= 80 || alreadyDone ? "rgba(25,128,56,0.22)" : "rgba(218,30,40,0.22)"}`,
                 }}
               >
-                <div className="flex-1">
-                  <div className="font-bold mb-0.5" style={{ color: "#161616", fontSize: "0.9375rem" }}>
-                    {quizDone
-                      ? quizScore >= 80 ? "Bien joué — module validé !" : "Score insuffisant — réessayez le quiz"
-                      : "Module déjà complété"}
-                  </div>
-                  <div className="text-sm" style={{ color: "#6f7897" }}>
-                    Retournez au tableau de bord pour continuer avec le prochain module.
-                  </div>
-                </div>
-                <button
-                  onClick={() => navigate("/hub")}
-                  className="flex items-center gap-2 font-semibold px-6 py-3 rounded-xl transition-all whitespace-nowrap"
-                  style={{ background: "#0043ce", color: "#fff", border: "none", cursor: "pointer", fontSize: "0.9375rem" }}
-                  onMouseEnter={(e) => (e.currentTarget as HTMLButtonElement).style.background = "#0031a9"}
-                  onMouseLeave={(e) => (e.currentTarget as HTMLButtonElement).style.background = "#0043ce"}
+                {/* Confirmation sauvegarde automatique */}
+                <div className="flex items-center gap-2.5 rounded-xl px-4 py-3"
+                  style={{ background: "rgba(25,128,56,0.08)", border: "1.5px solid rgba(25,128,56,0.2)" }}
                 >
-                  Tableau de bord
-                  <ChevronRight size={16} />
-                </button>
+                  <Save size={15} style={{ color: "#198038", flexShrink: 0 }} />
+                  <div>
+                    <div className="text-xs font-bold" style={{ color: "#0e6027" }}>Progression sauvegardée automatiquement</div>
+                    <div className="text-xs" style={{ color: "#6f7897" }}>Score {quizScore || (alreadyDone ? existingProgress?.score : 0)}% · Module {mod.number} · {new Date().toLocaleDateString("fr-FR")}</div>
+                  </div>
+                  <CheckCircle2 size={16} style={{ color: "#198038", marginLeft: "auto", flexShrink: 0 }} />
+                </div>
+
+                <div className="font-bold" style={{ color: "#161616", fontSize: "0.9375rem" }}>
+                  {quizDone
+                    ? quizScore >= 80 ? "Bien joué — module validé !" : "Score insuffisant — réessayez le quiz"
+                    : "Module déjà complété"}
+                </div>
+
+                {/* Boutons */}
+                <div className="flex flex-col sm:flex-row gap-2.5 pt-1">
+                  <button
+                    onClick={() => navigate("/hub")}
+                    className="flex items-center gap-1.5 font-semibold px-4 py-2.5 rounded-xl transition-all"
+                    style={{ background: "rgba(0,67,206,0.07)", color: "#0043ce", border: "1.5px solid rgba(0,67,206,0.2)", cursor: "pointer", fontSize: "0.875rem" }}
+                    onMouseEnter={(e) => (e.currentTarget as HTMLButtonElement).style.background = "rgba(0,67,206,0.12)"}
+                    onMouseLeave={(e) => (e.currentTarget as HTMLButtonElement).style.background = "rgba(0,67,206,0.07)"}
+                  >
+                    <ChevronLeft size={15} />
+                    Tableau de bord
+                  </button>
+                  <button
+                    onClick={() => navigate("/hub")}
+                    className="flex-1 flex items-center justify-center gap-2 font-semibold px-6 py-2.5 rounded-xl transition-all whitespace-nowrap"
+                    style={{ background: "#0043ce", color: "#fff", border: "none", cursor: "pointer", fontSize: "0.9375rem" }}
+                    onMouseEnter={(e) => (e.currentTarget as HTMLButtonElement).style.background = "#0031a9"}
+                    onMouseLeave={(e) => (e.currentTarget as HTMLButtonElement).style.background = "#0043ce"}
+                  >
+                    Module suivant
+                    <ChevronRight size={16} />
+                  </button>
+                </div>
               </div>
             </FadeIn>
           )}
