@@ -1,30 +1,33 @@
 import { useNavigate } from "react-router-dom";
 import { useUser } from "@/lib/userContext";
+import { useLanguage } from "@/lib/languageContext";
 import { Award, CheckCircle2, Shield, Clock, Star, Download, ChevronLeft } from "lucide-react";
 import IBMLogo from "@/components/IBMLogo";
 
 const TOTAL_MODULES = 14;
 
-const MODULE_TITLES: Record<string, string> = {
-  "ch1-m1": "Comprendre un départ de feu",
-  "ch1-m2": "Le triangle du feu",
-  "ch1-m3": "Propagation et confinement",
-  "ch1-m4": "Classes de feu et extincteurs",
-  "ch1-m5": "Utiliser un extincteur",
-  "ch1-m6": "Intervenir ou évacuer ?",
-  "ch1-m7": "Simulation incendie",
-  "ch2-m1": "Déclencher l'alarme",
-  "ch2-m2": "Garder son calme et guider",
-  "ch2-m3": "Fermer les portes",
-  "ch2-m4": "Vérifier que personne ne reste",
-  "ch2-m5": "Faire face à la fumée",
-  "ch2-m6": "Escaliers ou espace sécurisé",
-  "ch2-m7": "Procédure complète d'évacuation",
+const MODULE_TITLES: Record<string, { fr: string; en: string }> = {
+  "ch1-m1": { fr: "Comprendre un départ de feu",        en: "Understanding a fire outbreak" },
+  "ch1-m2": { fr: "Le triangle du feu",                  en: "The fire triangle" },
+  "ch1-m3": { fr: "Propagation et confinement",          en: "Propagation and confinement" },
+  "ch1-m4": { fr: "Classes de feu et extincteurs",       en: "Fire classes and extinguishers" },
+  "ch1-m5": { fr: "Utiliser un extincteur",              en: "Using an extinguisher" },
+  "ch1-m6": { fr: "Intervenir ou évacuer ?",             en: "Intervene or evacuate?" },
+  "ch1-m7": { fr: "Simulation incendie",                 en: "Fire simulation" },
+  "ch2-m1": { fr: "Déclencher l'alarme",                 en: "Trigger the alarm" },
+  "ch2-m2": { fr: "Garder son calme et guider",          en: "Stay calm and lead" },
+  "ch2-m3": { fr: "Fermer les portes",                   en: "Close the doors" },
+  "ch2-m4": { fr: "Vérifier que personne ne reste",      en: "Check no one remains" },
+  "ch2-m5": { fr: "Faire face à la fumée",               en: "Dealing with smoke" },
+  "ch2-m6": { fr: "Escaliers ou espace sécurisé",        en: "Stairs or safe waiting area" },
+  "ch2-m7": { fr: "Procédure complète d'évacuation",     en: "Full evacuation procedure" },
 };
 
 export default function CertificatePage() {
   const navigate = useNavigate();
   const { user, progress, globalScore, totalCompleted } = useUser();
+  const { lang } = useLanguage();
+  const isEN = lang === "en";
 
   const completedModules = Object.entries(progress).filter(([, p]) => p.completed);
   const avgScore = completedModules.length > 0
@@ -32,7 +35,7 @@ export default function CertificatePage() {
     : 0;
 
   const isFullyCompleted = totalCompleted >= TOTAL_MODULES;
-  const today = new Date().toLocaleDateString("fr-FR", { day: "2-digit", month: "long", year: "numeric" });
+  const today = new Date().toLocaleDateString(isEN ? "en-GB" : "fr-FR", { day: "2-digit", month: "long", year: "numeric" });
 
   const fullName = user ? `${user.prenom} ${user.nom}` : "Apprenant";
   const campus = user?.campus ?? "IBM France";
@@ -51,7 +54,7 @@ export default function CertificatePage() {
           style={{ color: "#0D47A1", background: "none", border: "none", cursor: "pointer" }}
         >
           <ChevronLeft size={16} />
-          Tableau de bord
+          {isEN ? "Dashboard" : "Tableau de bord"}
         </button>
         <div className="flex-1" />
         <IBMLogo variant="light" height={28} />
@@ -87,13 +90,13 @@ export default function CertificatePage() {
                 </div>
 
                 <div className="font-mono text-xs mt-3 uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.5)", fontFamily: "'IBM Plex Mono', monospace", fontSize: "9px" }}>
-                  Certificat de formation
+                  {isEN ? "Training certificate" : "Certificat de formation"}
                 </div>
                 <h1 className="font-bold text-white mt-1" style={{ fontSize: "1.3rem", letterSpacing: "-0.02em" }}>
-                  Sécurité Incendie IBM
+                  {isEN ? "IBM Fire Safety" : "Sécurité Incendie IBM"}
                 </h1>
                 <div className="text-sm mt-0.5" style={{ color: "rgba(255,255,255,0.6)" }}>
-                  Formation complète — 2 chapitres · 14 modules
+                  {isEN ? "Full training — 2 chapters · 14 modules" : "Formation complète — 2 chapitres · 14 modules"}
                 </div>
               </div>
             </div>
@@ -104,7 +107,7 @@ export default function CertificatePage() {
               {/* Certified person */}
               <div className="text-center">
                 <div className="text-xs uppercase font-mono" style={{ color: "#adb3c8", letterSpacing: "0.12em", fontFamily: "'IBM Plex Mono', monospace", fontSize: "9px" }}>
-                  Décerné à
+                  {isEN ? "Awarded to" : "Décerné à"}
                 </div>
                 <div className="font-bold mt-1" style={{ fontSize: "1.5rem", color: "#0a2052", letterSpacing: "-0.02em" }}>
                   {fullName}
@@ -118,9 +121,9 @@ export default function CertificatePage() {
               {/* Stats */}
               <div className="grid grid-cols-3 gap-3">
                 {[
-                  { label: "Score moyen", value: `${avgScore}%`, icon: <Star size={15} />, color: avgScore >= 80 ? "#198038" : "#b45309", bg: avgScore >= 80 ? "rgba(25,128,56,0.07)" : "rgba(180,83,9,0.07)" },
-                  { label: "Modules validés", value: `${totalCompleted}/${TOTAL_MODULES}`, icon: <CheckCircle2 size={15} />, color: "#0D47A1", bg: "rgba(13,71,161,0.07)" },
-                  { label: "Obtenu le", value: today.split(" ").slice(0, 2).join(" "), icon: <Clock size={15} />, color: "#6f7897", bg: "#f0f4fa" },
+                  { label: isEN ? "Avg. score" : "Score moyen", value: `${avgScore}%`, icon: <Star size={15} />, color: avgScore >= 80 ? "#198038" : "#b45309", bg: avgScore >= 80 ? "rgba(25,128,56,0.07)" : "rgba(180,83,9,0.07)" },
+                  { label: isEN ? "Modules passed" : "Modules validés", value: `${totalCompleted}/${TOTAL_MODULES}`, icon: <CheckCircle2 size={15} />, color: "#0D47A1", bg: "rgba(13,71,161,0.07)" },
+                  { label: isEN ? "Issued on" : "Obtenu le", value: today.split(" ").slice(0, 2).join(" "), icon: <Clock size={15} />, color: "#6f7897", bg: "#f0f4fa" },
                 ].map((stat, i) => (
                   <div key={i} className="rounded-xl p-3 flex flex-col items-center text-center" style={{ background: stat.bg }}>
                     <div style={{ color: stat.color }}>{stat.icon}</div>
@@ -135,16 +138,23 @@ export default function CertificatePage() {
 
               {/* Competencies validated */}
               <div>
-                <div className="font-bold text-sm mb-3" style={{ color: "#0a2052" }}>Compétences validées</div>
+                <div className="font-bold text-sm mb-3" style={{ color: "#0a2052" }}>{isEN ? "Validated competencies" : "Compétences validées"}</div>
                 <div className="grid grid-cols-1 gap-1.5">
-                  {[
+                  {(isEN ? [
+                    "Identify and report a fire outbreak",
+                    "Use an extinguisher according to the fire class",
+                    "Trigger the fire alarm (22 22)",
+                    "Apply the EXIT-CLOSE-SIGNAL sequence",
+                    "Lead a safe evacuation",
+                    "Follow the full IBM procedure",
+                  ] : [
                     "Identifier et signaler un départ de feu",
                     "Utiliser un extincteur selon la classe de feu",
                     "Déclencher l'alarme incendie (22 22)",
                     "Appliquer la séquence SORS-FERME-SIGNALE",
                     "Guider une évacuation en sécurité",
                     "Respecter la procédure IBM complète",
-                  ].map((comp, i) => (
+                  ]).map((comp, i) => (
                     <div key={i} className="flex items-center gap-2.5 rounded-lg px-3 py-2" style={{ background: "#f8f9fc" }}>
                       <CheckCircle2 size={13} style={{ color: "#198038", flexShrink: 0 }} />
                       <span style={{ color: "#3d4259", fontSize: "0.82rem" }}>{comp}</span>
@@ -158,7 +168,7 @@ export default function CertificatePage() {
 
               {/* Module scores */}
               <div>
-                <div className="font-bold text-sm mb-3" style={{ color: "#0a2052" }}>Détail par module</div>
+                <div className="font-bold text-sm mb-3" style={{ color: "#0a2052" }}>{isEN ? "Module details" : "Détail par module"}</div>
                 <div className="flex flex-col gap-1">
                   {Object.entries(MODULE_TITLES).map(([id, title]) => {
                     const p = progress[id];
@@ -169,7 +179,7 @@ export default function CertificatePage() {
                             ? <CheckCircle2 size={11} color="#fff" />
                             : <span style={{ fontSize: "8px", color: "#adb3c8", fontWeight: 700 }}>—</span>}
                         </div>
-                        <span className="flex-1 text-xs" style={{ color: p?.completed ? "#0a2052" : "#adb3c8" }}>{title}</span>
+                        <span className="flex-1 text-xs" style={{ color: p?.completed ? "#0a2052" : "#adb3c8" }}>{isEN ? title.en : title.fr}</span>
                         {p?.completed && (
                           <span className="font-mono font-bold text-xs" style={{ fontFamily: "'IBM Plex Mono', monospace", color: p.score >= 80 ? "#198038" : "#b45309" }}>
                             {p.score}%
@@ -186,9 +196,9 @@ export default function CertificatePage() {
                 <div className="flex items-start gap-2.5">
                   <Shield size={14} style={{ color: "#0D47A1", flexShrink: 0, marginTop: "1px" }} />
                   <div>
-                    <div className="font-semibold text-xs" style={{ color: "#0D47A1" }}>Certificat IBM France · Formation Sécurité Incendie</div>
+                    <div className="font-semibold text-xs" style={{ color: "#0D47A1" }}>{isEN ? "IBM France Certificate · Fire Safety Training" : "Certificat IBM France · Formation Sécurité Incendie"}</div>
                     <div className="text-xs mt-0.5" style={{ color: "#6f7897", lineHeight: "1.45" }}>
-                      Valable 1 an — renouvellement recommandé avant le {new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toLocaleDateString("fr-FR")}
+                      {isEN ? "Valid 1 year — renewal recommended before " : "Valable 1 an — renouvellement recommandé avant le "}{new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toLocaleDateString(isEN ? "en-GB" : "fr-FR")}
                     </div>
                   </div>
                 </div>
@@ -204,7 +214,7 @@ export default function CertificatePage() {
               style={{ background: "linear-gradient(135deg, #0D47A1, #1565C0)", color: "#fff", border: "none", cursor: "pointer", fontSize: "0.9375rem", boxShadow: "0 6px 24px rgba(13,71,161,0.25)" }}
             >
               <Download size={17} />
-              Télécharger / Imprimer le certificat
+              {isEN ? "Download / Print certificate" : "Télécharger / Imprimer le certificat"}
             </button>
             <button
               onClick={() => navigate("/hub")}
@@ -212,7 +222,7 @@ export default function CertificatePage() {
               style={{ background: "rgba(13,71,161,0.07)", color: "#0D47A1", border: "1.5px solid rgba(13,71,161,0.18)", cursor: "pointer", fontSize: "0.875rem" }}
             >
               <ChevronLeft size={15} />
-              Retour au tableau de bord
+              {isEN ? "Back to dashboard" : "Retour au tableau de bord"}
             </button>
           </div>
 

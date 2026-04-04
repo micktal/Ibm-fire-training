@@ -955,10 +955,10 @@ export default function ModulePage() {
                   </span>
                 ))}
               </div>
-              <h1 className="font-bold text-white mb-1" style={{ fontSize: "clamp(1.05rem, 3vw, 1.35rem)", letterSpacing: "-0.02em", lineHeight: "1.2" }}>
+              <h1 className="font-bold text-white mb-1" style={{ fontSize: "clamp(1.2rem, 3.5vw, 1.6rem)", letterSpacing: "-0.02em", lineHeight: "1.2" }}>
                 {mod.title}
               </h1>
-              <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.82rem", lineHeight: "1.45" }}>{mod.subtitle}</p>
+              <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.9rem", lineHeight: "1.45" }}>{mod.subtitle}</p>
               {alreadyDone && (
                 <div className="inline-flex items-center gap-1.5 mt-2 text-xs font-semibold px-2.5 py-1 rounded-full"
                   style={{ background: "rgba(25,128,56,0.3)", color: "#6fdc8c", border: "1px solid rgba(111,220,140,0.3)" }}

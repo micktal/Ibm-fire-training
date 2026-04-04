@@ -7,16 +7,45 @@ import {
 import IBMLogo from "@/components/IBMLogo";
 import GeometricBg from "@/components/layout/GeometricBg";
 import BottomNav from "@/components/layout/BottomNav";
+import { useLanguage } from "@/lib/languageContext";
 
 // ── Chapter 1 recap data ─────────────────────────────────────────
 const CH1_MODULES = [
-  { num: "M01", title: "Comprendre un départ de feu", takeaway: "Tout signal de fumée ou chaleur = traiter comme feu réel." },
-  { num: "M02", title: "Le triangle du feu", takeaway: "3 éléments : combustible · comburant · chaleur. Supprimer l'un = éteindre le feu." },
-  { num: "M03", title: "Propagation et confinement", takeaway: "Fermer toutes les portes. Ne jamais courir. Le feu se propage 5× plus vite avec les portes ouvertes." },
-  { num: "M04", title: "Classes de feu et extincteurs", takeaway: "Jamais d'eau sur un feu électrique. CO2 pour serveurs et câbles. Poudre ABC pour le reste." },
-  { num: "M05", title: "Utiliser un extincteur", takeaway: "Séquence PASS : Pull · Aim · Squeeze · Sweep. Distance optimale : 2-3 mètres du foyer." },
-  { num: "M06", title: "Intervenir ou évacuer ?", takeaway: "Règle des 10 secondes : observer, évaluer, décider. Si doute → évacuer sans hésiter." },
-  { num: "M07", title: "Simulation incendie", takeaway: "Réflexes validés : détecter → alarme 22 22 → intervenir ou évacuer en séquence." },
+  {
+    num: "M01",
+    title: { fr: "Comprendre un départ de feu", en: "Understanding a fire outbreak" },
+    takeaway: { fr: "Tout signal de fumée ou chaleur = traiter comme feu réel.", en: "Any smoke or heat signal = treat as a real fire." },
+  },
+  {
+    num: "M02",
+    title: { fr: "Le triangle du feu", en: "The fire triangle" },
+    takeaway: { fr: "3 éléments : combustible · comburant · chaleur. Supprimer l'un = éteindre le feu.", en: "3 elements: fuel · oxidizer · heat. Remove one = extinguish the fire." },
+  },
+  {
+    num: "M03",
+    title: { fr: "Propagation et confinement", en: "Propagation and confinement" },
+    takeaway: { fr: "Fermer toutes les portes. Ne jamais courir. Le feu se propage 5× plus vite avec les portes ouvertes.", en: "Close all doors. Never run. Fire spreads 5× faster with open doors." },
+  },
+  {
+    num: "M04",
+    title: { fr: "Classes de feu et extincteurs", en: "Fire classes and extinguishers" },
+    takeaway: { fr: "Jamais d'eau sur un feu électrique. CO2 pour serveurs et câbles. Poudre ABC pour le reste.", en: "Never water on an electrical fire. CO2 for servers and cables. ABC powder for the rest." },
+  },
+  {
+    num: "M05",
+    title: { fr: "Utiliser un extincteur", en: "Using an extinguisher" },
+    takeaway: { fr: "Séquence PASS : Pull · Aim · Squeeze · Sweep. Distance optimale : 2-3 mètres du foyer.", en: "PASS sequence: Pull · Aim · Squeeze · Sweep. Optimal distance: 2-3 meters from the fire." },
+  },
+  {
+    num: "M06",
+    title: { fr: "Intervenir ou évacuer ?", en: "Intervene or evacuate?" },
+    takeaway: { fr: "Règle des 10 secondes : observer, évaluer, décider. Si doute → évacuer sans hésiter.", en: "10-second rule: observe, assess, decide. If in doubt → evacuate without hesitation." },
+  },
+  {
+    num: "M07",
+    title: { fr: "Simulation incendie", en: "Fire simulation" },
+    takeaway: { fr: "Réflexes validés : détecter → alarme 22 22 → intervenir ou évacuer en séquence.", en: "Validated reflexes: detect → alarm 22 22 → intervene or evacuate in sequence." },
+  },
 ];
 
 // ── IBM best practices ────────────────────────────────────────────
@@ -26,64 +55,94 @@ const BEST_PRACTICES = [
     color: "#da1e28",
     bg: "rgba(218,30,40,0.08)",
     border: "rgba(218,30,40,0.2)",
-    rule: "Jamais d'eau sur un feu électrique",
-    detail: "CO2 uniquement pour les serveurs, câbles et data centers IBM",
+    rule: { fr: "Jamais d'eau sur un feu électrique", en: "Never water on an electrical fire" },
+    detail: { fr: "CO2 uniquement pour les serveurs, câbles et data centers IBM", en: "CO2 only for servers, cables and IBM data centers" },
   },
   {
     icon: <DoorClosed size={16} />,
     color: "#b45309",
     bg: "rgba(180,83,9,0.08)",
     border: "rgba(180,83,9,0.2)",
-    rule: "Porte chaude = ne pas ouvrir",
-    detail: "Rebrousser chemin, déclencher l'alarme, évacuer",
+    rule: { fr: "Porte chaude = ne pas ouvrir", en: "Hot door = do not open" },
+    detail: { fr: "Rebrousser chemin, déclencher l'alarme, évacuer", en: "Turn back, trigger the alarm, evacuate" },
   },
   {
     icon: <Bell size={16} />,
     color: "#0D47A1",
     bg: "rgba(13,71,161,0.08)",
     border: "rgba(13,71,161,0.2)",
-    rule: "22 22 AVANT le 18",
-    detail: "La sécurité IBM connaît les plans. Prévenir l'interne en premier.",
+    rule: { fr: "22 22 AVANT le 18", en: "22 22 BEFORE calling emergency services" },
+    detail: { fr: "La sécurité IBM connaît les plans. Prévenir l'interne en premier.", en: "IBM security knows the layouts. Alert internally first." },
   },
   {
     icon: <Shield size={16} />,
     color: "#198038",
     bg: "rgba(25,128,56,0.08)",
     border: "rgba(25,128,56,0.2)",
-    rule: "Sortie dans le dos avant d'intervenir",
-    detail: "Toujours avoir une voie d'évacuation dégagée avant d'utiliser un extincteur",
+    rule: { fr: "Sortie dans le dos avant d'intervenir", en: "Exit behind you before intervening" },
+    detail: { fr: "Toujours avoir une voie d'évacuation dégagée avant d'utiliser un extincteur", en: "Always have a clear evacuation route before using an extinguisher" },
   },
   {
     icon: <Eye size={16} />,
     color: "#7c3aed",
     bg: "rgba(124,58,237,0.08)",
     border: "rgba(124,58,237,0.2)",
-    rule: "10 secondes max pour décider",
-    detail: "Observer → Évaluer → Décider. Au-delà de 10s, le feu a déjà progressé.",
+    rule: { fr: "10 secondes max pour décider", en: "Max 10 seconds to decide" },
+    detail: { fr: "Observer → Évaluer → Décider. Au-delà de 10s, le feu a déjà progressé.", en: "Observe → Assess → Decide. Beyond 10s, the fire has already progressed." },
   },
   {
     icon: <AlertTriangle size={16} />,
     color: "#b45309",
     bg: "rgba(180,83,9,0.08)",
     border: "rgba(180,83,9,0.2)",
-    rule: "Ne jamais revenir chercher ses affaires",
-    detail: "Une fois l'évacuation lancée, quitter définitivement le bâtiment",
+    rule: { fr: "Ne jamais revenir chercher ses affaires", en: "Never go back for belongings" },
+    detail: { fr: "Une fois l'évacuation lancée, quitter définitivement le bâtiment", en: "Once evacuation is launched, leave the building permanently" },
   },
 ];
 
 // ── Chapter 2 modules preview ─────────────────────────────────────
 const CH2_MODULES = [
-  { num: "M01", icon: <Bell size={15} />, title: "Déclencher l'alarme", desc: "Quand et comment activer l'alerte — 22 22 et déclencheurs manuels" },
-  { num: "M02", icon: <Users size={15} />, title: "Garder son calme et guider", desc: "Posture et communication en situation de crise" },
-  { num: "M03", icon: <DoorClosed size={15} />, title: "Fermer les portes", desc: "Sors — Ferme — Signale. Le rôle coupe-feu des portes" },
-  { num: "M04", icon: <Eye size={15} />, title: "Vérifier que personne ne reste", desc: "Exploration rapide et sécurisée avant évacuation définitive" },
-  { num: "M05", icon: <Wind size={15} />, title: "Faire face à la fumée", desc: "Bons réflexes dans un environnement enfumé" },
-  { num: "M06", icon: <ArrowUp size={15} />, title: "Escaliers ou espace sécurisé", desc: "Jamais l'ascenseur — toujours l'escalier de secours" },
-  { num: "M07", icon: <ClipboardCheck size={15} />, title: "Procédure complète d'évacuation", desc: "Simulation finale chronométrée — mise en situation réelle" },
+  {
+    num: "M01", icon: <Bell size={15} />,
+    title: { fr: "Déclencher l'alarme", en: "Trigger the alarm" },
+    desc: { fr: "Quand et comment activer l'alerte — 22 22 et déclencheurs manuels", en: "When and how to activate the alert — 22 22 and manual triggers" },
+  },
+  {
+    num: "M02", icon: <Users size={15} />,
+    title: { fr: "Garder son calme et guider", en: "Stay calm and lead" },
+    desc: { fr: "Posture et communication en situation de crise", en: "Posture and communication in a crisis situation" },
+  },
+  {
+    num: "M03", icon: <DoorClosed size={15} />,
+    title: { fr: "Fermer les portes", en: "Close the doors" },
+    desc: { fr: "Sors — Ferme — Signale. Le rôle coupe-feu des portes", en: "Exit — Close — Signal. The fire-stopping role of doors" },
+  },
+  {
+    num: "M04", icon: <Eye size={15} />,
+    title: { fr: "Vérifier que personne ne reste", en: "Check no one remains" },
+    desc: { fr: "Exploration rapide et sécurisée avant évacuation définitive", en: "Quick and safe sweep before final evacuation" },
+  },
+  {
+    num: "M05", icon: <Wind size={15} />,
+    title: { fr: "Faire face à la fumée", en: "Dealing with smoke" },
+    desc: { fr: "Bons réflexes dans un environnement enfumé", en: "Good reflexes in a smoke-filled environment" },
+  },
+  {
+    num: "M06", icon: <ArrowUp size={15} />,
+    title: { fr: "Escaliers ou espace sécurisé", en: "Stairs or safe waiting area" },
+    desc: { fr: "Jamais l'ascenseur — toujours l'escalier de secours", en: "Never the elevator — always the emergency stairwell" },
+  },
+  {
+    num: "M07", icon: <ClipboardCheck size={15} />,
+    title: { fr: "Procédure complète d'évacuation", en: "Full evacuation procedure" },
+    desc: { fr: "Simulation finale chronométrée — mise en situation réelle", en: "Final timed simulation — real-life scenario" },
+  },
 ];
 
 export default function ChapterIntroPage() {
   const navigate = useNavigate();
+  const { lang } = useLanguage();
+  const isEN = lang === "en";
 
   return (
     <div className="fixed inset-0 flex flex-col overflow-hidden" style={{ fontFamily: "'IBM Plex Sans', sans-serif" }}>
@@ -96,7 +155,7 @@ export default function ChapterIntroPage() {
         <IBMLogo variant="light" height={30} />
         <div className="flex items-center gap-2">
           <span className="font-mono text-xs px-2.5 py-1 rounded-full" style={{ fontFamily: "'IBM Plex Mono', monospace", background: "rgba(13,71,161,0.08)", color: "#0D47A1", border: "1px solid rgba(13,71,161,0.18)", fontSize: "10px", letterSpacing: "0.08em" }}>
-            CHAPITRE 2
+            {isEN ? "CHAPTER 2" : "CHAPITRE 2"}
           </span>
         </div>
       </header>
@@ -107,13 +166,13 @@ export default function ChapterIntroPage() {
         <div className="relative z-10 px-5 py-5 flex flex-col justify-center" style={{ minHeight: "110px" }}>
           <div className="max-w-2xl mx-auto w-full">
             <div className="text-xs font-mono mb-1 uppercase" style={{ color: "rgba(255,255,255,0.5)", letterSpacing: "0.14em", fontFamily: "'IBM Plex Mono', monospace" }}>
-              Transition · Chapitre 1 → 2
+              {isEN ? "Transition · Chapter 1 → 2" : "Transition · Chapitre 1 → 2"}
             </div>
             <h1 className="font-bold text-white mb-1" style={{ fontSize: "clamp(1.1rem, 3vw, 1.5rem)", letterSpacing: "-0.025em" }}>
-              Avant de continuer
+              {isEN ? "Before you continue" : "Avant de continuer"}
             </h1>
             <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.85rem" }}>
-              Récapitulatif du Chapitre 1 et aperçu du Chapitre 2
+              {isEN ? "Chapter 1 recap and Chapter 2 preview" : "Récapitulatif du Chapitre 1 et aperçu du Chapitre 2"}
             </p>
           </div>
         </div>
@@ -125,21 +184,23 @@ export default function ChapterIntroPage() {
 
           {/* ── Section 1: Ch1 recap ─────────────────────────── */}
           <section>
-            {/* Section header */}
             <div className="flex items-center gap-2.5 mb-3">
               <div className="w-7 h-7 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(218,30,40,0.1)" }}>
                 <Flame size={14} style={{ color: "#da1e28" }} />
               </div>
               <div>
-                <div className="font-bold text-sm" style={{ color: "#0a2052" }}>Ce que vous avez appris — Chapitre 1</div>
-                <div className="text-xs" style={{ color: "#8d95aa" }}>Lutte incendie · 7 modules</div>
+                <div className="font-bold text-sm" style={{ color: "#0a2052" }}>
+                  {isEN ? "What you learned — Chapter 1" : "Ce que vous avez appris — Chapitre 1"}
+                </div>
+                <div className="text-xs" style={{ color: "#8d95aa" }}>
+                  {isEN ? "Fire fighting · 7 modules" : "Lutte incendie · 7 modules"}
+                </div>
               </div>
               <span className="ml-auto font-mono text-xs px-2 py-0.5 rounded-full" style={{ fontFamily: "'IBM Plex Mono', monospace", background: "rgba(25,128,56,0.1)", color: "#198038", border: "1px solid rgba(25,128,56,0.25)", fontSize: "9px" }}>
-                COMPLÉTÉ
+                {isEN ? "COMPLETED" : "COMPLÉTÉ"}
               </span>
             </div>
 
-            {/* Module recap list */}
             <div className="rounded-2xl overflow-hidden" style={{ border: "2px solid rgba(13,71,161,0.14)", background: "#fff", boxShadow: "0 2px 12px rgba(0,0,0,0.05)" }}>
               {CH1_MODULES.map((mod, i) => (
                 <div
@@ -154,8 +215,12 @@ export default function ChapterIntroPage() {
                     </span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="font-semibold" style={{ fontSize: "0.82rem", color: "#0a2052", marginBottom: "2px" }}>{mod.title}</div>
-                    <div style={{ fontSize: "0.76rem", color: "#6f7897", lineHeight: "1.4" }}>{mod.takeaway}</div>
+                    <div className="font-semibold" style={{ fontSize: "0.82rem", color: "#0a2052", marginBottom: "2px" }}>
+                      {isEN ? mod.title.en : mod.title.fr}
+                    </div>
+                    <div style={{ fontSize: "0.76rem", color: "#6f7897", lineHeight: "1.4" }}>
+                      {isEN ? mod.takeaway.en : mod.takeaway.fr}
+                    </div>
                   </div>
                 </div>
               ))}
@@ -169,8 +234,12 @@ export default function ChapterIntroPage() {
                 <Star size={14} style={{ color: "#0D47A1" }} />
               </div>
               <div>
-                <div className="font-bold text-sm" style={{ color: "#0a2052" }}>Les bonnes pratiques IBM à retenir</div>
-                <div className="text-xs" style={{ color: "#8d95aa" }}>Règles d'or — à appliquer immédiatement</div>
+                <div className="font-bold text-sm" style={{ color: "#0a2052" }}>
+                  {isEN ? "IBM best practices to remember" : "Les bonnes pratiques IBM à retenir"}
+                </div>
+                <div className="text-xs" style={{ color: "#8d95aa" }}>
+                  {isEN ? "Golden rules — apply immediately" : "Règles d'or — à appliquer immédiatement"}
+                </div>
               </div>
             </div>
 
@@ -185,8 +254,12 @@ export default function ChapterIntroPage() {
                     {bp.icon}
                   </div>
                   <div className="flex-1">
-                    <div className="font-bold" style={{ fontSize: "0.83rem", color: "#0a2052", marginBottom: "2px" }}>{bp.rule}</div>
-                    <div style={{ fontSize: "0.75rem", color: "#6f7897", lineHeight: "1.4" }}>{bp.detail}</div>
+                    <div className="font-bold" style={{ fontSize: "0.83rem", color: "#0a2052", marginBottom: "2px" }}>
+                      {isEN ? bp.rule.en : bp.rule.fr}
+                    </div>
+                    <div style={{ fontSize: "0.75rem", color: "#6f7897", lineHeight: "1.4" }}>
+                      {isEN ? bp.detail.en : bp.detail.fr}
+                    </div>
                   </div>
                 </div>
               ))}
@@ -200,8 +273,12 @@ export default function ChapterIntroPage() {
                 <Shield size={14} style={{ color: "#0D47A1" }} />
               </div>
               <div>
-                <div className="font-bold text-sm" style={{ color: "#0a2052" }}>Ce qui vous attend — Chapitre 2</div>
-                <div className="text-xs" style={{ color: "#8d95aa" }}>Évacuation & procédures d'urgence · 7 modules</div>
+                <div className="font-bold text-sm" style={{ color: "#0a2052" }}>
+                  {isEN ? "What's ahead — Chapter 2" : "Ce qui vous attend — Chapitre 2"}
+                </div>
+                <div className="text-xs" style={{ color: "#8d95aa" }}>
+                  {isEN ? "Evacuation & emergency procedures · 7 modules" : "Évacuation & procédures d'urgence · 7 modules"}
+                </div>
               </div>
             </div>
 
@@ -210,7 +287,7 @@ export default function ChapterIntroPage() {
               <div className="px-4 py-3 flex items-center gap-3" style={{ background: "linear-gradient(135deg, #0D47A1, #1565C0)" }}>
                 <BookOpen size={16} color="#fff" />
                 <span className="font-bold text-white uppercase" style={{ fontSize: "0.8rem", letterSpacing: "0.1em" }}>
-                  Chapitre 2 — Évacuation
+                  {isEN ? "Chapter 2 — Evacuation" : "Chapitre 2 — Évacuation"}
                 </span>
               </div>
 
@@ -228,13 +305,17 @@ export default function ChapterIntroPage() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
                         <span className="font-mono font-bold" style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "9px", color: "#adb3c8", letterSpacing: "0.08em" }}>{mod.num}</span>
-                        <span className="font-semibold" style={{ fontSize: "0.82rem", color: "#0a2052" }}>{mod.title}</span>
+                        <span className="font-semibold" style={{ fontSize: "0.82rem", color: "#0a2052" }}>
+                          {isEN ? mod.title.en : mod.title.fr}
+                        </span>
                       </div>
-                      <div style={{ fontSize: "0.74rem", color: "#8d95aa", lineHeight: "1.35", marginTop: "1px" }}>{mod.desc}</div>
+                      <div style={{ fontSize: "0.74rem", color: "#8d95aa", lineHeight: "1.35", marginTop: "1px" }}>
+                        {isEN ? mod.desc.en : mod.desc.fr}
+                      </div>
                     </div>
                     {i === 0 && (
                       <span className="text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0" style={{ background: "rgba(13,71,161,0.1)", color: "#0D47A1", fontSize: "9px" }}>
-                        SUIVANT
+                        {isEN ? "NEXT" : "SUIVANT"}
                       </span>
                     )}
                   </div>
@@ -251,7 +332,7 @@ export default function ChapterIntroPage() {
             onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 10px 32px rgba(13,71,161,0.4)")}
             onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "0 6px 24px rgba(13,71,161,0.3)")}
           >
-            <span>Commencer le Chapitre 2</span>
+            <span>{isEN ? "Start Chapter 2" : "Commencer le Chapitre 2"}</span>
             <ArrowRight size={18} />
           </button>
 

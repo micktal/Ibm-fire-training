@@ -143,7 +143,7 @@ export const MODULES_EN: CourseModule[] = [
       savoirEtre: "Anticipate risks and never create conditions favorable to fire",
     },
     duration: "6 min",
-    image: `${CDN}3c04daa891e84de3b4d78cb7b1ecade7?format=webp&width=800`,
+    image: `${CDN}d3c9b22a88e644d98bd46cd69cd9cf30?format=webp&width=800`,
     funFacts: [
       { stat: "3", label: "elements — remove 1 to extinguish", detail: "A fire cannot exist without fuel, oxidant and heat simultaneously. This is the basis of all firefighting: remove one element and the fire dies.", icon: "flame" },
       { stat: "21%", label: "oxygen in air — 16% minimum for a fire", detail: "Below 16% oxygen, fire cannot be sustained. CO2 and dry powder extinguishers work by reducing this level or by chemical reaction.", icon: "eye" },
@@ -201,7 +201,7 @@ export const MODULES_EN: CourseModule[] = [
       savoirEtre: "Act methodically without running, even under pressure",
     },
     duration: "7 min",
-    image: `${CDN}4a7961a4c4d640dcb8b3ee7c4a1db951?format=webp&width=800`,
+    image: `${CDN}26706b11880d4b55b61df8e668695b14?format=webp&width=800`,
     funFacts: [
       { stat: "5×", label: "faster spread with an open door", detail: "A fire-door left open multiplies the spread speed by 5. Closing doors before evacuating is one of the most effective firefighting actions — more effective than most extinguishers.", icon: "flame" },
       { stat: "30 min", label: "fire resistance of a closed EI30 door", detail: "A fire door can resist a fire for 30 to 60 minutes when closed. Propped open, it provides zero protection.", icon: "shield" },
@@ -242,7 +242,7 @@ export const MODULES_EN: CourseModule[] = [
       savoirEtre: "Never improvise — using the wrong agent can worsen the fire",
     },
     duration: "7 min",
-    image: `${CDN}c6a59c9b2da643f58b01f86d29534d0c?format=webp&width=800`,
+    image: `${CDN}8f5fa15ec33749609150a2fef62457e9?format=webp&width=800`,
     funFacts: [
       { stat: "5", label: "fire classes to master", detail: "Class A (solids), B (liquids), C (gas), D (metals), F (cooking oils). Each requires a specific extinguishing agent. Using the wrong one can spread the fire.", icon: "flame" },
       { stat: "CO₂", label: "the only choice for electrical fires", detail: "Water conducts electricity and can cause fatal electrocution. CO2 extinguishes without conducting current, leaving no residue on equipment.", icon: "zap" },
@@ -282,7 +282,7 @@ export const MODULES_EN: CourseModule[] = [
       savoirEtre: "Keep an exit behind you and never put your life at risk",
     },
     duration: "6 min",
-    image: `${CDN}d4ef7263a40e4131aa5b3ad9448e2ca5?format=webp&width=800`,
+    image: `${CDN}d41dd2ee6d6d4cf4b7f112d3fc2460f3?format=webp&width=800`,
     funFacts: [
       { stat: "PASS", label: "the 4 steps to remember", detail: "Pull (pin) · Aim (at base of fire) · Squeeze (handle) · Sweep (side to side). This sequence applies to all extinguisher types. Practice it mentally now.", icon: "shield" },
       { stat: "2-3m", label: "optimal distance from fire", detail: "CO2 exits at -78°C. Too close: cold burns. Too far: loss of effectiveness. 2-3 meters is the safety sweet spot for CO2 and ABC powder.", icon: "eye" },
@@ -322,7 +322,7 @@ export const MODULES_EN: CourseModule[] = [
       savoirEtre: "When in doubt, always favor evacuation without hesitation",
     },
     duration: "8 min",
-    image: `${CDN}2f4e7b1c8a3d4e6f9b0c1d2e3f4a5b6?format=webp&width=800`,
+    image: `${CDN}8e074d1b7bdf4b8fa872d5fd2451fbfe?format=webp&width=800`,
     funFacts: [
       { stat: "10s", label: "maximum to make your decision", detail: "10 seconds to observe, assess, and decide. Beyond this, the fire has grown and your options narrow. Train your decision reflex now.", icon: "clock" },
       { stat: "80%", label: "of victims could have survived", detail: "In most fatal office fires, a faster evacuation decision would have changed the outcome. Doubt must always lead to evacuation — never to waiting.", icon: "alert" },
@@ -363,7 +363,7 @@ export const MODULES_EN: CourseModule[] = [
       savoirEtre: "Keep a cool head and coordinate actions under timed pressure",
     },
     duration: "12 min",
-    image: `${CDN}2ee3c4ada85544aa87e2f4f440dc1a94?format=webp&width=800`,
+    image: `${CDN}dfd2975e7d864d029e522928a710aa05?format=webp&width=800`,
     funFacts: [
       { stat: "3", label: "seconds to react on the first signal", detail: "In a real situation, every second counts. This simulation trains your automatic reflexes so that in a real emergency, you act without thinking.", icon: "zap" },
       { stat: "100%", label: "of reflexes must be automatic", detail: "A learned reflex acts faster than a reasoned decision. Repeat the procedure until it becomes automatic. That's the purpose of this simulation.", icon: "shield" },
@@ -404,7 +404,7 @@ export const MODULES_EN: CourseModule[] = [
       savoirEtre: "Alert immediately without trying to extinguish alone when in doubt",
     },
     duration: "5 min",
-    image: `${CDN}1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6?format=webp&width=800`,
+    image: `${CDN}2482acaedcdd4b2abad18b1011a424c6?format=webp&width=800`,
     funFacts: [
       { stat: "22 22", label: "IBM Security — always first", detail: "IBM Security has building plans, knows zone locations, and coordinates with emergency services. Always call them before 18.", icon: "alert" },
       { stat: "3", label: "essential pieces of info to give", detail: "Your name, exact location (building/floor/zone), and description of what you see. 3 pieces of information — memorize them.", icon: "shield" },
@@ -443,7 +443,7 @@ export const MODULES_EN: CourseModule[] = [
       savoirEtre: "Adopt a firm, reassuring posture focused on action",
     },
     duration: "7 min",
-    image: `${CDN}2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7?format=webp&width=800`,
+    image: `${CDN}73ee73f4c5c54adb943d454c10b797a9?format=webp&width=800`,
     funFacts: [
       { stat: "85%", label: "of people freeze in an emergency", detail: "Research shows that most people hesitate for 3-5 seconds before reacting to a fire alarm. One person taking charge immediately can trigger evacuation for the whole group.", icon: "eye" },
       { stat: "1", label: "clear voice is worth 20 shouting", detail: "A calm, firm, directive voice is far more effective than shouting in a panic situation. Volume doesn't equal authority — clarity does.", icon: "shield" },
@@ -482,7 +482,7 @@ export const MODULES_EN: CourseModule[] = [
       savoirEtre: "Apply the procedure without exception, even under stress",
     },
     duration: "6 min",
-    image: `${CDN}3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8?format=webp&width=800`,
+    image: `${CDN}0385f320d59547b2b6d08166e29ab8f3?format=webp&width=800`,
     funFacts: [
       { stat: "5×", label: "faster spread with open door", detail: "A fire door left open multiplies fire spread speed by 5. Closing a door while evacuating is often more effective than an extinguisher.", icon: "flame" },
       { stat: "30 min", label: "resistance of a closed EI30 door", detail: "Closed, an EI30 fire door resists fire for 30 minutes. Propped open: zero protection.", icon: "shield" },
@@ -521,7 +521,7 @@ export const MODULES_EN: CourseModule[] = [
       savoirEtre: "Leave no one behind — without ever putting your own life at risk",
     },
     duration: "8 min",
-    image: `${CDN}4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9?format=webp&width=800`,
+    image: `${CDN}b5ca9823c0ba42e492f17a707fd14708?format=webp&width=800`,
     funFacts: [
       { stat: "3", label: "seconds to check a room", detail: "A rapid visual sweep from the doorway takes 3 seconds. You don't need to enter — look left, look right, call out if needed. Then close the door and move on.", icon: "eye" },
       { stat: "0", label: "the number of times to re-enter alone", detail: "Never re-enter a building alone to search for someone. Report to fire services immediately — it's their mission and they have equipment.", icon: "shield" },
@@ -560,7 +560,7 @@ export const MODULES_EN: CourseModule[] = [
       savoirEtre: "Resist panic and maintain a slow, controlled pace",
     },
     duration: "7 min",
-    image: `${CDN}5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0?format=webp&width=800`,
+    image: `${CDN}cc5ab29f9fd543a2aff682cdd54297ad?format=webp&width=800`,
     funFacts: [
       { stat: "3min", label: "to lose consciousness in smoke", detail: "Fire smoke contains carbon monoxide, CO2 and toxic gases. Within 3 minutes of exposure in a heavily smoke-filled area, loss of consciousness is possible.", icon: "alert" },
       { stat: "60%", label: "of deaths by intoxication", detail: "More than 60% of fire victims die from smoke inhalation, not from flames. Escaping smoke is the absolute priority — even if you don't see visible fire.", icon: "flame" },

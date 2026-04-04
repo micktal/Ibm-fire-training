@@ -30,8 +30,12 @@ export default function IBMLogo({ variant = "light", height = 32, style }: Props
             height: `${height}px`,
             width: "auto",
             display: "block",
-            // Rend le logo blanc pur → visible sur fond bleu marine
-            filter: "brightness(0) invert(1)",
+            // invert(1)        : white-bg → black | blue-bars → orange-yellow
+            // brightness(100)  : orange → clamps to white | black stays black
+            // screen blend     : black × blue-bg → blue (bg disappears) | white × blue-bg → white (bars visible)
+            // Result: IBM stripes appear WHITE, white background disappears into the blue container
+            filter: "invert(1) brightness(100)",
+            mixBlendMode: "screen",
           }}
         />
       </div>

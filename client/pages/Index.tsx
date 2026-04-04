@@ -41,7 +41,7 @@ function Tile({ icon, label, onClick }: { icon: React.ReactNode; label: string; 
       onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 20px rgba(0,0,0,0.10)"; }}
     >
       <div style={{ color: "#0D47A1" }}>{icon}</div>
-      <span style={{ fontWeight: 700, fontSize: "0.8rem", color: "#0D47A1", letterSpacing: "0.08em", textTransform: "uppercase", fontFamily: "'IBM Plex Sans', sans-serif" }}>
+      <span style={{ fontWeight: 700, fontSize: "0.875rem", color: "#0D47A1", letterSpacing: "0.08em", textTransform: "uppercase", fontFamily: "'IBM Plex Sans', sans-serif" }}>
         {label}
       </span>
     </button>
@@ -143,12 +143,6 @@ export default function Index() {
       >
         <IBMLogo variant="light" height={32} />
         <nav className="flex items-center gap-4">
-          <span className="text-xs font-semibold uppercase tracking-widest cursor-pointer hover:text-blue-700 transition-colors" style={{ color: "#0D47A1", letterSpacing: "0.12em" }}>
-            {t("landing.demo", lang)}
-          </span>
-          <span className="text-xs font-semibold uppercase tracking-widest cursor-pointer hover:text-blue-700 transition-colors" style={{ color: "#0D47A1", letterSpacing: "0.12em" }}>
-            {t("landing.contact", lang)}
-          </span>
           {/* Language toggle */}
           <button
             onClick={() => setLangChosen(false)}
@@ -176,13 +170,13 @@ export default function Index() {
               {t("landing.subtitle", lang)}
             </span>
           </div>
-          <h1 className="font-bold mb-1" style={{ fontSize: "clamp(1.4rem, 4vw, 2rem)", color: "#0a2052", lineHeight: "1.1", letterSpacing: "-0.01em", textTransform: "uppercase" }}>
+          <h1 className="font-bold mb-1" style={{ fontSize: "clamp(1.6rem, 5vw, 2.4rem)", color: "#0a2052", lineHeight: "1.1", letterSpacing: "-0.01em", textTransform: "uppercase" }}>
             {t("landing.welcome", lang)}
           </h1>
-          <h2 className="font-bold mb-4" style={{ fontSize: "clamp(1rem, 3vw, 1.5rem)", color: "#1565C0", lineHeight: "1.1", letterSpacing: "-0.01em", textTransform: "uppercase" }}>
+          <h2 className="font-bold mb-4" style={{ fontSize: "clamp(1.1rem, 3.5vw, 1.75rem)", color: "#1565C0", lineHeight: "1.1", letterSpacing: "-0.01em", textTransform: "uppercase" }}>
             {t("landing.title", lang)}
           </h2>
-          <p className="mb-6 text-sm" style={{ color: "#6f7897", lineHeight: "1.65", maxWidth: "480px" }}>
+          <p className="mb-6" style={{ fontSize: "0.95rem", color: "#6f7897", lineHeight: "1.65", maxWidth: "480px" }}>
             {t("landing.desc", lang)}
           </p>
 

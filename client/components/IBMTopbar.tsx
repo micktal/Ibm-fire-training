@@ -7,7 +7,7 @@ import IBMLogo from "@/components/IBMLogo";
 // ── Flag SVG components ──────────────────────────────────────────
 function FlagFR({ size = 20 }: { size?: number }) {
   return (
-    <svg width={size} height={size * 0.67} viewBox="0 0 30 20" style={{ borderRadius: "3px", display: "block" }}>
+    <svg width={size} height={size * 0.67} viewBox="0 0 30 20" style={{ borderRadius: "3px", display: "block", boxShadow: "0 0 0 1px rgba(0,0,0,0.18)" }}>
       <rect width="10" height="20" fill="#002395" />
       <rect x="10" width="10" height="20" fill="#fff" />
       <rect x="20" width="10" height="20" fill="#ED2939" />
@@ -17,7 +17,7 @@ function FlagFR({ size = 20 }: { size?: number }) {
 
 function FlagEN({ size = 20 }: { size?: number }) {
   return (
-    <svg width={size} height={size * 0.6} viewBox="0 0 60 36" style={{ borderRadius: "3px", display: "block" }}>
+    <svg width={size} height={size * 0.6} viewBox="0 0 60 36" style={{ borderRadius: "3px", display: "block", boxShadow: "0 0 0 1px rgba(0,0,0,0.18)" }}>
       <rect width="60" height="36" fill="#012169" />
       <path d="M0,0 L60,36 M60,0 L0,36" stroke="#fff" strokeWidth="6" />
       <path d="M0,0 L60,36 M60,0 L0,36" stroke="#C8102E" strokeWidth="4" />
@@ -148,7 +148,7 @@ export default function IBMTopbar({
           style={{ color: "#0D47A1", letterSpacing: "0.08em", background: "none", border: "none", cursor: "pointer" }}
         >
           <Home size={12} />
-          <span className="hidden md:inline">Tableau de bord</span>
+          <span className="hidden md:inline">{lang === "en" ? "Dashboard" : "Tableau de bord"}</span>
         </button>
 
         {/* Language toggle */}
