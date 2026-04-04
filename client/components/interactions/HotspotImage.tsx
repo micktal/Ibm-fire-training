@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { X, AlertTriangle, Info, CheckCircle2, MapPin } from "lucide-react";
+import { useLanguage } from "@/lib/languageContext";
 
 export interface Hotspot {
   id: string;
@@ -51,7 +52,7 @@ const TYPE_CONFIG = {
     bg: "rgba(25,128,56,0.18)",
     pulse: "rgba(25,128,56,0.35)",
     icon: <CheckCircle2 size={13} color="#198038" />,
-    label: "Sécurisé",
+    label: "Safe",  // overridden below for FR
     panelBorder: "rgba(25,128,56,0.3)",
     panelBg: "rgba(25,128,56,0.05)",
     titleColor: "#0e6027",
@@ -59,6 +60,8 @@ const TYPE_CONFIG = {
 };
 
 export default function HotspotImage({ exercise, onComplete }: Props) {
+  const { lang } = useLanguage();
+  const isEN = lang === "en";
   const [discovered, setDiscovered] = useState<Set<string>>(new Set());
   const [active, setActive] = useState<string | null>(null);
   const [completed, setCompleted] = useState(false);
@@ -77,7 +80,7 @@ export default function HotspotImage({ exercise, onComplete }: Props) {
   };
 
   const activeHotspot = exercise.hotspots.find((h) => h.id === active);
-  const cfg = activeHotspot ? TYPE_CONFIG[activeHotspot.type] : null;
+  const cfg = activeHotspot ? { ...TYPE_CONFIG[activeHotspot.type], label: activeHotspot.type === "safe" ? (isEN ? "Safe" : "Sécurisé") : TYPE_CONFIG[activeHotspot.type].label } : null;
   const progress = Math.round((discovered.size / exercise.hotspots.length) * 100);
 
   return (
@@ -91,14 +94,14 @@ export default function HotspotImage({ exercise, onComplete }: Props) {
               className="font-mono text-xs uppercase tracking-wider"
               style={{ color: "rgba(255,255,255,0.7)", fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.1em" }}
             >
-              Exercice Interactif — Hotspots
+              {isEN ? "Interactive Exercise — Hotspots" : "Exercice Interactif — Hotspots"}
             </span>
           </div>
           <span
             className="font-mono text-xs font-bold"
             style={{ color: "#fff", fontFamily: "'IBM Plex Mono', monospace" }}
           >
-            {discovered.size}/{exercise.hotspots.length} découverts
+            {discovered.size}/{exercise.hotspots.length} {isEN ? "discovered" : "découverts"}
           </span>
         </div>
         <p className="text-sm font-semibold text-white" style={{ lineHeight: "1.4" }}>
@@ -122,7 +125,7 @@ export default function HotspotImage({ exercise, onComplete }: Props) {
       <div className="relative" style={{ background: "#111" }}>
         <img
           src={exercise.image}
-          alt="Scène interactive"
+          alt={isEN ? "Interactive scene" : "Scène interactive"}
           className="w-full block"
           style={{ maxHeight: "360px", objectFit: "cover", objectPosition: "center" }}
           draggable={false}
@@ -207,7 +210,7 @@ export default function HotspotImage({ exercise, onComplete }: Props) {
         </div>
       ) : (
         <div className="px-5 py-3 text-xs" style={{ color: "#8d95aa", borderTop: "1px solid #f0f2f8" }}>
-          Cliquez sur un marqueur pour en savoir plus
+          {isEN ? "Click on a marker to learn more" : "Cliquez sur un marqueur pour en savoir plus"}
         </div>
       )}
 
@@ -220,10 +223,10 @@ export default function HotspotImage({ exercise, onComplete }: Props) {
           <CheckCircle2 size={18} style={{ color: "#198038", flexShrink: 0 }} />
           <div>
             <div className="text-sm font-bold" style={{ color: "#0e6027" }}>
-              {exercise.successMessage || "Tous les points identifiés — Excellent travail !"}
+              {exercise.successMessage || (isEN ? "All points identified — Excellent work!" : "Tous les points identifiés — Excellent travail !")}
             </div>
             <div className="text-xs" style={{ color: "#6f7897" }}>
-              {exercise.hotspots.filter((h) => h.type === "danger").length} zone(s) dangereuse(s) identifiée(s)
+              {exercise.hotspots.filter((h) => h.type === "danger").length} {isEN ? "dangerous zone(s) identified" : "zone(s) dangereuse(s) identifiée(s)"}
             </div>
           </div>
         </div>
@@ -242,13 +245,13 @@ export default function HotspotImage({ exercise, onComplete }: Props) {
             <div key={t} className="flex items-center gap-1.5">
               <div className="w-2.5 h-2.5 rounded-full" style={{ background: c.ring }} />
               <span className="text-xs" style={{ color: "#6f7897" }}>
-                {c.label} ({count})
+                {t === "safe" ? (isEN ? "Safe" : "Sécurisé") : c.label} ({count})
               </span>
             </div>
           );
         })}
         <span className="ml-auto text-xs" style={{ color: "#8d95aa" }}>
-          Cliquez sur les marqueurs pour explorer
+          {isEN ? "Click on markers to explore" : "Cliquez sur les marqueurs pour explorer"}
         </span>
       </div>
 

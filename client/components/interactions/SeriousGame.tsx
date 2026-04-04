@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { CheckCircle2, XCircle, Heart, Zap, Trophy, RotateCcw, Timer } from "lucide-react";
 import { SeriousGameExercise } from "@/lib/interactionData";
+import { useLanguage } from "@/lib/languageContext";
 
 interface Props {
   exercise: SeriousGameExercise;
@@ -84,6 +85,8 @@ export default function SeriousGame({ exercise, onComplete }: Props) {
     setPhase("playing"); setTimeLeft(exercise.rounds[0].timeLimit);
   };
 
+  const { lang } = useLanguage();
+  const isEN = lang === "en";
   const timeRatio = timeLeft / currentRound.timeLimit;
   const progressBarColor = timeRatio > 0.5 ? "#6fdc8c" : timeRatio > 0.25 ? "#f59e0b" : "#da1e28";
 
@@ -98,7 +101,11 @@ export default function SeriousGame({ exercise, onComplete }: Props) {
             {passed ? <Trophy size={28} color="#6fdc8c" /> : <XCircle size={28} color="#ff8b8b" />}
           </div>
           <div className="font-bold text-white mb-1" style={{ fontSize: "1.15rem" }}>
-            {phase === "dead" ? "Partie terminée — vies épuisées" : passed ? exercise.successMessage ?? "Challenge réussi !" : "Continuez à vous entraîner"}
+            {phase === "dead"
+              ? (isEN ? "Game over — no lives left" : "Partie terminée — vies épuisées")
+              : passed
+                ? exercise.successMessage ?? (isEN ? "Challenge completed!" : "Challenge réussi !")
+                : (isEN ? "Keep practicing" : "Continuez à vous entraîner")}
           </div>
           <div className="text-xs mb-4" style={{ color: "rgba(255,255,255,0.55)" }}>
             {round + 1}/{exercise.rounds.length} situations
@@ -106,21 +113,21 @@ export default function SeriousGame({ exercise, onComplete }: Props) {
           <div className="flex justify-center gap-4 mb-4">
             <div className="text-center">
               <div className="font-mono font-bold text-2xl" style={{ color: "#6fdc8c", fontFamily: "'IBM Plex Mono', monospace" }}>{points}</div>
-              <div className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>Points</div>
+              <div className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>{isEN ? "Points" : "Points"}</div>
             </div>
             <div className="w-px" style={{ background: "rgba(255,255,255,0.15)" }} />
             <div className="text-center">
               <div className="font-mono font-bold text-2xl" style={{ color: "#f59e0b", fontFamily: "'IBM Plex Mono', monospace" }}>{maxStreak}x</div>
-              <div className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>Meilleure série</div>
+              <div className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>{isEN ? "Best streak" : "Meilleure série"}</div>
             </div>
             <div className="w-px" style={{ background: "rgba(255,255,255,0.15)" }} />
             <div className="text-center">
               <div className="font-mono font-bold text-2xl" style={{ color: lives > 0 ? "#fff" : "#ff8b8b", fontFamily: "'IBM Plex Mono', monospace" }}>{lives > 0 ? lives : 0}</div>
-              <div className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>Vies restantes</div>
+              <div className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>{isEN ? "Lives remaining" : "Vies restantes"}</div>
             </div>
           </div>
           <button onClick={reset} className="flex items-center justify-center gap-2 mx-auto px-6 py-2.5 rounded-xl font-bold" style={{ background: "rgba(255,255,255,0.15)", color: "#fff", border: "1.5px solid rgba(255,255,255,0.25)", cursor: "pointer", fontSize: "0.9rem" }}>
-            <RotateCcw size={15} /> Rejouer
+            <RotateCcw size={15} /> {isEN ? "Play again" : "Rejouer"}
           </button>
         </div>
       </div>
@@ -142,7 +149,7 @@ export default function SeriousGame({ exercise, onComplete }: Props) {
           </span>
           {streak >= 2 && (
             <span className="ml-2 text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "#f59e0b", color: "#000" }}>
-              {streak}x SÉRIE !
+              {streak}x {isEN ? "STREAK!" : "SÉRIE !"}
             </span>
           )}
         </div>
@@ -211,7 +218,7 @@ export default function SeriousGame({ exercise, onComplete }: Props) {
             border: `1.5px solid ${currentRound.actions[selected]?.correct ? "rgba(111,220,140,0.4)" : "rgba(255,100,100,0.4)"}`,
           }}>
             <div className="text-sm" style={{ color: currentRound.actions[selected]?.correct ? "#6fdc8c" : "#ff8b8b", lineHeight: "1.5" }}>
-              {selected === -1 ? "⏱ Temps écoulé — réponse automatiquement incorrecte" : currentRound.actions[selected]?.feedback}
+              {selected === -1 ? (isEN ? "⏱ Time's up — automatic wrong answer" : "⏱ Temps écoulé — réponse automatiquement incorrecte") : currentRound.actions[selected]?.feedback}
             </div>
           </div>
         </div>

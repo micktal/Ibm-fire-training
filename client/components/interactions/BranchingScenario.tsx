@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { ChevronRight, AlertTriangle, CheckCircle2, XCircle, RotateCcw, Clock, GitBranch } from "lucide-react";
 import CharacterDialogue from "@/components/CharacterDialogue";
+import { useLanguage } from "@/lib/languageContext";
 
 export interface ScenarioChoice {
   label: string;
@@ -43,33 +44,41 @@ interface Props {
 }
 
 const URGENCY_COLOR = { low: "#0043ce", medium: "#b45309", high: "#da1e28" };
-const URGENCY_LABEL = { low: "Situation normale", medium: "Situation urgente", high: "Danger immédiat" };
-
-const CONSEQUENCE_STYLE = {
-  ok: {
-    bg: "rgba(25,128,56,0.07)",
-    border: "rgba(25,128,56,0.3)",
-    icon: <CheckCircle2 size={15} style={{ color: "#198038", flexShrink: 0 }} />,
-    titleColor: "#0e6027",
-    label: "Bonne décision",
-  },
-  ko: {
-    bg: "rgba(218,30,40,0.06)",
-    border: "rgba(218,30,40,0.28)",
-    icon: <XCircle size={15} style={{ color: "#da1e28", flexShrink: 0 }} />,
-    titleColor: "#a2191f",
-    label: "Mauvaise décision",
-  },
-  critical: {
-    bg: "rgba(218,30,40,0.1)",
-    border: "rgba(218,30,40,0.4)",
-    icon: <AlertTriangle size={15} style={{ color: "#da1e28", flexShrink: 0 }} />,
-    titleColor: "#a2191f",
-    label: "Erreur critique",
-  },
-};
 
 export default function BranchingScenario({ exercise, onComplete }: Props) {
+  const { lang } = useLanguage();
+  const isEN = lang === "en";
+
+  const URGENCY_LABEL = {
+    low: isEN ? "Normal situation" : "Situation normale",
+    medium: isEN ? "Urgent situation" : "Situation urgente",
+    high: isEN ? "Immediate danger" : "Danger immédiat",
+  };
+
+  const CONSEQUENCE_STYLE = {
+    ok: {
+      bg: "rgba(25,128,56,0.07)",
+      border: "rgba(25,128,56,0.3)",
+      icon: <CheckCircle2 size={15} style={{ color: "#198038", flexShrink: 0 }} />,
+      titleColor: "#0e6027",
+      label: isEN ? "Good decision" : "Bonne décision",
+    },
+    ko: {
+      bg: "rgba(218,30,40,0.06)",
+      border: "rgba(218,30,40,0.28)",
+      icon: <XCircle size={15} style={{ color: "#da1e28", flexShrink: 0 }} />,
+      titleColor: "#a2191f",
+      label: isEN ? "Bad decision" : "Mauvaise décision",
+    },
+    critical: {
+      bg: "rgba(218,30,40,0.1)",
+      border: "rgba(218,30,40,0.4)",
+      icon: <AlertTriangle size={15} style={{ color: "#da1e28", flexShrink: 0 }} />,
+      titleColor: "#a2191f",
+      label: isEN ? "Critical error" : "Erreur critique",
+    },
+  };
+
   const [currentId, setCurrentId] = useState<string>(exercise.startNode);
   const [chosenIdx, setChosenIdx] = useState<number | null>(null);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
@@ -182,7 +191,7 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
         <div className="px-5 py-3.5 flex items-center gap-2" style={{ background: "#161616" }}>
           <GitBranch size={13} color="rgba(255,255,255,0.7)" />
           <span className="font-mono text-xs uppercase" style={{ color: "rgba(255,255,255,0.55)", fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.1em" }}>
-            Scénario à embranchements — {exercise.title}
+            {isEN ? "Branching scenario" : "Scénario à embranchements"} — {exercise.title}
           </span>
         </div>
         <div
@@ -203,11 +212,13 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
           </div>
           <div className="text-base font-bold mb-1.5" style={{ color: "#161616" }}>
             {passed
-              ? exercise.successMessage || "Excellents réflexes — scénario maîtrisé !"
-              : exercise.failMessage || "Des décisions à revoir — réessayez le scénario"}
+              ? exercise.successMessage || (isEN ? "Excellent reflexes — scenario mastered!" : "Excellents réflexes — scénario maîtrisé !")
+              : exercise.failMessage || (isEN ? "Some decisions need review — retry the scenario" : "Des décisions à revoir — réessayez le scénario")}
           </div>
           <div className="text-sm mb-5" style={{ color: "#6f7897" }}>
-            {totalCorrect}/{totalDecisions} décision{totalCorrect > 1 ? "s" : ""} correcte{totalCorrect > 1 ? "s" : ""}
+            {totalCorrect}/{totalDecisions} {isEN
+              ? `correct decision${totalCorrect > 1 ? "s" : ""}`
+              : `décision${totalCorrect > 1 ? "s" : ""} correcte${totalCorrect > 1 ? "s" : ""}`}
           </div>
 
           {/* Decision recap */}
@@ -220,7 +231,7 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
                 <div key={i} className="flex items-start gap-3 rounded-lg p-3" style={{ background: "#fff", border: "1.5px solid #e4e7f0" }}>
                   <div className="mt-0.5">{s.icon}</div>
                   <div className="flex-1">
-                    <div className="text-xs font-semibold mb-0.5" style={{ color: "#8d95aa" }}>Décision {i + 1}</div>
+                    <div className="text-xs font-semibold mb-0.5" style={{ color: "#8d95aa" }}>{isEN ? "Decision" : "Décision"} {i + 1}</div>
                     <div className="text-xs font-medium" style={{ color: "#161616" }}>{choice.label}</div>
                     <div className="text-xs mt-0.5" style={{ color: "#6f7897" }}>{choice.consequence}</div>
                   </div>
@@ -237,7 +248,7 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
             onMouseLeave={(e) => (e.currentTarget as HTMLButtonElement).style.background = "#0043ce"}
           >
             <RotateCcw size={14} />
-            Recommencer le scénario
+            {isEN ? "Restart scenario" : "Recommencer le scénario"}
           </button>
         </div>
       </div>
@@ -260,7 +271,7 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
             className="font-mono text-xs uppercase"
             style={{ color: "rgba(255,255,255,0.55)", fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.1em" }}
           >
-            Scénario — {exercise.title}
+            {isEN ? "Scenario" : "Scénario"} — {exercise.title}
           </span>
         </div>
         <div className="flex items-center gap-3">
@@ -307,13 +318,13 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
         <div className="relative overflow-hidden" style={{ height: "200px" }}>
           <img
             src={node.image}
-            alt="Scène"
+            alt="Scene"
             className="w-full h-full object-cover"
             style={{ filter: "brightness(0.7)" }}
           />
           <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.6))" }} />
 
-          {/* Smoke fog — fills progressively as timer runs down */}
+          {/* Smoke fog */}
           {timeLeft !== null && node.timed && (
             <div
               className="absolute inset-0 pointer-events-none"
@@ -350,7 +361,7 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
           className="font-mono text-xs mb-2"
           style={{ color: "rgba(255,255,255,0.4)", fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.08em" }}
         >
-          Situation
+          {isEN ? "Situation" : "Situation"}
         </div>
         <p className="text-base font-bold text-white leading-snug mb-1" style={{ letterSpacing: "-0.01em" }}>
           {node.situation}
@@ -378,7 +389,7 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
       {/* Choices */}
       <div className="p-4 flex flex-col gap-2.5" style={{ background: "#111827" }}>
         <div className="font-mono text-xs mb-1" style={{ color: "rgba(255,255,255,0.35)", fontFamily: "'IBM Plex Mono', monospace" }}>
-          Que faites-vous ?
+          {isEN ? "What do you do?" : "Que faites-vous ?"}
         </div>
         {node.choices.map((choice, idx) => {
           const s = choiceStyle(choice, idx);
@@ -447,7 +458,7 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
             {currentChoice.nextNode && (
               <div className="text-xs mt-1.5 flex items-center gap-1" style={{ color: "#8d95aa" }}>
                 <ChevronRight size={11} />
-                Suite de la situation en cours...
+                {isEN ? "Continuing the scenario..." : "Suite de la situation en cours..."}
               </div>
             )}
           </div>

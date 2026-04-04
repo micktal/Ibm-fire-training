@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Flame, Wind, Zap, Shield, Eye, Users, CheckCircle2, RotateCcw, Layers } from "lucide-react";
 import { FlipCardsExercise } from "@/lib/interactionData";
+import { useLanguage } from "@/lib/languageContext";
 
 const ICON_MAP: Record<string, React.ReactNode> = {
   Flame: <Flame size={32} />,
@@ -33,6 +34,8 @@ export default function FlipCards({ exercise, onComplete }: Props) {
   };
 
   const reset = () => { setFlipped(new Set()); setDone(false); };
+  const { lang } = useLanguage();
+  const isEN = lang === "en";
 
   return (
     <div style={{ fontFamily: "'IBM Plex Sans', sans-serif" }}>
@@ -48,7 +51,7 @@ export default function FlipCards({ exercise, onComplete }: Props) {
           {exercise.subtitle && <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.65)" }}>{exercise.subtitle}</div>}
         </div>
         <span className="font-mono text-xs px-2.5 py-1 rounded-full" style={{ color: "#fff", background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.25)", fontFamily: "'IBM Plex Mono', monospace" }}>
-          {flipped.size}/{exercise.cards.length} retournées
+          {flipped.size}/{exercise.cards.length} {isEN ? "flipped" : "retournées"}
         </span>
       </div>
 
@@ -93,7 +96,7 @@ export default function FlipCards({ exercise, onComplete }: Props) {
                   <div className="font-bold text-white text-center" style={{ fontSize: "0.95rem", letterSpacing: "0.02em", lineHeight: "1.25", whiteSpace: "pre-line" }}>
                     {card.front}
                   </div>
-                  <div className="text-xs" style={{ color: "rgba(255,255,255,0.55)" }}>Cliquer pour retourner</div>
+                  <div className="text-xs" style={{ color: "rgba(255,255,255,0.55)" }}>{isEN ? "Click to flip" : "Cliquer pour retourner"}</div>
                 </div>
 
                 {/* Back */}
@@ -127,11 +130,11 @@ export default function FlipCards({ exercise, onComplete }: Props) {
         <div className="rounded-xl px-4 py-3 flex items-center gap-3" style={{ background: "rgba(25,128,56,0.08)", border: "1.5px solid rgba(25,128,56,0.25)" }}>
           <CheckCircle2 size={18} style={{ color: "#198038", flexShrink: 0 }} />
           <div className="flex-1">
-            <div className="font-bold text-sm" style={{ color: "#0e6027" }}>Toutes les cartes découvertes !</div>
-            <div className="text-xs" style={{ color: "#6f7897" }}>Cliquez à nouveau pour masquer une carte.</div>
+            <div className="font-bold text-sm" style={{ color: "#0e6027" }}>{isEN ? "All cards discovered!" : "Toutes les cartes découvertes !"}</div>
+            <div className="text-xs" style={{ color: "#6f7897" }}>{isEN ? "Click again to hide a card." : "Cliquez à nouveau pour masquer une carte."}</div>
           </div>
           <button onClick={reset} style={{ background: "none", border: "none", cursor: "pointer", color: "#198038", display: "flex", alignItems: "center", gap: "4px", fontSize: "12px", fontWeight: 600 }}>
-            <RotateCcw size={13} /> Recommencer
+            <RotateCcw size={13} /> {isEN ? "Restart" : "Recommencer"}
           </button>
         </div>
       )}

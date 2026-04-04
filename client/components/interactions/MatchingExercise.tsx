@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CheckCircle2, XCircle, RotateCcw, GitMerge } from "lucide-react";
 import { MatchExercise } from "@/lib/interactionData";
+import { useLanguage } from "@/lib/languageContext";
 
 const PAIR_COLORS = ["#0D47A1", "#7c3aed", "#198038", "#b45309", "#da1e28"];
 
@@ -63,6 +64,8 @@ export default function MatchingExercise({ exercise, onComplete }: Props) {
   const reset = () => { setMatches([]); setValidated(false); setSelectedLeft(null); };
 
   const correctCount = validated ? matches.filter((m) => m.left === m.right).length : 0;
+  const { lang } = useLanguage();
+  const isEN = lang === "en";
 
   return (
     <div style={{ fontFamily: "'IBM Plex Sans', sans-serif" }}>
@@ -84,7 +87,7 @@ export default function MatchingExercise({ exercise, onComplete }: Props) {
 
       {!validated && selectedLeft !== null && (
         <div className="text-xs text-center mb-3 px-3 py-2 rounded-lg" style={{ background: "rgba(13,71,161,0.08)", color: "#0D47A1", border: "1px solid rgba(13,71,161,0.2)" }}>
-          Sélectionné : <strong>{exercise.pairs[selectedLeft].left}</strong> — Cliquez maintenant sur la bonne correspondance à droite
+          {isEN ? "Selected:" : "Sélectionné :"} <strong>{exercise.pairs[selectedLeft].left}</strong> — {isEN ? "Now click the correct match on the right" : "Cliquez maintenant sur la bonne correspondance à droite"}
         </div>
       )}
 
@@ -92,7 +95,7 @@ export default function MatchingExercise({ exercise, onComplete }: Props) {
       <div className="grid grid-cols-2 gap-3 mb-4">
         {/* Left column */}
         <div className="flex flex-col gap-2">
-          <div className="text-xs font-bold uppercase text-center mb-1" style={{ color: "#8d95aa", letterSpacing: "0.1em" }}>Éléments</div>
+          <div className="text-xs font-bold uppercase text-center mb-1" style={{ color: "#8d95aa", letterSpacing: "0.1em" }}>{isEN ? "Elements" : "Éléments"}</div>
           {exercise.pairs.map((pair, i) => {
             const color = getMatchColor(i);
             const isSelected = selectedLeft === i;
@@ -129,7 +132,7 @@ export default function MatchingExercise({ exercise, onComplete }: Props) {
 
         {/* Right column (shuffled) */}
         <div className="flex flex-col gap-2">
-          <div className="text-xs font-bold uppercase text-center mb-1" style={{ color: "#8d95aa", letterSpacing: "0.1em" }}>Correspondances</div>
+          <div className="text-xs font-bold uppercase text-center mb-1" style={{ color: "#8d95aa", letterSpacing: "0.1em" }}>{isEN ? "Matches" : "Correspondances"}</div>
           {shuffledRight.map((origIdx) => {
             const color = getRightMatchColor(origIdx);
             const isAvailable = !matchedRight.has(origIdx) && selectedLeft !== null && !validated;
@@ -174,17 +177,17 @@ export default function MatchingExercise({ exercise, onComplete }: Props) {
             boxShadow: matches.length === exercise.pairs.length ? "0 4px 16px rgba(25,128,56,0.3)" : "none",
           }}
         >
-          Valider les associations
+          {isEN ? "Validate matches" : "Valider les associations"}
         </button>
       ) : (
         <div className="flex items-center gap-3 rounded-xl px-4 py-3" style={{ background: correctCount === exercise.pairs.length ? "rgba(25,128,56,0.08)" : "rgba(180,83,9,0.08)", border: `1.5px solid ${correctCount === exercise.pairs.length ? "rgba(25,128,56,0.25)" : "rgba(180,83,9,0.25)"}` }}>
           <div className="flex-1">
             <div className="font-bold text-sm" style={{ color: correctCount === exercise.pairs.length ? "#0e6027" : "#92400e" }}>
-              {correctCount === exercise.pairs.length ? (exercise.successMessage ?? "Associations parfaites !") : `${correctCount}/${exercise.pairs.length} associations correctes`}
+              {correctCount === exercise.pairs.length ? (exercise.successMessage ?? (isEN ? "Perfect matches!" : "Associations parfaites !")) : (isEN ? `${correctCount}/${exercise.pairs.length} correct matches` : `${correctCount}/${exercise.pairs.length} associations correctes`)}
             </div>
           </div>
           <button onClick={reset} className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg" style={{ background: "rgba(13,71,161,0.08)", color: "#0D47A1", border: "1px solid rgba(13,71,161,0.2)", cursor: "pointer" }}>
-            <RotateCcw size={12} /> Refaire
+            <RotateCcw size={12} /> {isEN ? "Retry" : "Refaire"}
           </button>
         </div>
       )}

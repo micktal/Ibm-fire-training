@@ -184,7 +184,7 @@ export default function TipFlipCards({ exercise, onComplete }: Props) {
                     style={{ color: accent.color, opacity: 0.6, fontSize: "0.7rem" }}
                   >
                     <RotateCcw size={10} />
-                    <span>Retourner</span>
+                    <span>{isEN ? "Flip" : "Retourner"}</span>
                   </div>
                 </div>
 
@@ -256,7 +256,7 @@ export default function TipFlipCards({ exercise, onComplete }: Props) {
                     style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.68rem" }}
                   >
                     <RotateCcw size={9} />
-                    <span>Retourner</span>
+                    <span>{isEN ? "Flip" : "Retourner"}</span>
                   </div>
                 </div>
               </div>

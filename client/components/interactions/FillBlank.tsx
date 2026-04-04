@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CheckCircle2, XCircle, RotateCcw, PenLine } from "lucide-react";
 import { FillBlankExercise } from "@/lib/interactionData";
+import { useLanguage } from "@/lib/languageContext";
 
 interface Props {
   exercise: FillBlankExercise;
@@ -24,6 +25,8 @@ export default function FillBlank({ exercise, onComplete }: Props) {
 
   const reset = () => { setInputs({}); setChecked(false); setDone(false); };
 
+  const { lang } = useLanguage();
+  const isEN = lang === "en";
   const allFilled = exercise.sentences.every((_, i) => (inputs[i] ?? "").trim().length > 0);
   const correct = checked ? exercise.sentences.filter((s, i) => (inputs[i] ?? "").trim().toLowerCase() === s.answer.toLowerCase()).length : 0;
 
@@ -69,7 +72,7 @@ export default function FillBlank({ exercise, onComplete }: Props) {
                     type="text"
                     value={val}
                     onChange={(e) => !checked && setInputs({ ...inputs, [i]: e.target.value })}
-                    placeholder={sent.hint ?? "votre réponse"}
+                    placeholder={sent.hint ?? (isEN ? "your answer" : "votre réponse")}
                     disabled={checked}
                     style={{
                       border: `2px solid ${isCorrect ? "#198038" : isWrong ? "#da1e28" : "#0D47A1"}`,
@@ -91,7 +94,7 @@ export default function FillBlank({ exercise, onComplete }: Props) {
               </div>
               {isWrong && (
                 <div className="mt-2 text-xs" style={{ color: "#da1e28" }}>
-                  Réponse correcte : <strong>« {sent.answer} »</strong>
+                  {isEN ? "Correct answer:" : "Réponse correcte :"} <strong>« {sent.answer} »</strong>
                 </div>
               )}
             </div>
@@ -114,17 +117,17 @@ export default function FillBlank({ exercise, onComplete }: Props) {
             boxShadow: allFilled ? "0 4px 16px rgba(124,58,237,0.3)" : "none",
           }}
         >
-          Valider mes réponses
+          {isEN ? "Submit my answers" : "Valider mes réponses"}
         </button>
       ) : (
         <div className="flex items-center gap-3 rounded-xl px-4 py-3" style={{ background: correct === exercise.sentences.length ? "rgba(25,128,56,0.08)" : "rgba(180,83,9,0.08)", border: `1.5px solid ${correct === exercise.sentences.length ? "rgba(25,128,56,0.25)" : "rgba(180,83,9,0.25)"}` }}>
           <div className="flex-1">
             <div className="font-bold text-sm" style={{ color: correct === exercise.sentences.length ? "#0e6027" : "#92400e" }}>
-              {correct === exercise.sentences.length ? (exercise.successMessage ?? "Parfait !") : `${correct}/${exercise.sentences.length} — Revoyez les réponses surlignées en rouge`}
+              {correct === exercise.sentences.length ? (exercise.successMessage ?? (isEN ? "Perfect!" : "Parfait !")) : (isEN ? `${correct}/${exercise.sentences.length} — Review the answers highlighted in red` : `${correct}/${exercise.sentences.length} — Revoyez les réponses surlignées en rouge`)}
             </div>
           </div>
           <button onClick={reset} className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg" style={{ background: "rgba(13,71,161,0.08)", color: "#0D47A1", border: "1px solid rgba(13,71,161,0.2)", cursor: "pointer" }}>
-            <RotateCcw size={12} /> Refaire
+            <RotateCcw size={12} /> {isEN ? "Retry" : "Refaire"}
           </button>
         </div>
       )}

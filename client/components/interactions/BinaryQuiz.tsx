@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CheckCircle2, XCircle, RotateCcw, ToggleLeft } from "lucide-react";
 import { BinaryExercise } from "@/lib/interactionData";
+import { useLanguage } from "@/lib/languageContext";
 
 interface Props {
   exercise: BinaryExercise;
@@ -29,6 +30,8 @@ export default function BinaryQuiz({ exercise, onComplete }: Props) {
 
   const reset = () => { setAnswers({}); setRevealed(new Set()); setDone(false); };
 
+  const { lang } = useLanguage();
+  const isEN = lang === "en";
   const correct = exercise.statements.filter((s, i) => answers[i] === s.isTrue).length;
 
   return (
@@ -83,7 +86,7 @@ export default function BinaryQuiz({ exercise, onComplete }: Props) {
                     onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(25,128,56,0.06)")}
                     onMouseLeave={(e) => (e.currentTarget.style.background = "none")}
                   >
-                    <CheckCircle2 size={16} /> VRAI
+                    <CheckCircle2 size={16} /> {isEN ? "TRUE" : "VRAI"}
                   </button>
                   <button
                     onClick={() => answer(i, false)}
@@ -92,7 +95,7 @@ export default function BinaryQuiz({ exercise, onComplete }: Props) {
                     onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(218,30,40,0.06)")}
                     onMouseLeave={(e) => (e.currentTarget.style.background = "none")}
                   >
-                    <XCircle size={16} /> FAUX
+                    <XCircle size={16} /> {isEN ? "FALSE" : "FAUX"}
                   </button>
                 </div>
               )}
@@ -106,7 +109,9 @@ export default function BinaryQuiz({ exercise, onComplete }: Props) {
                   }
                   <div>
                     <div className="font-bold text-xs mb-0.5" style={{ color: isCorrect ? "#0e6027" : "#a2191f" }}>
-                      {isCorrect ? "Correct !" : `Incorrect — c'est ${stmt.isTrue ? "VRAI" : "FAUX"}`}
+                      {isCorrect
+                        ? (isEN ? "Correct!" : "Correct !")
+                        : (isEN ? `Incorrect — it's ${stmt.isTrue ? "TRUE" : "FALSE"}` : `Incorrect — c'est ${stmt.isTrue ? "VRAI" : "FAUX"}`)}
                     </div>
                     <div style={{ fontSize: "0.78rem", color: "#6f7897", lineHeight: "1.45" }}>{stmt.explanation}</div>
                   </div>
@@ -122,12 +127,12 @@ export default function BinaryQuiz({ exercise, onComplete }: Props) {
         <div className="rounded-xl px-4 py-3 flex items-center gap-3" style={{ background: correct >= Math.ceil(exercise.statements.length * 0.8) ? "rgba(25,128,56,0.08)" : "rgba(180,83,9,0.08)", border: `1.5px solid ${correct >= Math.ceil(exercise.statements.length * 0.8) ? "rgba(25,128,56,0.25)" : "rgba(180,83,9,0.25)"}` }}>
           <div className="flex-1">
             <div className="font-bold text-sm" style={{ color: correct >= Math.ceil(exercise.statements.length * 0.8) ? "#0e6027" : "#92400e" }}>
-              {correct >= Math.ceil(exercise.statements.length * 0.8) ? (exercise.successMessage ?? "Excellent résultat !") : "Quelques révisions s'imposent"}
+              {correct >= Math.ceil(exercise.statements.length * 0.8) ? (exercise.successMessage ?? (isEN ? "Excellent result!" : "Excellent résultat !")) : (isEN ? "Some review is needed" : "Quelques révisions s'imposent")}
             </div>
-            <div className="text-xs mt-0.5" style={{ color: "#6f7897" }}>{correct}/{exercise.statements.length} bonnes réponses</div>
+            <div className="text-xs mt-0.5" style={{ color: "#6f7897" }}>{correct}/{exercise.statements.length} {isEN ? "correct answers" : "bonnes réponses"}</div>
           </div>
           <button onClick={reset} className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg" style={{ background: "rgba(13,71,161,0.08)", color: "#0D47A1", border: "1px solid rgba(13,71,161,0.2)", cursor: "pointer" }}>
-            <RotateCcw size={12} /> Refaire
+            <RotateCcw size={12} /> {isEN ? "Retry" : "Refaire"}
           </button>
         </div>
       )}

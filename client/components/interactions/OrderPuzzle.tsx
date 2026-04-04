@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { CheckCircle2, XCircle, RotateCcw, Puzzle } from "lucide-react";
 import { OrderPuzzleExercise } from "@/lib/interactionData";
+import { useLanguage } from "@/lib/languageContext";
 
 interface Props {
   exercise: OrderPuzzleExercise;
@@ -72,6 +73,8 @@ export default function OrderPuzzle({ exercise, onComplete }: Props) {
   };
 
   const correctCount = validated ? order.filter((id, idx) => pieceMap[id].correctPosition === idx + 1).length : 0;
+  const { lang } = useLanguage();
+  const isEN = lang === "en";
 
   return (
     <div style={{ fontFamily: "'IBM Plex Sans', sans-serif" }}>
@@ -149,17 +152,17 @@ export default function OrderPuzzle({ exercise, onComplete }: Props) {
           className="w-full flex items-center justify-center gap-2 rounded-xl py-3.5 font-bold"
           style={{ background: "linear-gradient(135deg, #b45309, #92400e)", color: "#fff", border: "none", cursor: "pointer", fontSize: "0.9375rem", boxShadow: "0 4px 16px rgba(180,83,9,0.3)" }}
         >
-          Valider ma séquence
+          {isEN ? "Validate my sequence" : "Valider ma séquence"}
         </button>
       ) : (
         <div className="flex items-center gap-3 rounded-xl px-4 py-3" style={{ background: correctCount === order.length ? "rgba(25,128,56,0.08)" : "rgba(180,83,9,0.08)", border: `1.5px solid ${correctCount === order.length ? "rgba(25,128,56,0.25)" : "rgba(180,83,9,0.25)"}` }}>
           <div className="flex-1">
             <div className="font-bold text-sm" style={{ color: correctCount === order.length ? "#0e6027" : "#92400e" }}>
-              {correctCount === order.length ? (exercise.successMessage ?? "Séquence parfaite !") : `${correctCount}/${order.length} positions correctes — les ▲▼ indiquent la bonne position`}
+              {correctCount === order.length ? (exercise.successMessage ?? (isEN ? "Perfect sequence!" : "Séquence parfaite !")) : (isEN ? `${correctCount}/${order.length} correct positions — ▲▼ show the right position` : `${correctCount}/${order.length} positions correctes — les ▲▼ indiquent la bonne position`)}
             </div>
           </div>
           <button onClick={reset} className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg" style={{ background: "rgba(13,71,161,0.08)", color: "#0D47A1", border: "1px solid rgba(13,71,161,0.2)", cursor: "pointer" }}>
-            <RotateCcw size={12} /> Refaire
+            <RotateCcw size={12} /> {isEN ? "Retry" : "Refaire"}
           </button>
         </div>
       )}

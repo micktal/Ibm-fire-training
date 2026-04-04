@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Play, Pause, Volume2, VolumeX, Maximize2, Subtitles } from "lucide-react";
+import { useLanguage } from "@/lib/languageContext";
 
 interface VideoPlayerProps {
   url: string;
@@ -9,6 +10,8 @@ interface VideoPlayerProps {
 }
 
 export default function VideoPlayer({ url, title, captionsVtt, onComplete }: VideoPlayerProps) {
+  const { lang } = useLanguage();
+  const isEN = lang === "en";
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(false);
@@ -140,7 +143,7 @@ export default function VideoPlayer({ url, title, captionsVtt, onComplete }: Vid
                 border: "1px solid rgba(25,128,56,0.3)",
               }}
             >
-              Visionné
+              {isEN ? "Watched" : "Visionné"}
             </span>
           )}
         </div>
@@ -163,8 +166,8 @@ export default function VideoPlayer({ url, title, captionsVtt, onComplete }: Vid
             <track
               kind="subtitles"
               src={captionsBlobUrl}
-              srcLang="fr"
-              label="Français"
+              srcLang={isEN ? "en" : "fr"}
+              label={isEN ? "English" : "Français"}
               default
             />
           )}
@@ -220,7 +223,7 @@ export default function VideoPlayer({ url, title, captionsVtt, onComplete }: Vid
               <button
                 onClick={() => setCaptionsOn(!captionsOn)}
                 className="transition-opacity hover:opacity-80"
-                title={captionsOn ? "Masquer les sous-titres" : "Afficher les sous-titres"}
+                title={captionsOn ? (isEN ? "Hide subtitles" : "Masquer les sous-titres") : (isEN ? "Show subtitles" : "Afficher les sous-titres")}
                 style={{ color: captionsOn ? "#0f62fe" : "rgba(255,255,255,0.4)" }}
               >
                 <Subtitles size={16} />

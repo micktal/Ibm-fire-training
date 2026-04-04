@@ -71,6 +71,8 @@ interface Props {
 }
 
 export default function DragAndDrop({ exercise, onComplete }: Props) {
+  const { lang } = useLanguage();
+  const isEN = lang === "en";
   const [placed, setPlaced] = useState<PlacedItem[]>([]);
   const [dragging, setDragging] = useState<string | null>(null);
   const [hoveredZone, setHoveredZone] = useState<string | null>(null);
@@ -151,7 +153,7 @@ export default function DragAndDrop({ exercise, onComplete }: Props) {
             className="font-mono text-xs uppercase tracking-wider"
             style={{ color: "rgba(255,255,255,0.55)", fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.1em" }}
           >
-            Exercice Interactif — Glisser-Déposer
+            {isEN ? "Interactive Exercise — Drag & Drop" : "Exercice Interactif — Glisser-Déposer"}
           </span>
         </div>
         <p className="text-sm font-semibold text-white" style={{ lineHeight: "1.4" }}>
@@ -169,7 +171,7 @@ export default function DragAndDrop({ exercise, onComplete }: Props) {
         {remaining.length > 0 && (
           <div className="mb-5">
             <div className="text-xs font-semibold mb-2.5" style={{ color: "#8d95aa", textTransform: "uppercase", letterSpacing: "0.08em" }}>
-              Éléments à classer — glissez vers la bonne catégorie
+              {isEN ? "Items to sort — drag to the right category" : "Éléments à classer — glissez vers la bonne catégorie"}
             </div>
             <div className="flex flex-wrap gap-2.5">
               {remaining.map((item) => (
@@ -268,7 +270,7 @@ export default function DragAndDrop({ exercise, onComplete }: Props) {
                           cursor: validated ? "default" : "pointer",
                         }}
                         onClick={() => !validated && removeFromZone(item.id)}
-                        title={validated ? "" : "Cliquer pour retirer"}
+                        title={validated ? "" : (isEN ? "Click to remove" : "Cliquer pour retirer")}
                       >
                         {(item.icon && ICON_MAP[item.icon]) ? (
                           <span style={{ color: "#4a5068", display: "flex", alignItems: "center" }}>{ICON_MAP[item.icon]}</span>
@@ -290,7 +292,7 @@ export default function DragAndDrop({ exercise, onComplete }: Props) {
                       className="text-xs italic"
                       style={{ color: isHovered ? zone.color : "#b0b7c9", padding: "4px 0" }}
                     >
-                      {isHovered ? "Déposez ici" : "Déposez un élément ici"}
+                      {isHovered ? (isEN ? "Drop here" : "Déposez ici") : (isEN ? "Drop an item here" : "Déposez un élément ici")}
                     </div>
                   )}
                 </div>
@@ -302,10 +304,10 @@ export default function DragAndDrop({ exercise, onComplete }: Props) {
         {/* Actions */}
         <div className="flex items-center justify-between mt-4 pt-4" style={{ borderTop: "1px solid #e4e7f0" }}>
           <div className="text-xs" style={{ color: "#8d95aa" }}>
-            {placed.length}/{exercise.items.length} éléments placés
+            {placed.length}/{exercise.items.length} {isEN ? "items placed" : "éléments placés"}
             {validated && (
               <span className="ml-2 font-semibold" style={{ color: correctCount === exercise.items.length ? "#198038" : "#da1e28" }}>
-                · {correctCount} correct{correctCount > 1 ? "s" : ""}
+                · {correctCount} {isEN ? "correct" : `correct${correctCount > 1 ? "s" : ""}`}
               </span>
             )}
           </div>
@@ -317,7 +319,7 @@ export default function DragAndDrop({ exercise, onComplete }: Props) {
                 style={{ background: "#f5f6f8", color: "#4a5068", border: "1.5px solid #e4e7f0" }}
               >
                 <RotateCcw size={12} />
-                Réessayer
+                {isEN ? "Retry" : "Réessayer"}
               </button>
             )}
             {!validated && (
@@ -333,7 +335,7 @@ export default function DragAndDrop({ exercise, onComplete }: Props) {
                 }}
               >
                 <CheckCircle2 size={12} />
-                Valider
+                {isEN ? "Validate" : "Valider"}
               </button>
             )}
           </div>
@@ -359,12 +361,12 @@ export default function DragAndDrop({ exercise, onComplete }: Props) {
                   style={{ color: correctCount === exercise.items.length ? "#0e6027" : "#a2191f" }}
                 >
                   {correctCount === exercise.items.length
-                    ? exercise.successMessage || "Parfait — toutes les associations sont correctes !"
-                    : `${correctCount}/${exercise.items.length} associations correctes — réessayez !`}
+                    ? exercise.successMessage || (isEN ? "Perfect — all matches are correct!" : "Parfait — toutes les associations sont correctes !")
+                    : (isEN ? `${correctCount}/${exercise.items.length} correct matches — retry!` : `${correctCount}/${exercise.items.length} associations correctes — réessayez !`)}
                 </div>
                 {correctCount < exercise.items.length && (
                   <div className="text-xs mt-0.5" style={{ color: "#6f7897" }}>
-                    Vérifiez les éléments en rouge et repositionnez-les.
+                    {isEN ? "Check the red items and reposition them." : "Vérifiez les éléments en rouge et repositionnez-les."}
                   </div>
                 )}
               </div>

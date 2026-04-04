@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AlertTriangle, X, CheckCircle2, XCircle, Mail, MessageSquare, Clock, ChevronRight } from "lucide-react";
 import { SituationAlert } from "@/lib/situationAlerts";
+import { useLanguage } from "@/lib/languageContext";
 
 interface Props {
   alert: SituationAlert;
@@ -14,11 +15,13 @@ const URGENCY_CONFIG = {
 };
 
 export default function SituationAlertPopup({ alert, onClose }: Props) {
+  const { lang } = useLanguage();
+  const isEN = lang === "en";
   const [selected, setSelected] = useState<string | null>(null);
   const [answered, setAnswered] = useState(false);
 
   const urgency = URGENCY_CONFIG[alert.urgency];
-  const now = new Date().toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+  const now = new Date().toLocaleTimeString(isEN ? "en-GB" : "fr-FR", { hour: "2-digit", minute: "2-digit" });
   const correctChoice = alert.choices.find((c) => c.correct);
   const selectedChoice = alert.choices.find((c) => c.key === selected);
 
@@ -70,7 +73,7 @@ export default function SituationAlertPopup({ alert, onClose }: Props) {
           }} />
           <AlertTriangle size={16} color="#fff" className="flex-shrink-0" style={{ position: "relative", zIndex: 1 }} />
           <span className="font-mono font-bold text-white uppercase" style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "11px", letterSpacing: "0.15em", position: "relative", zIndex: 1 }}>
-            {urgency.label} — Situation en cours
+            {urgency.label} — {isEN ? "Ongoing situation" : "Situation en cours"}
           </span>
           <div className="ml-auto flex items-center gap-1.5" style={{ position: "relative", zIndex: 1 }}>
             <Clock size={11} color="rgba(255,255,255,0.7)" />
@@ -86,7 +89,7 @@ export default function SituationAlertPopup({ alert, onClose }: Props) {
             ? <Mail size={13} style={{ color: "#7eb3ff" }} />
             : <MessageSquare size={13} style={{ color: "#6fdc8c" }} />}
           <span className="text-xs font-semibold" style={{ color: isEmail ? "#7eb3ff" : "#6fdc8c" }}>
-            {isEmail ? "IBM Mail — Message reçu" : `IBM Teams — Canal ${alert.subject}`}
+            {isEmail ? (isEN ? "IBM Mail — Message received" : "IBM Mail — Message reçu") : `IBM Teams — ${isEN ? "Channel" : "Canal"} ${alert.subject}`}
           </span>
         </div>
 
@@ -106,7 +109,7 @@ export default function SituationAlertPopup({ alert, onClose }: Props) {
             </div>
             {isEmail && (
               <div className="flex-shrink-0 font-mono text-xs px-2 py-0.5 rounded-full" style={{ fontFamily: "'IBM Plex Mono', monospace", background: urgency.bg, color: urgency.color, border: `1px solid ${urgency.border}`, fontSize: "9px", letterSpacing: "0.08em" }}>
-                NON LU
+                {isEN ? "UNREAD" : "NON LU"}
               </div>
             )}
           </div>
@@ -149,7 +152,7 @@ export default function SituationAlertPopup({ alert, onClose }: Props) {
             style={{ background: urgency.bg, border: `1.5px solid ${urgency.border}` }}
           >
             <div className="font-mono text-xs uppercase mb-1" style={{ fontFamily: "'IBM Plex Mono', monospace", color: urgency.color, fontSize: "9px", letterSpacing: "0.12em" }}>
-              Question — Que faites-vous ?
+              {isEN ? "Question — What do you do?" : "Question — Que faites-vous ?"}
             </div>
             <div className="font-bold text-white" style={{ fontSize: "0.9375rem", lineHeight: "1.4" }}>
               {alert.question}
@@ -234,7 +237,9 @@ export default function SituationAlertPopup({ alert, onClose }: Props) {
                   : <XCircle size={15} color="#ff8b8b" className="flex-shrink-0 mt-0.5" />}
                 <div>
                   <div className="font-bold text-sm mb-0.5" style={{ color: selectedChoice.correct ? "#6fdc8c" : "#ff8b8b" }}>
-                    {selectedChoice.correct ? "Bonne réaction" : `Réponse incorrecte — La bonne : ${correctChoice?.label}`}
+                    {selectedChoice.correct
+                        ? (isEN ? "Good reaction" : "Bonne réaction")
+                        : (isEN ? `Wrong answer — Correct one: ${correctChoice?.label}` : `Réponse incorrecte — La bonne : ${correctChoice?.label}`)}
                   </div>
                   <div style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.82rem", lineHeight: "1.5" }}>
                     {selectedChoice.feedback}
@@ -258,7 +263,7 @@ export default function SituationAlertPopup({ alert, onClose }: Props) {
                 boxShadow: "0 8px 32px rgba(15,98,254,0.4)",
               }}
             >
-              Reprendre le module
+              {isEN ? "Resume module" : "Reprendre le module"}
               <ChevronRight size={16} />
             </button>
           )}

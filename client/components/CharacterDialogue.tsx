@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLanguage } from "@/lib/languageContext";
 
 export type CharacterRole = "instructor" | "colleague" | "manager" | "security";
 export type SceneType = "office" | "corridor" | "meeting";
@@ -16,11 +17,11 @@ interface Props {
 }
 
 // ── SVG Character Definitions ────────────────────────────────────
-const CHAR_CONFIG: Record<CharacterRole, { bodyColor: string; shirtColor: string; skinColor: string; hairColor: string; glasses?: boolean; name: string; side: "left" | "right" }> = {
-  instructor: { bodyColor: "#0D47A1", shirtColor: "#1565C0", skinColor: "#FDBCB4", hairColor: "#3d2b1f", glasses: false, name: "Formateur", side: "left" },
-  colleague:  { bodyColor: "#4a5568", shirtColor: "#718096", skinColor: "#F5CBA7", hairColor: "#1a1a2e", glasses: false, name: "Collègue",  side: "right" },
-  manager:    { bodyColor: "#1a1a2e", shirtColor: "#2d3748", skinColor: "#FDBCB4", hairColor: "#8B4513", glasses: true,  name: "Manager",   side: "right" },
-  security:   { bodyColor: "#da1e28", shirtColor: "#b91c1c", skinColor: "#D4A574", hairColor: "#2d2d2d", glasses: false, name: "Sécurité",  side: "left" },
+const CHAR_CONFIG: Record<CharacterRole, { bodyColor: string; shirtColor: string; skinColor: string; hairColor: string; glasses?: boolean; nameFr: string; nameEn: string; side: "left" | "right" }> = {
+  instructor: { bodyColor: "#0D47A1", shirtColor: "#1565C0", skinColor: "#FDBCB4", hairColor: "#3d2b1f", glasses: false, nameFr: "Formateur", nameEn: "Trainer", side: "left" },
+  colleague:  { bodyColor: "#4a5568", shirtColor: "#718096", skinColor: "#F5CBA7", hairColor: "#1a1a2e", glasses: false, nameFr: "Collègue",  nameEn: "Colleague", side: "right" },
+  manager:    { bodyColor: "#1a1a2e", shirtColor: "#2d3748", skinColor: "#FDBCB4", hairColor: "#8B4513", glasses: true,  nameFr: "Manager",   nameEn: "Manager", side: "right" },
+  security:   { bodyColor: "#da1e28", shirtColor: "#b91c1c", skinColor: "#D4A574", hairColor: "#2d2d2d", glasses: false, nameFr: "Sécurité",  nameEn: "Security", side: "left" },
 };
 
 const SCENE_BACKGROUNDS: Record<SceneType, { wall: string; floor: string; accent: string }> = {
@@ -183,9 +184,9 @@ function SceneBackground({ scene }: { scene: SceneType }) {
       {/* Whiteboard content */}
       <text x="200" y="45" textAnchor="middle" fontSize="11" fill={s.accent} fontWeight="bold">PROCÉDURE INCENDIE</text>
       <line x1="110" y1="55" x2="290" y2="55" stroke={s.accent} strokeWidth="1" opacity="0.4" />
-      <text x="120" y="70" fontSize="8" fill="#4a5568">1. Déclencher l'alarme</text>
-      <text x="120" y="82" fontSize="8" fill="#4a5568">2. Appeler le 22 22</text>
-      <text x="120" y="94" fontSize="8" fill="#4a5568">3. Évacuer calmement</text>
+      <text x="120" y="70" fontSize="8" fill="#4a5568">1. Trigger alarm</text>
+      <text x="120" y="82" fontSize="8" fill="#4a5568">2. Call 22 22</text>
+      <text x="120" y="94" fontSize="8" fill="#4a5568">3. Evacuate calmly</text>
     </svg>
   );
 }
@@ -241,6 +242,8 @@ function SpeechBubble({ text, side, visible }: { text: string; side: "left" | "r
 
 // ── Main CharacterDialogue component ────────────────────────────
 export default function CharacterDialogue({ lines, scene = "office", onComplete, autoAdvance = false }: Props) {
+  const { lang } = useLanguage();
+  const isEN = lang === "en";
   const [currentLine, setCurrentLine] = useState(0);
   const [visible, setVisible] = useState(true);
 
@@ -284,7 +287,7 @@ export default function CharacterDialogue({ lines, scene = "office", onComplete,
       <div className="flex items-center gap-2 px-4 py-2.5" style={{ background: "linear-gradient(135deg, #0D47A1, #1565C0)" }}>
         <div className="w-2 h-2 rounded-full" style={{ background: "#6fdc8c", animation: "criticalPulse 2s ease-in-out infinite" }} />
         <span className="font-mono text-xs font-bold text-white uppercase" style={{ fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.1em", fontSize: "10px" }}>
-          Scénario interactif
+          {isEN ? "Interactive scenario" : "Scénario interactif"}
         </span>
         <span className="ml-auto font-mono text-xs" style={{ color: "rgba(255,255,255,0.5)", fontFamily: "'IBM Plex Mono', monospace", fontSize: "9px" }}>
           {currentLine + 1} / {lines.length}
@@ -324,7 +327,7 @@ export default function CharacterDialogue({ lines, scene = "office", onComplete,
             textTransform: "uppercase",
           }}
         >
-          {charConfig.name}
+          {isEN ? charConfig.nameEn : charConfig.nameFr}
         </div>
       </div>
 
@@ -348,7 +351,7 @@ export default function CharacterDialogue({ lines, scene = "office", onComplete,
           className="flex items-center gap-1.5 font-bold rounded-xl px-4 py-2"
           style={{ background: "#0D47A1", color: "#fff", border: "none", cursor: "pointer", fontSize: "0.82rem" }}
         >
-          {currentLine < lines.length - 1 ? "Suite" : "Commencer"}
+          {currentLine < lines.length - 1 ? (isEN ? "Next" : "Suite") : (isEN ? "Start" : "Commencer")}
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="9 18 15 12 9 6" />
           </svg>
