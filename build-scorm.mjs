@@ -82,6 +82,8 @@ async function main() {
   });
 
   writeFileSync(OUTPUT, content);
+  // Copie dans public/ pour téléchargement direct via le serveur
+  writeFileSync("public/ibm-fire-training-scorm.zip", content);
 
   const sizeMb = (content.length / 1024 / 1024).toFixed(2);
   console.log(`\n✅ Package SCORM généré avec succès !\n`);
