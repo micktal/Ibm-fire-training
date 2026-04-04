@@ -245,32 +245,32 @@ const m3_hotspot: HotspotExercise = {
   type: "hotspot",
   instruction: "Identifiez les facteurs qui accélèrent la propagation dans ce couloir",
   context: "Analysez la scène. Quels éléments aggravent la situation ? Lesquels la ralentissent ?",
-  image: `${CDN}1bc0b7770b8140dfbb89ac056c0159e4?format=webp&width=800`,
+  image: `${CDN}9f6805951259409eab7f9f39e93488aa?format=webp&width=800`,
   successMessage: "Analyse complète — vous comprenez les mécanismes de propagation",
   hotspots: [
     {
-      id: "h1", x: 18, y: 70,
+      id: "h1", x: 20, y: 65,
       label: "Foyer principal — équipement en feu",
       description: "L'équipement électrique en surchauffe est la source du départ de feu. La chaleur rayonnante et les flammes propagent le feu aux matériaux voisins.",
       type: "danger",
       detail: "Un équipement qui chauffe anormalement doit être signalé immédiatement",
     },
     {
-      id: "h2", x: 45, y: 25,
+      id: "h2", x: 45, y: 22,
       label: "Fumée dense en hauteur",
       description: "La fumée noire monte vers le plafond et se propage dans le couloir. Elle réduit la visibilité et indique la direction du feu. L'air respirable est au ras du sol.",
       type: "danger",
       detail: "En cas de fumée dense : se baisser et longer les murs jusqu'à la sortie",
     },
     {
-      id: "h3", x: 80, y: 30,
+      id: "h3", x: 72, y: 40,
       label: "Déclencheur d'alarme manuel",
       description: "Le déclencheur est visible et accessible sur le mur. L'activer immédiatement alerte tout le bâtiment et déclenche l'évacuation générale.",
       type: "safe",
       detail: "Distance maximale réglementaire : 30m entre deux déclencheurs",
     },
     {
-      id: "h4", x: 88, y: 72,
+      id: "h4", x: 83, y: 70,
       label: "Extincteur CO2",
       description: "Un extincteur est fixé au mur, accessible rapidement. Adapté aux feux électriques (classe E). À utiliser uniquement si le feu est maîtrisable et la sortie derrière soi.",
       type: "info",
@@ -288,7 +288,7 @@ const m3_branching: BranchingExercise = {
   nodes: {
     corridor: {
       id: "corridor",
-      image: `${CDN}420fe533d58f4bcea4ab6851d6cc9ab6?format=webp&width=800`,
+      image: `${CDN}e353c322f4e74a7282f3d1eeb9e272de?format=webp&width=800`,
       situation: "Fumée dans le couloir. Vous venez de quitter votre bureau. La porte est encore ouverte derrière vous.",
       context: "Vous êtes à 3 mètres de la porte ouverte. Des collègues arrivent de l'autre côté du couloir.",
       urgency: "high",
@@ -319,8 +319,8 @@ const m3_branching: BranchingExercise = {
     },
     alarm: {
       id: "alarm",
-      image: `${CDN}2482acaedcdd4b2abad18b1011a424c6?format=webp&width=800`,
-      situation: "Vous êtes dans le couloir. L'alarme n'a pas encore sonné. Vous voyez un déclencheur manuel à 5 mètres.",
+      image: `${CDN}e353c322f4e74a7282f3d1eeb9e272de?format=webp&width=800`,
+      situation: "L'alarme n'a pas encore sonné. En passant devant un déclencheur manuel, vous réalisez que personne ne l'a activé.",
       urgency: "high",
       choices: [
         {
