@@ -47,7 +47,7 @@ export default function CountdownOverlay({ onComplete, moduleImage }: Props) {
 
   const ringColor = isGo ? "#6fdc8c" : current <= 2 ? "#ff6b1a" : "#0f62fe";
 
-  const circumference = 2 * Math.PI * 54; // r=54
+  const circumference = 2 * Math.PI * 70; // r=70 fixe
 
   return (
     <div
@@ -83,21 +83,19 @@ export default function CountdownOverlay({ onComplete, moduleImage }: Props) {
       <div className="relative flex flex-col items-center">
 
         {/* SVG ring */}
-        <div className="relative flex items-center justify-center mb-0" style={{ width: "160px", height: "160px" }}>
-          <svg width="160" height="160" style={{ position: "absolute", top: 0, left: 0, transform: "rotate(-90deg)" }}>
-            {/* Track */}
-            <circle
-              cx="80" cy="80" r="54"
-              fill="none"
-              stroke="rgba(255,255,255,0.07)"
-              strokeWidth="5"
+        <div
+          className="relative flex items-center justify-center mb-0"
+          style={{ width: "180px", height: "180px" }}
+        >
+          <svg
+            width={180} height={180}
+            style={{ position: "absolute", top: 0, left: 0, transform: "rotate(-90deg)" }}
+          >
+            <circle cx={90} cy={90} r={70}
+              fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="5"
             />
-            {/* Progress arc */}
-            <circle
-              cx="80" cy="80" r="54"
-              fill="none"
-              stroke={ringColor}
-              strokeWidth="5"
+            <circle cx={90} cy={90} r={70}
+              fill="none" stroke={ringColor} strokeWidth="5"
               strokeLinecap="round"
               strokeDasharray={circumference}
               strokeDashoffset={circumference * (isGo ? 0 : 1 - (5 - current) / 5)}
@@ -105,35 +103,45 @@ export default function CountdownOverlay({ onComplete, moduleImage }: Props) {
             />
           </svg>
 
-          {/* Number or GO */}
-          <div
-            key={step} // re-mounts on each step for CSS animation
-            style={{
-              fontFamily: "'IBM Plex Mono', monospace",
-              fontSize: isGo ? "2.6rem" : "4.5rem",
-              fontWeight: 700,
-              color: numColor,
-              letterSpacing: isGo ? "0.04em" : "-0.04em",
-              lineHeight: 1,
-              animation: animate ? (isGo ? "goReveal 0.5s cubic-bezier(0.34,1.56,0.64,1) both" : "numPop 0.45s cubic-bezier(0.34,1.56,0.64,1) both") : "none",
-              textShadow: isGo
-                ? "0 0 40px rgba(111,220,140,0.7)"
-                : current <= 2
-                ? "0 0 30px rgba(255,107,26,0.6)"
-                : "0 0 20px rgba(15,98,254,0.5)",
-              transition: "color 0.3s ease",
-              display: "flex",
-              alignItems: "center",
-              gap: isGo ? "0.15em" : 0,
-            }}
-          >
-            {isGo ? (
-              <>
-                <span>PARTEZ</span>
-                <span style={{ fontSize: "2rem", lineHeight: 1, marginTop: "-0.1em" }}>!</span>
-              </>
-            ) : current}
-          </div>
+          {/* Chiffre ou PARTEZ! */}
+          {isGo ? (
+            /* PARTEZ! sort du cercle — centré en dessous du ring, overlapping */
+            <div
+              key={step}
+              style={{
+                fontFamily: "'IBM Plex Mono', monospace",
+                fontSize: "2.2rem",
+                fontWeight: 800,
+                color: numColor,
+                letterSpacing: "0.08em",
+                lineHeight: 1,
+                whiteSpace: "nowrap",
+                position: "absolute",
+                animation: "goReveal 0.5s cubic-bezier(0.34,1.56,0.64,1) both",
+                textShadow: "0 0 40px rgba(111,220,140,0.7)",
+              }}
+            >
+              PARTEZ !
+            </div>
+          ) : (
+            <div
+              key={step}
+              style={{
+                fontFamily: "'IBM Plex Mono', monospace",
+                fontSize: "4.5rem",
+                fontWeight: 800,
+                color: numColor,
+                letterSpacing: "-0.04em",
+                lineHeight: 1,
+                animation: animate ? "numPop 0.45s cubic-bezier(0.34,1.56,0.64,1) both" : "none",
+                textShadow: current <= 2
+                  ? "0 0 30px rgba(255,107,26,0.6)"
+                  : "0 0 20px rgba(15,98,254,0.5)",
+              }}
+            >
+              {current}
+            </div>
+          )}
         </div>
 
         {/* Label */}
