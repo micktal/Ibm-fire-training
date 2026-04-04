@@ -40,7 +40,8 @@ function exportToCSV(data: TrainingRegistration[]) {
     .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(";"))
     .join("\n");
 
-  const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+  // "sep=;" tells Excel (FR) to use semicolons as the column separator
+  const blob = new Blob(["\uFEFFsep=;\n" + csv], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
