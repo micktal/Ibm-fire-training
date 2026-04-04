@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import {
   CheckCircle2, ChevronRight, Flame, Shield, AlertTriangle,
   Zap, BookOpen, ArrowRight, Star, Eye, Bell, DoorClosed,
-  Users, Wind, Stairs, ClipboardCheck,
+  Users, Wind, ArrowUp, ClipboardCheck,
 } from "lucide-react";
 import IBMLogo from "@/components/IBMLogo";
 import GeometricBg from "@/components/layout/GeometricBg";
@@ -78,7 +78,7 @@ const CH2_MODULES = [
   { num: "M03", icon: <DoorClosed size={15} />, title: "Fermer les portes", desc: "Sors — Ferme — Signale. Le rôle coupe-feu des portes" },
   { num: "M04", icon: <Eye size={15} />, title: "Vérifier que personne ne reste", desc: "Exploration rapide et sécurisée avant évacuation définitive" },
   { num: "M05", icon: <Wind size={15} />, title: "Faire face à la fumée", desc: "Bons réflexes dans un environnement enfumé" },
-  { num: "M06", icon: <Stairs size={15} />, title: "Escaliers ou espace sécurisé", desc: "Jamais l'ascenseur — toujours l'escalier de secours" },
+  { num: "M06", icon: <ArrowUp size={15} />, title: "Escaliers ou espace sécurisé", desc: "Jamais l'ascenseur — toujours l'escalier de secours" },
   { num: "M07", icon: <ClipboardCheck size={15} />, title: "Procédure complète d'évacuation", desc: "Simulation finale chronométrée — mise en situation réelle" },
 ];
 
