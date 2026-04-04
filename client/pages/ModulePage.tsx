@@ -160,6 +160,16 @@ function ContentIcon({ type }: { type: string }) {
 }
 
 // ── Quiz component ──────────────────────────────────────────────
+/** Fisher-Yates shuffle — retourne un nouveau tableau mélangé */
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 function QuizBlock({
   questions,
   onComplete,
@@ -167,13 +177,21 @@ function QuizBlock({
   questions: QuizQuestion[];
   onComplete: (score: number, correct: number) => void;
 }) {
+  // Questions mélangées une fois à chaque montage du quiz
+  const [shuffledQuestions] = useState<QuizQuestion[]>(() => shuffle(questions));
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [answered, setAnswered] = useState(false);
   const [results, setResults] = useState<boolean[]>([]);
   const [done, setDone] = useState(false);
+  const [shake, setShake] = useState(false);
 
-  const q = questions[current];
+  const q = shuffledQuestions[current];
+
+  // Réponses mélangées pour chaque question (stable tant que current ne change pas)
+  const [shuffledChoices] = useState<typeof q.choices[]>(() =>
+    shuffledQuestions.map((sq) => shuffle(sq.choices))
+  );
 
   const handleSelect = (key: string) => {
     if (answered) return;
@@ -183,21 +201,27 @@ function QuizBlock({
   };
 
   const handleNext = () => {
-    if (current < questions.length - 1) {
+    if (!answered) {
+      // Bloquer: l'apprenant DOIT répondre
+      setShake(true);
+      setTimeout(() => setShake(false), 600);
+      return;
+    }
+    if (current < shuffledQuestions.length - 1) {
       setCurrent((c) => c + 1);
       setSelected(null);
       setAnswered(false);
     } else {
       const finalCorrect = [...results].filter(Boolean).length;
-      const score = Math.round((finalCorrect / questions.length) * 100);
+      const score = Math.round((finalCorrect / shuffledQuestions.length) * 100);
       setDone(true);
       onComplete(score, finalCorrect);
     }
   };
 
   const finalCorrect = results.filter(Boolean).length;
-  const finalScore = done ? Math.round((finalCorrect / questions.length) * 100) : 0;
-  const pct = ((current) / questions.length) * 100;
+  const finalScore = done ? Math.round((finalCorrect / shuffledQuestions.length) * 100) : 0;
+  const pct = ((current) / shuffledQuestions.length) * 100;
 
   if (done) {
     const passed = finalScore >= 80;
@@ -234,7 +258,7 @@ function QuizBlock({
             {passed ? "Quiz réussi — module validé" : "Score insuffisant — réessayez"}
           </div>
           <div className="text-sm mb-5" style={{ color: "#6f7897" }}>
-            {finalCorrect} bonne{finalCorrect > 1 ? "s" : ""} réponse{finalCorrect > 1 ? "s" : ""} sur {questions.length}
+            {finalCorrect} bonne{finalCorrect > 1 ? "s" : ""} réponse{finalCorrect > 1 ? "s" : ""} sur {shuffledQuestions.length}
           </div>
           {/* Mini results row */}
           <div className="flex justify-center gap-2 mb-5">
@@ -293,10 +317,10 @@ function QuizBlock({
               letterSpacing: "0.08em",
             }}
           >
-            {current + 1} / {questions.length}
+            {current + 1} / {shuffledQuestions.length}
           </span>
           <div className="flex gap-1.5">
-            {questions.map((_, i) => (
+            {shuffledQuestions.map((_, i) => (
               <div
                 key={i}
                 className="rounded-full transition-all duration-300"
@@ -330,7 +354,7 @@ function QuizBlock({
 
       {/* Choices */}
       <div className="p-4 flex flex-col gap-2.5" style={{ background: "#f8f9fc" }}>
-        {q.choices.map((choice) => {
+        {shuffledChoices[current].map((choice) => {
           const isSelected = selected === choice.key;
           const isCorrect = choice.key === q.correctKey;
 
@@ -428,21 +452,45 @@ function QuizBlock({
         </div>
       )}
 
-      {/* Next button */}
-      {answered && (
-        <div className="px-4 pb-4 pt-2">
-          <button
-            onClick={handleNext}
-            className="w-full flex items-center justify-center gap-2 font-semibold rounded-xl transition-all"
-            style={{ padding: "0.875rem", background: "#0043ce", color: "#fff", border: "none", cursor: "pointer", fontSize: "0.9375rem" }}
-            onMouseEnter={(e) => (e.currentTarget as HTMLButtonElement).style.background = "#0031a9"}
-            onMouseLeave={(e) => (e.currentTarget as HTMLButtonElement).style.background = "#0043ce"}
-          >
-            {current < questions.length - 1 ? "Question suivante" : "Voir mon résultat"}
-            <ArrowRight size={16} />
-          </button>
+      {/* Indicateur obligatoire avant réponse */}
+      {!answered && (
+        <div
+          className="mx-4 mb-3 rounded-xl px-4 py-2.5 flex items-center gap-2"
+          style={{
+            background: shake ? "rgba(218,30,40,0.08)" : "rgba(0,67,206,0.05)",
+            border: `1.5px solid ${shake ? "rgba(218,30,40,0.3)" : "rgba(0,67,206,0.15)"}`,
+            transition: "background 0.3s, border-color 0.3s",
+          }}
+        >
+          <span style={{ fontSize: "14px" }}>🔒</span>
+          <span className="text-xs font-semibold" style={{ color: shake ? "#da1e28" : "#0043ce" }}>
+            {shake ? "Vous devez répondre avant de continuer" : "Sélectionnez une réponse pour continuer"}
+          </span>
         </div>
       )}
+
+      {/* Bouton suivant — toujours visible, grisé tant que pas répondu */}
+      <div className="px-4 pb-4 pt-1">
+        <button
+          onClick={handleNext}
+          className="w-full flex items-center justify-center gap-2 font-semibold rounded-xl transition-all"
+          style={{
+            padding: "0.875rem",
+            background: answered ? "#0043ce" : "#c8cdd8",
+            color: "#fff",
+            border: "none",
+            cursor: answered ? "pointer" : "not-allowed",
+            fontSize: "0.9375rem",
+            opacity: answered ? 1 : 0.65,
+            transition: "background 0.3s, opacity 0.3s",
+          }}
+          onMouseEnter={(e) => { if (answered) (e.currentTarget as HTMLButtonElement).style.background = "#0031a9"; }}
+          onMouseLeave={(e) => { if (answered) (e.currentTarget as HTMLButtonElement).style.background = answered ? "#0043ce" : "#c8cdd8"; }}
+        >
+          {current < shuffledQuestions.length - 1 ? "Question suivante" : "Voir mon résultat"}
+          <ArrowRight size={16} />
+        </button>
+      </div>
     </div>
   );
 }
@@ -476,6 +524,15 @@ export default function ModulePage() {
   const [showCelebration, setShowCelebration] = useState(false);
 
   const mod = id ? getModuleById(id) : null;
+
+  // Réinitialise l'overlay intro à chaque changement de module
+  useEffect(() => {
+    setPhase("intro");
+    setQuizDone(false);
+    setQuizScore(0);
+    setActiveSection(0);
+    setShowCelebration(false);
+  }, [id]);
 
   useEffect(() => {
     if (!mod) navigate("/hub");
