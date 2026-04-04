@@ -29,6 +29,12 @@ export interface FunFact {
   icon: "flame" | "clock" | "alert" | "shield" | "zap" | "eye";
 }
 
+export interface PreTestQuestion {
+  question: string;
+  choices: { key: string; label: string }[];
+  correctKey: string;
+}
+
 export interface CourseModule {
   id: string;
   chapter: 1 | 2;
@@ -43,6 +49,7 @@ export interface CourseModule {
   captionsVtt?: string;
   funFacts?: FunFact[];
   keyPoints?: string[];   // 3 bullet points shown before quiz
+  preTest?: PreTestQuestion[]; // 2-question positioning test shown before module
   content: ModuleContent[];
   quiz: QuizQuestion[];
   locked: boolean;
@@ -201,6 +208,27 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       { stat: "30 secondes", label: "pour agir efficacement", detail: "Dès qu'un signal d'alerte est détecté, vous disposez de 30 secondes pour évaluer et déclencher la procédure IBM.", icon: "clock" },
       { stat: "80%", label: "des feux de bureau démarrent la nuit", detail: "La plupart des incendies en entreprise se déclarent hors des heures de présence. La prévention passe par le débranchement systématique.", icon: "eye" },
     ],
+    preTest: [
+      {
+        question: "Face à une légère odeur de brûlé dans votre open space, vous :",
+        choices: [
+          { key: "A", label: "Ignorez — c'est probablement la cuisine" },
+          { key: "B", label: "Identifiez et alertez immédiatement" },
+          { key: "C", label: "Attendez que d'autres réagissent" },
+        ],
+        correctKey: "B",
+      },
+      {
+        question: "Quels signaux peuvent indiquer un départ de feu ?",
+        choices: [
+          { key: "A", label: "Flammes visibles uniquement" },
+          { key: "B", label: "Fumée, odeur, chaleur anormale ou grésil" },
+          { key: "C", label: "Uniquement l'alarme automatique" },
+        ],
+        correctKey: "B",
+      },
+    ],
+
     content: [
       {
         type: "intro",
@@ -277,6 +305,27 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       { stat: "200 gaz", label: "toxiques libérés par un câble PVC", detail: "La combustion d'un seul câble PVC libère plus de 200 composés toxiques. La fumée tue avant les flammes.", icon: "alert" },
       { stat: "3 éléments", label: "suffisent à créer un incendie", detail: "Chaleur + combustible + oxygène. Supprimez-en un seul, le feu s'éteint. C'est le principe de toute intervention.", icon: "flame" },
     ],
+    preTest: [
+      {
+        question: "Le triangle du feu est composé de :",
+        choices: [
+          { key: "A", label: "Fumée, flamme et chaleur" },
+          { key: "B", label: "Combustible, comburant et chaleur" },
+          { key: "C", label: "Eau, air et feu" },
+        ],
+        correctKey: "B",
+      },
+      {
+        question: "Pour éteindre un feu, il faut :",
+        choices: [
+          { key: "A", label: "Verser de l'eau dans tous les cas" },
+          { key: "B", label: "Supprimer au moins un des 3 éléments du triangle" },
+          { key: "C", label: "Attendre les pompiers" },
+        ],
+        correctKey: "B",
+      },
+    ],
+
     content: [
       {
         type: "intro",
@@ -359,6 +408,27 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       { stat: "5×", label: "plus rapide que les flammes", detail: "La fumée se propage 5 fois plus vite que le feu dans un couloir. Elle est la première cause de décès dans les incendies de bureau.", icon: "zap" },
       { stat: "5 min", label: "pour enflammer une pièce entière", detail: "Sans intervention, une pièce de bureau standard peut être totalement embrasée en moins de 5 minutes après le départ de feu.", icon: "clock" },
     ],
+    preTest: [
+      {
+        question: "Fermer les portes lors d'un incendie :",
+        choices: [
+          { key: "A", label: "N'a aucun effet sur la propagation" },
+          { key: "B", label: "Ralentit la propagation du feu et de la fumée" },
+          { key: "C", label: "Aggrave l'incendie" },
+        ],
+        correctKey: "B",
+      },
+      {
+        question: "Lors d'une évacuation, il est correct de :",
+        choices: [
+          { key: "A", label: "Courir vers la sortie la plus proche" },
+          { key: "B", label: "Marcher calmement, sans prendre l'ascenseur" },
+          { key: "C", label: "Ouvrir toutes les fenêtres pour aérer" },
+        ],
+        correctKey: "B",
+      },
+    ],
+
     content: [
       {
         type: "intro",
@@ -440,6 +510,27 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       { stat: "6 classes", label: "de feux — 1 erreur peut être mortelle", detail: "Utiliser un extincteur inadapté peut être plus dangereux que de ne pas intervenir. Eau sur feu électrique = risque d'électrocution.", icon: "alert" },
       { stat: "95%", label: "des feux de bureau : classe A ou électrique", detail: "Connaître ces 2 classes vous prépare à 95% des situations réelles en entreprise.", icon: "shield" },
     ],
+    preTest: [
+      {
+        question: "Un feu électrique (câble, serveur) doit être éteint avec :",
+        choices: [
+          { key: "A", label: "De l'eau" },
+          { key: "B", label: "Un extincteur CO2 uniquement" },
+          { key: "C", label: "N'importe quel extincteur" },
+        ],
+        correctKey: "B",
+      },
+      {
+        question: "La classe B d'incendie concerne :",
+        choices: [
+          { key: "A", label: "Les feux de papier et bois" },
+          { key: "B", label: "Les feux de liquides inflammables" },
+          { key: "C", label: "Les métaux en combustion" },
+        ],
+        correctKey: "B",
+      },
+    ],
+
     content: [
       {
         type: "intro",
@@ -528,6 +619,27 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       { stat: "8-12 sec", label: "autonomie d'un extincteur CO2", detail: "Un extincteur CO2 standard se vide en 8 à 12 secondes. Chaque geste doit être précis et immédiat — pas de place à l'improvisation.", icon: "clock" },
       { stat: "-78°C", label: "température du cône CO2", detail: "Ne jamais tenir le cône d'un extincteur CO2 à mains nues. Le froid extrême provoque des brûlures en moins d'une seconde.", icon: "alert" },
     ],
+    preTest: [
+      {
+        question: "La première étape de la séquence PASS est :",
+        choices: [
+          { key: "A", label: "Presser la poignée de déclenchement" },
+          { key: "B", label: "Tirer la goupille de sécurité" },
+          { key: "C", label: "Viser la base des flammes" },
+        ],
+        correctKey: "B",
+      },
+      {
+        question: "La distance optimale d'utilisation d'un extincteur est :",
+        choices: [
+          { key: "A", label: "Moins d'1 mètre" },
+          { key: "B", label: "2 à 3 mètres" },
+          { key: "C", label: "Plus de 5 mètres" },
+        ],
+        correctKey: "B",
+      },
+    ],
+
     content: [
       {
         type: "intro",
@@ -604,6 +716,27 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       { stat: "10 sec", label: "pour prendre la décision critique", detail: "IBM fixe un délai de 10 secondes d'observation. Au-delà, la décision doit être prise : intervenir ou évacuer. Pas de troisième option.", icon: "clock" },
       { stat: "70%", label: "des victimes auraient pu évacuer", detail: "70% des décès par incendie en entreprise concernent des personnes qui avaient encore le temps d'évacuer mais ont hésité.", icon: "alert" },
     ],
+    preTest: [
+      {
+        question: "IBM impose de décider d'intervenir ou évacuer en :",
+        choices: [
+          { key: "A", label: "5 minutes" },
+          { key: "B", label: "10 secondes" },
+          { key: "C", label: "1 minute" },
+        ],
+        correctKey: "B",
+      },
+      {
+        question: "Vous DEVEZ évacuer si :",
+        choices: [
+          { key: "A", label: "Le feu est limité à une corbeille" },
+          { key: "B", label: "La fumée est épaisse ou la porte est chaude" },
+          { key: "C", label: "Vous avez un extincteur disponible" },
+        ],
+        correctKey: "B",
+      },
+    ],
+
     content: [
       {
         type: "intro",
@@ -686,6 +819,27 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       { stat: "40%", label: "de réduction du temps d'évacuation", detail: "Les entreprises qui organisent des exercices incendie réguliers réduisent leur temps d'évacuation de 40% en moyenne.", icon: "shield" },
       { stat: "2×/an", label: "exercices IBM obligatoires par site", detail: "IBM France organise 2 exercices incendie annuels par site. Chaque collaborateur doit y participer — l'absence est signalée aux RH.", icon: "eye" },
     ],
+    preTest: [
+      {
+        question: "En déclenchant l'alarme IBM, vous composez EN PREMIER :",
+        choices: [
+          { key: "A", label: "Le 18 (pompiers)" },
+          { key: "B", label: "Le 22 22 (sécurité IBM)" },
+          { key: "C", label: "Le 15 (SAMU)" },
+        ],
+        correctKey: "B",
+      },
+      {
+        question: "Les 3 réflexes IBM dans l'ordre sont :",
+        choices: [
+          { key: "A", label: "Évacuer → Alarme → Débrancher" },
+          { key: "B", label: "Débrancher → Alarme (22 22) → Évacuer" },
+          { key: "C", label: "Alarme → Débrancher → Appeler le 18" },
+        ],
+        correctKey: "B",
+      },
+    ],
+
     content: [
       {
         type: "intro",
@@ -754,6 +908,27 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       { stat: "6 m²", label: "de propagation par seconde de retard", detail: "Chaque seconde de retard à déclencher l'alarme représente en moyenne 6m² de surface supplémentaire touchée par le feu.", icon: "flame" },
       { stat: "22 22", label: "le numéro IBM à composer EN PREMIER", detail: "Avant le 18 et le 15, composez le 22 22. La sécurité IBM connaît le plan des bâtiments et peut intervenir plus rapidement.", icon: "shield" },
     ],
+    preTest: [
+      {
+        question: "À quel moment déclencher l'alarme incendie ?",
+        choices: [
+          { key: "A", label: "Seulement si les flammes sont visibles" },
+          { key: "B", label: "Dès qu'un signe de feu est détecté, sans attendre" },
+          { key: "C", label: "Après avoir prévenu son responsable" },
+        ],
+        correctKey: "B",
+      },
+      {
+        question: "Un déclencheur manuel d'alarme est :",
+        choices: [
+          { key: "A", label: "Utilisé uniquement par la sécurité" },
+          { key: "B", label: "Accessible à tous les collaborateurs" },
+          { key: "C", label: "Réservé aux exercices d'évacuation" },
+        ],
+        correctKey: "B",
+      },
+    ],
+
     content: [
       {
         type: "intro",
@@ -819,6 +994,27 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       { stat: "3×", label: "la panique ralentit l'évacuation", detail: "Une évacuation désordonnée et paniquée est 3 fois plus lente. Le sang-froid et les consignes claires sauvent des vies.", icon: "alert" },
       { stat: "1 voix", label: "suffit pour structurer 20 personnes", detail: "Un collaborateur formé qui prend le commandement vocal peut structurer une évacuation de 20 personnes en moins de 30 secondes.", icon: "zap" },
     ],
+    preTest: [
+      {
+        question: "Face à des collègues paniqués, votre rôle est :",
+        choices: [
+          { key: "A", label: "D'évacuer sans s'occuper des autres" },
+          { key: "B", label: "De parler calmement et guider vers la sortie" },
+          { key: "C", label: "D'attendre les instructions de la direction" },
+        ],
+        correctKey: "B",
+      },
+      {
+        question: "Un ton calme et ferme durant une évacuation :",
+        choices: [
+          { key: "A", label: "Augmente la panique" },
+          { key: "B", label: "Réduit la panique et facilite l'évacuation" },
+          { key: "C", label: "N'a pas d'effet sur le comportement" },
+        ],
+        correctKey: "B",
+      },
+    ],
+
     content: [
       {
         type: "intro",
@@ -875,6 +1071,27 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       { stat: "20%", label: "reviennent chercher leurs affaires", detail: "20% des décès lors d'incendies surviennent chez des personnes revenues chercher leurs effets personnels. Rien ne vaut une vie.", icon: "alert" },
       { stat: "3 min", label: "les plus dangereuses de l'évacuation", detail: "Les 3 premières minutes d'évacuation concentrent 80% des risques. Une sortie rapide et ordonnée est la seule priorité.", icon: "clock" },
     ],
+    preTest: [
+      {
+        question: "Fermer une porte durant un incendie peut :",
+        choices: [
+          { key: "A", label: "Piéger les personnes à l'intérieur" },
+          { key: "B", label: "Retarder la propagation du feu de plusieurs minutes" },
+          { key: "C", label: "Couper l'oxygène et éteindre le feu" },
+        ],
+        correctKey: "B",
+      },
+      {
+        question: "En quittant une pièce lors d'une évacuation :",
+        choices: [
+          { key: "A", label: "Laisser la porte ouverte pour ventiler" },
+          { key: "B", label: "Fermer la porte sans la verrouiller" },
+          { key: "C", label: "Verrouiller la porte à clé" },
+        ],
+        correctKey: "B",
+      },
+    ],
+
     content: [
       {
         type: "intro",
@@ -931,6 +1148,27 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       { stat: "3×", label: "la fumée tue plus que les flammes", detail: "L'inhalation de fumée toxique tue 3 fois plus que les brûlures directes. Se baisser sous 1m réduit l'exposition de 80%.", icon: "alert" },
       { stat: "1 m", label: "la hauteur de survie en fumée dense", detail: "En dessous de 1 mètre, l'air est 80% plus respirable qu'en position debout lors d'un incendie avec fumée dense.", icon: "shield" },
     ],
+    preTest: [
+      {
+        question: "Avant de quitter définitivement un étage :",
+        choices: [
+          { key: "A", label: "Partir rapidement sans vérifier" },
+          { key: "B", label: "Vérifier rapidement que personne ne reste" },
+          { key: "C", label: "Attendre que l'alarme s'arrête" },
+        ],
+        correctKey: "B",
+      },
+      {
+        question: "Les personnes non évacuées se signalent :",
+        choices: [
+          { key: "A", label: "Par SMS à son responsable" },
+          { key: "B", label: "Au responsable évacuation au point de rassemblement" },
+          { key: "C", label: "En appelant le 18" },
+        ],
+        correctKey: "B",
+      },
+    ],
+
     content: [
       {
         type: "intro",
@@ -989,6 +1227,27 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       { stat: "0.3 sec", label: "inhalation létale de certains gaz", detail: "Certains gaz issus de plastiques brûlés peuvent causer une perte de conscience en moins de 0.3 seconde à forte concentration.", icon: "zap" },
       { stat: "40°C", label: "la chaleur de la fumée à hauteur des yeux", detail: "À hauteur debout, la fumée peut atteindre 40 à 60°C lors d'un incendie de bureau — suffisant pour brûler les voies respiratoires.", icon: "flame" },
     ],
+    preTest: [
+      {
+        question: "Face à une zone enfumée, la bonne position est :",
+        choices: [
+          { key: "A", label: "Debout, tête haute pour voir devant soi" },
+          { key: "B", label: "Accroupi ou à quatre pattes, sous le niveau de fumée" },
+          { key: "C", label: "Allongé sur le sol, immobile" },
+        ],
+        correctKey: "B",
+      },
+      {
+        question: "Obstruer le bas d'une porte avec un tissu :",
+        choices: [
+          { key: "A", label: "Empêche l'oxygène de sortir" },
+          { key: "B", label: "Ralentit la pénétration de fumée dans la pièce" },
+          { key: "C", label: "N'a aucun effet" },
+        ],
+        correctKey: "B",
+      },
+    ],
+
     content: [
       {
         type: "intro",
@@ -1053,6 +1312,27 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       { stat: "100%", label: "des décès en ascenseur sont évitables", detail: "L'ascenseur en cas d'incendie est un piège : coupure électrique, enfumage, portes bloquées. Escaliers uniquement, toujours.", icon: "alert" },
       { stat: "4×", label: "plus lent en ascenseur qu'en escalier", detail: "Le temps d'évacuation via ascenseur est en moyenne 4 fois plus long qu'une évacuation ordonnée par les escaliers de secours.", icon: "clock" },
     ],
+    preTest: [
+      {
+        question: "En cas d'incendie, vous vous déplacez via :",
+        choices: [
+          { key: "A", label: "L'ascenseur — plus rapide" },
+          { key: "B", label: "L'escalier de secours désigné" },
+          { key: "C", label: "La fenêtre la plus proche" },
+        ],
+        correctKey: "B",
+      },
+      {
+        question: "Un espace sécurisé (refuge) est :",
+        choices: [
+          { key: "A", label: "N'importe quelle pièce fermée" },
+          { key: "B", label: "Une zone définie, protégée, avec communication vers les secours" },
+          { key: "C", label: "Une sortie de secours bloquée" },
+        ],
+        correctKey: "B",
+      },
+    ],
+
     content: [
       {
         type: "intro",
@@ -1111,6 +1391,27 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       { stat: "85%", label: "de réduction du risque de décès", detail: "Une formation incendie bien exécutée et régulièrement pratiquée réduit le risque de décès de 85% en situation réelle.", icon: "shield" },
       { stat: "14 modules", label: "pour être pleinement opérationnel", detail: "Vous terminez les 14 modules IBM. Chaque réflexe appris ici peut faire la différence entre une évacuation réussie et une tragédie.", icon: "zap" },
     ],
+    preTest: [
+      {
+        question: "La séquence d'évacuation IBM est :",
+        choices: [
+          { key: "A", label: "SORS — SIGNALE — FERME" },
+          { key: "B", label: "SORS — FERME — SIGNALE" },
+          { key: "C", label: "FERME — SORS — SIGNALE" },
+        ],
+        correctKey: "B",
+      },
+      {
+        question: "Au point de rassemblement, vous devez :",
+        choices: [
+          { key: "A", label: "Rentrer chez vous immédiatement" },
+          { key: "B", label: "Vous signaler au responsable évacuation" },
+          { key: "C", label: "Retourner chercher vos affaires" },
+        ],
+        correctKey: "B",
+      },
+    ],
+
     content: [
       {
         type: "intro",

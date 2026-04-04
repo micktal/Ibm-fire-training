@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Lock, CheckCircle2, Clock, Play, Flame, Shield, Award, BarChart2 } from "lucide-react";
+import { Lock, CheckCircle2, Clock, Play, Flame, Shield, Award, BarChart2, ArrowRight, BookOpen } from "lucide-react";
 import IBMLogo from "@/components/IBMLogo";
 import GeometricBg from "@/components/layout/GeometricBg";
 import BottomNav from "@/components/layout/BottomNav";
@@ -311,6 +311,36 @@ export default function Hub() {
 
           {/* Chapter 1 */}
           <ChapterSection chapter={1} mods={ch1Mods} completedCount={completedCh1} />
+
+          {/* Chapter bridge banner */}
+          <div className="mx-4 mb-2">
+            <button
+              onClick={() => navigate("/chapter-intro/2")}
+              className="w-full flex items-center gap-4 rounded-2xl px-4 py-4 transition-all duration-200"
+              style={{
+                background: "linear-gradient(135deg, #0D47A1 0%, #1565C0 100%)",
+                border: "none",
+                cursor: "pointer",
+                boxShadow: "0 4px 20px rgba(13,71,161,0.3)",
+                textAlign: "left",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 8px 28px rgba(13,71,161,0.4)")}
+              onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "0 4px 20px rgba(13,71,161,0.3)")}
+            >
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(255,255,255,0.15)" }}>
+                <BookOpen size={18} color="#fff" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="font-bold text-white" style={{ fontSize: "0.88rem", letterSpacing: "-0.01em" }}>
+                  Récapitulatif Chapitre 1
+                </div>
+                <div style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.76rem", marginTop: "1px" }}>
+                  Points clés · Bonnes pratiques · Aperçu Chapitre 2
+                </div>
+              </div>
+              <ArrowRight size={18} color="rgba(255,255,255,0.7)" />
+            </button>
+          </div>
 
           {/* Chapter 2 */}
           <ChapterSection chapter={2} mods={ch2Mods} completedCount={completedCh2} />

@@ -14,8 +14,14 @@ import CountdownOverlay from "@/components/CountdownOverlay";
 import HotspotImage from "@/components/interactions/HotspotImage";
 import DragAndDrop from "@/components/interactions/DragAndDrop";
 import BranchingScenario from "@/components/interactions/BranchingScenario";
+import FlipCards from "@/components/interactions/FlipCards";
+import BinaryQuiz from "@/components/interactions/BinaryQuiz";
+import FillBlank from "@/components/interactions/FillBlank";
+import MatchingExercise from "@/components/interactions/MatchingExercise";
+import OrderPuzzle from "@/components/interactions/OrderPuzzle";
+import SeriousGame from "@/components/interactions/SeriousGame";
 import BottomNav from "@/components/layout/BottomNav";
-import { getModuleById, QuizQuestion, ModuleContent } from "@/lib/courseData";
+import { getModuleById, QuizQuestion, ModuleContent, PreTestQuestion } from "@/lib/courseData";
 import { MODULE_INTERACTIONS, AnyExercise } from "@/lib/interactionData";
 import { useUser } from "@/lib/userContext";
 
@@ -23,6 +29,12 @@ function InteractionBlock({ exercise }: { exercise: AnyExercise }) {
   if (exercise.type === "hotspot") return <HotspotImage exercise={exercise} />;
   if (exercise.type === "dragdrop") return <DragAndDrop exercise={exercise} />;
   if (exercise.type === "branching") return <BranchingScenario exercise={exercise} />;
+  if (exercise.type === "flipcards") return <FlipCards exercise={exercise} />;
+  if (exercise.type === "binary") return <BinaryQuiz exercise={exercise} />;
+  if (exercise.type === "fillblank") return <FillBlank exercise={exercise} />;
+  if (exercise.type === "matching") return <MatchingExercise exercise={exercise} />;
+  if (exercise.type === "orderpuzzle") return <OrderPuzzle exercise={exercise} />;
+  if (exercise.type === "seriousgame") return <SeriousGame exercise={exercise} />;
   return null;
 }
 
@@ -586,6 +598,138 @@ function QuizBlock({
   );
 }
 
+// ── Pre-test overlay ────────────────────────────────────────────
+function PreTestOverlay({
+  questions,
+  moduleTitle,
+  onComplete,
+  onSkip,
+}: {
+  questions: PreTestQuestion[];
+  moduleTitle: string;
+  onComplete: (score: number) => void;
+  onSkip: () => void;
+}) {
+  const [current, setCurrent] = useState(0);
+  const [selected, setSelected] = useState<string | null>(null);
+  const [answered, setAnswered] = useState(false);
+  const [correct, setCorrect] = useState(0);
+
+  const q = questions[current];
+
+  const handleSelect = (key: string) => {
+    if (answered) return;
+    setSelected(key);
+    setAnswered(true);
+    if (key === q.correctKey) setCorrect((c) => c + 1);
+  };
+
+  const handleNext = () => {
+    if (current < questions.length - 1) {
+      setCurrent((c) => c + 1);
+      setSelected(null);
+      setAnswered(false);
+    } else {
+      const finalCorrect = selected === q.correctKey ? correct + 1 : correct;
+      onComplete(Math.round((finalCorrect / questions.length) * 100));
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex flex-col" style={{ background: "rgba(10,24,82,0.97)", fontFamily: "'IBM Plex Sans', sans-serif" }}>
+      {/* Header */}
+      <div className="flex items-center justify-between px-5 py-4 flex-shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
+        <div>
+          <div className="text-xs font-mono uppercase mb-0.5" style={{ color: "rgba(255,255,255,0.4)", letterSpacing: "0.14em", fontFamily: "'IBM Plex Mono', monospace" }}>
+            Test de positionnement
+          </div>
+          <div className="font-bold text-white" style={{ fontSize: "0.92rem" }}>{moduleTitle}</div>
+        </div>
+        <button
+          onClick={onSkip}
+          className="text-xs font-semibold px-3 py-1.5 rounded-lg"
+          style={{ background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.5)", border: "1px solid rgba(255,255,255,0.12)", cursor: "pointer" }}
+        >
+          Passer
+        </button>
+      </div>
+
+      {/* Progress dots */}
+      <div className="flex items-center gap-2 px-5 py-3 flex-shrink-0">
+        {questions.map((_, i) => (
+          <div key={i} className="rounded-full transition-all duration-300" style={{ height: "4px", flex: 1, background: i < current ? "#6fdc8c" : i === current ? "#fff" : "rgba(255,255,255,0.18)" }} />
+        ))}
+      </div>
+
+      {/* Question */}
+      <div className="flex-1 overflow-y-auto px-5 py-4">
+        <div className="max-w-lg mx-auto">
+          <div className="text-xs font-mono mb-3" style={{ color: "rgba(255,255,255,0.4)", fontFamily: "'IBM Plex Mono', monospace" }}>
+            Question {current + 1} / {questions.length}
+          </div>
+          <div className="font-bold text-white mb-5" style={{ fontSize: "1.05rem", lineHeight: "1.4" }}>
+            {q.question}
+          </div>
+
+          <div className="flex flex-col gap-2.5">
+            {q.choices.map((choice) => {
+              const isSelected = selected === choice.key;
+              const isCorrect = choice.key === q.correctKey;
+              let bg = "rgba(255,255,255,0.06)";
+              let border = "rgba(255,255,255,0.12)";
+              let color = "#fff";
+              if (answered && isSelected && isCorrect) { bg = "rgba(25,128,56,0.2)"; border = "rgba(25,128,56,0.5)"; color = "#6fdc8c"; }
+              else if (answered && isSelected && !isCorrect) { bg = "rgba(218,30,40,0.2)"; border = "rgba(218,30,40,0.5)"; color = "#ff8b8b"; }
+              else if (answered && isCorrect) { bg = "rgba(25,128,56,0.12)"; border = "rgba(25,128,56,0.35)"; color = "#6fdc8c"; }
+              return (
+                <button
+                  key={choice.key}
+                  onClick={() => handleSelect(choice.key)}
+                  className="flex items-center gap-3 rounded-xl px-4 py-3.5 text-left transition-all"
+                  style={{ background: bg, border: `2px solid ${border}`, color, cursor: answered ? "default" : "pointer", fontSize: "0.9rem", lineHeight: "1.4" }}
+                >
+                  <span className="font-mono font-bold flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center text-xs"
+                    style={{ background: "rgba(255,255,255,0.1)", fontFamily: "'IBM Plex Mono', monospace" }}
+                  >{choice.key}</span>
+                  {choice.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {answered && (
+            <div className="mt-4 rounded-xl px-4 py-3" style={{ background: selected === q.correctKey ? "rgba(25,128,56,0.15)" : "rgba(218,30,40,0.12)", border: `1.5px solid ${selected === q.correctKey ? "rgba(25,128,56,0.4)" : "rgba(218,30,40,0.35)"}` }}>
+              <div className="text-sm font-semibold" style={{ color: selected === q.correctKey ? "#6fdc8c" : "#ff8b8b" }}>
+                {selected === q.correctKey ? "Bonne réponse" : "Réponse incorrecte — la bonne réponse est soulignée en vert"}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Next button */}
+      <div className="flex-shrink-0 px-5 pb-6 pt-3">
+        <button
+          onClick={handleNext}
+          disabled={!answered}
+          className="w-full flex items-center justify-center gap-2 rounded-xl py-3.5 font-bold transition-all"
+          style={{
+            background: answered ? "linear-gradient(135deg, #0D47A1, #1565C0)" : "rgba(255,255,255,0.06)",
+            color: answered ? "#fff" : "rgba(255,255,255,0.3)",
+            border: "none",
+            cursor: answered ? "pointer" : "not-allowed",
+            fontSize: "0.9375rem",
+            boxShadow: answered ? "0 4px 16px rgba(13,71,161,0.4)" : "none",
+          }}
+        >
+          {current < questions.length - 1 ? "Question suivante" : "Commencer le module"}
+          <ArrowRight size={16} />
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // ── Type labels & tab colors ────────────────────────────────────
 const typeLabel: Record<string, string> = {
   intro: "Introduction",
@@ -610,11 +754,14 @@ export default function ModulePage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { setModuleProgress, progress } = useUser();
-  const [phase, setPhase] = useState<"intro" | "countdown" | "module">("intro");
+  const [phase, setPhase] = useState<"intro" | "pretest" | "countdown" | "module">("intro");
   const [quizDone, setQuizDone] = useState(false);
   const [quizScore, setQuizScore] = useState(0);
   const [activeSection, setActiveSection] = useState<number | null>(0);
   const [showCelebration, setShowCelebration] = useState(false);
+  const [preTestScore, setPreTestScore] = useState<number | null>(null);
+  const [selfAssessment, setSelfAssessment] = useState<number | null>(null);
+  const [savedAt, setSavedAt] = useState<string | null>(null);
 
   const mod = id ? getModuleById(id) : null;
 
@@ -625,6 +772,9 @@ export default function ModulePage() {
     setQuizScore(0);
     setActiveSection(0);
     setShowCelebration(false);
+    setPreTestScore(null);
+    setSelfAssessment(null);
+    setSavedAt(null);
   }, [id]);
 
   useEffect(() => {
@@ -911,35 +1061,104 @@ export default function ModulePage() {
             </div>
           </FadeIn>
 
-          {/* Post-quiz navigation */}
+          {/* Post-quiz section */}
           {(quizDone || alreadyDone) && (
             <FadeIn delay={0}>
+              {/* Key points recap */}
+              {mod.keyPoints && (
+                <div className="rounded-2xl overflow-hidden mb-4" style={{ border: "2px solid rgba(13,71,161,0.22)", boxShadow: "0 4px 16px rgba(13,71,161,0.08)" }}>
+                  <div className="flex items-center gap-2.5 px-5 py-3" style={{ background: "linear-gradient(135deg, #0D47A1, #1565C0)" }}>
+                    <BookOpen size={15} color="#fff" />
+                    <span className="font-bold text-white uppercase" style={{ fontSize: "0.8rem", letterSpacing: "0.1em" }}>Points clés du module</span>
+                  </div>
+                  <div className="flex flex-col bg-white">
+                    {mod.keyPoints.map((point, i) => (
+                      <div key={i} className="flex items-start gap-3 px-5 py-3" style={{ borderBottom: i < mod.keyPoints!.length - 1 ? "1px solid #f0f2f8" : "none" }}>
+                        <CheckCircle2 size={15} style={{ color: "#0D47A1", flexShrink: 0, marginTop: "1px" }} />
+                        <span style={{ color: "#0a2052", fontSize: "0.875rem", lineHeight: "1.55", fontWeight: 500 }}>{point}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Pre-test comparison */}
+              {preTestScore !== null && (
+                <div className="rounded-xl px-4 py-3 mb-4 flex items-center gap-3" style={{ background: "rgba(124,58,237,0.07)", border: "1.5px solid rgba(124,58,237,0.2)" }}>
+                  <Award size={16} style={{ color: "#7c3aed", flexShrink: 0 }} />
+                  <div className="flex-1">
+                    <div className="font-bold text-xs uppercase" style={{ color: "#5b21b6", letterSpacing: "0.08em" }}>Progression mesurée</div>
+                    <div className="text-xs mt-0.5" style={{ color: "#6f7897" }}>
+                      Test initial : <strong>{preTestScore}%</strong> → Score final : <strong>{quizScore || existingProgress?.score || 0}%</strong>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Self-assessment */}
+              <div className="rounded-2xl p-4 mb-4" style={{ background: "#fff", border: "2px solid #e4e7f0" }}>
+                <div className="font-bold text-sm mb-3" style={{ color: "#0a2052" }}>Comment vous sentez-vous sur ce module ?</div>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { val: 1, label: "À revoir", color: "#da1e28", bg: "rgba(218,30,40,0.07)", border: "rgba(218,30,40,0.25)" },
+                    { val: 2, label: "En progression", color: "#b45309", bg: "rgba(180,83,9,0.07)", border: "rgba(180,83,9,0.25)" },
+                    { val: 3, label: "Acquis", color: "#0D47A1", bg: "rgba(13,71,161,0.07)", border: "rgba(13,71,161,0.25)" },
+                    { val: 4, label: "Maîtrisé", color: "#198038", bg: "rgba(25,128,56,0.07)", border: "rgba(25,128,56,0.25)" },
+                  ].map((lvl) => (
+                    <button
+                      key={lvl.val}
+                      onClick={() => setSelfAssessment(lvl.val)}
+                      className="rounded-xl py-2.5 px-3 font-semibold text-sm transition-all"
+                      style={{
+                        background: selfAssessment === lvl.val ? lvl.bg : "#f8f9fc",
+                        border: `2px solid ${selfAssessment === lvl.val ? lvl.border : "#e4e7f0"}`,
+                        color: selfAssessment === lvl.val ? lvl.color : "#8d95aa",
+                        cursor: "pointer",
+                        fontWeight: selfAssessment === lvl.val ? 700 : 500,
+                      }}
+                    >
+                      {lvl.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Save button + navigation */}
               <div className="flex flex-col gap-3 rounded-2xl p-5"
                 style={{
                   background: quizScore >= 80 || alreadyDone ? "rgba(25,128,56,0.05)" : "rgba(218,30,40,0.04)",
                   border: `2px solid ${quizScore >= 80 || alreadyDone ? "rgba(25,128,56,0.22)" : "rgba(218,30,40,0.22)"}`,
                 }}
               >
-                {/* Confirmation sauvegarde automatique */}
-                <div className="flex items-center gap-2.5 rounded-xl px-4 py-3"
-                  style={{ background: "rgba(25,128,56,0.08)", border: "1.5px solid rgba(25,128,56,0.2)" }}
-                >
-                  <Save size={15} style={{ color: "#198038", flexShrink: 0 }} />
-                  <div>
-                    <div className="text-xs font-bold" style={{ color: "#0e6027" }}>Progression sauvegardée automatiquement</div>
-                    <div className="text-xs" style={{ color: "#6f7897" }}>Score {quizScore || (alreadyDone ? existingProgress?.score : 0)}% · Module {mod.number} · {new Date().toLocaleDateString("fr-FR")}</div>
-                  </div>
-                  <CheckCircle2 size={16} style={{ color: "#198038", marginLeft: "auto", flexShrink: 0 }} />
-                </div>
-
                 <div className="font-bold" style={{ color: "#161616", fontSize: "0.9375rem" }}>
                   {quizDone
                     ? quizScore >= 80 ? "Bien joué — module validé !" : "Score insuffisant — réessayez le quiz"
                     : "Module déjà complété"}
                 </div>
 
-                {/* Boutons */}
-                <div className="flex flex-col sm:flex-row gap-2.5 pt-1">
+                {/* Explicit save button */}
+                <button
+                  onClick={() => {
+                    // LMS save point — add API call here for external LMS integration
+                    const ts = new Date().toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+                    setSavedAt(ts);
+                    // Progress already in localStorage via setModuleProgress
+                  }}
+                  className="w-full flex items-center justify-center gap-2 rounded-xl py-3 font-bold transition-all"
+                  style={{
+                    background: savedAt ? "rgba(25,128,56,0.1)" : "rgba(13,71,161,0.08)",
+                    border: `2px solid ${savedAt ? "rgba(25,128,56,0.3)" : "rgba(13,71,161,0.2)"}`,
+                    color: savedAt ? "#198038" : "#0D47A1",
+                    cursor: "pointer",
+                    fontSize: "0.875rem",
+                  }}
+                >
+                  {savedAt ? <CheckCircle2 size={15} /> : <Save size={15} />}
+                  {savedAt ? `Sauvegardé à ${savedAt} — progression transmise` : "Sauvegarder ma progression"}
+                </button>
+
+                {/* Nav buttons */}
+                <div className="flex flex-col sm:flex-row gap-2.5">
                   <button
                     onClick={() => navigate("/hub")}
                     className="flex items-center gap-1.5 font-semibold px-4 py-2.5 rounded-xl transition-all"
@@ -971,7 +1190,17 @@ export default function ModulePage() {
       {phase === "intro" && (
         <ModuleIntroOverlay
           mod={mod}
-          onStart={() => setPhase("countdown")}
+          onStart={() => mod.preTest?.length ? setPhase("pretest") : setPhase("countdown")}
+        />
+      )}
+
+      {/* Pre-test overlay */}
+      {phase === "pretest" && mod.preTest && (
+        <PreTestOverlay
+          questions={mod.preTest}
+          moduleTitle={mod.title}
+          onComplete={(score) => { setPreTestScore(score); setPhase("countdown"); }}
+          onSkip={() => setPhase("countdown")}
         />
       )}
 

@@ -2,7 +2,70 @@ import { HotspotExercise } from "@/components/interactions/HotspotImage";
 import { DragDropExercise } from "@/components/interactions/DragAndDrop";
 import { BranchingExercise } from "@/components/interactions/BranchingScenario";
 
-export type AnyExercise = HotspotExercise | DragDropExercise | BranchingExercise;
+// ── New interaction types ──────────────────────────────────────
+export interface BinaryExercise {
+  type: "binary";
+  title: string;
+  subtitle?: string;
+  statements: Array<{ statement: string; isTrue: boolean; explanation: string }>;
+  successMessage?: string;
+}
+
+export interface FillBlankExercise {
+  type: "fillblank";
+  title: string;
+  subtitle?: string;
+  sentences: Array<{ before: string; answer: string; after?: string; hint?: string }>;
+  successMessage?: string;
+}
+
+export interface MatchExercise {
+  type: "matching";
+  title: string;
+  subtitle?: string;
+  pairs: Array<{ left: string; right: string }>;
+  successMessage?: string;
+}
+
+export interface FlipCardsExercise {
+  type: "flipcards";
+  title: string;
+  subtitle?: string;
+  cards: Array<{ front: string; back: string; icon?: string; color?: string }>;
+}
+
+export interface OrderPuzzleExercise {
+  type: "orderpuzzle";
+  title: string;
+  subtitle?: string;
+  instruction: string;
+  pieces: Array<{ id: string; label: string; sublabel?: string; correctPosition: number }>;
+  successMessage?: string;
+}
+
+export interface SeriousGameExercise {
+  type: "seriousgame";
+  title: string;
+  subtitle?: string;
+  rounds: Array<{
+    image?: string;
+    situation: string;
+    actions: Array<{ label: string; correct: boolean; feedback: string }>;
+    timeLimit: number;
+  }>;
+  successMessage?: string;
+}
+
+export type AnyExercise =
+  | HotspotExercise
+  | DragDropExercise
+  | BranchingExercise
+  | BinaryExercise
+  | FillBlankExercise
+  | MatchExercise
+  | FlipCardsExercise
+  | OrderPuzzleExercise
+  | SeriousGameExercise;
 
 const CDN = "https://cdn.builder.io/api/v1/image/assets%2Fd93d9a0ec7824aa1ac4d890a1f90a2ec%2F";
 
@@ -1216,18 +1279,238 @@ const ch2m7_branching: BranchingExercise = {
   },
 };
 
+// ── BINARY (True / False) ──────────────────────────────────────
+const m1_binary: BinaryExercise = {
+  type: "binary",
+  title: "Vrai ou Faux — Départ de feu",
+  subtitle: "Testez vos certitudes sur la détection incendie",
+  successMessage: "Vous distinguez les bonnes pratiques des idées reçues !",
+  statements: [
+    { statement: "Un départ de feu est toujours précédé de flammes visibles.", isTrue: false, explanation: "Faux. La fumée, l'odeur et la chaleur sont souvent les premiers signaux — bien avant les flammes." },
+    { statement: "Une légère odeur de brûlé persistante est un signal d'alerte réel.", isTrue: true, explanation: "Vrai. Toute odeur de brûlé persistante doit déclencher une vérification immédiate." },
+    { statement: "Attendre que l'alarme sonne avant d'agir est la procédure correcte.", isTrue: false, explanation: "Faux. L'alarme arrive après le signal — vous devez agir dès la détection, sans attendre." },
+    { statement: "Un grésil électrique anormal peut précéder un incendie.", isTrue: true, explanation: "Vrai. Un arc électrique ou grésil est souvent signe d'un court-circuit qui peut provoquer un feu." },
+    { statement: "On peut ignorer une légère chaleur anormale près d'une prise.", isTrue: false, explanation: "Faux. Une prise chaude signale une surcharge électrique — source courante d'incendie en bureau." },
+  ],
+};
+
+const ch2m1_binary: BinaryExercise = {
+  type: "binary",
+  title: "Vrai ou Faux — L'alarme incendie",
+  subtitle: "Idées reçues sur le déclenchement de l'alarme",
+  successMessage: "Vous savez quand et comment déclencher l'alarme IBM !",
+  statements: [
+    { statement: "Déclencher l'alarme trop tôt est sanctionné chez IBM.", isTrue: false, explanation: "Faux. Il est impossible de déclencher trop tôt face à un signal suspect. IBM prévoit un retour des secours sans sanction." },
+    { statement: "Le 22 22 doit être composé avant le 18 lors d'un incident IBM.", isTrue: true, explanation: "Vrai. La sécurité IBM connaît les plans des bâtiments et peut intervenir plus rapidement que les services externes." },
+    { statement: "Les détecteurs automatiques rendent le déclencheur manuel inutile.", isTrue: false, explanation: "Faux. Le déclencheur manuel est un filet de sécurité indépendant — toujours disponible si le détecteur n'a pas réagi." },
+    { statement: "Chaque seconde de retard représente environ 6m² supplémentaires en feu.", isTrue: true, explanation: "Vrai. C'est la statistique IBM : le retard à déclencher l'alarme est directement corrélé à la superficie touchée." },
+    { statement: "Après avoir déclenché l'alarme, il faut attendre sur place les consignes.", isTrue: false, explanation: "Faux. Après déclenchement, commencer immédiatement l'évacuation sans attendre confirmation." },
+  ],
+};
+
+// ── FLIP CARDS ─────────────────────────────────────────────────
+const m2_flipcards: FlipCardsExercise = {
+  type: "flipcards",
+  title: "Le Triangle du Feu — 3 éléments clés",
+  subtitle: "Retournez chaque carte pour comprendre le rôle de chaque élément",
+  cards: [
+    { front: "COMBUSTIBLE", back: "Matière qui brûle : papier, bois, tissu, plastique, câbles. Pour éteindre → retirer ou isoler la matière.", icon: "Flame", color: "#b45309" },
+    { front: "COMBURANT\n(Oxygène)", back: "L'air contient 21% d'O₂ qui alimente la combustion. Pour éteindre → étouffer avec couverture anti-feu ou CO2.", icon: "Wind", color: "#0D47A1" },
+    { front: "CHALEUR\n(Énergie)", back: "L'énergie qui déclenche la réaction : étincelle, court-circuit, friction. Pour éteindre → refroidir avec eau ou CO2.", icon: "Zap", color: "#da1e28" },
+    { front: "BRISER LE\nTRIANGLE", back: "Supprimer UN seul élément suffit à éteindre le feu. C'est le principe de tous les agents extincteurs.", icon: "Shield", color: "#198038" },
+  ],
+};
+
+const ch2m2_flipcards: FlipCardsExercise = {
+  type: "flipcards",
+  title: "Posture en crise — 4 règles d'or",
+  subtitle: "Retournez chaque carte pour maîtriser la communication en urgence",
+  cards: [
+    { front: "CALME", back: "Voix posée et ferme. L'urgence s'entend dans votre ton, pas dans votre volume. Pas de cris — ils amplifient la panique.", icon: "Shield", color: "#0D47A1" },
+    { front: "CLAIR", back: "'Tout le monde sort par là.' Instructions courtes et directes. Pas d'explications complexes en situation de crise.", icon: "Eye", color: "#198038" },
+    { front: "RASSURANT", back: "Votre posture physique (position, démarche) influence le groupe. Marchez, ne courez pas. Le groupe vous imite.", icon: "Users", color: "#7c3aed" },
+    { front: "COMPLET", back: "Vérifiez que tout le monde suit avant de continuer. Comptez si possible. Ne laissez personne derrière.", icon: "CheckCircle", color: "#b45309" },
+  ],
+};
+
+// ── FILL IN THE BLANK ──────────────────────────────────────────
+const m5_fillblank: FillBlankExercise = {
+  type: "fillblank",
+  title: "Complétez la séquence PASS",
+  subtitle: "Retrouvez les mots clés de la méthode d'extinction IBM",
+  successMessage: "La séquence PASS est parfaitement mémorisée !",
+  sentences: [
+    { before: "P — Tirez la", answer: "goupille", after: "de sécurité pour déverrouiller l'extincteur.", hint: "verrou de sécurité" },
+    { before: "A — Visez la", answer: "base", after: "des flammes, jamais le haut du feu.", hint: "où se trouve le combustible" },
+    { before: "S — Pressez la", answer: "poignée", after: "de déclenchement pour activer le jet.", hint: "mécanisme de déclenchement" },
+    { before: "S — Balayez de", answer: "gauche à droite", after: "en maintenant le jet sur la base.", hint: "mouvement horizontal" },
+    { before: "Distance optimale :", answer: "2 à 3 mètres", after: "du foyer pour une efficacité maximale.", hint: "distance de sécurité" },
+  ],
+};
+
+const ch2m3_fillblank: FillBlankExercise = {
+  type: "fillblank",
+  title: "Complétez : SORS — FERME — SIGNALE",
+  subtitle: "Les 3 actions fondamentales de l'évacuation IBM",
+  successMessage: "Séquence SORS-FERME-SIGNALE parfaitement maîtrisée !",
+  sentences: [
+    { before: "Quittez la pièce", answer: "sans attendre", after: "— chaque seconde compte.", hint: "ne pas hésiter" },
+    { before: "Fermez la porte", answer: "sans la verrouiller", after: "pour ralentir le feu sans piéger les autres.", hint: "fermer mais pas bloquer" },
+    { before: "Signalez les zones vérifiées au", answer: "responsable évacuation", after: "au point de rassemblement.", hint: "personne en charge" },
+    { before: "Ne", answer: "jamais revenir", after: "chercher ses affaires une fois l'évacuation lancée.", hint: "interdiction absolue" },
+  ],
+};
+
+// ── MATCHING ───────────────────────────────────────────────────
+const m4_matching: MatchExercise = {
+  type: "matching",
+  title: "Associez chaque classe de feu à son extincteur",
+  subtitle: "Le bon agent extincteur selon la nature du feu",
+  successMessage: "Parfait — vous choisissez le bon extincteur selon le type de feu !",
+  pairs: [
+    { left: "Classe A — Bois, papier, tissu", right: "Eau, Poudre ABC" },
+    { left: "Classe B — Liquides inflammables", right: "Mousse, Poudre ABC" },
+    { left: "Classe C — Gaz inflammables", right: "Poudre ABC (coupure gaz en premier)" },
+    { left: "Classe E — Feux électriques", right: "CO2 uniquement (jamais d'eau)" },
+    { left: "Classe F — Huiles / graisses", right: "Émulseur F spécifique" },
+  ],
+};
+
+const ch2m6_matching: MatchExercise = {
+  type: "matching",
+  title: "Situatations → Bonne action",
+  subtitle: "Associez chaque situation d'évacuation à la réponse correcte",
+  successMessage: "Excellent — vos réflexes d'évacuation sont calibrés !",
+  pairs: [
+    { left: "La porte est chaude au toucher", right: "Ne pas ouvrir — rebrousser chemin" },
+    { left: "Fumée dense dans le couloir", right: "S'accroupir — progresser sous la fumée" },
+    { left: "L'ascenseur est disponible", right: "Ignorer — prendre les escaliers de secours" },
+    { left: "Une personne est manquante au rassemblement", right: "Signaler immédiatement aux secours" },
+    { left: "Le point de rassemblement est atteint", right: "Se signaler au responsable évacuation" },
+  ],
+};
+
+// ── ORDER PUZZLE ───────────────────────────────────────────────
+const m3_orderpuzzle: OrderPuzzleExercise = {
+  type: "orderpuzzle",
+  title: "Remettez la séquence de confinement dans l'ordre",
+  subtitle: "En cas d'incendie, l'ordre des actions est crucial",
+  instruction: "Faites glisser les étapes pour reconstituer la bonne séquence",
+  successMessage: "Séquence de confinement maîtrisée !",
+  pieces: [
+    { id: "p1", label: "Détecter le signal", sublabel: "Fumée, odeur ou chaleur anormale", correctPosition: 1 },
+    { id: "p2", label: "Alerter les collègues", sublabel: "Sans panique, ton calme", correctPosition: 2 },
+    { id: "p3", label: "Fermer toutes les portes", sublabel: "Ralentit la propagation de 5x", correctPosition: 3 },
+    { id: "p4", label: "Déclencher l'alarme (22 22)", sublabel: "Avant d'évacuer", correctPosition: 4 },
+    { id: "p5", label: "Évacuer par les sorties de secours", sublabel: "Ne jamais prendre l'ascenseur", correctPosition: 5 },
+    { id: "p6", label: "Rejoindre le point de rassemblement", sublabel: "Se signaler au responsable", correctPosition: 6 },
+  ],
+};
+
+const ch2m7_orderpuzzle: OrderPuzzleExercise = {
+  type: "orderpuzzle",
+  title: "Procédure complète d'évacuation IBM",
+  subtitle: "Remettez les 7 étapes de la procédure dans le bon ordre",
+  instruction: "Faites glisser les étapes pour reconstituer la séquence officielle",
+  successMessage: "Procédure d'évacuation IBM parfaitement maîtrisée !",
+  pieces: [
+    { id: "e1", label: "Détecter et confirmer l'alerte", sublabel: "Signal sonore ou visuel", correctPosition: 1 },
+    { id: "e2", label: "Composer le 22 22", sublabel: "Sécurité IBM avant le 18", correctPosition: 2 },
+    { id: "e3", label: "Alerter les collègues à voix posée", sublabel: "Pas de panique", correctPosition: 3 },
+    { id: "e4", label: "Fermer les portes en partant", sublabel: "Sans verrouiller", correctPosition: 4 },
+    { id: "e5", label: "Évacuer par les escaliers", sublabel: "Jamais l'ascenseur", correctPosition: 5 },
+    { id: "e6", label: "Vérifier les zones accessibles", sublabel: "S'assurer que personne ne reste", correctPosition: 6 },
+    { id: "e7", label: "Se signaler au responsable évacuation", sublabel: "Au point de rassemblement", correctPosition: 7 },
+  ],
+};
+
+// ── SERIOUS GAME ───────────────────────────────────────────────
+const m7_seriousgame: SeriousGameExercise = {
+  type: "seriousgame",
+  title: "Réflexes Incendie — Challenge Chronométré",
+  subtitle: "3 vies · 6 situations · Décisions en temps réel",
+  successMessage: "Score Réflexes Expert — Tous les bons réflexes acquis !",
+  rounds: [
+    {
+      situation: "14h30. L'alarme retentit. Une fumée légère entre par la porte. Un extincteur CO2 est à 3m. Que faites-vous EN PREMIER ?",
+      timeLimit: 8,
+      actions: [
+        { label: "Évaluer rapidement la situation (5 sec)", correct: true, feedback: "Correct. 5 secondes d'évaluation avant d'agir — c'est la règle IBM." },
+        { label: "Prendre l'extincteur et chercher le feu", correct: false, feedback: "Risqué. Sans évaluation, vous pourriez foncer vers un feu trop développé." },
+        { label: "Rester à son bureau et attendre", correct: false, feedback: "Erreur grave. L'inaction face à l'alarme est la pire réponse." },
+        { label: "Appeler son manager pour confirmation", correct: false, feedback: "Faux. En cas d'alarme, pas besoin de confirmation — agir immédiatement." },
+      ],
+    },
+    {
+      situation: "Vous approchez d'une porte. Elle est CHAUDE au toucher. De la fumée noire passe dessous.",
+      timeLimit: 6,
+      actions: [
+        { label: "Ouvrir doucement pour évaluer", correct: false, feedback: "Erreur fatale. Porte chaude + fumée noire = feu développé. L'ouvrir aspire le feu vers vous." },
+        { label: "Ne pas ouvrir — rebrousser et évacuer", correct: true, feedback: "Décision vitale. Porte chaude = feu de l'autre côté. Retraite immédiate." },
+        { label: "Arroser la porte avec le CO2", correct: false, feedback: "Inutile. Le CO2 refroidit la surface mais ne change rien au feu de l'autre côté." },
+        { label: "Attendre devant la porte", correct: false, feedback: "Dangereux. Rester expose à la chaleur et aux gaz toxiques." },
+      ],
+    },
+    {
+      situation: "Feu de câbles visible — taille d'une corbeille. Sortie dans votre dos à 4m. CO2 disponible. Que faites-vous ?",
+      timeLimit: 8,
+      actions: [
+        { label: "Intervenir avec le CO2 — PASS", correct: true, feedback: "Correct. Toutes les conditions sont réunies : petit feu, CO2 adapté, sortie libre." },
+        { label: "Évacuer directement sans intervenir", correct: false, feedback: "Acceptable mais sous-optimal. Le feu est contrôlable et les conditions sont réunies." },
+        { label: "Appeler les pompiers d'abord", correct: false, feedback: "Faux. Agir d'abord (max 30s), alerter ensuite. Le 22 22 puis le 18." },
+        { label: "Verser de l'eau sur les câbles", correct: false, feedback: "Interdit. Jamais d'eau sur un feu électrique — risque d'électrocution." },
+      ],
+    },
+    {
+      situation: "Fumée envahit le couloir. Vous ne voyez plus la sortie. Quelle est votre position ?",
+      timeLimit: 7,
+      actions: [
+        { label: "Rester debout, progresser rapidement", correct: false, feedback: "Faux. Debout vous respirez la fumée chaude. La toxicité est mortelle en secondes." },
+        { label: "S'accroupir et progresser sous la fumée", correct: true, feedback: "Exact. L'air respirable reste dans le tiers inférieur de la pièce." },
+        { label: "Faire demi-tour et retourner à son bureau", correct: false, feedback: "Risqué. Mieux vaut progresser vers la sortie que rester dans le bâtiment." },
+        { label: "Ouvrir toutes les fenêtres pour aérer", correct: false, feedback: "Faux. Ouvrir les fenêtres attire l'oxygène et intensifie l'incendie." },
+      ],
+    },
+    {
+      situation: "Vous êtes au point de rassemblement. Une collègue est manquante. Que faites-vous ?",
+      timeLimit: 6,
+      actions: [
+        { label: "Retourner la chercher vous-même", correct: false, feedback: "Interdit et dangereux. Retourner sans équipement = risque vital pour vous aussi." },
+        { label: "Signaler immédiatement aux secours avec description et dernière localisation", correct: true, feedback: "Correct. Les secours ont l'équipement pour effectuer les recherches en sécurité." },
+        { label: "Attendre qu'elle arrive peut-être par un autre chemin", correct: false, feedback: "Insuffisant. Signaler sans délai permet d'agir rapidement." },
+        { label: "L'appeler sur son téléphone portable", correct: false, feedback: "Secondaire. Signaler d'abord aux secours, appel si possible en parallèle." },
+      ],
+    },
+    {
+      situation: "L'extincteur est vide. Le feu ne recule pas. Vous êtes à 30 secondes d'intervention.",
+      timeLimit: 5,
+      actions: [
+        { label: "Chercher un autre extincteur rapidement", correct: false, feedback: "Trop risqué. Après 30 secondes d'inefficacité, le feu est trop développé pour vous." },
+        { label: "Reculer et évacuer immédiatement", correct: true, feedback: "Bonne décision. La règle IBM : si le feu ne recule pas en 30s — évacuer sans hésiter." },
+        { label: "Continuer avec l'extincteur vide pour intimider le feu", correct: false, feedback: "Absurde et dangereux. Un extincteur vide n'a aucun effet." },
+        { label: "Appeler les collègues pour aider", correct: false, feedback: "Faux. En urgence, évacuer seul et rapidement, pas grouper des gens non équipés." },
+      ],
+    },
+  ],
+};
+
 // ── Export map ─────────────────────────────────────────────────
 
 export const MODULE_INTERACTIONS: Record<string, AnyExercise[]> = {
-  "ch1-m1": [m1_hotspot, m1_branching],
-  "ch1-m2": [m2_dragdrop, m2_branching],
-  "ch1-m3": [m3_hotspot, m3_branching],
-  "ch1-m4": [m4_dragdrop],
-  "ch1-m5": [m5_hotspot, m5_branching],
+  "ch1-m1": [m1_hotspot, m1_binary, m1_branching],
+  "ch1-m2": [m2_flipcards, m2_dragdrop, m2_branching],
+  "ch1-m3": [m3_hotspot, m3_orderpuzzle, m3_branching],
+  "ch1-m4": [m4_dragdrop, m4_matching],
+  "ch1-m5": [m5_hotspot, m5_fillblank, m5_branching],
   "ch1-m6": [m6_branching],
-  "ch1-m7": [m7_branching],
-  "ch2-m1": [ch2m1_hotspot],
-  "ch2-m2": [ch2m2_branching],
+  "ch1-m7": [m7_seriousgame, m7_branching],
+  "ch2-m1": [ch2m1_hotspot, ch2m1_binary],
+  "ch2-m2": [ch2m2_flipcards, ch2m2_branching],
+  "ch2-m3": [ch2m3_fillblank, ch2m3_dragdrop],
+  "ch2-m4": [ch2m4_hotspot],
+  "ch2-m5": [ch2m5_branching],
+  "ch2-m6": [ch2m6_matching, ch2m6_hotspot],
+  "ch2-m7": [ch2m7_orderpuzzle, ch2m7_branching],
   "ch2-m3": [ch2m3_dragdrop],
   "ch2-m4": [ch2m4_hotspot],
   "ch2-m5": [ch2m5_branching],
