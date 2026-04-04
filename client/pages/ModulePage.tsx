@@ -62,8 +62,8 @@ function SectionBody({ section }: { section: ModuleContent }) {
     <div className="px-5 pb-6 pt-1">
       {/* Image */}
       {section.image && (
-        <div className="rounded-xl overflow-hidden mb-5" style={{ border: "1px solid #e4e7f0" }}>
-          <img src={section.image} alt={section.title || ""} className="w-full object-cover" style={{ maxHeight: "280px" }} />
+        <div className="rounded-xl overflow-hidden mb-5 flex items-center justify-center" style={{ border: "1px solid #e4e7f0", background: "#f8f9fc" }}>
+          <img src={section.image} alt={section.title || ""} className="w-full object-contain" style={{ maxHeight: "340px" }} />
         </div>
       )}
 
