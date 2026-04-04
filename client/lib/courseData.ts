@@ -101,7 +101,7 @@ export const MODULES: CourseModule[] = [
     },
     duration: "8 min",
     image: `${CDN}68e7b7c3ea9048b4a797a2ceacec35aa?format=webp&width=800`,
-    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/ibm%20intro%20(2).mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL2libSBpbnRybyAoMikubXA0IiwiaWF0IjoxNzc1MjQxMjI3LCJleHAiOjE4Njk4NDkyMjd9.RBEu401aURzjAUFnNv6l8Miao-DYiC2QvtucX5cGiNA",
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Prvenir%20un%20dpart%20de%20feu%20au%20bureau.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL1BydmVuaXIgdW4gZHBhcnQgZGUgZmV1IGF1IGJ1cmVhdS5tcDQiLCJpYXQiOjE3NzUzMzUyNTMsImV4cCI6MTgzODQwNzI1M30.KCyO1UCQfI8jNCA1LyOqAlMpzPMW2OWkPquVeo0z1bA",
     captionsVtt: `WEBVTT
 
 STYLE
@@ -318,6 +318,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     },
     duration: "6 min",
     image: `${CDN}d3c9b22a88e644d98bd46cd69cd9cf30?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Matriser%20le%20triangle%20du%20feu.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL01hdHJpc2VyIGxlIHRyaWFuZ2xlIGR1IGZldS5tcDQiLCJpYXQiOjE3NzUzMzUyODksImV4cCI6MTgzODQwNzI4OX0.uEB3pGV29I6T0nSV5I6Rvb1gebXLIHptDNgGgCAGcCY",
     funFacts: [
       { stat: "200 gaz", label: "toxiques libérés par un câble PVC", detail: "La combustion d'un seul câble PVC libère plus de 200 composés toxiques. La fumée tue avant les flammes.", icon: "alert" },
       { stat: "3 éléments", label: "suffisent à créer un incendie", detail: "Chaleur + combustible + oxygène. Supprimez-en un seul, le feu s'éteint. C'est le principe de toute intervention.", icon: "flame" },
