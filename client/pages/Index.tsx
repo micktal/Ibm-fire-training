@@ -1,31 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, Home, BookOpen, BarChart2, HelpCircle, Users, PlayCircle, ChevronLeft, ChevronRight, Menu } from "lucide-react";
+import { ArrowRight, Home, BookOpen, BarChart2, HelpCircle, Users, PlayCircle } from "lucide-react";
 import IBMLogo from "@/components/IBMLogo";
-
-// ── Geometric background ─────────────────────────────────────────
-function GeometricBg() {
-  return (
-    <div className="absolute inset-0 overflow-hidden" style={{ background: "#0D47A1" }}>
-      {/* Base layer shapes */}
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(145deg, #0A3882 0%, #0D47A1 40%, #1565C0 100%)" }} />
-      {/* Large right polygon */}
-      <div style={{ position: "absolute", top: 0, right: 0, width: "62%", height: "100%", background: "#0E4DB8", clipPath: "polygon(18% 0, 100% 0, 100% 100%, 0 100%)" }} />
-      {/* Center diamond */}
-      <div style={{ position: "absolute", top: "8%", left: "8%", width: "55%", height: "60%", background: "#1565C0", clipPath: "polygon(0 0, 100% 0, 88% 100%, 0% 90%)" }} />
-      {/* Mid right lighter */}
-      <div style={{ position: "absolute", top: "15%", right: "5%", width: "42%", height: "52%", background: "#1976D2", clipPath: "polygon(12% 0, 100% 0, 100% 100%, 0 88%)" }} />
-      {/* Bottom left dark */}
-      <div style={{ position: "absolute", bottom: 0, left: 0, width: "45%", height: "40%", background: "#083070", clipPath: "polygon(0 20%, 100% 0, 100% 100%, 0 100%)" }} />
-      {/* Center accent - brightest */}
-      <div style={{ position: "absolute", top: "28%", left: "22%", width: "38%", height: "38%", background: "#1E88E5", clipPath: "polygon(8% 0, 100% 0, 92% 100%, 0 100%)" }} />
-      {/* Top left triangle */}
-      <div style={{ position: "absolute", top: 0, left: 0, width: "30%", height: "35%", background: "#0A3882", clipPath: "polygon(0 0, 100% 0, 60% 100%, 0 100%)" }} />
-      {/* White glass sheen */}
-      <div style={{ position: "absolute", top: "35%", right: "18%", width: "28%", height: "25%", background: "rgba(255,255,255,0.04)", clipPath: "polygon(10% 0, 100% 0, 90% 100%, 0 100%)" }} />
-      <div style={{ position: "absolute", bottom: "12%", right: "8%", width: "22%", height: "20%", background: "rgba(255,255,255,0.05)", clipPath: "polygon(0 0, 100% 10%, 88% 100%, 0 90%)" }} />
-    </div>
-  );
-}
+import GeometricBg from "@/components/layout/GeometricBg";
+import BottomNav from "@/components/layout/BottomNav";
 
 // ── Tile button ──────────────────────────────────────────────────
 function Tile({ icon, label, onClick }: { icon: React.ReactNode; label: string; onClick?: () => void }) {
@@ -163,34 +140,7 @@ export default function Index() {
         </div>
       </div>
 
-      {/* ── Bottom nav bar ──────────────────────────────────── */}
-      <footer
-        className="flex-shrink-0 flex items-center justify-center gap-6"
-        style={{ height: "48px", background: "#fff", borderTop: "1px solid #e4e7f0", zIndex: 20 }}
-      >
-        <button className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors" style={{ color: "#0D47A1" }}>
-          <ChevronLeft size={18} />
-        </button>
-        <div style={{ width: "1px", height: "20px", background: "#e4e7f0" }} />
-        <button className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors" style={{ color: "#0D47A1" }} onClick={() => navigate("/")}>
-          <Home size={16} />
-        </button>
-        <div style={{ width: "1px", height: "20px", background: "#e4e7f0" }} />
-        <button className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors" style={{ color: "#0D47A1" }} onClick={() => navigate("/hub")}>
-          <Menu size={16} />
-        </button>
-        <div style={{ width: "1px", height: "20px", background: "#e4e7f0" }} />
-        <button className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors" style={{ color: "#0D47A1" }} onClick={() => navigate("/form")}>
-          <ChevronRight size={18} />
-        </button>
-      </footer>
-
-      <style>{`
-        @keyframes breathePulse {
-          0%, 100% { box-shadow: 0 4px 20px rgba(13,71,161,0.4); }
-          50% { box-shadow: 0 6px 32px rgba(13,71,161,0.65); }
-        }
-      `}</style>
+      <BottomNav onNext={() => navigate("/form")} onMenu={() => navigate("/hub")} />
     </div>
   );
 }

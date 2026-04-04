@@ -14,6 +14,7 @@ import CountdownOverlay from "@/components/CountdownOverlay";
 import HotspotImage from "@/components/interactions/HotspotImage";
 import DragAndDrop from "@/components/interactions/DragAndDrop";
 import BranchingScenario from "@/components/interactions/BranchingScenario";
+import BottomNav from "@/components/layout/BottomNav";
 import { getModuleById, QuizQuestion, ModuleContent } from "@/lib/courseData";
 import { MODULE_INTERACTIONS, AnyExercise } from "@/lib/interactionData";
 import { useUser } from "@/lib/userContext";
@@ -648,7 +649,7 @@ export default function ModulePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "#f2f3f7", fontFamily: "'IBM Plex Sans', sans-serif" }}>
+    <div className="min-h-screen flex flex-col" style={{ background: "#F0F4FA", fontFamily: "'IBM Plex Sans', sans-serif" }}>
       <IBMTopbar
         title={`Module ${mod.number} — ${mod.title}`}
         subtitle={`Chapitre ${mod.chapter} · ${mod.duration}`}
@@ -1007,6 +1008,11 @@ export default function ModulePage() {
           }}
         />
       )}
+
+      <BottomNav
+        onBack={() => navigate("/hub")}
+        onMenu={() => navigate("/hub")}
+      />
     </div>
   );
 }

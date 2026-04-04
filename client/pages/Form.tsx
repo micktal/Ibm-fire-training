@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AlertCircle, ArrowRight, ChevronLeft, Info, User, Mail, MapPin, Building2, Layers, LayoutGrid } from "lucide-react";
 import IBMLogo from "@/components/IBMLogo";
+import GeometricBg from "@/components/layout/GeometricBg";
+import BottomNav from "@/components/layout/BottomNav";
 import { useUser } from "@/lib/userContext";
 import { IBM_SITES } from "@/lib/courseData";
 
@@ -102,41 +104,43 @@ export default function Form() {
 
   return (
     <div
-      className="min-h-screen flex flex-col"
-      style={{ background: "#f5f6f8", fontFamily: "'IBM Plex Sans', sans-serif" }}
+      className="fixed inset-0 flex flex-col"
+      style={{ fontFamily: "'IBM Plex Sans', sans-serif" }}
     >
       {/* Topbar */}
       <header
-        className="flex-shrink-0 bg-white border-b flex items-center justify-between px-5 h-12"
-        style={{ borderColor: "#e4e7f0", boxShadow: "0 1px 4px rgba(0,0,0,0.06)" }}
+        className="flex-shrink-0 bg-white flex items-center justify-between px-5 h-12"
+        style={{ borderBottom: "1px solid #e4e7f0", boxShadow: "0 1px 4px rgba(0,0,0,0.06)", zIndex: 20 }}
       >
         <div className="flex items-center gap-3">
-          {/* Bouton retour */}
           <button
             onClick={() => navigate("/")}
             className="flex items-center gap-1.5 text-sm font-semibold transition-opacity hover:opacity-70"
-            style={{ color: "#0043ce", background: "none", border: "none", cursor: "pointer", padding: 0 }}
+            style={{ color: "#0D47A1", background: "none", border: "none", cursor: "pointer", padding: 0 }}
           >
             <ChevronLeft size={16} strokeWidth={2.5} />
             <span className="hidden sm:inline">Accueil</span>
           </button>
           <div className="w-px h-4" style={{ background: "#e4e7f0" }} />
-          <IBMLogo variant="light" height={20} />
+          <IBMLogo variant="light" height={22} />
           <div className="w-px h-4" style={{ background: "#e4e7f0" }} />
-          <span className="text-xs hidden sm:inline" style={{ color: "#8d95aa", fontFamily: "'IBM Plex Mono', monospace" }}>
+          <span className="text-xs hidden sm:inline font-semibold uppercase" style={{ color: "#0D47A1", letterSpacing: "0.1em", fontFamily: "'IBM Plex Mono', monospace" }}>
             Formation obligatoire
           </span>
         </div>
         <span
-          className="font-mono text-xs font-semibold px-2 py-0.5 rounded-full"
-          style={{ color: "#da1e28", background: "rgba(218,30,40,0.06)", border: "1px solid rgba(218,30,40,0.15)", fontFamily: "'IBM Plex Mono', monospace" }}
+          className="font-mono text-xs font-semibold px-2.5 py-1 rounded-full"
+          style={{ color: "#0D47A1", background: "rgba(13,71,161,0.07)", border: "1px solid rgba(13,71,161,0.2)", fontFamily: "'IBM Plex Mono', monospace" }}
         >
           Étape 1 / 2
         </span>
       </header>
 
-      {/* Content */}
-      <div className="flex-1 flex items-start justify-center px-4 py-8">
+      {/* Geometric bg + scrollable form */}
+      <div className="flex-1 relative overflow-hidden">
+        <GeometricBg />
+        <div className="relative z-10 h-full overflow-y-auto">
+          <div className="flex items-start justify-center px-4 py-6 min-h-full">
         <div
           className="w-full rounded-xl overflow-hidden"
           style={{ maxWidth: "600px", background: "#fff", border: "1px solid #e4e7f0", boxShadow: "0 4px 24px rgba(0,0,0,0.07)" }}
@@ -322,7 +326,11 @@ export default function Form() {
             </button>
           </div>
         </div>
+          </div>
+        </div>
       </div>
+
+      <BottomNav onBack={() => navigate("/")} onNext={handleSubmit} />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft, Home, BarChart2 } from "lucide-react";
+import { ChevronLeft, Home, BarChart2, Shield } from "lucide-react";
 import { useUser } from "@/lib/userContext";
 import IBMLogo from "@/components/IBMLogo";
 
@@ -102,13 +102,28 @@ export default function IBMTopbar({
           </div>
         )}
 
+        {chapter && (
+          <span
+            className="hidden sm:inline font-mono text-xs font-semibold px-2 py-0.5 rounded-full flex items-center gap-1"
+            style={{
+              fontFamily: "'IBM Plex Mono', monospace",
+              color: chapter === 1 ? "#b45309" : "#0D47A1",
+              background: chapter === 1 ? "rgba(180,83,9,0.07)" : "rgba(13,71,161,0.07)",
+              border: `1px solid ${chapter === 1 ? "rgba(180,83,9,0.2)" : "rgba(13,71,161,0.2)"}`,
+            }}
+          >
+            <Shield size={10} />
+            Ch.{chapter}
+          </span>
+        )}
+
         <button
           onClick={() => navigate("/hub")}
           className="hidden sm:flex items-center gap-1 text-xs font-semibold uppercase hover:opacity-70 transition-opacity"
           style={{ color: "#0D47A1", letterSpacing: "0.08em", background: "none", border: "none", cursor: "pointer" }}
         >
           <Home size={12} />
-          Tableau de bord
+          <span className="hidden md:inline">Tableau de bord</span>
         </button>
 
         <div className="flex items-center gap-1.5">
