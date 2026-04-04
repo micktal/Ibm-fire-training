@@ -1,6 +1,8 @@
 import { Play, Clock, Brain, Wrench, Heart, Zap, Shield, Video, Lightbulb } from "lucide-react";
 import { CourseModule } from "@/lib/courseData";
 import { MODULE_INTERACTIONS } from "@/lib/interactionData";
+import { useLanguage } from "@/lib/languageContext";
+import { t } from "@/lib/i18n";
 
 interface Props {
   mod: CourseModule;
@@ -8,6 +10,7 @@ interface Props {
 }
 
 export default function ModuleIntroOverlay({ mod, onStart }: Props) {
+  const { lang } = useLanguage();
   const interactionCount = MODULE_INTERACTIONS[mod.id]?.length ?? 0;
   const hasVideo = !!mod.videoUrl;
   const lo = mod.learningObjectives;
@@ -46,20 +49,20 @@ export default function ModuleIntroOverlay({ mod, onStart }: Props) {
           maxHeight: "92vh",
         }}
       >
-        {/* Module image strip */}
-        <div className="relative overflow-hidden flex-shrink-0" style={{ height: "140px" }}>
+        {/* Module image strip — badges only, NO title inside */}
+        <div className="relative overflow-hidden flex-shrink-0" style={{ height: "100px" }}>
           <img
             src={mod.image}
             alt={mod.title}
             className="w-full h-full object-cover"
-            style={{ filter: "brightness(0.45)" }}
+            style={{ filter: "brightness(0.4)" }}
           />
           <div
             className="absolute inset-0"
-            style={{ background: "linear-gradient(to bottom, transparent 30%, rgba(10,14,26,0.95))" }}
+            style={{ background: "linear-gradient(to bottom, rgba(10,14,26,0.3) 0%, rgba(10,14,26,0.85) 100%)" }}
           />
-          {/* Chapter + module badge */}
-          <div className="absolute top-4 left-4 flex items-center gap-2">
+          {/* Chapter + module badge — top left */}
+          <div className="absolute top-3 left-4 flex items-center gap-2">
             <span
               className="font-mono text-xs px-2.5 py-1 rounded-full"
               style={{
@@ -71,7 +74,7 @@ export default function ModuleIntroOverlay({ mod, onStart }: Props) {
                 fontSize: "10px",
               }}
             >
-              CHAPITRE {mod.chapter}
+              {t("module.chapter", lang)} {mod.chapter}
             </span>
             <span
               className="font-mono text-xs px-2.5 py-1 rounded-full"
@@ -88,9 +91,9 @@ export default function ModuleIntroOverlay({ mod, onStart }: Props) {
             </span>
           </div>
 
-          {/* Duration */}
+          {/* Duration — top right */}
           <div
-            className="absolute top-4 right-4 flex items-center gap-1.5 font-mono text-xs px-2.5 py-1 rounded-full"
+            className="absolute top-3 right-4 flex items-center gap-1.5 font-mono text-xs px-2.5 py-1 rounded-full"
             style={{
               fontFamily: "'IBM Plex Mono', monospace",
               background: "rgba(0,0,0,0.5)",
@@ -102,20 +105,21 @@ export default function ModuleIntroOverlay({ mod, onStart }: Props) {
             <Clock size={11} />
             {mod.duration}
           </div>
-
-          {/* Title over image bottom */}
-          <div className="absolute bottom-0 left-0 right-0 px-5 pb-3">
-            <h2
-              className="font-bold text-white"
-              style={{ fontSize: "1.15rem", letterSpacing: "-0.02em", lineHeight: "1.2" }}
-            >
-              {mod.title}
-            </h2>
-          </div>
         </div>
 
+        {/* Bright accent separator — clear visual boundary between image and content */}
+        <div style={{ height: "3px", background: "linear-gradient(90deg, #0f62fe 0%, #4589ff 60%, transparent 100%)", flexShrink: 0 }} />
+
         {/* Content */}
-        <div className="px-5 pt-4 pb-5 flex flex-col gap-4">
+        <div className="px-5 pt-5 pb-5 flex flex-col gap-4">
+
+          {/* ── Title clearly in content area — well below image badges ── */}
+          <h2
+            className="font-bold text-white"
+            style={{ fontSize: "1.15rem", letterSpacing: "-0.02em", lineHeight: "1.3" }}
+          >
+            {mod.title}
+          </h2>
 
           {/* ── Objectif global ────────────────────────────── */}
           <div
@@ -123,7 +127,7 @@ export default function ModuleIntroOverlay({ mod, onStart }: Props) {
             style={{ background: "rgba(0,67,206,0.12)", border: "1px solid rgba(0,67,206,0.22)" }}
           >
             <div className="font-mono text-xs mb-1.5 uppercase" style={{ color: "rgba(126,179,255,0.6)", letterSpacing: "0.1em", fontFamily: "'IBM Plex Mono', monospace", fontSize: "9px" }}>
-              À la fin, l'apprenant est capable de…
+              {t("intro.at_end", lang)}
             </div>
             <p style={{ color: "rgba(255,255,255,0.8)", fontSize: "0.855rem", lineHeight: "1.5" }}>
               {mod.objective}
@@ -134,7 +138,7 @@ export default function ModuleIntroOverlay({ mod, onStart }: Props) {
           {lo && (
             <div className="flex flex-col gap-2">
               <div className="font-mono text-xs uppercase mb-0.5" style={{ color: "rgba(255,255,255,0.25)", letterSpacing: "0.1em", fontFamily: "'IBM Plex Mono', monospace", fontSize: "9px" }}>
-                Objectifs pédagogiques
+                {t("intro.objectives", lang)}
               </div>
 
               {/* Savoir */}
@@ -143,7 +147,7 @@ export default function ModuleIntroOverlay({ mod, onStart }: Props) {
                   <Brain size={12} color="#c4b5fd" />
                 </div>
                 <div>
-                  <div className="font-bold text-xs mb-0.5" style={{ color: "#c4b5fd", letterSpacing: "0.06em" }}>SAVOIR</div>
+                  <div className="font-bold text-xs mb-0.5" style={{ color: "#c4b5fd", letterSpacing: "0.06em" }}>{t("lo.savoir", lang)}</div>
                   <div style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.8rem", lineHeight: "1.45" }}>{lo.savoir}</div>
                 </div>
               </div>
@@ -154,7 +158,7 @@ export default function ModuleIntroOverlay({ mod, onStart }: Props) {
                   <Wrench size={12} color="#7eb3ff" />
                 </div>
                 <div>
-                  <div className="font-bold text-xs mb-0.5" style={{ color: "#7eb3ff", letterSpacing: "0.06em" }}>SAVOIR-FAIRE</div>
+                  <div className="font-bold text-xs mb-0.5" style={{ color: "#7eb3ff", letterSpacing: "0.06em" }}>{t("lo.savoirFaire", lang)}</div>
                   <div style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.8rem", lineHeight: "1.45" }}>{lo.savoirFaire}</div>
                 </div>
               </div>
@@ -165,7 +169,7 @@ export default function ModuleIntroOverlay({ mod, onStart }: Props) {
                   <Heart size={12} color="#6fdc8c" />
                 </div>
                 <div>
-                  <div className="font-bold text-xs mb-0.5" style={{ color: "#6fdc8c", letterSpacing: "0.06em" }}>SAVOIR-ÊTRE</div>
+                  <div className="font-bold text-xs mb-0.5" style={{ color: "#6fdc8c", letterSpacing: "0.06em" }}>{t("lo.savoirEtre", lang)}</div>
                   <div style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.8rem", lineHeight: "1.45" }}>{lo.savoirEtre}</div>
                 </div>
               </div>
@@ -178,33 +182,33 @@ export default function ModuleIntroOverlay({ mod, onStart }: Props) {
               className="font-mono text-xs mb-2 uppercase"
               style={{ color: "rgba(255,255,255,0.25)", letterSpacing: "0.1em", fontFamily: "'IBM Plex Mono', monospace", fontSize: "9px" }}
             >
-              Ce module contient
+              {t("intro.contains", lang)}
             </div>
             <div className="flex flex-col gap-1.5">
               {hasVideo && (
                 <div className="flex items-center gap-2.5 rounded-xl px-3.5 py-2.5" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}>
                   <Video size={13} style={{ color: "#0f62fe", flexShrink: 0 }} />
-                  <span style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.835rem" }}>Vidéo pédagogique avec sous-titres</span>
+                  <span style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.835rem" }}>{t("intro.video", lang)}</span>
                 </div>
               )}
               {interactionCount > 0 && (
                 <div className="flex items-center gap-2.5 rounded-xl px-3.5 py-2.5" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}>
                   <Zap size={13} style={{ color: "#ff6b1a", flexShrink: 0 }} />
                   <span style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.835rem" }}>
-                    {interactionCount} exercice{interactionCount > 1 ? "s" : ""} interactif{interactionCount > 1 ? "s" : ""}
+                    {interactionCount} {interactionCount > 1 ? t("intro.exercises_pl", lang) : t("intro.exercises", lang)}
                   </span>
                 </div>
               )}
               <div className="flex items-center gap-2.5 rounded-xl px-3.5 py-2.5" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}>
                 <Shield size={13} style={{ color: "#6fdc8c", flexShrink: 0 }} />
                 <span style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.835rem" }}>
-                  Quiz final — <span style={{ color: "#6fdc8c", fontWeight: 600 }}>80% requis</span> pour valider
+                  {t("intro.quiz_req", lang)}
                 </span>
               </div>
               <div className="flex items-center gap-2.5 rounded-xl px-3.5 py-2.5" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}>
                 <Lightbulb size={13} style={{ color: "#f59e0b", flexShrink: 0 }} />
                 <span style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.835rem" }}>
-                  {mod.quiz.length} question{mod.quiz.length > 1 ? "s" : ""} · Lisez bien le contenu avant de répondre
+                  {mod.quiz.length} {t("module.questions", lang)} · {t("module.read_content", lang)}
                 </span>
               </div>
             </div>
@@ -235,7 +239,7 @@ export default function ModuleIntroOverlay({ mod, onStart }: Props) {
             }}
           >
             <Play size={18} fill="#fff" />
-            Démarrer le module
+            {t("intro.to_start", lang)}
           </button>
         </div>
       </div>

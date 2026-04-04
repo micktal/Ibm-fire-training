@@ -93,7 +93,7 @@ export default function ChapterIntroPage() {
         className="flex-shrink-0 flex items-center justify-between px-5"
         style={{ height: "52px", background: "#fff", borderBottom: "1px solid #e4e7f0", zIndex: 20 }}
       >
-        <IBMLogo variant="light" height={24} />
+        <IBMLogo variant="light" height={30} />
         <div className="flex items-center gap-2">
           <span className="font-mono text-xs px-2.5 py-1 rounded-full" style={{ fontFamily: "'IBM Plex Mono', monospace", background: "rgba(13,71,161,0.08)", color: "#0D47A1", border: "1px solid rgba(13,71,161,0.18)", fontSize: "10px", letterSpacing: "0.08em" }}>
             CHAPITRE 2

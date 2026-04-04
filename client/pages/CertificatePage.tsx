@@ -54,7 +54,7 @@ export default function CertificatePage() {
           Tableau de bord
         </button>
         <div className="flex-1" />
-        <IBMLogo variant="light" height={22} />
+        <IBMLogo variant="light" height={28} />
       </header>
 
       <main className="flex-1 overflow-y-auto">
@@ -80,7 +80,7 @@ export default function CertificatePage() {
 
               <div className="relative z-10 flex flex-col items-center">
                 {/* IBM Logo */}
-                <IBMLogo variant="dark" height={28} />
+                <IBMLogo variant="dark" height={36} />
 
                 <div className="mt-4 w-16 h-16 rounded-full flex items-center justify-center" style={{ background: "rgba(255,255,255,0.15)", border: "2px solid rgba(255,255,255,0.3)" }}>
                   <Award size={30} color="#FFD700" />

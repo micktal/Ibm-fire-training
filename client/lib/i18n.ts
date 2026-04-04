@@ -50,25 +50,37 @@ const STRINGS = {
   "hub.play":           { fr: "Démarrer",                         en: "Start" },
 
   // ── Module page ───────────────────────────────────────────
-  "module.objective":    { fr: "Objectif du module",            en: "Module objective" },
-  "module.did_you_know": { fr: "Le saviez-vous ?",              en: "Did you know?" },
-  "module.content":      { fr: "Contenu pédagogique",           en: "Course content" },
-  "module.exercises":    { fr: "Exercices interactifs",         en: "Interactive exercises" },
-  "module.key_points":   { fr: "À retenir avant le quiz",       en: "Key takeaways before the quiz" },
-  "module.quiz":         { fr: "Évaluation du module",          en: "Module assessment" },
-  "module.questions":    { fr: "questions",                     en: "questions" },
-  "module.completed":    { fr: "Module déjà complété",          en: "Module already completed" },
-  "module.validated":    { fr: "Module validé !",               en: "Module validated!" },
-  "module.insufficient": { fr: "Score insuffisant — réessayez le quiz", en: "Insufficient score — retry the quiz" },
-  "module.retry":        { fr: "Réessayer le quiz",             en: "Retry the quiz" },
-  "module.save":         { fr: "Sauvegarder ma progression",    en: "Save my progress" },
-  "module.saved":        { fr: "Sauvegardé",                    en: "Saved" },
-  "module.lms_saved":    { fr: "progression transmise au LMS",  en: "progress sent to LMS" },
-  "module.next":         { fr: "Module suivant",                en: "Next module" },
-  "module.elapsed":      { fr: "min passées sur ce module",     en: "min spent on this module" },
-  "module.min_required": { fr: "80% minimum requis pour valider", en: "80% minimum required to validate" },
-  "module.start":        { fr: "Démarrer le module",            en: "Start module" },
-  "module.restart":      { fr: "Recommencer",                   en: "Restart" },
+  "module.objective":       { fr: "Objectif du module",                en: "Module objective" },
+  "module.did_you_know":    { fr: "Le saviez-vous ?",                  en: "Did you know?" },
+  "module.content":         { fr: "Contenu pédagogique",               en: "Course content" },
+  "module.exercises":       { fr: "Exercices interactifs",             en: "Interactive exercises" },
+  "module.key_points":      { fr: "À retenir avant le quiz",           en: "Key takeaways before the quiz" },
+  "module.key_points_post": { fr: "Points clés du module",             en: "Module key points" },
+  "module.quiz":            { fr: "Évaluation du module",              en: "Module assessment" },
+  "module.questions":       { fr: "questions",                         en: "questions" },
+  "module.completed":       { fr: "Module déjà complété",              en: "Module already completed" },
+  "module.validated":       { fr: "Module validé !",                   en: "Module validated!" },
+  "module.insufficient":    { fr: "Score insuffisant — réessayez le quiz", en: "Insufficient score — retry the quiz" },
+  "module.retry":           { fr: "Réessayer le quiz",                 en: "Retry the quiz" },
+  "module.save":            { fr: "Sauvegarder ma progression",        en: "Save my progress" },
+  "module.saved":           { fr: "Sauvegardé",                        en: "Saved" },
+  "module.lms_saved":       { fr: "progression transmise au LMS",      en: "progress sent to LMS" },
+  "module.next":            { fr: "Module suivant",                    en: "Next module" },
+  "module.elapsed":         { fr: "min passées sur ce module",         en: "min spent on this module" },
+  "module.min_required":    { fr: "80% minimum requis pour valider",   en: "80% minimum required to validate" },
+  "module.start":           { fr: "Démarrer le module",                en: "Start module" },
+  "module.restart":         { fr: "Recommencer",                       en: "Restart" },
+  "module.chapter":         { fr: "CHAPITRE",                          en: "CHAPTER" },
+  "module.video_label":     { fr: "Vidéo pédagogique",                 en: "Educational video" },
+  "module.dashboard":       { fr: "Tableau de bord",                   en: "Dashboard" },
+  "module.score_label":     { fr: "Score",                             en: "Score" },
+  "module.progression":     { fr: "Progression mesurée",               en: "Measured progress" },
+  "module.initial_test":    { fr: "Test initial",                      en: "Initial test" },
+  "module.final_score":     { fr: "Score final",                       en: "Final score" },
+  "module.correct_ans":     { fr: "bonnes réponses",                   en: "correct answers" },
+  "module.saved_at":        { fr: "Sauvegardé à",                      en: "Saved at" },
+  "module.min_validate":    { fr: "80% minimum requis pour valider ce module", en: "80% minimum required to pass this module" },
+  "module.read_content":    { fr: "Lisez bien le contenu avant de répondre", en: "Read the content carefully before answering" },
 
   // ── Quiz ─────────────────────────────────────────────────
   "quiz.good":        { fr: "Bonne réponse !",                  en: "Correct answer!" },
@@ -81,6 +93,10 @@ const STRINGS = {
   "quiz.select":      { fr: "Sélectionnez une réponse pour continuer", en: "Select an answer to continue" },
   "quiz.must_answer": { fr: "Vous devez répondre avant de continuer",  en: "You must answer before continuing" },
   "quiz.attempts":    { fr: "tentative",                        en: "attempt" },
+  "quiz.passed_msg":  { fr: "Quiz réussi — module validé",      en: "Quiz passed — module validated" },
+  "quiz.retry_msg":   { fr: "Score insuffisant — réessayez",    en: "Insufficient score — retry" },
+  "quiz.retry_btn":   { fr: "Réessayer le quiz",                en: "Retry quiz" },
+  "quiz.correct_of":  { fr: "bonne(s) réponse(s) sur",          en: "correct answer(s) out of" },
 
   // ── Pre-test ──────────────────────────────────────────────
   "pretest.title":    { fr: "Test de positionnement",           en: "Positioning test" },
@@ -91,6 +107,8 @@ const STRINGS = {
   "pretest.correct":  { fr: "Bonne réponse :",                  en: "Correct answer:" },
   "pretest.start":    { fr: "Commencer le module",              en: "Start module" },
   "pretest.next":     { fr: "Question suivante",                en: "Next question" },
+  "pretest.good_msg": { fr: "Excellent — vous maîtrisez déjà ce point. Continuez !", en: "Excellent — you already master this point. Keep going!" },
+  "pretest.ko_msg":   { fr: "Pas de souci — ce module va vous permettre de maîtriser ce concept.", en: "No worries — this module will help you master this concept." },
 
   // ── Self-assessment ───────────────────────────────────────
   "self.title":       { fr: "Comment vous sentez-vous sur ce module ?", en: "How confident are you about this module?" },
@@ -125,6 +143,22 @@ const STRINGS = {
   "lo.savoirFaire":   { fr: "SAVOIR-FAIRE",                     en: "KNOW-HOW" },
   "lo.savoirEtre":    { fr: "SAVOIR-ÊTRE",                      en: "KNOW-HOW-TO-BE" },
 
+  // ── FactCard ──────────────────────────────────────────────
+  "factcard.did_you_know": { fr: "LE SAVIEZ-VOUS ?",            en: "DID YOU KNOW?" },
+
+  // ── Countdown ─────────────────────────────────────────────
+  "countdown.go":      { fr: "PARTEZ !",                        en: "GO!" },
+  "countdown.ready":   { fr: "Préparez-vous",                   en: "Get ready" },
+  "countdown.goodluck":{ fr: "Bonne formation",                 en: "Good luck!" },
+
+  // ── Completion celebration ────────────────────────────────
+  "completion.passed":    { fr: "Module validé !",              en: "Module validated!" },
+  "completion.failed":    { fr: "Score insuffisant",            en: "Insufficient score" },
+  "completion.threshold_ok":  { fr: "✓ Seuil IBM de 80% atteint", en: "✓ IBM 80% threshold reached" },
+  "completion.threshold_ko":  { fr: "Seuil IBM : 80% requis",  en: "IBM threshold: 80% required" },
+  "completion.continue":  { fr: "Continuer le parcours",        en: "Continue training" },
+  "completion.retry":     { fr: "Réessayer le quiz",            en: "Retry quiz" },
+
   // ── Interactions generic ─────────────────────────────────
   "int.flip":         { fr: "Cliquer pour retourner",           en: "Click to flip" },
   "int.all_done":     { fr: "Toutes les cartes découvertes !",  en: "All cards discovered!" },
@@ -138,11 +172,21 @@ const STRINGS = {
   "int.incorrect":    { fr: "Incorrect",                        en: "Incorrect" },
 
   // ── Section type labels ───────────────────────────────────
-  "section.intro":    { fr: "Introduction",                     en: "Introduction" },
-  "section.visual":   { fr: "Visuel",                           en: "Visual" },
-  "section.info":     { fr: "Information",                      en: "Information" },
-  "section.scenario": { fr: "Scénario",                         en: "Scenario" },
-  "section.list":     { fr: "Points clés",                      en: "Key points" },
+  "section.intro":      { fr: "Introduction",                   en: "Introduction" },
+  "section.visual":     { fr: "Visuel",                         en: "Visual" },
+  "section.info":       { fr: "Information",                    en: "Information" },
+  "section.scenario":   { fr: "Scénario",                       en: "Scenario" },
+  "section.list":       { fr: "Points clés",                    en: "Key points" },
+  "section.casefigure": { fr: "Cas pratique",                   en: "Case study" },
+  "section.comparison": { fr: "Comparaison",                    en: "Comparison" },
+  "casefig.situation":  { fr: "Situation",                      en: "Situation" },
+  "casefig.action":     { fr: "Action",                         en: "Action" },
+  "casefig.good":       { fr: "Bonne décision",                 en: "Good decision" },
+  "casefig.bad":        { fr: "Mistake à éviter",               en: "Mistake to avoid" },
+  "casefig.case":       { fr: "Cas",                            en: "Case" },
+  "compare.do":         { fr: "À faire",                        en: "Do" },
+  "compare.dont":       { fr: "À éviter",                       en: "Avoid" },
+  "self.completed_pct": { fr: "bonnes réponses",                en: "correct answers" },
 
   // ── Chapter intro page ───────────────────────────────────
   "ch_intro.transition": { fr: "Transition · Chapitre 1 → 2",  en: "Transition · Chapter 1 → 2" },

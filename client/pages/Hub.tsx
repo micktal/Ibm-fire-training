@@ -231,7 +231,7 @@ export default function Hub() {
         className="flex-shrink-0 flex items-center justify-between px-6"
         style={{ height: "52px", background: "#fff", borderBottom: "1px solid #e4e7f0", zIndex: 20 }}
       >
-        <IBMLogo variant="light" height={26} />
+        <IBMLogo variant="light" height={32} />
         <nav className="flex items-center gap-4">
           <button
             onClick={() => navigate("/")}
@@ -268,7 +268,7 @@ export default function Hub() {
           <div className="max-w-2xl mx-auto w-full">
             {/* IBM logo */}
             <div className="mb-3">
-              <IBMLogo variant="dark" height={30} />
+              <IBMLogo variant="dark" height={36} />
             </div>
 
             {user && (

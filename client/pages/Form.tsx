@@ -6,6 +6,7 @@ import GeometricBg from "@/components/layout/GeometricBg";
 import BottomNav from "@/components/layout/BottomNav";
 import { useUser } from "@/lib/userContext";
 import { IBM_SITES } from "@/lib/courseData";
+import { useLanguage } from "@/lib/languageContext";
 
 function Field({
   id, label, required, error, children,
@@ -36,6 +37,8 @@ function Field({
 export default function Form() {
   const navigate = useNavigate();
   const { setUser } = useUser();
+  const { lang } = useLanguage();
+  const isEN = lang === "en";
 
   const [fields, setFields] = useState({
     prenom: "",
@@ -56,14 +59,15 @@ export default function Form() {
 
   const validate = () => {
     const e: Record<string, string> = {};
-    if (!fields.prenom.trim()) e.prenom = "Champ requis";
-    if (!fields.nom.trim()) e.nom = "Champ requis";
+    const req = isEN ? "Required field" : "Champ requis";
+    if (!fields.prenom.trim()) e.prenom = req;
+    if (!fields.nom.trim()) e.nom = req;
     if (!fields.email.trim()) {
-      e.email = "Champ requis";
+      e.email = req;
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email)) {
-      e.email = "Adresse email invalide";
+      e.email = isEN ? "Invalid email address" : "Adresse email invalide";
     }
-    if (!fields.campus) e.campus = "Sélectionnez votre site";
+    if (!fields.campus) e.campus = isEN ? "Select your site" : "Sélectionnez votre site";
     return e;
   };
 
@@ -119,20 +123,20 @@ export default function Form() {
             style={{ color: "#0D47A1", background: "none", border: "none", cursor: "pointer", padding: 0 }}
           >
             <ChevronLeft size={16} strokeWidth={2.5} />
-            <span className="hidden sm:inline">Accueil</span>
+            <span className="hidden sm:inline">{isEN ? "Home" : "Accueil"}</span>
           </button>
           <div className="w-px h-4" style={{ background: "#e4e7f0" }} />
-          <IBMLogo variant="light" height={22} />
+          <IBMLogo variant="dark" height={28} />
           <div className="w-px h-4" style={{ background: "#e4e7f0" }} />
           <span className="text-xs hidden sm:inline font-semibold uppercase" style={{ color: "#0D47A1", letterSpacing: "0.1em", fontFamily: "'IBM Plex Mono', monospace" }}>
-            Formation obligatoire
+            {isEN ? "Mandatory training" : "Formation obligatoire"}
           </span>
         </div>
         <span
           className="font-mono text-xs font-semibold px-2.5 py-1 rounded-full"
           style={{ color: "#0D47A1", background: "rgba(13,71,161,0.07)", border: "1px solid rgba(13,71,161,0.2)", fontFamily: "'IBM Plex Mono', monospace" }}
         >
-          Étape 1 / 2
+          {isEN ? "Step 1 / 2" : "Étape 1 / 2"}
         </span>
       </header>
 
@@ -157,13 +161,15 @@ export default function Form() {
               ))}
             </div>
             <div className="font-mono text-xs mb-1.5" style={{ color: "rgba(255,255,255,0.55)", fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.12em", textTransform: "uppercase" }}>
-              IBM · Formation obligatoire · 2026
+              IBM · {isEN ? "Mandatory training" : "Formation obligatoire"} · 2026
             </div>
             <h1 className="text-xl font-bold text-white mb-1.5" style={{ letterSpacing: "-0.02em" }}>
-              Sécurité Incendie & Évacuation
+              {isEN ? "Fire Safety & Evacuation" : "Sécurité Incendie & Évacuation"}
             </h1>
             <p className="text-sm" style={{ color: "rgba(255,255,255,0.7)", lineHeight: "1.55" }}>
-              Renseignez vos informations avant de démarrer. Ces données permettent le suivi interne IBM de vos certifications.
+              {isEN
+                ? "Please fill in your details before starting. This data enables IBM's internal tracking of your certifications."
+                : "Renseignez vos informations avant de démarrer. Ces données permettent le suivi interne IBM de vos certifications."}
             </p>
           </div>
 
@@ -176,7 +182,9 @@ export default function Form() {
             >
               <Info size={14} style={{ color: "#0043ce", flexShrink: 0, marginTop: "1px" }} />
               <p className="text-xs leading-relaxed" style={{ color: "#0031a9" }}>
-                Ce formulaire est requis avant d'accéder au module. Vos réponses sont transmises au service RH IBM et ne sont pas visibles dans l'interface.
+                {isEN
+                  ? "This form is required before accessing the module. Your responses are sent to IBM HR and are not visible in the interface."
+                  : "Ce formulaire est requis avant d'accéder au module. Vos réponses sont transmises au service RH IBM et ne sont pas visibles dans l'interface."}
               </p>
             </div>
 
@@ -184,7 +192,7 @@ export default function Form() {
             <div className="flex flex-col gap-5">
               {/* Nom / Prénom */}
               <div className="grid grid-cols-2 gap-4">
-                <Field id="f-prenom" label="Prénom" required error={errors.prenom}>
+                <Field id="f-prenom" label={isEN ? "First name" : "Prénom"} required error={errors.prenom}>
                   <div className="relative">
                     <User size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2" style={{ color: "#8d95aa" }} />
                     <input
@@ -197,7 +205,7 @@ export default function Form() {
                     />
                   </div>
                 </Field>
-                <Field id="f-nom" label="Nom" required error={errors.nom}>
+                <Field id="f-nom" label={isEN ? "Last name" : "Nom"} required error={errors.nom}>
                   <div className="relative">
                     <User size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2" style={{ color: "#8d95aa" }} />
                     <input
@@ -213,7 +221,7 @@ export default function Form() {
               </div>
 
               {/* Email */}
-              <Field id="f-email" label="Email" required error={errors.email}>
+              <Field id="f-email" label={isEN ? "Email" : "Email"} required error={errors.email}>
                 <div className="relative">
                   <Mail size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2" style={{ color: "#8d95aa" }} />
                   <input
@@ -229,7 +237,7 @@ export default function Form() {
 
               {/* Campus + Bâtiment */}
               <div className="grid grid-cols-2 gap-4">
-                <Field id="f-campus" label="Campus / Site" required error={errors.campus}>
+                <Field id="f-campus" label={isEN ? "Campus / Site" : "Campus / Site"} required error={errors.campus}>
                   <div className="relative">
                     <MapPin size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none z-10" style={{ color: "#8d95aa" }} />
                     <select
@@ -245,14 +253,14 @@ export default function Form() {
                         backgroundPosition: "right 0.7rem center",
                       }}
                     >
-                      <option value="">-- Sélectionnez --</option>
+                      <option value="">{isEN ? "-- Select --" : "-- Sélectionnez --"}</option>
                       {IBM_SITES.map((site) => (
                         <option key={site} value={site}>{site}</option>
                       ))}
                     </select>
                   </div>
                 </Field>
-                <Field id="f-batiment" label="Bâtiment">
+                <Field id="f-batiment" label={isEN ? "Building" : "Bâtiment"}>
                   <div className="relative">
                     <Building2 size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2" style={{ color: "#8d95aa" }} />
                     <input
@@ -269,7 +277,7 @@ export default function Form() {
 
               {/* Étage + Zone */}
               <div className="grid grid-cols-2 gap-4">
-                <Field id="f-etage" label="Étage">
+                <Field id="f-etage" label={isEN ? "Floor" : "Étage"}>
                   <div className="relative">
                     <Layers size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2" style={{ color: "#8d95aa" }} />
                     <input
@@ -282,7 +290,7 @@ export default function Form() {
                     />
                   </div>
                 </Field>
-                <Field id="f-zone" label="Zone / Open space">
+                <Field id="f-zone" label={isEN ? "Zone / Open space" : "Zone / Open space"}>
                   <div className="relative">
                     <LayoutGrid size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2" style={{ color: "#8d95aa" }} />
                     <input
@@ -305,7 +313,7 @@ export default function Form() {
             style={{ borderTop: "1px solid #e4e7f0", background: "#fafbfc" }}
           >
             <span className="text-xs" style={{ color: "#8d95aa" }}>
-              Champs <span style={{ color: "#da1e28" }}>*</span> obligatoires
+{isEN ? "* Required fields" : <>Champs <span style={{ color: "#da1e28" }}>*</span> obligatoires</>}
             </span>
             <button
               onClick={handleSubmit}
@@ -321,7 +329,7 @@ export default function Form() {
               onMouseEnter={(e) => { if (!submitting) (e.currentTarget as HTMLButtonElement).style.background = "#0031a9"; }}
               onMouseLeave={(e) => { if (!submitting) (e.currentTarget as HTMLButtonElement).style.background = "#0043ce"; }}
             >
-              {submitting ? "Chargement..." : "Démarrer la formation"}
+              {submitting ? (isEN ? "Loading..." : "Chargement...") : (isEN ? "Start training" : "Démarrer la formation")}
               {!submitting && <ArrowRight size={15} />}
             </button>
           </div>

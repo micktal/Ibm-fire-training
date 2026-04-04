@@ -21,11 +21,15 @@ import MatchingExercise from "@/components/interactions/MatchingExercise";
 import OrderPuzzle from "@/components/interactions/OrderPuzzle";
 import SeriousGame from "@/components/interactions/SeriousGame";
 import TipFlipCards from "@/components/interactions/TipFlipCards";
+import SpinWheel from "@/components/interactions/SpinWheel";
+import GridQuiz from "@/components/interactions/GridQuiz";
+import MindMap from "@/components/interactions/MindMap";
 import BottomNav from "@/components/layout/BottomNav";
 import SituationAlertPopup from "@/components/SituationAlertPopup";
 import { getModuleById, QuizQuestion, ModuleContent, PreTestQuestion } from "@/lib/courseData";
 import { getModuleByIdEn } from "@/lib/courseDataEn";
 import { useLanguage } from "@/lib/languageContext";
+import { t } from "@/lib/i18n";
 import { MODULE_INTERACTIONS, AnyExercise } from "@/lib/interactionData";
 import { ALERT_BY_MODULE } from "@/lib/situationAlerts";
 import { useUser } from "@/lib/userContext";
@@ -41,6 +45,9 @@ function InteractionBlock({ exercise }: { exercise: AnyExercise }) {
   if (exercise.type === "orderpuzzle") return <OrderPuzzle exercise={exercise} />;
   if (exercise.type === "seriousgame") return <SeriousGame exercise={exercise} />;
   if (exercise.type === "tipflip") return <TipFlipCards exercise={exercise} />;
+  if (exercise.type === "spinwheel") return <SpinWheel exercise={exercise} />;
+  if (exercise.type === "gridquiz") return <GridQuiz exercise={exercise} />;
+  if (exercise.type === "mindmap") return <MindMap exercise={exercise} />;
   return null;
 }
 
@@ -282,9 +289,11 @@ function shuffle<T>(arr: T[]): T[] {
 function QuizBlock({
   questions,
   onComplete,
+  lang = "fr",
 }: {
   questions: QuizQuestion[];
   onComplete: (score: number, correct: number) => void;
+  lang?: "fr" | "en";
 }) {
   // Questions mélangées une fois à chaque montage du quiz
   const [shuffledQuestions] = useState<QuizQuestion[]>(() => shuffle(questions));
@@ -364,10 +373,10 @@ function QuizBlock({
             {finalScore}%
           </div>
           <div className="text-base font-bold mt-2 mb-1" style={{ color: "#161616" }}>
-            {passed ? "Quiz réussi — module validé" : "Score insuffisant — réessayez"}
+            {passed ? (lang === "en" ? "Quiz passed — module validated" : "Quiz réussi — module validé") : (lang === "en" ? "Insufficient score — retry" : "Score insuffisant — réessayez")}
           </div>
           <div className="text-sm mb-5" style={{ color: "#6f7897" }}>
-            {finalCorrect} bonne{finalCorrect > 1 ? "s" : ""} réponse{finalCorrect > 1 ? "s" : ""} sur {shuffledQuestions.length}
+            {finalCorrect} {lang === "en" ? "correct answer(s) out of" : `bonne${finalCorrect > 1 ? "s" : ""} réponse${finalCorrect > 1 ? "s" : ""} sur`} {shuffledQuestions.length}
           </div>
           {/* Mini results row */}
           <div className="flex justify-center gap-2 mb-5">
@@ -391,7 +400,7 @@ function QuizBlock({
               style={{ background: "#0043ce", color: "#fff", border: "none", cursor: "pointer" }}
             >
               <RotateCcw size={14} />
-              Réessayer le quiz
+              {lang === "en" ? "Retry quiz" : "Réessayer le quiz"}
             </button>
           )}
         </div>
@@ -558,7 +567,7 @@ function QuizBlock({
                 ? <CheckCircle2 size={15} color="#fff" />
                 : <XCircle size={15} color="#fff" />}
               <span className="font-bold text-white" style={{ fontSize: "0.875rem" }}>
-                {isCorrect ? "Bonne réponse !" : "Réponse incorrecte"}
+                {isCorrect ? t("quiz.good", lang) : t("quiz.wrong", lang)}
               </span>
             </div>
 
@@ -568,7 +577,7 @@ function QuizBlock({
               {!isCorrect && correctChoice && (
                 <div className="rounded-xl px-3.5 py-2.5" style={{ background: "rgba(25,128,56,0.1)", border: "1.5px solid rgba(25,128,56,0.3)" }}>
                   <div className="text-xs font-bold uppercase mb-1" style={{ color: "#198038", letterSpacing: "0.08em" }}>
-                    La bonne réponse était
+                    {t("quiz.correct_was", lang)}
                   </div>
                   <div className="font-semibold" style={{ color: "#0e6027", fontSize: "0.9rem" }}>
                     {correctChoice.key}. {correctChoice.label}
@@ -581,7 +590,7 @@ function QuizBlock({
                 <div className="flex items-center gap-1.5 mb-1.5">
                   <div className="w-1 h-4 rounded-full" style={{ background: isCorrect ? "#198038" : "#da1e28" }} />
                   <span className="text-xs font-bold uppercase" style={{ color: isCorrect ? "#0e6027" : "#a2191f", letterSpacing: "0.1em" }}>
-                    Pourquoi ?
+                    {t("quiz.why", lang)}
                   </span>
                 </div>
                 <p style={{ color: "#2d3148", fontSize: "0.9rem", lineHeight: "1.65" }}>
@@ -593,7 +602,7 @@ function QuizBlock({
               {!isCorrect && q.feedbackOk && (
                 <div className="rounded-xl px-3.5 py-2.5" style={{ background: "rgba(13,71,161,0.06)", border: "1px solid rgba(13,71,161,0.18)" }}>
                   <div className="text-xs font-bold uppercase mb-1" style={{ color: "#0D47A1", letterSpacing: "0.08em" }}>
-                    À retenir
+                    {t("quiz.remember", lang)}
                   </div>
                   <p style={{ color: "#3d4259", fontSize: "0.875rem", lineHeight: "1.6" }}>
                     {q.feedbackOk}
@@ -625,7 +634,7 @@ function QuizBlock({
         >
           <FileText size={13} style={{ color: shake ? "#da1e28" : "#0043ce", flexShrink: 0 }} />
           <span className="text-xs font-semibold" style={{ color: shake ? "#da1e28" : "#0043ce" }}>
-            {shake ? "Vous devez répondre avant de continuer" : "Sélectionnez une réponse pour continuer"}
+            {shake ? t("quiz.must_answer", lang) : t("quiz.select", lang)}
           </span>
         </div>
       )}
@@ -648,7 +657,7 @@ function QuizBlock({
           onMouseEnter={(e) => { if (answered) (e.currentTarget as HTMLButtonElement).style.background = "#0031a9"; }}
           onMouseLeave={(e) => { if (answered) (e.currentTarget as HTMLButtonElement).style.background = answered ? "#0043ce" : "#c8cdd8"; }}
         >
-          {current < shuffledQuestions.length - 1 ? "Question suivante" : "Voir mon résultat"}
+          {current < shuffledQuestions.length - 1 ? t("quiz.next_q", lang) : t("quiz.result", lang)}
           <ArrowRight size={16} />
         </button>
       </div>
@@ -662,11 +671,13 @@ function PreTestOverlay({
   moduleTitle,
   onComplete,
   onSkip,
+  lang = "fr",
 }: {
   questions: PreTestQuestion[];
   moduleTitle: string;
   onComplete: (score: number) => void;
   onSkip: () => void;
+  lang?: "fr" | "en";
 }) {
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
@@ -699,7 +710,7 @@ function PreTestOverlay({
       <div className="flex items-center justify-between px-5 py-4 flex-shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
         <div>
           <div className="text-xs font-mono uppercase mb-0.5" style={{ color: "rgba(255,255,255,0.4)", letterSpacing: "0.14em", fontFamily: "'IBM Plex Mono', monospace" }}>
-            Test de positionnement
+            {t("pretest.title", lang)}
           </div>
           <div className="font-bold text-white" style={{ fontSize: "0.92rem" }}>{moduleTitle}</div>
         </div>
@@ -708,7 +719,7 @@ function PreTestOverlay({
           className="text-xs font-semibold px-3 py-1.5 rounded-lg"
           style={{ background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.5)", border: "1px solid rgba(255,255,255,0.12)", cursor: "pointer" }}
         >
-          Passer
+          {t("pretest.skip", lang)}
         </button>
       </div>
 
@@ -723,7 +734,7 @@ function PreTestOverlay({
       <div className="flex-1 overflow-y-auto px-5 py-4">
         <div className="max-w-lg mx-auto">
           <div className="text-xs font-mono mb-3" style={{ color: "rgba(255,255,255,0.4)", fontFamily: "'IBM Plex Mono', monospace" }}>
-            Question {current + 1} / {questions.length}
+            {t("pretest.question", lang)} {current + 1} / {questions.length}
           </div>
           <div className="font-bold text-white mb-5" style={{ fontSize: "1.05rem", lineHeight: "1.4" }}>
             {q.question}
@@ -766,18 +777,16 @@ function PreTestOverlay({
                     {isCorrect
                       ? <CheckCircle2 size={14} color="#fff" />
                       : <XCircle size={14} color="#fff" />}
-                    <span className="font-bold text-white text-sm">{isCorrect ? "Bonne réponse !" : "Réponse incorrecte"}</span>
+                    <span className="font-bold text-white text-sm">{isCorrect ? t("pretest.good", lang) : t("pretest.wrong", lang)}</span>
                   </div>
                   <div className="px-4 py-3" style={{ background: isCorrect ? "rgba(25,128,56,0.12)" : "rgba(218,30,40,0.1)" }}>
                     {!isCorrect && correctChoice && (
                       <div className="mb-2 text-sm font-semibold" style={{ color: "#6fdc8c" }}>
-                        Bonne réponse : {correctChoice.key}. {correctChoice.label}
+                        {t("pretest.correct", lang)} {correctChoice.key}. {correctChoice.label}
                       </div>
                     )}
                     <p className="text-sm" style={{ color: "rgba(255,255,255,0.7)", lineHeight: "1.55" }}>
-                      {isCorrect
-                        ? "Excellent — vous maîtrisez déjà ce point. Continuez !"
-                        : "Pas de souci — ce module va vous permettre de maîtriser ce concept."}
+                      {isCorrect ? t("pretest.good_msg", lang) : t("pretest.ko_msg", lang)}
                     </p>
                   </div>
                 </div>
@@ -795,7 +804,7 @@ function PreTestOverlay({
                     boxShadow: "0 4px 16px rgba(13,71,161,0.4)",
                   }}
                 >
-                  {current < questions.length - 1 ? "Question suivante" : "Commencer le module"}
+                  {current < questions.length - 1 ? t("pretest.next", lang) : t("pretest.start", lang)}
                   <ArrowRight size={16} />
                 </button>
               </div>
@@ -808,13 +817,18 @@ function PreTestOverlay({
 }
 
 // ── Type labels & tab colors ────────────────────────────────────
-const typeLabel: Record<string, string> = {
-  intro: "Introduction",
-  visual: "Visuel",
-  info: "Information",
-  scenario: "Scénario",
-  list: "Points clés",
-};
+function getTypeLabel(type: string, lang: "fr" | "en"): string {
+  const map: Record<string, { fr: string; en: string }> = {
+    intro:      { fr: "Introduction", en: "Introduction" },
+    visual:     { fr: "Visuel",       en: "Visual" },
+    info:       { fr: "Information",  en: "Information" },
+    scenario:   { fr: "Scénario",     en: "Scenario" },
+    list:       { fr: "Points clés",  en: "Key points" },
+    casefigure: { fr: "Cas pratique", en: "Case study" },
+    comparison: { fr: "Comparaison",  en: "Comparison" },
+  };
+  return map[type]?.[lang] ?? map[type]?.fr ?? type;
+}
 
 const typeAccent: Record<string, { border: string; icon: string; headerBg: string; labelColor: string }> = {
   intro:      { border: "#0D47A1", icon: "rgba(13,71,161,0.1)",   headerBg: "#fff",    labelColor: "#0D47A1" },
@@ -908,9 +922,9 @@ export default function ModulePage() {
     <div className="min-h-screen flex flex-col" style={{ background: "#F0F4FA", fontFamily: "'IBM Plex Sans', sans-serif" }}>
       <IBMTopbar
         title={`Module ${mod.number} — ${mod.title}`}
-        subtitle={`Chapitre ${mod.chapter} · ${mod.duration}`}
+        subtitle={`${t("module.chapter", lang)} ${mod.chapter} · ${mod.duration}`}
         backTo="/hub"
-        backLabel="Tableau de bord"
+        backLabel={t("module.dashboard", lang)}
         showProgress
         currentModule={mod.number}
         chapter={mod.chapter}
@@ -950,7 +964,7 @@ export default function ModulePage() {
                   style={{ background: "rgba(25,128,56,0.3)", color: "#6fdc8c", border: "1px solid rgba(111,220,140,0.3)" }}
                 >
                   <CheckCircle2 size={11} />
-                  Complété · {existingProgress.score}%
+                  {t("hub.completed", lang)} · {existingProgress.score}%
                 </div>
               )}
             </div>
@@ -974,7 +988,7 @@ export default function ModulePage() {
               </div>
               <div>
                 <div className="text-xs font-semibold mb-1 uppercase" style={{ color: "rgba(255,255,255,0.65)", letterSpacing: "0.12em" }}>
-                  Objectif du module
+                  {t("module.objective", lang)}
                 </div>
                 <div className="font-semibold text-white" style={{ fontSize: "0.9375rem", lineHeight: "1.55" }}>
                   {mod.objective}
@@ -999,7 +1013,7 @@ export default function ModulePage() {
             <FadeIn delay={0.1}>
               <div>
                 <div className="text-xs font-semibold mb-2.5" style={{ color: "#8d95aa", textTransform: "uppercase", letterSpacing: "0.1em" }}>
-                  Vidéo pédagogique
+                  {t("module.video_label", lang)}
                 </div>
                 <VideoPlayer url={mod.videoUrl} title={mod.title} captionsVtt={mod.captionsVtt} />
               </div>
@@ -1040,7 +1054,7 @@ export default function ModulePage() {
                             <div className="text-xs font-bold uppercase mb-0.5"
                               style={{ color: isOpen ? accent.labelColor : "#adb3c8", letterSpacing: "0.1em", transition: "color 0.2s" }}
                             >
-                              {typeLabel[section.type] ?? section.type}
+                              {getTypeLabel(section.type, lang)}
                             </div>
                             <div className="font-bold truncate" style={{ color: "#0a2052", fontSize: "0.9rem" }}>
                               {section.title || mod.title}
@@ -1075,7 +1089,7 @@ export default function ModulePage() {
                   <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(255,255,255,0.15)" }}>
                     <Zap size={14} style={{ color: "#fff" }} />
                   </div>
-                  <span className="font-bold text-white uppercase" style={{ fontSize: "0.85rem", letterSpacing: "0.08em" }}>Exercices interactifs</span>
+                  <span className="font-bold text-white uppercase" style={{ fontSize: "0.85rem", letterSpacing: "0.08em" }}>{t("module.exercises", lang)}</span>
                   <span className="ml-auto font-mono text-xs px-2.5 py-1 rounded-full"
                     style={{ fontFamily: "'IBM Plex Mono', monospace", color: "#fff", background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.25)" }}
                   >
@@ -1099,7 +1113,7 @@ export default function ModulePage() {
                   <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "rgba(13,71,161,0.12)" }}>
                     <BookOpen size={14} style={{ color: "#0D47A1" }} />
                   </div>
-                  <span className="font-bold text-sm uppercase" style={{ color: "#0D47A1", letterSpacing: "0.08em" }}>À retenir avant le quiz</span>
+                  <span className="font-bold text-sm uppercase" style={{ color: "#0D47A1", letterSpacing: "0.08em" }}>{t("module.key_points", lang)}</span>
                 </div>
                 <div className="flex flex-col bg-white">
                   {mod.keyPoints.map((point, i) => (
@@ -1128,7 +1142,7 @@ export default function ModulePage() {
                 <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(255,255,255,0.15)" }}>
                   <Shield size={14} style={{ color: "#fff" }} />
                 </div>
-                <span className="font-bold text-white uppercase" style={{ fontSize: "0.85rem", letterSpacing: "0.08em" }}>Évaluation du module</span>
+                <span className="font-bold text-white uppercase" style={{ fontSize: "0.85rem", letterSpacing: "0.08em" }}>{t("module.quiz", lang)}</span>
                 <span className="ml-auto font-mono text-xs px-2.5 py-1 rounded-full"
                   style={{ fontFamily: "'IBM Plex Mono', monospace", color: "#fff", background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.25)" }}
                 >
@@ -1145,9 +1159,9 @@ export default function ModulePage() {
                     <CheckCircle2 size={22} color="#fff" />
                   </div>
                   <div className="flex-1">
-                    <div className="font-bold mb-0.5" style={{ color: "#0e6027", fontSize: "0.9375rem" }}>Module déjà complété</div>
+                    <div className="font-bold mb-0.5" style={{ color: "#0e6027", fontSize: "0.9375rem" }}>{t("module.completed", lang)}</div>
                     <div className="text-sm" style={{ color: "#6f7897" }}>
-                      Score : {existingProgress.score}% · {existingProgress.correctAnswers}/{existingProgress.totalQuestions} bonnes réponses
+                      {t("module.score_label", lang)} : {existingProgress.score}% · {existingProgress.correctAnswers}/{existingProgress.totalQuestions} {t("module.correct_ans", lang)}
                     </div>
                   </div>
                   <button
@@ -1156,11 +1170,11 @@ export default function ModulePage() {
                     style={{ background: "#198038", color: "#fff", border: "none", cursor: "pointer" }}
                   >
                     <RotateCcw size={13} />
-                    Réessayer
+                    {t("module.restart", lang)}
                   </button>
                 </div>
               ) : (
-                <QuizBlock questions={mod.quiz} onComplete={handleQuizComplete} />
+                <QuizBlock questions={mod.quiz} onComplete={handleQuizComplete} lang={lang} />
               )}
             </div>
           </FadeIn>
@@ -1173,7 +1187,7 @@ export default function ModulePage() {
                 <div className="rounded-2xl overflow-hidden mb-4" style={{ border: "2px solid rgba(13,71,161,0.22)", boxShadow: "0 4px 16px rgba(13,71,161,0.08)" }}>
                   <div className="flex items-center gap-2.5 px-5 py-3" style={{ background: "linear-gradient(135deg, #0D47A1, #1565C0)" }}>
                     <BookOpen size={15} color="#fff" />
-                    <span className="font-bold text-white uppercase" style={{ fontSize: "0.8rem", letterSpacing: "0.1em" }}>Points clés du module</span>
+                    <span className="font-bold text-white uppercase" style={{ fontSize: "0.8rem", letterSpacing: "0.1em" }}>{t("module.key_points_post", lang)}</span>
                   </div>
                   <div className="flex flex-col bg-white">
                     {mod.keyPoints.map((point, i) => (
@@ -1191,9 +1205,9 @@ export default function ModulePage() {
                 <div className="rounded-xl px-4 py-3 mb-4 flex items-center gap-3" style={{ background: "rgba(124,58,237,0.07)", border: "1.5px solid rgba(124,58,237,0.2)" }}>
                   <Award size={16} style={{ color: "#7c3aed", flexShrink: 0 }} />
                   <div className="flex-1">
-                    <div className="font-bold text-xs uppercase" style={{ color: "#5b21b6", letterSpacing: "0.08em" }}>Progression mesurée</div>
+                    <div className="font-bold text-xs uppercase" style={{ color: "#5b21b6", letterSpacing: "0.08em" }}>{t("module.progression", lang)}</div>
                     <div className="text-xs mt-0.5" style={{ color: "#6f7897" }}>
-                      Test initial : <strong>{preTestScore}%</strong> → Score final : <strong>{quizScore || existingProgress?.score || 0}%</strong>
+                      {t("module.initial_test", lang)} : <strong>{preTestScore}%</strong> → {t("module.final_score", lang)} : <strong>{quizScore || existingProgress?.score || 0}%</strong>
                     </div>
                   </div>
                 </div>
@@ -1201,13 +1215,13 @@ export default function ModulePage() {
 
               {/* Self-assessment */}
               <div className="rounded-2xl p-4 mb-4" style={{ background: "#fff", border: "2px solid #e4e7f0" }}>
-                <div className="font-bold text-sm mb-3" style={{ color: "#0a2052" }}>Comment vous sentez-vous sur ce module ?</div>
+                <div className="font-bold text-sm mb-3" style={{ color: "#0a2052" }}>{t("self.title", lang)}</div>
                 <div className="grid grid-cols-2 gap-2">
                   {[
-                    { val: 1, label: "À revoir", color: "#da1e28", bg: "rgba(218,30,40,0.07)", border: "rgba(218,30,40,0.25)" },
-                    { val: 2, label: "En progression", color: "#b45309", bg: "rgba(180,83,9,0.07)", border: "rgba(180,83,9,0.25)" },
-                    { val: 3, label: "Acquis", color: "#0D47A1", bg: "rgba(13,71,161,0.07)", border: "rgba(13,71,161,0.25)" },
-                    { val: 4, label: "Maîtrisé", color: "#198038", bg: "rgba(25,128,56,0.07)", border: "rgba(25,128,56,0.25)" },
+                    { val: 1, label: t("self.review", lang), color: "#da1e28", bg: "rgba(218,30,40,0.07)", border: "rgba(218,30,40,0.25)" },
+                    { val: 2, label: t("self.progress", lang), color: "#b45309", bg: "rgba(180,83,9,0.07)", border: "rgba(180,83,9,0.25)" },
+                    { val: 3, label: t("self.acquired", lang), color: "#0D47A1", bg: "rgba(13,71,161,0.07)", border: "rgba(13,71,161,0.25)" },
+                    { val: 4, label: t("self.mastered", lang), color: "#198038", bg: "rgba(25,128,56,0.07)", border: "rgba(25,128,56,0.25)" },
                   ].map((lvl) => (
                     <button
                       key={lvl.val}
@@ -1235,8 +1249,8 @@ export default function ModulePage() {
                       <XCircle size={18} color="#fff" />
                     </div>
                     <div>
-                      <div className="font-bold" style={{ color: "#da1e28", fontSize: "0.9375rem" }}>Score insuffisant — {quizScore}%</div>
-                      <div className="text-xs mt-0.5" style={{ color: "#6f7897" }}>80% minimum requis pour valider ce module</div>
+                      <div className="font-bold" style={{ color: "#da1e28", fontSize: "0.9375rem" }}>{t("module.insufficient", lang)} — {quizScore}%</div>
+                      <div className="text-xs mt-0.5" style={{ color: "#6f7897" }}>{t("module.min_validate", lang)}</div>
                     </div>
                   </div>
                   <button
@@ -1245,7 +1259,7 @@ export default function ModulePage() {
                     style={{ background: "#da1e28", color: "#fff", border: "none", cursor: "pointer", fontSize: "0.9rem" }}
                   >
                     <RotateCcw size={15} />
-                    Réessayer le quiz ({quizAttempts} tentative{quizAttempts > 1 ? "s" : ""})
+                    {t("module.retry", lang)} ({quizAttempts} {t("quiz.attempts", lang)}{quizAttempts > 1 ? "s" : ""})
                   </button>
                   <button
                     onClick={() => navigate("/hub")}
@@ -1253,7 +1267,7 @@ export default function ModulePage() {
                     style={{ background: "rgba(13,71,161,0.07)", color: "#0D47A1", border: "1.5px solid rgba(13,71,161,0.18)", cursor: "pointer", fontSize: "0.875rem" }}
                   >
                     <ChevronLeft size={14} />
-                    Retour au tableau de bord
+                    {t("module.dashboard", lang)}
                   </button>
                 </div>
               )}
@@ -1267,14 +1281,14 @@ export default function ModulePage() {
                     </div>
                     <div className="flex-1">
                       <div className="font-bold" style={{ color: "#0e6027", fontSize: "0.9375rem" }}>
-                        {quizDone ? "Module validé !" : "Module déjà complété"}
+                        {quizDone ? t("module.validated", lang) : t("module.completed", lang)}
                       </div>
                       <div className="flex items-center gap-3 mt-0.5">
-                        <span className="text-xs" style={{ color: "#6f7897" }}>Score : <strong style={{ color: "#198038" }}>{quizScore || existingProgress?.score || 0}%</strong></span>
+                        <span className="text-xs" style={{ color: "#6f7897" }}>{t("module.score_label", lang)} : <strong style={{ color: "#198038" }}>{quizScore || existingProgress?.score || 0}%</strong></span>
                         {elapsedMin !== null && (
                           <span className="flex items-center gap-1 text-xs" style={{ color: "#6f7897" }}>
                             <Clock size={11} />
-                            {elapsedMin} min passées sur ce module
+                            {elapsedMin} {t("module.elapsed", lang)}
                           </span>
                         )}
                       </div>
@@ -1298,7 +1312,7 @@ export default function ModulePage() {
                     }}
                   >
                     {savedAt ? <CheckCircle2 size={15} /> : <Save size={15} />}
-                    {savedAt ? `Sauvegardé à ${savedAt} — progression transmise au LMS` : "Sauvegarder ma progression"}
+                    {savedAt ? `${t("module.saved_at", lang)} ${savedAt} — ${t("module.lms_saved", lang)}` : t("module.save", lang)}
                   </button>
 
                   {/* Nav buttons */}
@@ -1309,14 +1323,14 @@ export default function ModulePage() {
                       style={{ background: "rgba(13,71,161,0.07)", color: "#0D47A1", border: "1.5px solid rgba(13,71,161,0.2)", cursor: "pointer", fontSize: "0.875rem" }}
                     >
                       <ChevronLeft size={15} />
-                      Tableau de bord
+                      {t("module.dashboard", lang)}
                     </button>
                     <button
                       onClick={() => navigate("/hub")}
                       className="flex-1 flex items-center justify-center gap-2 font-semibold px-6 py-2.5 rounded-xl transition-all whitespace-nowrap"
                       style={{ background: "#0D47A1", color: "#fff", border: "none", cursor: "pointer", fontSize: "0.9375rem" }}
                     >
-                      Module suivant
+                      {t("module.next", lang)}
                       <ChevronRight size={16} />
                     </button>
                   </div>
@@ -1342,6 +1356,7 @@ export default function ModulePage() {
           moduleTitle={mod.title}
           onComplete={(score) => { setPreTestScore(score); setPhase("countdown"); }}
           onSkip={() => setPhase("countdown")}
+          lang={lang}
         />
       )}
 

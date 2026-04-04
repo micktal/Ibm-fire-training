@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Flame, Clock, AlertTriangle, Shield, Zap, Eye } from "lucide-react";
 import { FunFact } from "@/lib/courseData";
+import { useLanguage } from "@/lib/languageContext";
+import { t } from "@/lib/i18n";
 
 const ICONS: Record<string, React.ReactNode> = {
   flame:  <Flame  size={18} />,
@@ -29,6 +31,7 @@ export default function FactCard({ fact, delay = 0 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const accent = ACCENT[fact.icon] ?? ACCENT.clock;
+  const { lang } = useLanguage();
 
   useEffect(() => {
     const el = ref.current;
@@ -112,7 +115,7 @@ export default function FactCard({ fact, delay = 0 }: Props) {
             textTransform: "uppercase",
           }}
         >
-          Le saviez-vous ?
+          {t("factcard.did_you_know", lang)}
         </div>
       </div>
     </div>

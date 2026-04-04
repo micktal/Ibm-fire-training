@@ -83,7 +83,7 @@ export default function IBMTopbar({
         )}
 
         {/* IBM logo officiel */}
-        <IBMLogo variant="light" height={26} />
+        <IBMLogo variant="light" height={32} />
 
         {(title || subtitle) && (
           <>

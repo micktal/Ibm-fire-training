@@ -60,7 +60,7 @@ function LanguageSelector({ onSelect }: { onSelect: (lang: Lang) => void }) {
 
       <div className="relative z-10 flex flex-col items-center gap-8 px-6" style={{ maxWidth: "420px", width: "100%" }}>
         {/* Logo */}
-        <IBMLogo variant="dark" height={32} />
+        <IBMLogo variant="dark" height={36} />
 
         {/* Title */}
         <div className="text-center">
@@ -141,7 +141,7 @@ export default function Index() {
         className="flex-shrink-0 flex items-center justify-between px-6"
         style={{ height: "52px", background: "#fff", borderBottom: "1px solid #e4e7f0", zIndex: 20, position: "relative" }}
       >
-        <IBMLogo variant="light" height={26} />
+        <IBMLogo variant="light" height={32} />
         <nav className="flex items-center gap-4">
           <span className="text-xs font-semibold uppercase tracking-widest cursor-pointer hover:text-blue-700 transition-colors" style={{ color: "#0D47A1", letterSpacing: "0.12em" }}>
             {t("landing.demo", lang)}

@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
+import { useLanguage } from "@/lib/languageContext";
+import { t } from "@/lib/i18n";
 
 interface Props {
   onComplete: () => void;
   moduleImage?: string;
+  lang?: "fr" | "en";
 }
 
 const SEQUENCE = [5, 4, 3, 2, 1, 0]; // 0 = "C'EST PARTI !"
@@ -10,6 +13,7 @@ const SEQUENCE = [5, 4, 3, 2, 1, 0]; // 0 = "C'EST PARTI !"
 export default function CountdownOverlay({ onComplete, moduleImage }: Props) {
   const [step, setStep] = useState(0); // index into SEQUENCE
   const [animate, setAnimate] = useState(true);
+  const { lang } = useLanguage();
 
   useEffect(() => {
     if (step >= SEQUENCE.length) {
@@ -121,7 +125,7 @@ export default function CountdownOverlay({ onComplete, moduleImage }: Props) {
                 textShadow: "0 0 40px rgba(111,220,140,0.7)",
               }}
             >
-              PARTEZ !
+              {t("countdown.go", lang)}
             </div>
           ) : (
             <div
@@ -157,7 +161,7 @@ export default function CountdownOverlay({ onComplete, moduleImage }: Props) {
             animation: animate ? "fadeIn 0.3s ease both" : "none",
           }}
         >
-          {isGo ? "Bonne formation" : "Préparez-vous"}
+          {isGo ? t("countdown.goodluck", lang) : t("countdown.ready", lang)}
         </div>
 
         {/* Urgency dots */}

@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { Home, LayoutGrid, User, ChevronRight } from "lucide-react";
+import { Home, LayoutGrid } from "lucide-react";
 import { useUser } from "@/lib/userContext";
+import { useLanguage } from "@/lib/languageContext";
 
 interface NavItem {
   label: string;
@@ -9,22 +10,17 @@ interface NavItem {
   exact?: boolean;
 }
 
-const ITEMS: NavItem[] = [
+const BASE_ITEMS: NavItem[] = [
   {
-    label: "Accueil",
+    label: "home",
     icon: <Home size={20} />,
     path: "/",
     exact: true,
   },
   {
-    label: "Modules",
+    label: "modules",
     icon: <LayoutGrid size={20} />,
     path: "/hub",
-  },
-  {
-    label: "Profil",
-    icon: <User size={20} />,
-    path: "/profil",
   },
 ];
 
@@ -35,6 +31,12 @@ export default function BottomNav() {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, totalCompleted, globalScore } = useUser();
+  const { lang } = useLanguage();
+
+  const ITEMS: NavItem[] = BASE_ITEMS.map((item) => ({
+    ...item,
+    label: item.label === "home" ? (lang === "en" ? "Home" : "Accueil") : (lang === "en" ? "Modules" : "Modules"),
+  }));
 
   // Don't show on welcome/form screens — immersive onboarding
   if (HIDDEN_PATHS.includes(location.pathname)) return null;
@@ -86,16 +88,10 @@ export default function BottomNav() {
           {/* Nav items */}
           {ITEMS.map((item) => {
             const active = isActive(item);
-            // Skip profil if no user yet
-            if (item.path === "/profil" && !user) return null;
-
             return (
               <button
                 key={item.path}
-                onClick={() => {
-                  if (item.path === "/profil") return; // placeholder
-                  navigate(item.path);
-                }}
+                onClick={() => navigate(item.path)}
                 className="flex-1 flex flex-col items-center justify-center gap-1 transition-all"
                 style={{
                   background: "none",

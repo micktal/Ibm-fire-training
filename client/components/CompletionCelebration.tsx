@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Award, ChevronRight } from "lucide-react";
+import { useLanguage } from "@/lib/languageContext";
+import { t } from "@/lib/i18n";
 
 interface Props {
   score: number;
@@ -69,6 +71,7 @@ function runConfetti(canvas: HTMLCanvasElement) {
 export default function CompletionCelebration({ score, moduleName, onContinue }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const passed = score >= 80;
+  const { lang } = useLanguage();
 
   useEffect(() => {
     if (!passed || !canvasRef.current) return;
@@ -129,7 +132,7 @@ export default function CompletionCelebration({ score, moduleName, onContinue }:
 
           {/* Title */}
           <div className="font-bold text-lg mb-1" style={{ color: "#161616", letterSpacing: "-0.015em" }}>
-            {passed ? "Module validé !" : "Score insuffisant"}
+            {passed ? t("completion.passed", lang) : t("completion.failed", lang)}
           </div>
 
           {/* Module name */}
@@ -146,7 +149,7 @@ export default function CompletionCelebration({ score, moduleName, onContinue }:
               border: `1px solid ${passed ? "rgba(25,128,56,0.2)" : "rgba(218,30,40,0.2)"}`,
             }}
           >
-            {passed ? "✓ Seuil IBM de 80% atteint" : "Seuil IBM : 80% requis"}
+            {passed ? t("completion.threshold_ok", lang) : t("completion.threshold_ko", lang)}
           </div>
 
           {/* CTA */}
@@ -164,7 +167,7 @@ export default function CompletionCelebration({ score, moduleName, onContinue }:
             onMouseEnter={(e) => (e.currentTarget as HTMLButtonElement).style.opacity = "0.88"}
             onMouseLeave={(e) => (e.currentTarget as HTMLButtonElement).style.opacity = "1"}
           >
-            {passed ? "Continuer le parcours" : "Réessayer le quiz"}
+            {passed ? t("completion.continue", lang) : t("completion.retry", lang)}
             <ChevronRight size={17} />
           </button>
         </div>

@@ -71,6 +71,66 @@ export interface TipFlipExercise {
   }>;
 }
 
+// ── Spin the Wheel ────────────────────────────────────────────
+export interface SpinWheelItem {
+  label: string;         // FR label on wheel segment
+  labelEn?: string;      // EN label
+  question: string;      // FR question displayed when landing
+  questionEn?: string;   // EN question
+  choices: Array<{ key: string; label: string; labelEn?: string }>;
+  correctKey: string;
+  explanation: string;   // FR explanation after answer
+  explanationEn?: string;
+}
+
+export interface SpinWheelExercise {
+  type: "spinwheel";
+  title: string;
+  titleEn?: string;
+  subtitle?: string;
+  subtitleEn?: string;
+  items: SpinWheelItem[];
+}
+
+// ── Mind Map ──────────────────────────────────────────────────
+export interface MindMapItem {
+  id: string;
+  label: string;       // FR short label (fits in a node, ~3 words max)
+  labelEn?: string;    // EN short label
+  isCorrect: boolean;  // belongs to the central concept
+  explanation: string; // FR explanation after submit
+  explanationEn?: string;
+}
+
+export interface MindMapExercise {
+  type: "mindmap";
+  title: string;
+  titleEn?: string;
+  subtitle?: string;
+  subtitleEn?: string;
+  centerLabel: string;    // central concept (FR, short)
+  centerLabelEn?: string; // central concept (EN)
+  items: MindMapItem[];   // 8 items (5 correct + 3 distractors recommended)
+}
+
+// ── True/False Grid Quiz ───────────────────────────────────────
+export interface GridCell {
+  statement: string;      // FR statement to evaluate
+  statementEn?: string;   // EN statement
+  correct: "true" | "false";
+  explanation: string;    // FR explanation
+  explanationEn?: string;
+}
+
+export interface GridQuizExercise {
+  type: "gridquiz";
+  title: string;
+  titleEn?: string;
+  subtitle?: string;
+  subtitleEn?: string;
+  cells: GridCell[];      // 9 cells for 3×3 grid
+}
+
 export type AnyExercise =
   | HotspotExercise
   | DragDropExercise
@@ -81,7 +141,10 @@ export type AnyExercise =
   | FlipCardsExercise
   | OrderPuzzleExercise
   | SeriousGameExercise
-  | TipFlipExercise;
+  | TipFlipExercise
+  | SpinWheelExercise
+  | GridQuizExercise
+  | MindMapExercise;
 
 const CDN = "https://cdn.builder.io/api/v1/image/assets%2Fd93d9a0ec7824aa1ac4d890a1f90a2ec%2F";
 
@@ -1690,19 +1753,491 @@ const ch2m5_tipflip: TipFlipExercise = {
   ],
 };
 
+// ── SPIN THE WHEEL — ch1-m2 (Triangle du feu) ─────────────────
+const m2_spinwheel: SpinWheelExercise = {
+  type: "spinwheel",
+  title: "Roue de la connaissance — Triangle du feu",
+  titleEn: "Wheel of Knowledge — Fire Triangle",
+  subtitle: "Tournez et répondez !",
+  subtitleEn: "Spin and answer!",
+  items: [
+    {
+      label: "OXYGÈNE",
+      labelEn: "OXYGEN",
+      question: "Quel pourcentage d'oxygène dans l'air est nécessaire pour entretenir une combustion ?",
+      questionEn: "What percentage of oxygen in the air is needed to sustain combustion?",
+      choices: [
+        { key: "A", label: "8%", labelEn: "8%" },
+        { key: "B", label: "16%", labelEn: "16%" },
+        { key: "C", label: "21%", labelEn: "21%" },
+        { key: "D", label: "30%", labelEn: "30%" },
+      ],
+      correctKey: "B",
+      explanation: "En dessous de 16% d'O₂, la combustion ne peut plus se maintenir. L'air ambiant contient 21% — c'est pourquoi fermer les portes (réduire l'oxygène) ralentit le feu.",
+      explanationEn: "Below 16% O₂, combustion cannot be sustained. Ambient air contains 21% — which is why closing doors (reducing oxygen) slows the fire.",
+    },
+    {
+      label: "COMBUSTIBLE",
+      labelEn: "FUEL",
+      question: "Parmi ces matériaux de bureau, lequel constitue le combustible le plus dangereux en cas d'incendie ?",
+      questionEn: "Among these office materials, which is the most dangerous fuel in case of fire?",
+      choices: [
+        { key: "A", label: "Métal d'un bureau", labelEn: "Metal desk" },
+        { key: "B", label: "Câbles électriques", labelEn: "Electrical cables" },
+        { key: "C", label: "Verre d'une fenêtre", labelEn: "Window glass" },
+        { key: "D", label: "Eau d'une bouteille", labelEn: "Bottled water" },
+      ],
+      correctKey: "B",
+      explanation: "Les câbles électriques (PVC, plastique) brûlent facilement, dégagent des fumées toxiques et propagent le feu rapidement d'un local à l'autre via les faux-plafonds.",
+      explanationEn: "Electrical cables (PVC, plastic) burn easily, release toxic fumes, and spread fire quickly between rooms via false ceilings.",
+    },
+    {
+      label: "CHALEUR",
+      labelEn: "HEAT",
+      question: "À quelle température le papier ordinaire s'enflamme-t-il spontanément ?",
+      questionEn: "At what temperature does ordinary paper spontaneously ignite?",
+      choices: [
+        { key: "A", label: "100°C", labelEn: "100°C" },
+        { key: "B", label: "233°C", labelEn: "233°C" },
+        { key: "C", label: "450°C", labelEn: "450°C" },
+        { key: "D", label: "700°C", labelEn: "700°C" },
+      ],
+      correctKey: "B",
+      explanation: "Le papier s'enflamme spontanément vers 233°C (451°F). Dans un bureau, une simple source de chaleur concentrée peut donc déclencher un incendie très rapidement.",
+      explanationEn: "Paper spontaneously ignites at around 233°C (451°F). In an office, a concentrated heat source can therefore trigger a fire very quickly.",
+    },
+    {
+      label: "TRIANGLE",
+      labelEn: "TRIANGLE",
+      question: "Que se passe-t-il si vous retirez l'un des 3 éléments du triangle du feu ?",
+      questionEn: "What happens if you remove one of the 3 elements of the fire triangle?",
+      choices: [
+        { key: "A", label: "Le feu brûle plus vite", labelEn: "The fire burns faster" },
+        { key: "B", label: "Le feu s'intensifie", labelEn: "The fire intensifies" },
+        { key: "C", label: "Le feu s'éteint", labelEn: "The fire goes out" },
+        { key: "D", label: "Rien ne change", labelEn: "Nothing changes" },
+      ],
+      correctKey: "C",
+      explanation: "Le triangle du feu exige 3 éléments simultanés : combustible, chaleur et oxygène. Supprimer n'importe lequel — avec un extincteur, une porte fermée ou de l'eau — éteint le feu.",
+      explanationEn: "The fire triangle requires 3 simultaneous elements: fuel, heat and oxygen. Removing any one — with an extinguisher, a closed door or water — extinguishes the fire.",
+    },
+    {
+      label: "CLASSES",
+      labelEn: "CLASSES",
+      question: "Un feu électrique (ordinateur, câble) correspond à quelle classe d'incendie IBM ?",
+      questionEn: "An electrical fire (computer, cable) corresponds to which IBM fire class?",
+      choices: [
+        { key: "A", label: "Classe A — solides", labelEn: "Class A — solids" },
+        { key: "B", label: "Classe B — liquides", labelEn: "Class B — liquids" },
+        { key: "C", label: "Classe C — gaz", labelEn: "Class C — gas" },
+        { key: "D", label: "Classe E — électrique", labelEn: "Class E — electrical" },
+      ],
+      correctKey: "D",
+      explanation: "La classe E (ou F selon les normes) désigne les feux sur équipements électriques sous tension. N'utilisez jamais d'eau — uniquement CO2 ou poudre sèche.",
+      explanationEn: "Class E (or F depending on standards) designates fires on live electrical equipment. Never use water — only CO2 or dry powder.",
+    },
+    {
+      label: "RÉFLEXE",
+      labelEn: "REFLEX",
+      question: "Vous détectez une odeur de brûlé depuis l'imprimante. Quelle est votre première action IBM ?",
+      questionEn: "You detect a burning smell from the printer. What is your first IBM action?",
+      choices: [
+        { key: "A", label: "Ouvrir les fenêtres", labelEn: "Open the windows" },
+        { key: "B", label: "Appeler le 18 directement", labelEn: "Call 18 directly" },
+        { key: "C", label: "Appeler le 22 22 (Sécurité IBM)", labelEn: "Call 22 22 (IBM Security)" },
+        { key: "D", label: "Attendre de voir les flammes", labelEn: "Wait to see flames" },
+      ],
+      correctKey: "C",
+      explanation: "Le protocole IBM impose d'appeler le 22 22 (Sécurité interne) en premier — avant le 18. La sécurité IBM connaît les plans du bâtiment et coordonne l'intervention.",
+      explanationEn: "IBM protocol requires calling 22 22 (internal Security) first — before 18. IBM Security knows the building plans and coordinates the response.",
+    },
+  ],
+};
+
+// ── SPIN THE WHEEL — ch2-m4 (Procédures d'urgence) ────────────
+const ch2m4_spinwheel: SpinWheelExercise = {
+  type: "spinwheel",
+  title: "Roue d'urgence — Évacuation",
+  titleEn: "Emergency Wheel — Evacuation",
+  subtitle: "Connaissez-vous les règles ?",
+  subtitleEn: "Do you know the rules?",
+  items: [
+    {
+      label: "ASCENSEUR",
+      labelEn: "ELEVATOR",
+      question: "Lors d'une évacuation incendie, que faites-vous face à un ascenseur ?",
+      questionEn: "During a fire evacuation, what do you do when facing an elevator?",
+      choices: [
+        { key: "A", label: "Je l'utilise si le feu est loin", labelEn: "Use it if the fire is far" },
+        { key: "B", label: "Je n'utilise jamais l'ascenseur", labelEn: "Never use the elevator" },
+        { key: "C", label: "Je l'utilise pour les personnes âgées", labelEn: "Use it for elderly people" },
+        { key: "D", label: "Je décide selon l'étage", labelEn: "Decide based on the floor" },
+      ],
+      correctKey: "B",
+      explanation: "JAMAIS d'ascenseur en cas d'incendie — même en panne de courant, il peut rester bloqué dans une zone enfumée. Toujours utiliser les escaliers.",
+      explanationEn: "NEVER use the elevator during a fire — even during a power failure, it can get stuck in a smoke-filled area. Always use the stairs.",
+    },
+    {
+      label: "PORTE",
+      labelEn: "DOOR",
+      question: "Vous devez traverser une porte fermée lors de l'évacuation. Que vérifiez-vous d'abord ?",
+      questionEn: "You need to cross a closed door during evacuation. What do you check first?",
+      choices: [
+        { key: "A", label: "La couleur de la porte", labelEn: "The color of the door" },
+        { key: "B", label: "La chaleur de la poignée avec la main", labelEn: "The handle heat with your hand" },
+        { key: "C", label: "Si la porte est verrouillée", labelEn: "If the door is locked" },
+        { key: "D", label: "Rien, j'ouvre directement", labelEn: "Nothing, I open directly" },
+      ],
+      correctKey: "B",
+      explanation: "Touchez la poignée du dos de la main (plus sensible à la chaleur). Si elle est chaude, ne l'ouvrez pas — il y a du feu ou de la fumée de l'autre côté.",
+      explanationEn: "Touch the handle with the back of your hand (more sensitive to heat). If it's hot, don't open it — there's fire or smoke on the other side.",
+    },
+    {
+      label: "RASSEMBLEMENT",
+      labelEn: "ASSEMBLY",
+      question: "Une fois sorti du bâtiment lors d'une évacuation incendie, où devez-vous vous rendre ?",
+      questionEn: "Once outside the building during a fire evacuation, where must you go?",
+      choices: [
+        { key: "A", label: "Chez le collègue le plus proche", labelEn: "To the nearest colleague" },
+        { key: "B", label: "Dans votre voiture sur le parking", labelEn: "To your car in the parking lot" },
+        { key: "C", label: "Au point de rassemblement désigné", labelEn: "To the designated assembly point" },
+        { key: "D", label: "Au café d'à côté", labelEn: "To the coffee shop nearby" },
+      ],
+      correctKey: "C",
+      explanation: "Le point de rassemblement désigné permet au responsable évacuation de faire l'appel et de s'assurer que tout le monde est sorti. Ne quittez jamais ce point sans autorisation.",
+      explanationEn: "The designated assembly point allows the evacuation warden to take roll call and ensure everyone has evacuated. Never leave this point without authorization.",
+    },
+    {
+      label: "PMR",
+      labelEn: "MOBILITY",
+      question: "Une personne en fauteuil roulant ne peut pas utiliser les escaliers. Que faites-vous ?",
+      questionEn: "A person in a wheelchair cannot use the stairs. What do you do?",
+      choices: [
+        { key: "A", label: "Je la laisse attendre l'ascenseur", labelEn: "Leave them to wait for the elevator" },
+        { key: "B", label: "Je la conduis à l'espace d'attente sécurisé et alerte les secours", labelEn: "Guide them to the safe waiting area and alert rescue services" },
+        { key: "C", label: "Je la transporte dans mes bras", labelEn: "Carry them in my arms" },
+        { key: "D", label: "Je la laisse sur place", labelEn: "Leave them in place" },
+      ],
+      correctKey: "B",
+      explanation: "Les PMR (Personnes à Mobilité Réduite) doivent être conduites vers l'espace d'attente sécurisé (EAS) prévu sur chaque palier. Les pompiers sont formés pour les évacuer.",
+      explanationEn: "People with Reduced Mobility (PRM) must be guided to the designated safe waiting area (SWA) on each landing. Firefighters are trained to evacuate them.",
+    },
+    {
+      label: "FUMÉE",
+      labelEn: "SMOKE",
+      question: "Vous êtes bloqué par de la fumée dans un couloir. Quelle position adoptez-vous ?",
+      questionEn: "You are blocked by smoke in a corridor. What position do you adopt?",
+      choices: [
+        { key: "A", label: "Je cours le plus vite possible", labelEn: "I run as fast as possible" },
+        { key: "B", label: "Je me baisse et rampe sous la fumée", labelEn: "I crouch and crawl under the smoke" },
+        { key: "C", label: "Je respire profondément pour tenir", labelEn: "I breathe deeply to hold on" },
+        { key: "D", label: "Je reviens sur mes pas debout", labelEn: "I turn back standing up" },
+      ],
+      correctKey: "B",
+      explanation: "La fumée est plus légère que l'air et monte. En dessous d'1 mètre, l'air est plus respirable. Couvrez-vous le nez et la bouche et avancez en rampant vers la sortie.",
+      explanationEn: "Smoke is lighter than air and rises. Below 1 meter, the air is more breathable. Cover your nose and mouth and crawl towards the exit.",
+    },
+    {
+      label: "ALARME",
+      labelEn: "ALARM",
+      question: "L'alarme incendie sonne. Votre manager dit que c'est sûrement un faux-alarme. Que faites-vous ?",
+      questionEn: "The fire alarm sounds. Your manager says it's probably a false alarm. What do you do?",
+      choices: [
+        { key: "A", label: "J'attends la confirmation de mon manager", labelEn: "I wait for my manager's confirmation" },
+        { key: "B", label: "Je continue à travailler", labelEn: "I continue working" },
+        { key: "C", label: "J'évacue immédiatement sans attendre", labelEn: "I evacuate immediately without waiting" },
+        { key: "D", label: "Je cherche d'abord d'où vient l'alarme", labelEn: "I first search where the alarm comes from" },
+      ],
+      correctKey: "C",
+      explanation: "Toute alarme doit être traitée comme réelle jusqu'à preuve du contraire. Le protocole IBM est formel : évacuer immédiatement. Votre vie ne vaut pas le risque d'attendre.",
+      explanationEn: "Every alarm must be treated as real until proven otherwise. IBM protocol is clear: evacuate immediately. Your life is not worth the risk of waiting.",
+    },
+  ],
+};
+
+// ── GRID QUIZ — ch1-m5 (Extincteurs) ─────────────────────────
+const m5_gridquiz: GridQuizExercise = {
+  type: "gridquiz",
+  title: "Vrai ou Faux — Extincteurs",
+  titleEn: "True or False — Fire Extinguishers",
+  subtitle: "9 affirmations · Cliquez une case pour commencer",
+  subtitleEn: "9 statements · Click a cell to start",
+  cells: [
+    {
+      statement: "On peut utiliser un extincteur à eau sur un feu électrique.",
+      statementEn: "You can use a water extinguisher on an electrical fire.",
+      correct: "false",
+      explanation: "FAUX. L'eau conduit l'électricité et vous expose à une électrocution. Pour les feux électriques, utilisez uniquement un extincteur CO2.",
+      explanationEn: "FALSE. Water conducts electricity and exposes you to electrocution. For electrical fires, only use a CO2 extinguisher.",
+    },
+    {
+      statement: "Le CO2 agit en étouffant le feu en supprimant l'oxygène.",
+      statementEn: "CO2 works by smothering the fire by removing oxygen.",
+      correct: "true",
+      explanation: "VRAI. Le dioxyde de carbone déplace l'oxygène autour du foyer, privant la combustion de l'un de ses 3 éléments essentiels.",
+      explanationEn: "TRUE. Carbon dioxide displaces oxygen around the fire, depriving combustion of one of its 3 essential elements.",
+    },
+    {
+      statement: "Vous devez vous placer dos au vent pour utiliser un extincteur en extérieur.",
+      statementEn: "You should stand with the wind at your back when using an extinguisher outdoors.",
+      correct: "true",
+      explanation: "VRAI. Le vent dans le dos projette l'agent extincteur vers le feu et évite qu'il ne vous soit renvoyé au visage.",
+      explanationEn: "TRUE. Wind at your back projects the extinguishing agent towards the fire and prevents it from being blown back in your face.",
+    },
+    {
+      statement: "Un extincteur à poudre peut être utilisé sur tous les types de feux.",
+      statementEn: "A powder extinguisher can be used on all types of fires.",
+      correct: "false",
+      explanation: "FAUX. La poudre est polyvalente (A, B, C) mais déconseillée sur les équipements électroniques sensibles car elle les détruit irrémédiablement.",
+      explanationEn: "FALSE. Powder is versatile (A, B, C) but not recommended on sensitive electronic equipment as it permanently destroys them.",
+    },
+    {
+      statement: "Il faut tenir la lance de l'extincteur CO2 avec les deux mains.",
+      statementEn: "You should hold the CO2 extinguisher nozzle with both hands.",
+      correct: "false",
+      explanation: "FAUX. Le col de cygne du CO2 se refroidit fortement (jusqu'à -78°C). Tenez uniquement la poignée isolée, jamais la lance directement.",
+      explanationEn: "FALSE. The CO2 diffuser cone gets very cold (down to -78°C). Hold only the insulated handle, never the nozzle directly.",
+    },
+    {
+      statement: "La méthode PASS (Goupille, Viser, Presser, Balayer) est universelle pour tous les extincteurs.",
+      statementEn: "The PASS method (Pull, Aim, Squeeze, Sweep) is universal for all extinguishers.",
+      correct: "true",
+      explanation: "VRAI. PASS (Pull pin, Aim low, Squeeze handle, Sweep side to side) est la méthode standard reconnue internationalement pour utiliser tout type d'extincteur.",
+      explanationEn: "TRUE. PASS (Pull pin, Aim low, Squeeze handle, Sweep side to side) is the internationally recognized standard method for using any type of extinguisher.",
+    },
+    {
+      statement: "Un extincteur vide peut être laissé en place après utilisation.",
+      statementEn: "An empty extinguisher can be left in place after use.",
+      correct: "false",
+      explanation: "FAUX. Un extincteur vide doit être immédiatement remplacé et signalé à la maintenance. Le laisser en place donne une fausse impression de sécurité.",
+      explanationEn: "FALSE. An empty extinguisher must be immediately replaced and reported to maintenance. Leaving it in place gives a false sense of security.",
+    },
+    {
+      statement: "La distance d'attaque recommandée avec un extincteur est de 1 à 2 mètres du foyer.",
+      statementEn: "The recommended attack distance with an extinguisher is 1 to 2 meters from the fire.",
+      correct: "true",
+      explanation: "VRAI. À 1-2 mètres, vous pouvez viser efficacement la base du feu tout en maintenant une distance de sécurité. Plus près = risque de brûlure.",
+      explanationEn: "TRUE. At 1-2 meters, you can effectively aim at the base of the fire while maintaining a safe distance. Closer = burn risk.",
+    },
+    {
+      statement: "En cas d'échec, vous devez tenter à nouveau d'éteindre le feu avec un extincteur vide.",
+      statementEn: "If unsuccessful, you should try again to extinguish the fire with an empty extinguisher.",
+      correct: "false",
+      explanation: "FAUX. Si l'extincteur ne suffit pas ou est vide, évacuez immédiatement. Ne prenez pas de risques inutiles — les pompiers prendront le relais.",
+      explanationEn: "FALSE. If the extinguisher is insufficient or empty, evacuate immediately. Don't take unnecessary risks — firefighters will take over.",
+    },
+  ],
+};
+
+// ── GRID QUIZ — ch2-m6 (Règles d'évacuation) ─────────────────
+const ch2m6_gridquiz: GridQuizExercise = {
+  type: "gridquiz",
+  title: "Vrai ou Faux — Évacuation",
+  titleEn: "True or False — Evacuation",
+  subtitle: "9 règles essentielles · Testez-vous !",
+  subtitleEn: "9 essential rules · Test yourself!",
+  cells: [
+    {
+      statement: "Il est permis de retourner chercher ses affaires personnelles après avoir évacué.",
+      statementEn: "It is permitted to go back to collect personal belongings after evacuating.",
+      correct: "false",
+      explanation: "FAUX. Retourner dans un bâtiment en feu est extrêmement dangereux. Les secours peuvent avoir fermé l'accès. Vos affaires ne valent pas votre vie.",
+      explanationEn: "FALSE. Returning to a burning building is extremely dangerous. Emergency services may have closed access. Your belongings are not worth your life.",
+    },
+    {
+      statement: "Les sorties de secours doivent toujours rester dégagées et accessibles.",
+      statementEn: "Emergency exits must always remain clear and accessible.",
+      correct: "true",
+      explanation: "VRAI. Bloquer une sortie de secours est une infraction grave. En cas d'urgence, quelques secondes suffisent pour que l'obstruction coûte des vies.",
+      explanationEn: "TRUE. Blocking an emergency exit is a serious offence. In an emergency, a few seconds are enough for an obstruction to cost lives.",
+    },
+    {
+      statement: "En cas d'évacuation, il faut attendre que son manager donne l'ordre de partir.",
+      statementEn: "During an evacuation, you must wait for your manager to give the order to leave.",
+      correct: "false",
+      explanation: "FAUX. L'alarme incendie est l'ordre d'évacuation. Tout le monde doit quitter les lieux immédiatement, quel que soit l'avis du management.",
+      explanationEn: "FALSE. The fire alarm IS the evacuation order. Everyone must leave immediately, regardless of management's opinion.",
+    },
+    {
+      statement: "La fumée est responsable de la majorité des décès lors d'incendies.",
+      statementEn: "Smoke is responsible for the majority of deaths in fires.",
+      correct: "true",
+      explanation: "VRAI. Plus de 80% des décès par incendie sont dus à l'inhalation de fumée toxique, et non aux flammes directement. La fumée est l'ennemi invisible.",
+      explanationEn: "TRUE. More than 80% of fire deaths are caused by toxic smoke inhalation, not by the flames directly. Smoke is the invisible enemy.",
+    },
+    {
+      statement: "Il faut fermer les portes derrière soi lors de l'évacuation.",
+      statementEn: "You should close doors behind you during evacuation.",
+      correct: "true",
+      explanation: "VRAI. Une porte fermée ralentit la propagation du feu et de la fumée de 15 à 30 minutes. C'est un geste simple qui peut sauver des vies.",
+      explanationEn: "TRUE. A closed door slows the spread of fire and smoke by 15 to 30 minutes. It's a simple action that can save lives.",
+    },
+    {
+      statement: "Vous pouvez rester dans votre bureau si vous avez terminé une réunion importante.",
+      statementEn: "You can stay in your office if you are finishing an important meeting.",
+      correct: "false",
+      explanation: "FAUX. Aucune réunion, dossier ou engagement professionnel ne justifie de rester dans un bâtiment en alerte incendie. L'évacuation est prioritaire.",
+      explanationEn: "FALSE. No meeting, file or professional commitment justifies staying in a building on fire alert. Evacuation is the priority.",
+    },
+    {
+      statement: "Le responsable évacuation (guide-file) doit être le dernier à quitter chaque zone.",
+      statementEn: "The evacuation warden (guide) must be the last to leave each area.",
+      correct: "true",
+      explanation: "VRAI. Le guide-file vérifie que toutes les personnes ont quitté sa zone avant de partir lui-même. Il est responsable du contrôle de l'évacuation.",
+      explanationEn: "TRUE. The warden checks that all people have left their area before leaving themselves. They are responsible for controlling the evacuation.",
+    },
+    {
+      statement: "En cas de fumée, la position debout est plus sûre pour se déplacer.",
+      statementEn: "In case of smoke, standing upright is safer when moving.",
+      correct: "false",
+      explanation: "FAUX. La fumée monte. En restant bas (en rampant), vous respirez l'air le plus pur disponible. Rampez sous le niveau de fumée pour survivre.",
+      explanationEn: "FALSE. Smoke rises. By staying low (crawling), you breathe the purest available air. Crawl below the smoke level to survive.",
+    },
+    {
+      statement: "Au point de rassemblement, vous devez vous signaler à votre responsable d'évacuation.",
+      statementEn: "At the assembly point, you must report to your evacuation warden.",
+      correct: "true",
+      explanation: "VRAI. L'appel nominal au point de rassemblement permet de confirmer que personne n'est resté bloqué à l'intérieur. C'est une procédure obligatoire IBM.",
+      explanationEn: "TRUE. Roll call at the assembly point confirms that no one is trapped inside. This is a mandatory IBM procedure.",
+    },
+  ],
+};
+
+// ── MIND MAP — ch1-m3 (Confinement) ──────────────────────────
+const m3_mindmap: MindMapExercise = {
+  type: "mindmap",
+  title: "Carte mentale — Le confinement",
+  titleEn: "Mind Map — Confinement",
+  subtitle: "Sélectionnez les actions qui appartiennent au confinement",
+  subtitleEn: "Select the actions that belong to the confinement procedure",
+  centerLabel: "CONFINEMENT",
+  centerLabelEn: "CONFINEMENT",
+  items: [
+    {
+      id: "mm1", label: "Fermer les portes", labelEn: "Close the doors",
+      isCorrect: true,
+      explanation: "CORRECT — Fermer les portes isole le foyer et ralentit la propagation de la fumée et du feu vers votre local.",
+      explanationEn: "CORRECT — Closing doors isolates the fire source and slows the spread of smoke and fire towards your room.",
+    },
+    {
+      id: "mm2", label: "Calfeutrer les fissures", labelEn: "Seal the gaps",
+      isCorrect: true,
+      explanation: "CORRECT — Boucher les interstices sous les portes (avec tissu, vêtement) empêche la fumée toxique de pénétrer dans votre local.",
+      explanationEn: "CORRECT — Sealing gaps under doors (with fabric, clothing) prevents toxic smoke from entering your room.",
+    },
+    {
+      id: "mm3", label: "Appeler le 22 22", labelEn: "Call 22 22",
+      isCorrect: true,
+      explanation: "CORRECT — Contacter la sécurité IBM permet aux secours de connaître votre position exacte et d'organiser votre évacuation.",
+      explanationEn: "CORRECT — Contacting IBM security allows rescuers to know your exact position and organise your evacuation.",
+    },
+    {
+      id: "mm4", label: "Signaler sa présence", labelEn: "Signal your presence",
+      isCorrect: true,
+      explanation: "CORRECT — Se manifester à la fenêtre ou par téléphone aide les secours à vous localiser rapidement.",
+      explanationEn: "CORRECT — Making yourself visible at the window or by phone helps rescuers locate you quickly.",
+    },
+    {
+      id: "mm5", label: "Rester dans le local", labelEn: "Stay in the room",
+      isCorrect: true,
+      explanation: "CORRECT — Le confinement consiste précisément à rester en lieu sûr quand l'évacuation est impossible ou trop dangereuse.",
+      explanationEn: "CORRECT — Confinement consists precisely of staying in a safe place when evacuation is impossible or too dangerous.",
+    },
+    {
+      id: "mm6", label: "Prendre l'ascenseur", labelEn: "Take the elevator",
+      isCorrect: false,
+      explanation: "INCORRECT — L'ascenseur est toujours interdit lors d'un incendie. En confinement, vous restez sur place — pas question d'ascenseur.",
+      explanationEn: "INCORRECT — The elevator is always forbidden during a fire. In confinement, you stay put — no elevator at all.",
+    },
+    {
+      id: "mm7", label: "Ouvrir les fenêtres", labelEn: "Open the windows",
+      isCorrect: false,
+      explanation: "INCORRECT — Ouvrir les fenêtres peut attirer la fumée ou activer des courants d'air qui accélèrent l'incendie. Restez fenêtres fermées sauf signal des secours.",
+      explanationEn: "INCORRECT — Opening windows can draw in smoke or create draughts that accelerate the fire. Keep windows closed unless signalled by rescuers.",
+    },
+    {
+      id: "mm8", label: "Courir vers la sortie", labelEn: "Run to the exit",
+      isCorrect: false,
+      explanation: "INCORRECT — Courir vers la sortie sans évaluation est une erreur. Si l'évacuation est impossible, le confinement est la bonne réponse — pas la fuite aveugle.",
+      explanationEn: "INCORRECT — Running to the exit without assessment is a mistake. If evacuation is impossible, confinement is the right answer — not blind flight.",
+    },
+  ],
+};
+
+// ── MIND MAP — ch2-m2 (Communication de crise) ───────────────
+const ch2m2_mindmap: MindMapExercise = {
+  type: "mindmap",
+  title: "Carte mentale — Communiquer en crise",
+  titleEn: "Mind Map — Crisis Communication",
+  subtitle: "Sélectionnez les comportements d'une bonne communication d'urgence",
+  subtitleEn: "Select the behaviours of effective emergency communication",
+  centerLabel: "COMMUNIQUER\nEN CRISE",
+  centerLabelEn: "CRISIS\nCOMMUNICATION",
+  items: [
+    {
+      id: "cc1", label: "Voix calme et ferme", labelEn: "Calm and firm voice",
+      isCorrect: true,
+      explanation: "CORRECT — Une voix calme mais ferme réduit la panique et établit votre autorité naturelle sur le groupe.",
+      explanationEn: "CORRECT — A calm but firm voice reduces panic and establishes your natural authority over the group.",
+    },
+    {
+      id: "cc2", label: "Indiquer la direction", labelEn: "Point the direction",
+      isCorrect: true,
+      explanation: "CORRECT — Donner une direction précise ('par l'escalier B') évite les hésitations et les mouvements désordonnés.",
+      explanationEn: "CORRECT — Giving a precise direction ('via stairwell B') prevents hesitation and disorderly movements.",
+    },
+    {
+      id: "cc3", label: "Guider le groupe", labelEn: "Lead the group",
+      isCorrect: true,
+      explanation: "CORRECT — Prendre la tête de l'évacuation et marcher (pas courir) donne l'exemple et canalise le groupe.",
+      explanationEn: "CORRECT — Leading the evacuation and walking (not running) sets the example and channels the group.",
+    },
+    {
+      id: "cc4", label: "Compter les évacués", labelEn: "Count evacuees",
+      isCorrect: true,
+      explanation: "CORRECT — Compter les personnes en mouvement permet de détecter rapidement une absence et d'alerter les secours avec précision.",
+      explanationEn: "CORRECT — Counting people on the move allows quick detection of an absence and precise alerting of rescuers.",
+    },
+    {
+      id: "cc5", label: "Instructions courtes", labelEn: "Short instructions",
+      isCorrect: true,
+      explanation: "CORRECT — En situation de stress, le cerveau traite mieux des messages courts et directs. 'Suivez-moi maintenant' est plus efficace qu'une explication longue.",
+      explanationEn: "CORRECT — In stressful situations, the brain processes short, direct messages better. 'Follow me now' is more effective than a long explanation.",
+    },
+    {
+      id: "cc6", label: "Crier et paniquer", labelEn: "Shout and panic",
+      isCorrect: false,
+      explanation: "INCORRECT — Crier amplifie immédiatement la panique collective. La communication de crise exige de maîtriser son volume et son ton.",
+      explanationEn: "INCORRECT — Shouting immediately amplifies collective panic. Crisis communication requires controlling your volume and tone.",
+    },
+    {
+      id: "cc7", label: "Attendre les ordres", labelEn: "Wait for orders",
+      isCorrect: false,
+      explanation: "INCORRECT — Attendre des instructions supplémentaires retarde l'évacuation. L'alarme est l'ordre — agir immédiatement sans confirmation.",
+      explanationEn: "INCORRECT — Waiting for additional instructions delays evacuation. The alarm IS the order — act immediately without confirmation.",
+    },
+    {
+      id: "cc8", label: "Tout expliquer", labelEn: "Explain everything",
+      isCorrect: false,
+      explanation: "INCORRECT — Les explications longues en situation de crise paralysent. Les gens ont besoin d'actions concrètes, pas de contexte détaillé.",
+      explanationEn: "INCORRECT — Long explanations in a crisis situation cause paralysis. People need concrete actions, not detailed context.",
+    },
+  ],
+};
+
 export const MODULE_INTERACTIONS: Record<string, AnyExercise[]> = {
   "ch1-m1": [m1_hotspot, m1_binary, m1_branching],
-  "ch1-m2": [m2_flipcards, m2_dragdrop, m2_branching],
-  "ch1-m3": [m3_hotspot, m3_orderpuzzle, m3_branching],
+  "ch1-m2": [m2_flipcards, m2_dragdrop, m2_branching, m2_spinwheel],
+  "ch1-m3": [m3_hotspot, m3_orderpuzzle, m3_branching, m3_mindmap],
   "ch1-m4": [m4_tipflip, m4_dragdrop, m4_matching],
-  "ch1-m5": [m5_hotspot, m5_fillblank, m5_branching],
+  "ch1-m5": [m5_hotspot, m5_fillblank, m5_branching, m5_gridquiz],
   "ch1-m6": [m6_tipflip, m6_branching],
   "ch1-m7": [m7_seriousgame, m7_branching],
   "ch2-m1": [ch2m1_hotspot, ch2m1_binary],
-  "ch2-m2": [ch2m2_flipcards, ch2m2_branching],
+  "ch2-m2": [ch2m2_flipcards, ch2m2_branching, ch2m2_mindmap],
   "ch2-m3": [ch2m3_tipflip, ch2m3_fillblank, ch2m3_dragdrop],
-  "ch2-m4": [ch2m4_hotspot],
+  "ch2-m4": [ch2m4_hotspot, ch2m4_spinwheel],
   "ch2-m5": [ch2m5_tipflip, ch2m5_branching],
-  "ch2-m6": [ch2m6_matching, ch2m6_hotspot],
+  "ch2-m6": [ch2m6_matching, ch2m6_hotspot, ch2m6_gridquiz],
   "ch2-m7": [ch2m7_orderpuzzle, ch2m7_branching],
 };
