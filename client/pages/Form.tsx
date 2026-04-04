@@ -57,8 +57,8 @@ export default function Form() {
     if (!fields.nom.trim()) e.nom = "Champ requis";
     if (!fields.email.trim()) {
       e.email = "Champ requis";
-    } else if (!fields.email.toLowerCase().includes("@") || !fields.email.toLowerCase().includes("ibm.com")) {
-      e.email = "Adresse @ibm.com requise";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email)) {
+      e.email = "Adresse email invalide";
     }
     if (!fields.campus) e.campus = "Sélectionnez votre site";
     return e;
@@ -203,13 +203,13 @@ export default function Form() {
               </div>
 
               {/* Email */}
-              <Field id="f-email" label="Email IBM" required error={errors.email}>
+              <Field id="f-email" label="Email" required error={errors.email}>
                 <div className="relative">
                   <Mail size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2" style={{ color: "#8d95aa" }} />
                   <input
                     id="f-email"
                     type="email"
-                    placeholder="prenom.nom@fr.ibm.com"
+                    placeholder="votre@email.com"
                     value={fields.email}
                     onChange={(e) => set("email", e.target.value)}
                     style={{ ...(errors.email ? inputErr : inputBase), paddingLeft: "2rem" }}
