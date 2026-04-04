@@ -76,7 +76,7 @@ export const MODULES: CourseModule[] = [
       "Analyser des scènes montrant différents signaux : fumée légère, odeur de brûlé, bruit électrique, chaleur localisée.",
     objective: "Identifier un départ de feu en moins de 10 secondes.",
     duration: "8 min",
-    image: `${CDN}1428f65fac8147e090a970c03ba942a4?format=webp&width=800`,
+    image: `${CDN}68e7b7c3ea9048b4a797a2ceacec35aa?format=webp&width=800`,
     videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/ibm%20intro%20(2).mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL2libSBpbnRybyAoMikubXA0IiwiaWF0IjoxNzc1MjQxMjI3LCJleHAiOjE4Njk4NDkyMjd9.RBEu401aURzjAUFnNv6l8Miao-DYiC2QvtucX5cGiNA",
     captionsVtt: `WEBVTT
 
@@ -267,7 +267,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       "Animation expliquant combustible / comburant / énergie. Manipulation d'un schéma interactif pour comprendre comment casser la combustion.",
     objective: "Comprendre comment casser le triangle du feu et stopper la combustion.",
     duration: "6 min",
-    image: `${CDN}03282479c89b48dea9e157db2b4d6588?format=webp&width=800`,
+    image: `${CDN}d3c9b22a88e644d98bd46cd69cd9cf30?format=webp&width=800`,
     funFacts: [
       { stat: "200 gaz", label: "toxiques libérés par un câble PVC", detail: "La combustion d'un seul câble PVC libère plus de 200 composés toxiques. La fumée tue avant les flammes.", icon: "alert" },
       { stat: "3 éléments", label: "suffisent à créer un incendie", detail: "Chaleur + combustible + oxygène. Supprimez-en un seul, le feu s'éteint. C'est le principe de toute intervention.", icon: "flame" },
@@ -277,7 +277,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         type: "intro",
         title: "Les 3 éléments du triangle du feu",
         body: "Le feu ne peut exister que si trois éléments sont réunis simultanément : le combustible (ce qui brûle), le comburant (l'oxygène) et l'énergie (source de chaleur ou étincelle). Retirer un seul de ces éléments et le feu s'éteint.",
-        image: `${CDN}03282479c89b48dea9e157db2b4d6588?format=webp&width=800`,
+        image: `${CDN}d3c9b22a88e644d98bd46cd69cd9cf30?format=webp&width=800`,
       },
       {
         type: "list",
@@ -323,7 +323,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       "Simulation où l'apprenant choisit d'ouvrir une porte, la fermer, ventiler, attendre ou alerter. La propagation évolue en fonction des choix.",
     objective: "Comprendre l'impact direct d'une action sur la propagation du feu.",
     duration: "10 min",
-    image: `${CDN}420fe533d58f4bcea4ab6851d6cc9ab6?format=webp&width=800`,
+    image: `${CDN}26706b11880d4b55b61df8e668695b14?format=webp&width=800`,
     funFacts: [
       { stat: "5×", label: "plus rapide que les flammes", detail: "La fumée se propage 5 fois plus vite que le feu dans un couloir. Elle est la première cause de décès dans les incendies de bureau.", icon: "zap" },
       { stat: "5 min", label: "pour enflammer une pièce entière", detail: "Sans intervention, une pièce de bureau standard peut être totalement embrasée en moins de 5 minutes après le départ de feu.", icon: "clock" },
@@ -333,7 +333,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         type: "intro",
         title: "La propagation peut être ralentie ou accélérée",
         body: "Un incendie se propage grâce à la chaleur, aux matières combustibles et à l'oxygène. Chaque action humaine — bonne ou mauvaise — a un impact direct et immédiat sur sa vitesse de propagation.",
-        image: `${CDN}420fe533d58f4bcea4ab6851d6cc9ab6?format=webp&width=800`,
+        image: `${CDN}26706b11880d4b55b61df8e668695b14?format=webp&width=800`,
       },
       {
         type: "list",
@@ -386,7 +386,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       "Présentation visuelle des classes A, B, F. Exercice associer différents objets du quotidien à la bonne classe de feu.",
     objective: "Choisir le bon type d'extincteur selon la classe du feu.",
     duration: "7 min",
-    image: `${CDN}fe758a5b35224b1bae42de1253d3aa38?format=webp&width=800`,
+    image: `${CDN}8f5fa15ec33749609150a2fef62457e9?format=webp&width=800`,
     funFacts: [
       { stat: "6 classes", label: "de feux — 1 erreur peut être mortelle", detail: "Utiliser un extincteur inadapté peut être plus dangereux que de ne pas intervenir. Eau sur feu électrique = risque d'électrocution.", icon: "alert" },
       { stat: "95%", label: "des feux de bureau : classe A ou électrique", detail: "Connaître ces 2 classes vous prépare à 95% des situations réelles en entreprise.", icon: "shield" },
@@ -396,7 +396,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         type: "intro",
         title: "Pourquoi les classes de feu existent",
         body: "Tous les feux ne se combattent pas de la même façon. Un extincteur inadapté peut être inefficace, voire dangereux. Les classes de feu permettent de choisir le bon agent extincteur selon la nature du combustible.",
-        image: `${CDN}fe758a5b35224b1bae42de1253d3aa38?format=webp&width=800`,
+        image: `${CDN}8f5fa15ec33749609150a2fef62457e9?format=webp&width=800`,
       },
       {
         type: "list",
@@ -450,7 +450,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       "Découvrir les types d'extincteurs, leurs pictogrammes et les étapes essentielles. Comprendre la bonne distance, orientation et la séquence PASS.",
     objective: "Savoir identifier le bon extincteur et l'utiliser en sécurité.",
     duration: "9 min",
-    image: `${CDN}11cdce1f8e754ca18f408758ae5ad7b9?format=webp&width=800`,
+    image: `${CDN}d41dd2ee6d6d4cf4b7f112d3fc2460f3?format=webp&width=800`,
     funFacts: [
       { stat: "8-12 sec", label: "autonomie d'un extincteur CO2", detail: "Un extincteur CO2 standard se vide en 8 à 12 secondes. Chaque geste doit être précis et immédiat — pas de place à l'improvisation.", icon: "clock" },
       { stat: "-78°C", label: "température du cône CO2", detail: "Ne jamais tenir le cône d'un extincteur CO2 à mains nues. Le froid extrême provoque des brûlures en moins d'une seconde.", icon: "alert" },
@@ -460,7 +460,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         type: "intro",
         title: "La séquence PASS — 4 étapes essentielles",
         body: "Utiliser un extincteur de façon efficace nécessite de respecter une séquence précise. En situation de stress, cette séquence doit être automatique.",
-        image: `${CDN}11cdce1f8e754ca18f408758ae5ad7b9?format=webp&width=800`,
+        image: `${CDN}d41dd2ee6d6d4cf4b7f112d3fc2460f3?format=webp&width=800`,
       },
       {
         type: "list",
