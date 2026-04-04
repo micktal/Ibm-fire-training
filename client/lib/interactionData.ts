@@ -576,9 +576,8 @@ const m6_branching: BranchingExercise = {
       id: "assess",
       image: `${CDN}8e074d1b7bdf4b8fa872d5fd2451fbfe?format=webp&width=800`,
       situation: "Alarme déclenchée. Vous arrivez dans un couloir avec de la fumée. Un extincteur CO2 est à portée.",
-      context: "Évaluez la situation avant d'agir. Vous avez 10 secondes.",
+      context: "Évaluez la situation avant d'agir.",
       urgency: "high",
-      timed: 10,
       choices: [
         {
           label: "J'évalue : taille du feu, fumée, sortie disponible, avant d'agir",
