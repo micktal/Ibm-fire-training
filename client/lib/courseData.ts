@@ -427,6 +427,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     },
     duration: "10 min",
     image: `${CDN}26706b11880d4b55b61df8e668695b14?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Ragir%20vite%20face%20l'incendie.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL1JhZ2lyIHZpdGUgZmFjZSBsJ2luY2VuZGllLm1wNCIsImlhdCI6MTc3NTMzNTMyNCwiZXhwIjoxODM4NDA3MzI0fQ.BX-MtZuzr-Fyafw-sPo-0d5SJN4M8tvVbj31rSiX6vM",
     funFacts: [
       { stat: "5×", label: "plus rapide que les flammes", detail: "La fumée se propage 5 fois plus vite que le feu dans un couloir. Elle est la première cause de décès dans les incendies de bureau.", icon: "zap" },
       { stat: "5 min", label: "pour enflammer une pièce entière", detail: "Sans intervention, une pièce de bureau standard peut être totalement embrasée en moins de 5 minutes après le départ de feu.", icon: "clock" },
