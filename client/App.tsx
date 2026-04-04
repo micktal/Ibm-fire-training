@@ -16,6 +16,7 @@ import BottomNav from "./components/BottomNav";
 import BuilderPage from "./pages/BuilderPage";
 import ChapterIntroPage from "./pages/ChapterIntroPage";
 import CertificatePage from "./pages/CertificatePage";
+import AdminPage from "./pages/AdminPage";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ export default function App() {
                 <Route path="/module/:id" element={<ModulePage />} />
                 <Route path="/chapter-intro/:chapter" element={<ChapterIntroPage />} />
                 <Route path="/certificat" element={<CertificatePage />} />
+                <Route path="/admin" element={<AdminPage />} />
                 {/* Pages Builder.io — catch-all avant NotFound */}
                 <Route path="/builder/:slug" element={<BuilderPage />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

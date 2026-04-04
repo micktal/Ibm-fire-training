@@ -7,6 +7,7 @@ import BottomNav from "@/components/layout/BottomNav";
 import { useUser } from "@/lib/userContext";
 import { IBM_SITES } from "@/lib/courseData";
 import { useLanguage } from "@/lib/languageContext";
+import { saveRegistration, getSessionId } from "@/lib/supabase";
 
 function Field({
   id, label, required, error, children,
@@ -71,14 +72,14 @@ export default function Form() {
     return e;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const e = validate();
     if (Object.keys(e).length > 0) {
       setErrors(e);
       return;
     }
     setSubmitting(true);
-    setUser({
+    const userInfo = {
       prenom: fields.prenom.trim(),
       nom: fields.nom.trim(),
       email: fields.email.trim(),
@@ -86,7 +87,19 @@ export default function Form() {
       batiment: fields.batiment.trim(),
       etage: fields.etage.trim(),
       zone: fields.zone.trim(),
-    });
+    };
+    setUser(userInfo);
+    // Save to Supabase (non-blocking — proceed even if it fails)
+    saveRegistration({
+      first_name: userInfo.prenom,
+      last_name: userInfo.nom,
+      email: userInfo.email,
+      building: userInfo.batiment || userInfo.campus,
+      floor: userInfo.etage,
+      zone: userInfo.zone,
+      language: lang as "fr" | "en",
+      session_id: getSessionId(),
+    }).catch(console.error);
     setTimeout(() => navigate("/hub"), 400);
   };
 
