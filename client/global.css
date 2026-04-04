@@ -50,9 +50,15 @@
     @apply border-border;
   }
 
+  html {
+    font-size: 17px; /* Augmenté depuis 16px — toutes les tailles rem s'adaptent automatiquement */
+  }
+
   body {
     @apply bg-background text-foreground;
     font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
   }
 
   :where(p, span, li, h1, h2, h3, h4, h5, h6, a, button, label, td, th) {

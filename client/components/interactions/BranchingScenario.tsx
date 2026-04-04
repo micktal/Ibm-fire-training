@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { ChevronRight, AlertTriangle, CheckCircle2, XCircle, RotateCcw, Clock, GitBranch } from "lucide-react";
+import CharacterDialogue from "@/components/CharacterDialogue";
 
 export interface ScenarioChoice {
   label: string;
@@ -286,6 +287,20 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
           </div>
         </div>
       </div>
+
+      {/* Character scene — shown when no image, brings the situation to life */}
+      {!node.image && (
+        <div className="px-4 pt-4 pb-2">
+          <CharacterDialogue
+            lines={[{
+              speaker: node.urgency === "high" ? "security" : node.urgency === "medium" ? "manager" : "instructor",
+              text: node.situation.length > 120 ? node.situation.slice(0, 117) + "…" : node.situation,
+            }]}
+            scene={node.urgency === "high" ? "corridor" : node.context ? "meeting" : "office"}
+            autoAdvance={false}
+          />
+        </div>
+      )}
 
       {/* Scene image */}
       {node.image && (

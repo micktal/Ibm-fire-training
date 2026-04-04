@@ -20,9 +20,12 @@ import FillBlank from "@/components/interactions/FillBlank";
 import MatchingExercise from "@/components/interactions/MatchingExercise";
 import OrderPuzzle from "@/components/interactions/OrderPuzzle";
 import SeriousGame from "@/components/interactions/SeriousGame";
+import TipFlipCards from "@/components/interactions/TipFlipCards";
 import BottomNav from "@/components/layout/BottomNav";
+import SituationAlertPopup from "@/components/SituationAlertPopup";
 import { getModuleById, QuizQuestion, ModuleContent, PreTestQuestion } from "@/lib/courseData";
 import { MODULE_INTERACTIONS, AnyExercise } from "@/lib/interactionData";
+import { ALERT_BY_MODULE } from "@/lib/situationAlerts";
 import { useUser } from "@/lib/userContext";
 
 function InteractionBlock({ exercise }: { exercise: AnyExercise }) {
@@ -35,6 +38,7 @@ function InteractionBlock({ exercise }: { exercise: AnyExercise }) {
   if (exercise.type === "matching") return <MatchingExercise exercise={exercise} />;
   if (exercise.type === "orderpuzzle") return <OrderPuzzle exercise={exercise} />;
   if (exercise.type === "seriousgame") return <SeriousGame exercise={exercise} />;
+  if (exercise.type === "tipflip") return <TipFlipCards exercise={exercise} />;
   return null;
 }
 
@@ -531,29 +535,81 @@ function QuizBlock({
       </div>
 
       {/* Feedback */}
-      {answered && (
-        <div
-          className="mx-4 mb-2 rounded-xl p-4 flex items-start gap-3"
-          style={{
-            background: selected === q.correctKey ? "rgba(25,128,56,0.07)" : "rgba(218,30,40,0.06)",
-            border: `2px solid ${selected === q.correctKey ? "rgba(25,128,56,0.3)" : "rgba(218,30,40,0.25)"}`,
-            animation: "feedbackSlide 0.3s ease",
-          }}
-        >
-          {selected === q.correctKey
-            ? <CheckCircle2 size={16} style={{ color: "#198038", flexShrink: 0, marginTop: "1px" }} />
-            : <XCircle size={16} style={{ color: "#da1e28", flexShrink: 0, marginTop: "1px" }} />
-          }
-          <div>
-            <div className="text-sm font-bold mb-1" style={{ color: selected === q.correctKey ? "#0e6027" : "#a2191f" }}>
-              {selected === q.correctKey ? "Bonne réponse" : "Réponse incorrecte"}
+      {answered && (() => {
+        const isCorrect = selected === q.correctKey;
+        const correctChoice = shuffledChoices[current].find((c) => c.key === q.correctKey);
+        const selectedChoice = shuffledChoices[current].find((c) => c.key === selected);
+        return (
+          <div
+            className="mx-4 mb-2 rounded-2xl overflow-hidden"
+            style={{
+              border: `2px solid ${isCorrect ? "rgba(25,128,56,0.35)" : "rgba(218,30,40,0.3)"}`,
+              animation: "feedbackSlide 0.35s ease",
+            }}
+          >
+            {/* Header bar */}
+            <div
+              className="flex items-center gap-2.5 px-4 py-2.5"
+              style={{ background: isCorrect ? "#198038" : "#da1e28" }}
+            >
+              {isCorrect
+                ? <CheckCircle2 size={15} color="#fff" />
+                : <XCircle size={15} color="#fff" />}
+              <span className="font-bold text-white" style={{ fontSize: "0.875rem" }}>
+                {isCorrect ? "Bonne réponse !" : "Réponse incorrecte"}
+              </span>
             </div>
-            <div className="text-sm leading-relaxed" style={{ color: "#4a5068" }}>
-              {selected === q.correctKey ? q.feedbackOk : q.feedbackKo}
+
+            <div className="px-4 py-4 flex flex-col gap-3" style={{ background: isCorrect ? "rgba(25,128,56,0.04)" : "rgba(218,30,40,0.04)" }}>
+
+              {/* If wrong: show the correct answer */}
+              {!isCorrect && correctChoice && (
+                <div className="rounded-xl px-3.5 py-2.5" style={{ background: "rgba(25,128,56,0.1)", border: "1.5px solid rgba(25,128,56,0.3)" }}>
+                  <div className="text-xs font-bold uppercase mb-1" style={{ color: "#198038", letterSpacing: "0.08em" }}>
+                    La bonne réponse était
+                  </div>
+                  <div className="font-semibold" style={{ color: "#0e6027", fontSize: "0.9rem" }}>
+                    {correctChoice.key}. {correctChoice.label}
+                  </div>
+                </div>
+              )}
+
+              {/* Pourquoi section */}
+              <div>
+                <div className="flex items-center gap-1.5 mb-1.5">
+                  <div className="w-1 h-4 rounded-full" style={{ background: isCorrect ? "#198038" : "#da1e28" }} />
+                  <span className="text-xs font-bold uppercase" style={{ color: isCorrect ? "#0e6027" : "#a2191f", letterSpacing: "0.1em" }}>
+                    Pourquoi ?
+                  </span>
+                </div>
+                <p style={{ color: "#2d3148", fontSize: "0.9rem", lineHeight: "1.65" }}>
+                  {isCorrect ? q.feedbackOk : q.feedbackKo}
+                </p>
+              </div>
+
+              {/* Alternative — if wrong, show what could also be done */}
+              {!isCorrect && q.feedbackOk && (
+                <div className="rounded-xl px-3.5 py-2.5" style={{ background: "rgba(13,71,161,0.06)", border: "1px solid rgba(13,71,161,0.18)" }}>
+                  <div className="text-xs font-bold uppercase mb-1" style={{ color: "#0D47A1", letterSpacing: "0.08em" }}>
+                    À retenir
+                  </div>
+                  <p style={{ color: "#3d4259", fontSize: "0.875rem", lineHeight: "1.6" }}>
+                    {q.feedbackOk}
+                  </p>
+                </div>
+              )}
+
+              {/* Hint from selected choice if wrong */}
+              {!isCorrect && selectedChoice?.hint && (
+                <div className="flex items-start gap-2" style={{ color: "#6f7897", fontSize: "0.82rem" }}>
+                  <Info size={13} style={{ flexShrink: 0, marginTop: "2px", color: "#adb3c8" }} />
+                  <span>{selectedChoice.hint}</span>
+                </div>
+              )}
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* Indicateur obligatoire avant réponse */}
       {!answered && (
@@ -565,7 +621,7 @@ function QuizBlock({
             transition: "background 0.3s, border-color 0.3s",
           }}
         >
-          <span style={{ fontSize: "14px" }}>🔒</span>
+          <FileText size={13} style={{ color: shake ? "#da1e28" : "#0043ce", flexShrink: 0 }} />
           <span className="text-xs font-semibold" style={{ color: shake ? "#da1e28" : "#0043ce" }}>
             {shake ? "Vous devez répondre avant de continuer" : "Sélectionnez une réponse pour continuer"}
           </span>
@@ -697,34 +753,53 @@ function PreTestOverlay({
             })}
           </div>
 
-          {answered && (
-            <div className="mt-4 rounded-xl px-4 py-3" style={{ background: selected === q.correctKey ? "rgba(25,128,56,0.15)" : "rgba(218,30,40,0.12)", border: `1.5px solid ${selected === q.correctKey ? "rgba(25,128,56,0.4)" : "rgba(218,30,40,0.35)"}` }}>
-              <div className="text-sm font-semibold" style={{ color: selected === q.correctKey ? "#6fdc8c" : "#ff8b8b" }}>
-                {selected === q.correctKey ? "Bonne réponse" : "Réponse incorrecte — la bonne réponse est soulignée en vert"}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+          {answered && (() => {
+            const isCorrect = selected === q.correctKey;
+            const correctChoice = q.choices.find((c) => c.key === q.correctKey);
+            return (
+              <div className="mt-4 flex flex-col gap-3">
+                {/* Feedback box */}
+                <div className="rounded-2xl overflow-hidden" style={{ border: `1.5px solid ${isCorrect ? "rgba(25,128,56,0.45)" : "rgba(218,30,40,0.45)"}` }}>
+                  <div className="flex items-center gap-2 px-4 py-2.5" style={{ background: isCorrect ? "#198038" : "#da1e28" }}>
+                    {isCorrect
+                      ? <CheckCircle2 size={14} color="#fff" />
+                      : <XCircle size={14} color="#fff" />}
+                    <span className="font-bold text-white text-sm">{isCorrect ? "Bonne réponse !" : "Réponse incorrecte"}</span>
+                  </div>
+                  <div className="px-4 py-3" style={{ background: isCorrect ? "rgba(25,128,56,0.12)" : "rgba(218,30,40,0.1)" }}>
+                    {!isCorrect && correctChoice && (
+                      <div className="mb-2 text-sm font-semibold" style={{ color: "#6fdc8c" }}>
+                        Bonne réponse : {correctChoice.key}. {correctChoice.label}
+                      </div>
+                    )}
+                    <p className="text-sm" style={{ color: "rgba(255,255,255,0.7)", lineHeight: "1.55" }}>
+                      {isCorrect
+                        ? "Excellent — vous maîtrisez déjà ce point. Continuez !"
+                        : "Pas de souci — ce module va vous permettre de maîtriser ce concept."}
+                    </p>
+                  </div>
+                </div>
 
-      {/* Next button */}
-      <div className="flex-shrink-0 px-5 pb-6 pt-3">
-        <button
-          onClick={handleNext}
-          disabled={!answered}
-          className="w-full flex items-center justify-center gap-2 rounded-xl py-3.5 font-bold transition-all"
-          style={{
-            background: answered ? "linear-gradient(135deg, #0D47A1, #1565C0)" : "rgba(255,255,255,0.06)",
-            color: answered ? "#fff" : "rgba(255,255,255,0.3)",
-            border: "none",
-            cursor: answered ? "pointer" : "not-allowed",
-            fontSize: "0.9375rem",
-            boxShadow: answered ? "0 4px 16px rgba(13,71,161,0.4)" : "none",
-          }}
-        >
-          {current < questions.length - 1 ? "Question suivante" : "Commencer le module"}
-          <ArrowRight size={16} />
-        </button>
+                {/* Next button — inside scrollable area, always accessible */}
+                <button
+                  onClick={handleNext}
+                  className="w-full flex items-center justify-center gap-2 rounded-xl py-3.5 font-bold mb-4"
+                  style={{
+                    background: "linear-gradient(135deg, #0D47A1, #1565C0)",
+                    color: "#fff",
+                    border: "none",
+                    cursor: "pointer",
+                    fontSize: "0.9375rem",
+                    boxShadow: "0 4px 16px rgba(13,71,161,0.4)",
+                  }}
+                >
+                  {current < questions.length - 1 ? "Question suivante" : "Commencer le module"}
+                  <ArrowRight size={16} />
+                </button>
+              </div>
+            );
+          })()}
+        </div>
       </div>
     </div>
   );
@@ -757,11 +832,17 @@ export default function ModulePage() {
   const [phase, setPhase] = useState<"intro" | "pretest" | "countdown" | "module">("intro");
   const [quizDone, setQuizDone] = useState(false);
   const [quizScore, setQuizScore] = useState(0);
+  const [quizAttempts, setQuizAttempts] = useState(0);
   const [activeSection, setActiveSection] = useState<number | null>(0);
   const [showCelebration, setShowCelebration] = useState(false);
   const [preTestScore, setPreTestScore] = useState<number | null>(null);
   const [selfAssessment, setSelfAssessment] = useState<number | null>(null);
   const [savedAt, setSavedAt] = useState<string | null>(null);
+  const startTimeRef = useRef<number | null>(null);
+  const [elapsedMin, setElapsedMin] = useState<number | null>(null);
+  const [showAlert, setShowAlert] = useState(false);
+  const alertShownRef = useRef(false);
+  const alertTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const mod = id ? getModuleById(id) : null;
 
@@ -770,11 +851,17 @@ export default function ModulePage() {
     setPhase("intro");
     setQuizDone(false);
     setQuizScore(0);
+    setQuizAttempts(0);
     setActiveSection(0);
     setShowCelebration(false);
     setPreTestScore(null);
     setSelfAssessment(null);
     setSavedAt(null);
+    startTimeRef.current = null;
+    setElapsedMin(null);
+    setShowAlert(false);
+    alertShownRef.current = false;
+    if (alertTimerRef.current) clearTimeout(alertTimerRef.current);
   }, [id]);
 
   useEffect(() => {
@@ -789,15 +876,29 @@ export default function ModulePage() {
   const handleQuizComplete = (score: number, correct: number) => {
     setQuizScore(score);
     setQuizDone(true);
-    setShowCelebration(true);
-    setModuleProgress(mod.id, {
-      moduleId: mod.id,
-      completed: true,
-      score,
-      correctAnswers: correct,
-      totalQuestions: mod.quiz.length,
-      completedAt: new Date().toISOString(),
-    });
+    setQuizAttempts((n) => n + 1);
+    // Compute elapsed time
+    if (startTimeRef.current) {
+      const mins = Math.round((Date.now() - startTimeRef.current) / 60000);
+      setElapsedMin(mins);
+    }
+    // Only mark completed if score >= 80%
+    if (score >= 80) {
+      setShowCelebration(true);
+      setModuleProgress(mod.id, {
+        moduleId: mod.id,
+        completed: true,
+        score,
+        correctAnswers: correct,
+        totalQuestions: mod.quiz.length,
+        completedAt: new Date().toISOString(),
+      });
+    }
+  };
+
+  const handleRetryQuiz = () => {
+    setQuizDone(false);
+    setQuizScore(0);
   };
 
   return (
@@ -1123,64 +1224,101 @@ export default function ModulePage() {
                 </div>
               </div>
 
-              {/* Save button + navigation */}
-              <div className="flex flex-col gap-3 rounded-2xl p-5"
-                style={{
-                  background: quizScore >= 80 || alreadyDone ? "rgba(25,128,56,0.05)" : "rgba(218,30,40,0.04)",
-                  border: `2px solid ${quizScore >= 80 || alreadyDone ? "rgba(25,128,56,0.22)" : "rgba(218,30,40,0.22)"}`,
-                }}
-              >
-                <div className="font-bold" style={{ color: "#161616", fontSize: "0.9375rem" }}>
-                  {quizDone
-                    ? quizScore >= 80 ? "Bien joué — module validé !" : "Score insuffisant — réessayez le quiz"
-                    : "Module déjà complété"}
-                </div>
-
-                {/* Explicit save button */}
-                <button
-                  onClick={() => {
-                    // LMS save point — add API call here for external LMS integration
-                    const ts = new Date().toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
-                    setSavedAt(ts);
-                    // Progress already in localStorage via setModuleProgress
-                  }}
-                  className="w-full flex items-center justify-center gap-2 rounded-xl py-3 font-bold transition-all"
-                  style={{
-                    background: savedAt ? "rgba(25,128,56,0.1)" : "rgba(13,71,161,0.08)",
-                    border: `2px solid ${savedAt ? "rgba(25,128,56,0.3)" : "rgba(13,71,161,0.2)"}`,
-                    color: savedAt ? "#198038" : "#0D47A1",
-                    cursor: "pointer",
-                    fontSize: "0.875rem",
-                  }}
-                >
-                  {savedAt ? <CheckCircle2 size={15} /> : <Save size={15} />}
-                  {savedAt ? `Sauvegardé à ${savedAt} — progression transmise` : "Sauvegarder ma progression"}
-                </button>
-
-                {/* Nav buttons */}
-                <div className="flex flex-col sm:flex-row gap-2.5">
+              {/* ── Score insuffisant → Retry ──────────────────── */}
+              {quizDone && quizScore < 80 && (
+                <div className="rounded-2xl p-5 flex flex-col gap-3" style={{ background: "rgba(218,30,40,0.05)", border: "2px solid rgba(218,30,40,0.25)" }}>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: "#da1e28" }}>
+                      <XCircle size={18} color="#fff" />
+                    </div>
+                    <div>
+                      <div className="font-bold" style={{ color: "#da1e28", fontSize: "0.9375rem" }}>Score insuffisant — {quizScore}%</div>
+                      <div className="text-xs mt-0.5" style={{ color: "#6f7897" }}>80% minimum requis pour valider ce module</div>
+                    </div>
+                  </div>
                   <button
-                    onClick={() => navigate("/hub")}
-                    className="flex items-center gap-1.5 font-semibold px-4 py-2.5 rounded-xl transition-all"
-                    style={{ background: "rgba(13,71,161,0.07)", color: "#0D47A1", border: "1.5px solid rgba(13,71,161,0.2)", cursor: "pointer", fontSize: "0.875rem" }}
-                    onMouseEnter={(e) => (e.currentTarget as HTMLButtonElement).style.background = "rgba(13,71,161,0.12)"}
-                    onMouseLeave={(e) => (e.currentTarget as HTMLButtonElement).style.background = "rgba(13,71,161,0.07)"}
+                    onClick={handleRetryQuiz}
+                    className="w-full flex items-center justify-center gap-2 rounded-xl py-3 font-bold"
+                    style={{ background: "#da1e28", color: "#fff", border: "none", cursor: "pointer", fontSize: "0.9rem" }}
                   >
-                    <ChevronLeft size={15} />
-                    Tableau de bord
+                    <RotateCcw size={15} />
+                    Réessayer le quiz ({quizAttempts} tentative{quizAttempts > 1 ? "s" : ""})
                   </button>
                   <button
                     onClick={() => navigate("/hub")}
-                    className="flex-1 flex items-center justify-center gap-2 font-semibold px-6 py-2.5 rounded-xl transition-all whitespace-nowrap"
-                    style={{ background: "#0D47A1", color: "#fff", border: "none", cursor: "pointer", fontSize: "0.9375rem" }}
-                    onMouseEnter={(e) => (e.currentTarget as HTMLButtonElement).style.background = "#0A3882"}
-                    onMouseLeave={(e) => (e.currentTarget as HTMLButtonElement).style.background = "#0D47A1"}
+                    className="w-full flex items-center justify-center gap-2 rounded-xl py-2.5 font-semibold"
+                    style={{ background: "rgba(13,71,161,0.07)", color: "#0D47A1", border: "1.5px solid rgba(13,71,161,0.18)", cursor: "pointer", fontSize: "0.875rem" }}
                   >
-                    Module suivant
-                    <ChevronRight size={16} />
+                    <ChevronLeft size={14} />
+                    Retour au tableau de bord
                   </button>
                 </div>
-              </div>
+              )}
+
+              {/* ── Score OK → Complétion ──────────────────────── */}
+              {(quizScore >= 80 || alreadyDone) && (
+                <div className="flex flex-col gap-3 rounded-2xl p-5" style={{ background: "rgba(25,128,56,0.05)", border: "2px solid rgba(25,128,56,0.22)" }}>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: "#198038" }}>
+                      <CheckCircle2 size={18} color="#fff" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-bold" style={{ color: "#0e6027", fontSize: "0.9375rem" }}>
+                        {quizDone ? "Module validé !" : "Module déjà complété"}
+                      </div>
+                      <div className="flex items-center gap-3 mt-0.5">
+                        <span className="text-xs" style={{ color: "#6f7897" }}>Score : <strong style={{ color: "#198038" }}>{quizScore || existingProgress?.score || 0}%</strong></span>
+                        {elapsedMin !== null && (
+                          <span className="flex items-center gap-1 text-xs" style={{ color: "#6f7897" }}>
+                            <Clock size={11} />
+                            {elapsedMin} min passées sur ce module
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* LMS save button */}
+                  <button
+                    onClick={() => {
+                      // LMS save point — add API call here for external LMS integration
+                      const ts = new Date().toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+                      setSavedAt(ts);
+                    }}
+                    className="w-full flex items-center justify-center gap-2 rounded-xl py-3 font-bold transition-all"
+                    style={{
+                      background: savedAt ? "rgba(25,128,56,0.1)" : "rgba(13,71,161,0.08)",
+                      border: `2px solid ${savedAt ? "rgba(25,128,56,0.3)" : "rgba(13,71,161,0.2)"}`,
+                      color: savedAt ? "#198038" : "#0D47A1",
+                      cursor: "pointer",
+                      fontSize: "0.875rem",
+                    }}
+                  >
+                    {savedAt ? <CheckCircle2 size={15} /> : <Save size={15} />}
+                    {savedAt ? `Sauvegardé à ${savedAt} — progression transmise au LMS` : "Sauvegarder ma progression"}
+                  </button>
+
+                  {/* Nav buttons */}
+                  <div className="flex flex-col sm:flex-row gap-2.5">
+                    <button
+                      onClick={() => navigate("/hub")}
+                      className="flex items-center gap-1.5 font-semibold px-4 py-2.5 rounded-xl transition-all"
+                      style={{ background: "rgba(13,71,161,0.07)", color: "#0D47A1", border: "1.5px solid rgba(13,71,161,0.2)", cursor: "pointer", fontSize: "0.875rem" }}
+                    >
+                      <ChevronLeft size={15} />
+                      Tableau de bord
+                    </button>
+                    <button
+                      onClick={() => navigate("/hub")}
+                      className="flex-1 flex items-center justify-center gap-2 font-semibold px-6 py-2.5 rounded-xl transition-all whitespace-nowrap"
+                      style={{ background: "#0D47A1", color: "#fff", border: "none", cursor: "pointer", fontSize: "0.9375rem" }}
+                    >
+                      Module suivant
+                      <ChevronRight size={16} />
+                    </button>
+                  </div>
+                </div>
+              )}
             </FadeIn>
           )}
         </div>
@@ -1208,7 +1346,27 @@ export default function ModulePage() {
       {phase === "countdown" && (
         <CountdownOverlay
           moduleImage={mod.image}
-          onComplete={() => setPhase("module")}
+          onComplete={() => {
+            startTimeRef.current = Date.now();
+            setPhase("module");
+            // Trigger situation alert popup after 20s if module has one
+            if (mod && ALERT_BY_MODULE[mod.id] && !alertShownRef.current) {
+              alertTimerRef.current = setTimeout(() => {
+                if (!alertShownRef.current) {
+                  setShowAlert(true);
+                  alertShownRef.current = true;
+                }
+              }, 20000);
+            }
+          }}
+        />
+      )}
+
+      {/* Situation alert popup */}
+      {showAlert && mod && ALERT_BY_MODULE[mod.id] && (
+        <SituationAlertPopup
+          alert={ALERT_BY_MODULE[mod.id]}
+          onClose={() => setShowAlert(false)}
         />
       )}
 

@@ -56,6 +56,21 @@ export interface SeriousGameExercise {
   successMessage?: string;
 }
 
+export interface TipFlipExercise {
+  type: "tipflip";
+  title: string;
+  subtitle?: string;
+  cards: Array<{
+    icon: string;       // Lucide icon name
+    accent: "flame" | "clock" | "alert" | "shield" | "zap" | "eye";
+    stat: string;       // valeur clé affichée en grand sur l'avant
+    label: string;      // titre court de la carte (avant)
+    category: "funfact" | "astuce" | "chiffre";
+    tip: string;        // explication détaillée (dos)
+    tipTitle?: string;  // titre du verso
+  }>;
+}
+
 export type AnyExercise =
   | HotspotExercise
   | DragDropExercise
@@ -65,7 +80,8 @@ export type AnyExercise =
   | MatchExercise
   | FlipCardsExercise
   | OrderPuzzleExercise
-  | SeriousGameExercise;
+  | SeriousGameExercise
+  | TipFlipExercise;
 
 const CDN = "https://cdn.builder.io/api/v1/image/assets%2Fd93d9a0ec7824aa1ac4d890a1f90a2ec%2F";
 
@@ -1496,24 +1512,197 @@ const m7_seriousgame: SeriousGameExercise = {
 
 // ── Export map ─────────────────────────────────────────────────
 
+// ── TipFlip cards ─────────────────────────────────────────────────
+
+const m4_tipflip: TipFlipExercise = {
+  type: "tipflip",
+  title: "Le saviez-vous ? — Classes de feu",
+  subtitle: "Retournez chaque carte pour découvrir l'explication complète",
+  cards: [
+    {
+      icon: "Flame",
+      accent: "flame",
+      stat: "5",
+      label: "Classes de feu à maîtriser",
+      category: "chiffre",
+      tipTitle: "Pourquoi 5 classes ?",
+      tip: "Chaque classe (A : solides, B : liquides, C : gaz, D : métaux, F : huiles) réclame un agent extincteur spécifique. Utiliser le mauvais agent peut propager le sinistre au lieu de l'éteindre.",
+    },
+    {
+      icon: "Zap",
+      accent: "alert",
+      stat: "CO₂",
+      label: "Seul agent pour feux électriques",
+      category: "astuce",
+      tipTitle: "Jamais d'eau sur l'électrique",
+      tip: "L'eau est conductrice d'électricité — risque d'électrocution fatal. Le CO₂ étouffe la flamme sans conduire le courant et sans laisser de résidu sur les équipements.",
+    },
+    {
+      icon: "Timer",
+      accent: "clock",
+      stat: "30s",
+      label: "Durée d'un extincteur CO₂ 2kg",
+      category: "chiffre",
+      tipTitle: "Un extincteur s'épuise vite",
+      tip: "30 secondes de décharge maximum pour un extincteur CO₂ de 2kg. Si le feu n'est pas maîtrisé à ce stade, évacuez immédiatement. Persister en rechargement zéro est dangereux.",
+    },
+    {
+      icon: "Target",
+      accent: "shield",
+      stat: "2–3m",
+      label: "Distance idéale d'intervention",
+      category: "astuce",
+      tipTitle: "Ni trop près, ni trop loin",
+      tip: "Le CO₂ sort à -78°C. Trop proche = brûlure par le froid. Trop loin = perte d'efficacité. 2 à 3 mètres du foyer est la distance qui combine sécurité et efficacité maximale.",
+    },
+  ],
+};
+
+const m6_tipflip: TipFlipExercise = {
+  type: "tipflip",
+  title: "Le saviez-vous ? — Intervenir ou évacuer",
+  subtitle: "Retournez chaque carte pour découvrir l'explication complète",
+  cards: [
+    {
+      icon: "Clock",
+      accent: "clock",
+      stat: "10s",
+      label: "La règle de décision",
+      category: "chiffre",
+      tipTitle: "Observer · Évaluer · Décider",
+      tip: "10 secondes maximum pour prendre votre décision. Observer la taille du feu, évaluer l'agent disponible, décider. Au-delà, le feu double de volume — vos options se réduisent.",
+    },
+    {
+      icon: "CheckSquare",
+      accent: "shield",
+      stat: "3",
+      label: "Critères pour intervenir sans risque",
+      category: "astuce",
+      tipTitle: "Les 3 conditions obligatoires",
+      tip: "Feu inférieur à une corbeille à papier, extincteur adapté à portée, sortie dégagée dans le dos. Si UN seul critère manque, l'intervention est interdite. Évacuez.",
+    },
+    {
+      icon: "AlertTriangle",
+      accent: "alert",
+      stat: "80%",
+      label: "Des victimes auraient pu survivre",
+      category: "funfact",
+      tipTitle: "L'hésitation tue",
+      tip: "Dans la majorité des incendies mortels d'entreprise, une évacuation plus rapide aurait changé l'issue. Le doute doit toujours conduire à l'évacuation — jamais à l'attente.",
+    },
+    {
+      icon: "Eye",
+      accent: "eye",
+      stat: "1m80",
+      label: "Hauteur où la fumée asphyxie",
+      category: "funfact",
+      tipTitle: "Restez en dessous",
+      tip: "En dessous de 1m80, l'air reste respirable plus longtemps. Si vous traversez un couloir enfumé pour évacuer, baissez-vous. La fumée monte — l'air pur reste en bas.",
+    },
+  ],
+};
+
+const ch2m3_tipflip: TipFlipExercise = {
+  type: "tipflip",
+  title: "Le saviez-vous ? — Fermer les portes",
+  subtitle: "Retournez chaque carte pour découvrir l'explication complète",
+  cards: [
+    {
+      icon: "DoorClosed",
+      accent: "flame",
+      stat: "5×",
+      label: "Plus vite avec porte ouverte",
+      category: "chiffre",
+      tipTitle: "La porte comme bouclier",
+      tip: "Une porte coupe-feu ouverte permet au feu de se propager 5 fois plus rapidement. Fermer une porte en fuyant est souvent plus efficace qu'utiliser un extincteur.",
+    },
+    {
+      icon: "Shield",
+      accent: "shield",
+      stat: "30min",
+      label: "Résistance d'une porte EI30 fermée",
+      category: "chiffre",
+      tipTitle: "Calée ouverte : protection zéro",
+      tip: "Une porte coupe-feu EI30 résiste 30 minutes au feu et à la fumée. Fermée, elle protège les voies d'évacuation. Calée ouverte, elle devient un accélérateur de sinistre.",
+    },
+    {
+      icon: "ArrowRight",
+      accent: "clock",
+      stat: "SORS",
+      label: "Première étape de la séquence",
+      category: "astuce",
+      tipTitle: "La séquence ne s'inverse pas",
+      tip: "SORS d'abord, FERME ensuite, SIGNALE après. Ne jamais rester dans la pièce pour fermer avant de sortir. Ne jamais rouvrir pour récupérer des affaires — jamais d'exception.",
+    },
+    {
+      icon: "XCircle",
+      accent: "alert",
+      stat: "0",
+      label: "Exception à la règle de fermeture",
+      category: "astuce",
+      tipTitle: "Règle absolue sans exception",
+      tip: "Zéro exception. Toutes les portes doivent être fermées lors d'une évacuation, quelle que soit la situation. Même si vous pensez revenir vite. Même si la pièce est vide.",
+    },
+  ],
+};
+
+const ch2m5_tipflip: TipFlipExercise = {
+  type: "tipflip",
+  title: "Le saviez-vous ? — Faire face à la fumée",
+  subtitle: "Retournez chaque carte pour découvrir l'explication complète",
+  cards: [
+    {
+      icon: "Clock",
+      accent: "alert",
+      stat: "3min",
+      label: "Pour perdre connaissance",
+      category: "chiffre",
+      tipTitle: "La fumée agit en silence",
+      tip: "La fumée d'incendie contient du monoxyde de carbone, du CO₂ et des gaz toxiques. En 3 minutes d'exposition dans une zone enfumée, la perte de conscience est possible.",
+    },
+    {
+      icon: "TrendingDown",
+      accent: "flame",
+      stat: "60%",
+      label: "Des morts par intoxication",
+      category: "funfact",
+      tipTitle: "La fumée tue avant le feu",
+      tip: "Plus de 60% des victimes d'incendie meurent d'intoxication et non des flammes. Fuir la fumée est la priorité absolue — même si vous ne voyez pas de feu directement.",
+    },
+    {
+      icon: "Wind",
+      accent: "zap",
+      stat: "30m/min",
+      label: "Vitesse de montée de la fumée",
+      category: "chiffre",
+      tipTitle: "Descendez toujours",
+      tip: "La fumée monte à environ 30 mètres par minute verticalement. Un immeuble de 6 étages s'enfume en 2 minutes. En cas d'incendie, descendre est toujours plus sûr que monter.",
+    },
+    {
+      icon: "ArrowDown",
+      accent: "shield",
+      stat: "0,5m",
+      label: "Zone d'air respirable au sol",
+      category: "astuce",
+      tipTitle: "Rampez si vous le devez",
+      tip: "À 50 cm du sol, l'air reste respirable plusieurs minutes supplémentaires. En cas de couloir enfumé : baissez-vous, protégez votre bouche avec un tissu humide si possible, avancez vite.",
+    },
+  ],
+};
+
 export const MODULE_INTERACTIONS: Record<string, AnyExercise[]> = {
   "ch1-m1": [m1_hotspot, m1_binary, m1_branching],
   "ch1-m2": [m2_flipcards, m2_dragdrop, m2_branching],
   "ch1-m3": [m3_hotspot, m3_orderpuzzle, m3_branching],
-  "ch1-m4": [m4_dragdrop, m4_matching],
+  "ch1-m4": [m4_tipflip, m4_dragdrop, m4_matching],
   "ch1-m5": [m5_hotspot, m5_fillblank, m5_branching],
-  "ch1-m6": [m6_branching],
+  "ch1-m6": [m6_tipflip, m6_branching],
   "ch1-m7": [m7_seriousgame, m7_branching],
   "ch2-m1": [ch2m1_hotspot, ch2m1_binary],
   "ch2-m2": [ch2m2_flipcards, ch2m2_branching],
-  "ch2-m3": [ch2m3_fillblank, ch2m3_dragdrop],
+  "ch2-m3": [ch2m3_tipflip, ch2m3_fillblank, ch2m3_dragdrop],
   "ch2-m4": [ch2m4_hotspot],
-  "ch2-m5": [ch2m5_branching],
+  "ch2-m5": [ch2m5_tipflip, ch2m5_branching],
   "ch2-m6": [ch2m6_matching, ch2m6_hotspot],
   "ch2-m7": [ch2m7_orderpuzzle, ch2m7_branching],
-  "ch2-m3": [ch2m3_dragdrop],
-  "ch2-m4": [ch2m4_hotspot],
-  "ch2-m5": [ch2m5_branching],
-  "ch2-m6": [ch2m6_hotspot],
-  "ch2-m7": [ch2m7_branching],
 };

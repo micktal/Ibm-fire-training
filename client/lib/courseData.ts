@@ -35,6 +35,12 @@ export interface PreTestQuestion {
   correctKey: string;
 }
 
+export interface LearningObjectives {
+  savoir: string;       // connaissances théoriques
+  savoirFaire: string;  // actions concrètes
+  savoirEtre: string;   // comportement / posture
+}
+
 export interface CourseModule {
   id: string;
   chapter: 1 | 2;
@@ -43,6 +49,7 @@ export interface CourseModule {
   subtitle: string;
   description: string;
   objective: string;
+  learningObjectives?: LearningObjectives;
   duration: string;
   image: string;
   videoUrl?: string;
@@ -87,6 +94,11 @@ export const MODULES: CourseModule[] = [
     description:
       "Analyser des scènes montrant différents signaux : fumée légère, odeur de brûlé, bruit électrique, chaleur localisée.",
     objective: "Identifier un départ de feu en moins de 10 secondes.",
+    learningObjectives: {
+      savoir: "Les signes d'un départ de feu et le fonctionnement des détecteurs incendie IBM",
+      savoirFaire: "Identifier un départ de feu et déclencher l'alerte au 22 22 sans délai",
+      savoirEtre: "Traiter tout signal comme une urgence réelle — jamais sous-estimer une alarme",
+    },
     duration: "8 min",
     image: `${CDN}68e7b7c3ea9048b4a797a2ceacec35aa?format=webp&width=800`,
     videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/ibm%20intro%20(2).mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL2libSBpbnRybyAoMikubXA0IiwiaWF0IjoxNzc1MjQxMjI3LCJleHAiOjE4Njk4NDkyMjd9.RBEu401aURzjAUFnNv6l8Miao-DYiC2QvtucX5cGiNA",
@@ -299,6 +311,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     description:
       "Animation expliquant combustible / comburant / énergie. Manipulation d'un schéma interactif pour comprendre comment casser la combustion.",
     objective: "Comprendre comment casser le triangle du feu et stopper la combustion.",
+    learningObjectives: {
+      savoir: "Les trois composants du triangle du feu : combustible, comburant, chaleur",
+      savoirFaire: "Supprimer un élément du triangle pour éteindre ou prévenir un incendie",
+      savoirEtre: "Anticiper les risques et ne jamais créer de conditions propices au feu",
+    },
     duration: "6 min",
     image: `${CDN}d3c9b22a88e644d98bd46cd69cd9cf30?format=webp&width=800`,
     funFacts: [
@@ -402,6 +419,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     description:
       "Simulation où l'apprenant choisit d'ouvrir une porte, la fermer, ventiler, attendre ou alerter. La propagation évolue en fonction des choix.",
     objective: "Comprendre l'impact direct d'une action sur la propagation du feu.",
+    learningObjectives: {
+      savoir: "La vitesse de propagation du feu et le rôle coupe-feu des portes",
+      savoirFaire: "Fermer toutes les portes en quittant une zone et confiner l'incendie",
+      savoirEtre: "Agir méthodiquement sans courir, même sous pression",
+    },
     duration: "10 min",
     image: `${CDN}26706b11880d4b55b61df8e668695b14?format=webp&width=800`,
     funFacts: [
@@ -504,6 +526,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     description:
       "Présentation visuelle des classes A, B, F. Exercice associer différents objets du quotidien à la bonne classe de feu.",
     objective: "Choisir le bon type d'extincteur selon la classe du feu.",
+    learningObjectives: {
+      savoir: "Les classes de feu (A, B, C, D, F) et les extincteurs adaptés à chacune",
+      savoirFaire: "Choisir et utiliser l'extincteur correct selon la nature du feu",
+      savoirEtre: "Ne jamais improviser — utiliser le mauvais agent peut aggraver l'incendie",
+    },
     duration: "7 min",
     image: `${CDN}8f5fa15ec33749609150a2fef62457e9?format=webp&width=800`,
     funFacts: [
@@ -613,6 +640,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     description:
       "Découvrir les types d'extincteurs, leurs pictogrammes et les étapes essentielles. Comprendre la bonne distance, orientation et la séquence PASS.",
     objective: "Savoir identifier le bon extincteur et l'utiliser en sécurité.",
+    learningObjectives: {
+      savoir: "La séquence PASS (Pull · Aim · Squeeze · Sweep) et la distance d'intervention",
+      savoirFaire: "Utiliser un extincteur CO2 ou poudre ABC de façon sécurisée à 2–3 mètres",
+      savoirEtre: "Maintenir une sortie dans le dos et ne jamais mettre sa vie en danger",
+    },
     duration: "9 min",
     image: `${CDN}d41dd2ee6d6d4cf4b7f112d3fc2460f3?format=webp&width=800`,
     funFacts: [
@@ -710,6 +742,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     description:
       "Arbre décisionnel interactif basé sur la taille du feu, la fumée, le repli possible, la présence de victimes et le type d'extincteur disponible.",
     objective: "Savoir trancher la décision intervenir/évacuer en quelques secondes.",
+    learningObjectives: {
+      savoir: "Les critères qui déterminent si on intervient ou si on évacue",
+      savoirFaire: "Appliquer la règle des 10 secondes : observer, évaluer, décider",
+      savoirEtre: "En cas de doute, toujours privilégier l'évacuation sans hésitation",
+    },
     duration: "10 min",
     image: `${CDN}8e074d1b7bdf4b8fa872d5fd2451fbfe?format=webp&width=800`,
     funFacts: [
@@ -813,6 +850,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     description:
       "Situation réaliste : alarme sonore, fumée dans un couloir, portes à fermer, extincteur à disposition. Décisions chronométrées à 5 secondes.",
     objective: "Valider l'ensemble des compétences du chapitre en conditions proches du réel.",
+    learningObjectives: {
+      savoir: "La procédure complète de gestion d'un incendie en environnement IBM",
+      savoirFaire: "Enchaîner : détecter → alarme 22 22 → évaluer → intervenir ou évacuer",
+      savoirEtre: "Garder son sang-froid et coordonner ses actions sous pression chronométrée",
+    },
     duration: "12 min",
     image: `${CDN}dfd2975e7d864d029e522928a710aa05?format=webp&width=800`,
     funFacts: [
@@ -902,6 +944,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     description:
       "Découvrir quand et comment déclencher l'alarme incendie. Hotspots sur un déclencheur manuel, animations des étapes, cas pratiques.",
     objective: "Savoir identifier le bon moment pour activer l'alarme et localiser les points d'alerte.",
+    learningObjectives: {
+      savoir: "Les types d'alarmes incendie IBM et les numéros d'urgence à connaître",
+      savoirFaire: "Activer un déclencheur manuel et appeler le 22 22 avec les bons éléments",
+      savoirEtre: "Alerter immédiatement sans chercher à éteindre soi-même dans le doute",
+    },
     duration: "6 min",
     image: `${CDN}2482acaedcdd4b2abad18b1011a424c6?format=webp&width=800`,
     funFacts: [
@@ -988,6 +1035,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     description:
       "Mises en situation visuelles illustrant les bons comportements : posture, voix, consignes simples. Exercice bonne/mauvaise formulation.",
     objective: "Adopter un comportement clair pour aider les autres à évacuer.",
+    learningObjectives: {
+      savoir: "Les techniques de communication et de leadership en situation de crise",
+      savoirFaire: "Guider calmement des collègues paniqués vers les sorties de secours",
+      savoirEtre: "Adopter une posture ferme, rassurante et orientée vers l'action",
+    },
     duration: "7 min",
     image: `${CDN}73ee73f4c5c54adb943d454c10b797a9?format=webp&width=800`,
     funFacts: [
@@ -1065,6 +1117,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     description:
       "Animation montrant l'effet d'une porte fermée sur la fumée. Exercice pour déterminer l'ordre correct de la séquence.",
     objective: "Intégrer la fermeture systématique des portes pour limiter la propagation.",
+    learningObjectives: {
+      savoir: "La séquence SORS-FERME-SIGNALE et son impact sur la propagation",
+      savoirFaire: "Fermer systématiquement chaque porte en quittant les locaux",
+      savoirEtre: "Appliquer la procédure sans exception, même en situation de stress",
+    },
     duration: "5 min",
     image: `${CDN}0385f320d59547b2b6d08166e29ab8f3?format=webp&width=800`,
     funFacts: [
@@ -1142,6 +1199,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     description:
       "L'apprenant explore virtuellement un bureau, une salle de réunion, un local technique. Zones vérifiées vs non vérifiées.",
     objective: "Effectuer une vérification rapide et sécurisée avant d'évacuer.",
+    learningObjectives: {
+      savoir: "La méthode de vérification rapide d'une zone avant évacuation définitive",
+      savoirFaire: "Balayer visuellement un espace et signaler toute présence au responsable",
+      savoirEtre: "Ne laisser personne derrière — sans jamais mettre sa propre vie en danger",
+    },
     duration: "8 min",
     image: `${CDN}b5ca9823c0ba42e492f17a707fd14708?format=webp&width=800`,
     funFacts: [
@@ -1221,6 +1283,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     description:
       "Mini-simulation : fumée au sol / fumée en hauteur / porte chaude. Choisir les bons réflexes avec feedback immédiat.",
     objective: "Adopter les bons réflexes dans un environnement enfumé.",
+    learningObjectives: {
+      savoir: "Le comportement de la fumée, sa toxicité et ses effets sur l'organisme",
+      savoirFaire: "Se déplacer en position basse et protéger ses voies respiratoires",
+      savoirEtre: "Résister à la panique et garder un rythme lent et contrôlé",
+    },
     duration: "8 min",
     image: `${CDN}cc5ab29f9fd543a2aff682cdd54297ad?format=webp&width=800`,
     funFacts: [
@@ -1306,6 +1373,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     description:
       "Plan interactif d'un étage IBM. Exercice pour choisir le bon itinéraire. Animations sur la vitesse de fumée dans les cages d'escalier.",
     objective: "Trouver rapidement le bon chemin d'évacuation.",
+    learningObjectives: {
+      savoir: "Les règles d'évacuation verticale et les espaces d'attente sécurisés",
+      savoirFaire: "Emprunter uniquement les escaliers de secours — jamais l'ascenseur",
+      savoirEtre: "Respecter les files, ne pas se précipiter, aider les personnes à mobilité réduite",
+    },
     duration: "7 min",
     image: `${CDN}48e0cc79ee294fbbaf81f10232959ffb?format=webp&width=800`,
     funFacts: [
@@ -1385,6 +1457,11 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     description:
       "Scénario final chronométré : bruit d'alarme, fumée, collègues, portes, escaliers, point de rassemblement. Score final.",
     objective: "Valider la maîtrise de toute la procédure d'évacuation en situation simulée.",
+    learningObjectives: {
+      savoir: "La procédure complète d'évacuation IBM de A à Z",
+      savoirFaire: "Exécuter toutes les étapes dans l'ordre correct sous contrainte de temps",
+      savoirEtre: "Coordination, sens des responsabilités et leadership en situation réelle",
+    },
     duration: "12 min",
     image: `${CDN}2ee3c4ada85544aa87e2f4f440dc1a94?format=webp&width=800`,
     funFacts: [
