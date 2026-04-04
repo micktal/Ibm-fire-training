@@ -113,13 +113,15 @@ export default function AdminPage() {
           {/* Header */}
           <div className="px-8 py-6" style={{ background: "#0043ce" }}>
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.15)" }}>
-                <Shield size={18} color="#fff" />
-              </div>
-              <div>
-                <div className="font-bold text-white" style={{ fontSize: "1rem" }}>Espace Administrateur</div>
-                <div className="text-xs" style={{ color: "rgba(255,255,255,0.65)" }}>IBM · Sécurité Incendie</div>
-              </div>
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg"
+                alt="IBM"
+                style={{ height: "28px", filter: "brightness(0) invert(1)" }}
+              />
+            </div>
+            <div className="mb-2">
+              <div className="font-bold text-white" style={{ fontSize: "1rem" }}>Espace Administrateur</div>
+              <div className="text-xs" style={{ color: "rgba(255,255,255,0.65)" }}>IBM · Sécurité Incendie</div>
             </div>
             <p className="text-xs" style={{ color: "rgba(255,255,255,0.7)", lineHeight: "1.5" }}>
               Accès réservé au responsable sécurité IBM. Entrez le mot de passe pour consulter les inscriptions.
