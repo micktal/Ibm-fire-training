@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { scorm } from "@/lib/scormApi";
+import { updateProgression, getSessionId } from "@/lib/supabase";
 
 export interface UserData {
   prenom: string;
@@ -72,6 +73,16 @@ export function UserProvider({ children }: { children: ReactNode }) {
     const updated = { ...progress, [moduleId]: prog };
     setProgressState(updated);
     localStorage.setItem("ibm_progress", JSON.stringify(updated));
+
+    // Synchroniser avec Supabase
+    const completedCountForSupabase = Object.values(updated).filter((p) => p.completed).length;
+    const avgScoreForSupabase = completedCountForSupabase > 0
+      ? Math.round(Object.values(updated).reduce((s, p) => s + p.score, 0) / completedCountForSupabase)
+      : 0;
+    updateProgression(getSessionId(), {
+      completed_modules: completedCountForSupabase,
+      average_score: avgScoreForSupabase,
+    }).catch(console.error);
 
     // Mettre à jour SCORM à chaque complétion de module
     if (scorm.isConnected) {

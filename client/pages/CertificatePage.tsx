@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useUser } from "@/lib/userContext";
 import { useLanguage } from "@/lib/languageContext";
 import { Award, CheckCircle2, Shield, Clock, Star, Download, ChevronLeft } from "lucide-react";
 import IBMLogo from "@/components/IBMLogo";
+import { updateProgression, getSessionId } from "@/lib/supabase";
 
 const TOTAL_MODULES = 14;
 
@@ -36,6 +38,16 @@ export default function CertificatePage() {
 
   const isFullyCompleted = totalCompleted >= TOTAL_MODULES;
   const today = new Date().toLocaleDateString(isEN ? "en-GB" : "fr-FR", { day: "2-digit", month: "long", year: "numeric" });
+
+  // Marquer le certificat obtenu dans Supabase (une seule fois au montage)
+  useEffect(() => {
+    updateProgression(getSessionId(), {
+      certificate_obtained: true,
+      completed_at: new Date().toISOString(),
+      average_score: avgScore,
+      completed_modules: completedModules.length,
+    }).catch(console.error);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fullName = user ? `${user.prenom} ${user.nom}` : "Apprenant";
   const campus = user?.campus ?? "IBM France";
