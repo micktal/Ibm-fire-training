@@ -44,8 +44,8 @@ export default function BinaryQuiz({ exercise, onComplete }: Props) {
           <ToggleLeft size={14} color="#fff" />
         </div>
         <div className="flex-1">
-          <span className="font-bold text-white uppercase" style={{ fontSize: "0.82rem", letterSpacing: "0.08em" }}>{exercise.title}</span>
-          {exercise.subtitle && <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.65)" }}>{exercise.subtitle}</div>}
+          <span className="font-bold text-white uppercase" style={{ fontSize: "0.82rem", letterSpacing: "0.08em" }}>{isEN ? (exercise.titleEn ?? exercise.title) : exercise.title}</span>
+          {exercise.subtitle && <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.65)" }}>{isEN ? (exercise.subtitleEn ?? exercise.subtitle) : exercise.subtitle}</div>}
         </div>
         <span className="font-mono text-xs px-2.5 py-1 rounded-full" style={{ color: "#fff", background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.25)", fontFamily: "'IBM Plex Mono', monospace" }}>
           {revealed.size}/{exercise.statements.length}
@@ -72,7 +72,7 @@ export default function BinaryQuiz({ exercise, onComplete }: Props) {
                     style={{ background: "#0D47A1", color: "#fff", fontFamily: "'IBM Plex Mono', monospace", fontSize: "9px" }}>
                     {i + 1}
                   </span>
-                  <span style={{ fontSize: "0.88rem", color: "#0a2052", lineHeight: "1.5", fontWeight: 500 }}>{stmt.statement}</span>
+                  <span style={{ fontSize: "0.88rem", color: "#0a2052", lineHeight: "1.5", fontWeight: 500 }}>{isEN ? (stmt.statementEn ?? stmt.statement) : stmt.statement}</span>
                 </div>
               </div>
 
@@ -113,7 +113,7 @@ export default function BinaryQuiz({ exercise, onComplete }: Props) {
                         ? (isEN ? "Correct!" : "Correct !")
                         : (isEN ? `Incorrect — it's ${stmt.isTrue ? "TRUE" : "FALSE"}` : `Incorrect — c'est ${stmt.isTrue ? "VRAI" : "FAUX"}`)}
                     </div>
-                    <div style={{ fontSize: "0.78rem", color: "#6f7897", lineHeight: "1.45" }}>{stmt.explanation}</div>
+                    <div style={{ fontSize: "0.78rem", color: "#6f7897", lineHeight: "1.45" }}>{isEN ? (stmt.explanationEn ?? stmt.explanation) : stmt.explanation}</div>
                   </div>
                 </div>
               )}

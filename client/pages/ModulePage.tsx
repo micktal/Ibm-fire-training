@@ -81,6 +81,8 @@ function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 
 // ── Content section body renderer ───────────────────────────────
 function SectionBody({ section }: { section: ModuleContent }) {
+  const { lang } = useLanguage();
+  const isEN = lang === "en";
   const isScenario = section.type === "scenario";
   const isList = section.type === "list";
   const isCaseFigure = section.type === "casefigure";
@@ -174,14 +176,14 @@ function SectionBody({ section }: { section: ModuleContent }) {
                   className="text-xs font-bold uppercase tracking-wide"
                   style={{ color: c.correct ? "#0e6027" : "#a2191f", fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.08em" }}
                 >
-                  Cas {i + 1} — {c.correct ? "Bonne décision" : "Erreur à éviter"}
+                  {isEN ? "Case" : "Cas"} {i + 1} — {c.correct ? (isEN ? "Good decision" : "Bonne décision") : (isEN ? "Mistake to avoid" : "Erreur à éviter")}
                 </span>
               </div>
               {/* Case body */}
               <div className="px-4 py-3" style={{ background: "#fafbfc" }}>
-                <div className="text-xs font-semibold uppercase mb-1" style={{ color: "#8d95aa", letterSpacing: "0.06em" }}>Situation</div>
+                <div className="text-xs font-semibold uppercase mb-1" style={{ color: "#8d95aa", letterSpacing: "0.06em" }}>{isEN ? "Situation" : "Situation"}</div>
                 <div className="text-sm mb-3" style={{ color: "#3d4259", lineHeight: "1.6" }}>{c.situation}</div>
-                <div className="text-xs font-semibold uppercase mb-1" style={{ color: "#8d95aa", letterSpacing: "0.06em" }}>Action</div>
+                <div className="text-xs font-semibold uppercase mb-1" style={{ color: "#8d95aa", letterSpacing: "0.06em" }}>{isEN ? "Action" : "Action"}</div>
                 <div
                   className="text-sm font-semibold mb-2"
                   style={{ color: c.correct ? "#198038" : "#da1e28" }}
@@ -205,7 +207,7 @@ function SectionBody({ section }: { section: ModuleContent }) {
             <div className="rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(25,128,56,0.3)" }}>
               <div className="flex items-center gap-2 px-3 py-2.5" style={{ background: "rgba(25,128,56,0.07)", borderBottom: "1px solid rgba(25,128,56,0.15)" }}>
                 <CheckCircle2 size={13} style={{ color: "#198038" }} />
-                <span className="text-xs font-bold uppercase" style={{ color: "#0e6027", letterSpacing: "0.08em" }}>À faire</span>
+                <span className="text-xs font-bold uppercase" style={{ color: "#0e6027", letterSpacing: "0.08em" }}>{isEN ? "To do" : "À faire"}</span>
               </div>
               <div className="px-3 py-3 flex flex-col gap-2.5">
                 {section.doList.map((item, i) => (
@@ -221,7 +223,7 @@ function SectionBody({ section }: { section: ModuleContent }) {
             <div className="rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(218,30,40,0.3)" }}>
               <div className="flex items-center gap-2 px-3 py-2.5" style={{ background: "rgba(218,30,40,0.06)", borderBottom: "1px solid rgba(218,30,40,0.15)" }}>
                 <XCircle size={13} style={{ color: "#da1e28" }} />
-                <span className="text-xs font-bold uppercase" style={{ color: "#a2191f", letterSpacing: "0.08em" }}>À éviter</span>
+                <span className="text-xs font-bold uppercase" style={{ color: "#a2191f", letterSpacing: "0.08em" }}>{isEN ? "To avoid" : "À éviter"}</span>
               </div>
               <div className="px-3 py-3 flex flex-col gap-2.5">
                 {section.dontList.map((item, i) => (
@@ -1093,7 +1095,7 @@ export default function ModulePage() {
                   <span className="ml-auto font-mono text-xs px-2.5 py-1 rounded-full"
                     style={{ fontFamily: "'IBM Plex Mono', monospace", color: "#fff", background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.25)" }}
                   >
-                    {MODULE_INTERACTIONS[mod.id].length} exercice{MODULE_INTERACTIONS[mod.id].length > 1 ? "s" : ""}
+                    {MODULE_INTERACTIONS[mod.id].length} {isEN ? `exercise${MODULE_INTERACTIONS[mod.id].length > 1 ? "s" : ""}` : `exercice${MODULE_INTERACTIONS[mod.id].length > 1 ? "s" : ""}`}
                   </span>
                 </div>
                 {MODULE_INTERACTIONS[mod.id].map((exercise, idx) => (

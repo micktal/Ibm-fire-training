@@ -7,18 +7,24 @@ export interface Hotspot {
   x: number; // % from left
   y: number; // % from top
   label: string;
+  labelEn?: string;
   description: string;
+  descriptionEn?: string;
   type: "danger" | "info" | "safe";
   detail?: string;
+  detailEn?: string;
 }
 
 export interface HotspotExercise {
   type: "hotspot";
   instruction: string;
+  instructionEn?: string;
   context?: string;
+  contextEn?: string;
   image: string;
   hotspots: Hotspot[];
   successMessage?: string;
+  successMessageEn?: string;
 }
 
 interface Props {
@@ -105,11 +111,11 @@ export default function HotspotImage({ exercise, onComplete }: Props) {
           </span>
         </div>
         <p className="text-sm font-semibold text-white" style={{ lineHeight: "1.4" }}>
-          {exercise.instruction}
+          {isEN ? (exercise.instructionEn ?? exercise.instruction) : exercise.instruction}
         </p>
         {exercise.context && (
           <p className="text-xs mt-1" style={{ color: "rgba(255,255,255,0.6)" }}>
-            {exercise.context}
+            {isEN ? (exercise.contextEn ?? exercise.context) : exercise.context}
           </p>
         )}
         {/* Progress bar */}
@@ -190,14 +196,14 @@ export default function HotspotImage({ exercise, onComplete }: Props) {
               </span>
             </div>
             <div className="font-bold text-sm mb-1" style={{ color: "#161616", lineHeight: "1.35" }}>
-              {activeHotspot.label}
+              {isEN ? (activeHotspot.labelEn ?? activeHotspot.label) : activeHotspot.label}
             </div>
             <div className="text-sm leading-relaxed" style={{ color: "#3d4259" }}>
-              {activeHotspot.description}
+              {isEN ? (activeHotspot.descriptionEn ?? activeHotspot.description) : activeHotspot.description}
             </div>
             {activeHotspot.detail && (
               <div className="mt-2 text-xs font-semibold" style={{ color: cfg.titleColor }}>
-                → {activeHotspot.detail}
+                → {isEN ? (activeHotspot.detailEn ?? activeHotspot.detail) : activeHotspot.detail}
               </div>
             )}
           </div>
@@ -223,7 +229,7 @@ export default function HotspotImage({ exercise, onComplete }: Props) {
           <CheckCircle2 size={18} style={{ color: "#198038", flexShrink: 0 }} />
           <div>
             <div className="text-sm font-bold" style={{ color: "#0e6027" }}>
-              {exercise.successMessage || (isEN ? "All points identified — Excellent work!" : "Tous les points identifiés — Excellent travail !")}
+              {isEN ? (exercise.successMessageEn ?? exercise.successMessage ?? "All points identified — Excellent work!") : (exercise.successMessage ?? "Tous les points identifiés — Excellent travail !")}
             </div>
             <div className="text-xs" style={{ color: "#6f7897" }}>
               {exercise.hotspots.filter((h) => h.type === "danger").length} {isEN ? "dangerous zone(s) identified" : "zone(s) dangereuse(s) identifiée(s)"}

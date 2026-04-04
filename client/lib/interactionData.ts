@@ -6,9 +6,12 @@ import { BranchingExercise } from "@/components/interactions/BranchingScenario";
 export interface BinaryExercise {
   type: "binary";
   title: string;
+  titleEn?: string;
   subtitle?: string;
-  statements: Array<{ statement: string; isTrue: boolean; explanation: string }>;
+  subtitleEn?: string;
+  statements: Array<{ statement: string; statementEn?: string; isTrue: boolean; explanation: string; explanationEn?: string }>;
   successMessage?: string;
+  successMessageEn?: string;
 }
 
 export interface FillBlankExercise {
@@ -940,37 +943,52 @@ const m7_branching: BranchingExercise = {
 const ch2m1_hotspot: HotspotExercise = {
   type: "hotspot",
   instruction: "Localisez et identifiez tous les déclencheurs d'alarme dans cette scène",
+  instructionEn: "Locate and identify all alarm triggers in this scene",
   context: "Dans un vrai bureau IBM, repérez les équipements d'alerte et comprenez leur fonctionnement.",
-  image: `${CDN}2482acaedcdd4b2abad18b1011a424c6?format=webp&width=800`,
+  contextEn: "In a real IBM office, spot the alert equipment and understand how it works.",
+  image: `${CDN}f70ab7cdd9114da8bfd5ad197221b46b?format=webp&width=800`,
   successMessage: "Vous savez localiser et utiliser les systèmes d'alarme",
+  successMessageEn: "You know how to locate and use the alarm systems",
   hotspots: [
     {
       id: "h1", x: 18, y: 42,
       label: "Déclencheur manuel (boîtier rouge)",
+      labelEn: "Manual call point (red box)",
       description: "Le déclencheur manuel FIRE PULL DOWN est le moyen le plus direct d'alerter tout le bâtiment. Briser le verre ou appuyer selon le modèle.",
+      descriptionEn: "The FIRE PULL DOWN manual call point is the most direct way to alert the entire building. Break the glass or press depending on the model.",
       type: "info",
       detail: "Utilisation : 1 geste ferme suffit — l'alarme est immédiate et irréversible",
+      detailEn: "Usage: 1 firm action is enough — the alarm is immediate and irreversible",
     },
     {
       id: "h2", x: 52, y: 15,
       label: "Détecteur de fumée au plafond",
+      labelEn: "Ceiling smoke detector",
       description: "Le détecteur automatique se déclenche quand la concentration de fumée dépasse le seuil. Peut prendre 2-5 minutes pour réagir.",
+      descriptionEn: "The automatic detector triggers when smoke concentration exceeds the threshold. It may take 2-5 minutes to react.",
       type: "info",
       detail: "Ne pas attendre le détecteur automatique — le déclencheur manuel est plus rapide",
+      detailEn: "Don't wait for the automatic detector — the manual call point is faster",
     },
     {
       id: "h3", x: 75, y: 58,
       label: "Foyer actif — déclenchement requis",
+      labelEn: "Active fire — alarm required",
       description: "Un départ de feu est visible. Le déclencheur manuel est à moins de 10 mètres. Chaque seconde sans alerte = propagation supplémentaire.",
+      descriptionEn: "A fire outbreak is visible. The manual call point is less than 10 metres away. Every second without an alarm means further spread.",
       type: "danger",
       detail: "Réflexe : déclencher l'alarme AVANT de tenter d'intervenir",
+      detailEn: "Reflex: trigger the alarm BEFORE attempting to intervene",
     },
     {
       id: "h4", x: 40, y: 75,
       label: "Signalisation sortie de secours",
+      labelEn: "Emergency exit sign",
       description: "La sortie de secours est identifiée par le pictogramme vert standardisé. Elle doit rester dégagée en permanence.",
+      descriptionEn: "The emergency exit is identified by the standardised green pictogram. It must remain clear at all times.",
       type: "safe",
       detail: "Ne jamais bloquer une issue de secours — même temporairement",
+      detailEn: "Never block an emergency exit — even temporarily",
     },
   ],
 };
@@ -1376,14 +1394,47 @@ const m1_binary: BinaryExercise = {
 const ch2m1_binary: BinaryExercise = {
   type: "binary",
   title: "Vrai ou Faux — L'alarme incendie",
+  titleEn: "True or False — The fire alarm",
   subtitle: "Idées reçues sur le déclenchement de l'alarme",
+  subtitleEn: "Common misconceptions about triggering the alarm",
   successMessage: "Vous savez quand et comment déclencher l'alarme IBM !",
+  successMessageEn: "You know when and how to trigger the IBM alarm!",
   statements: [
-    { statement: "Déclencher l'alarme trop tôt est sanctionné chez IBM.", isTrue: false, explanation: "Faux. Il est impossible de déclencher trop tôt face à un signal suspect. IBM prévoit un retour des secours sans sanction." },
-    { statement: "Le 22 22 doit être composé avant le 18 lors d'un incident IBM.", isTrue: true, explanation: "Vrai. La sécurité IBM connaît les plans des bâtiments et peut intervenir plus rapidement que les services externes." },
-    { statement: "Les détecteurs automatiques rendent le déclencheur manuel inutile.", isTrue: false, explanation: "Faux. Le déclencheur manuel est un filet de sécurité indépendant — toujours disponible si le détecteur n'a pas réagi." },
-    { statement: "Chaque seconde de retard représente environ 6m² supplémentaires en feu.", isTrue: true, explanation: "Vrai. C'est la statistique IBM : le retard à déclencher l'alarme est directement corrélé à la superficie touchée." },
-    { statement: "Après avoir déclenché l'alarme, il faut attendre sur place les consignes.", isTrue: false, explanation: "Faux. Après déclenchement, commencer immédiatement l'évacuation sans attendre confirmation." },
+    {
+      statement: "Déclencher l'alarme trop tôt est sanctionné chez IBM.",
+      statementEn: "Triggering the alarm too early is penalized at IBM.",
+      isTrue: false,
+      explanation: "Faux. Il est impossible de déclencher trop tôt face à un signal suspect. IBM prévoit un retour des secours sans sanction.",
+      explanationEn: "False. It is impossible to trigger too early when facing a suspicious signal. IBM policy supports early alarm with no penalty.",
+    },
+    {
+      statement: "Le 22 22 doit être composé avant le 18 lors d'un incident IBM.",
+      statementEn: "22 22 must be called before 18 during an IBM incident.",
+      isTrue: true,
+      explanation: "Vrai. La sécurité IBM connaît les plans des bâtiments et peut intervenir plus rapidement que les services externes.",
+      explanationEn: "True. IBM Security knows the building plans and can respond faster than external services.",
+    },
+    {
+      statement: "Les détecteurs automatiques rendent le déclencheur manuel inutile.",
+      statementEn: "Automatic detectors make the manual call point unnecessary.",
+      isTrue: false,
+      explanation: "Faux. Le déclencheur manuel est un filet de sécurité indépendant — toujours disponible si le détecteur n'a pas réagi.",
+      explanationEn: "False. The manual call point is an independent safety net — always available if the detector has not reacted.",
+    },
+    {
+      statement: "Chaque seconde de retard représente environ 6m² supplémentaires en feu.",
+      statementEn: "Every second of delay represents approximately 6m² more on fire.",
+      isTrue: true,
+      explanation: "Vrai. C'est la statistique IBM : le retard à déclencher l'alarme est directement corrélé à la superficie touchée.",
+      explanationEn: "True. This is the IBM statistic: delay in triggering the alarm is directly correlated with the area affected.",
+    },
+    {
+      statement: "Après avoir déclenché l'alarme, il faut attendre sur place les consignes.",
+      statementEn: "After triggering the alarm, you must wait on site for instructions.",
+      isTrue: false,
+      explanation: "Faux. Après déclenchement, commencer immédiatement l'évacuation sans attendre confirmation.",
+      explanationEn: "False. After triggering, begin evacuation immediately without waiting for confirmation.",
+    },
   ],
 };
 
