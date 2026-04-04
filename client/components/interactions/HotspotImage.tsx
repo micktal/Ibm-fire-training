@@ -151,72 +151,65 @@ export default function HotspotImage({ exercise, onComplete }: Props) {
                   ? `0 0 0 6px ${c.pulse}, 0 4px 16px rgba(0,0,0,0.4)`
                   : `0 0 0 3px ${c.pulse}`,
                 cursor: "pointer",
-                zIndex: isActive ? 20 : 10,
+                zIndex: 10,
                 animation: isDiscovered ? "none" : "hotspotPulse 2s ease infinite",
               }}
               title={hs.label}
             >
-              <span
-                className="font-mono font-bold text-xs text-white"
-                style={{ fontFamily: "'IBM Plex Mono', monospace" }}
-              >
+              <span className="font-mono font-bold text-xs text-white" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>
                 {idx + 1}
               </span>
             </button>
           );
         })}
+      </div>
 
-        {/* Active panel */}
-        {activeHotspot && cfg && (
+      {/* Detail panel — sous l'image, pas dedans */}
+      {activeHotspot && cfg ? (
+        <div
+          className="flex items-start gap-3 px-5 py-4"
+          style={{
+            background: cfg.panelBg,
+            borderTop: `2px solid ${cfg.panelBorder}`,
+            animation: "feedbackSlide 0.25s ease",
+          }}
+        >
           <div
-            className="absolute bottom-3 left-3 right-3 rounded-xl p-4"
-            style={{
-              background: "rgba(10,14,26,0.95)",
-              border: `1.5px solid ${cfg.panelBorder}`,
-              backdropFilter: "blur(12px)",
-              zIndex: 30,
-              boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
-            }}
+            className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
+            style={{ background: "white", border: `1.5px solid ${cfg.panelBorder}` }}
           >
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex items-center gap-2 mb-1.5">
-                <div
-                  className="w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0"
-                  style={{ background: cfg.panelBg, border: `1px solid ${cfg.panelBorder}` }}
-                >
-                  {cfg.icon}
-                </div>
-                <span
-                  className="font-mono text-xs font-semibold uppercase"
-                  style={{ color: cfg.titleColor, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.08em" }}
-                >
-                  {cfg.label}
-                </span>
-              </div>
-              <button
-                onClick={() => setActive(null)}
-                className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors"
-              >
-                <X size={11} color="rgba(255,255,255,0.6)" />
-              </button>
+            {cfg.icon}
+          </div>
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="font-mono text-xs font-bold uppercase" style={{ color: cfg.titleColor, letterSpacing: "0.08em" }}>
+                {cfg.label}
+              </span>
             </div>
-            <div className="font-semibold text-sm text-white mb-1" style={{ lineHeight: "1.35" }}>
+            <div className="font-bold text-sm mb-1" style={{ color: "#161616", lineHeight: "1.35" }}>
               {activeHotspot.label}
             </div>
-            <div className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.7)" }}>
+            <div className="text-sm leading-relaxed" style={{ color: "#3d4259" }}>
               {activeHotspot.description}
             </div>
             {activeHotspot.detail && (
-              <div
-                className="mt-2 px-3 py-2 rounded-lg text-xs font-semibold"
-                style={{ background: cfg.panelBg, color: cfg.titleColor, border: `1px solid ${cfg.panelBorder}` }}
-              >
-                {activeHotspot.detail}
+              <div className="mt-2 text-xs font-semibold" style={{ color: cfg.titleColor }}>
+                → {activeHotspot.detail}
               </div>
             )}
           </div>
-        )}
-      </div>
+          <button
+            onClick={() => setActive(null)}
+            className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center transition-colors hover:bg-black/10"
+          >
+            <X size={12} color="#6f7897" />
+          </button>
+        </div>
+      ) : (
+        <div className="px-5 py-3 text-xs" style={{ color: "#8d95aa", borderTop: "1px solid #f0f2f8" }}>
+          Cliquez sur un marqueur pour en savoir plus
+        </div>
+      )}
 
       {/* Completion banner */}
       {completed && (
