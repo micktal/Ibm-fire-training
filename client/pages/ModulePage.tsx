@@ -863,6 +863,7 @@ export default function ModulePage() {
   const alertTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const { lang } = useLanguage();
+  const isEN = lang === "en";
   const mod = id ? (lang === "en" ? getModuleByIdEn(id) : getModuleById(id)) : null;
 
   // Réinitialise l'overlay intro à chaque changement de module
