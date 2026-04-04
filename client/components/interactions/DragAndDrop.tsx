@@ -1,10 +1,35 @@
 import { useState, useRef } from "react";
-import { CheckCircle2, XCircle, RotateCcw, Layers } from "lucide-react";
+import {
+  CheckCircle2, XCircle, RotateCcw, Layers,
+  FileText, Server, Droplet, Armchair, Zap, FlaskConical, Flame, Laptop,
+  Shirt, Package, Car, Printer, Lightbulb, Wrench, Coffee, Wind,
+} from "lucide-react";
+
+const ICON_MAP: Record<string, React.ReactNode> = {
+  FileText: <FileText size={15} />,
+  Server: <Server size={15} />,
+  Droplet: <Droplet size={15} />,
+  Armchair: <Armchair size={15} />,
+  Zap: <Zap size={15} />,
+  FlaskConical: <FlaskConical size={15} />,
+  Flame: <Flame size={15} />,
+  Laptop: <Laptop size={15} />,
+  Shirt: <Shirt size={15} />,
+  Package: <Package size={15} />,
+  Car: <Car size={15} />,
+  Printer: <Printer size={15} />,
+  Lightbulb: <Lightbulb size={15} />,
+  Wrench: <Wrench size={15} />,
+  Coffee: <Coffee size={15} />,
+  Wind: <Wind size={15} />,
+};
 
 export interface DragItem {
   id: string;
   label: string;
+  sublabel?: string;
   emoji?: string;
+  icon?: string;
   correctZone: string;
 }
 
@@ -12,6 +37,7 @@ export interface DropZone {
   id: string;
   label: string;
   sublabel?: string;
+  description?: string;
   color: string;
   bgColor: string;
   borderColor: string;
@@ -155,10 +181,23 @@ export default function DragAndDrop({ exercise, onComplete }: Props) {
                     userSelect: "none",
                   }}
                 >
-                  {item.emoji && <span style={{ fontSize: "1.1rem" }}>{item.emoji}</span>}
-                  <span className="text-sm font-semibold" style={{ color: "#161616" }}>
-                    {item.label}
-                  </span>
+                  {(item.icon && ICON_MAP[item.icon]) ? (
+                    <span style={{ color: "#4a5068", display: "flex", alignItems: "center" }}>
+                      {ICON_MAP[item.icon]}
+                    </span>
+                  ) : item.emoji ? (
+                    <span style={{ fontSize: "1.1rem" }}>{item.emoji}</span>
+                  ) : null}
+                  <div>
+                    <span className="text-sm font-semibold" style={{ color: "#161616" }}>
+                      {item.label}
+                    </span>
+                    {item.sublabel && (
+                      <div className="text-xs" style={{ color: "#8d95aa", lineHeight: "1.3", marginTop: "1px" }}>
+                        {item.sublabel}
+                      </div>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
@@ -194,7 +233,10 @@ export default function DragAndDrop({ exercise, onComplete }: Props) {
                   </span>
                 </div>
                 {zone.sublabel && (
-                  <div className="text-xs mb-2" style={{ color: "#8d95aa" }}>{zone.sublabel}</div>
+                  <div className="text-xs font-semibold mb-1" style={{ color: "#8d95aa" }}>{zone.sublabel}</div>
+                )}
+                {zone.description && (
+                  <div className="text-xs mb-2" style={{ color: "#a0a8bb", lineHeight: "1.4", fontStyle: "italic" }}>{zone.description}</div>
                 )}
 
                 {/* Placed items */}
@@ -223,7 +265,11 @@ export default function DragAndDrop({ exercise, onComplete }: Props) {
                         onClick={() => !validated && removeFromZone(item.id)}
                         title={validated ? "" : "Cliquer pour retirer"}
                       >
-                        {item.emoji && <span style={{ fontSize: "0.9rem" }}>{item.emoji}</span>}
+                        {(item.icon && ICON_MAP[item.icon]) ? (
+                          <span style={{ color: "#4a5068", display: "flex", alignItems: "center" }}>{ICON_MAP[item.icon]}</span>
+                        ) : item.emoji ? (
+                          <span style={{ fontSize: "0.9rem" }}>{item.emoji}</span>
+                        ) : null}
                         <span className="text-xs font-semibold" style={{ color: "#161616" }}>
                           {item.label}
                         </span>
