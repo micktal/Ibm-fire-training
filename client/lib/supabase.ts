@@ -1,9 +1,11 @@
 import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = supabaseUrl && supabaseAnonKey
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : null;
 
 // ── Types ──────────────────────────────────────────────────────
 export interface TrainingRegistration {
@@ -36,6 +38,7 @@ export function getSessionId(): string {
 
 // ── Save registration ─────────────────────────────────────────
 export async function saveRegistration(data: Omit<TrainingRegistration, "id" | "created_at">) {
+  if (!supabase) { console.warn("Supabase not configured"); return { error: null }; }
   const { error } = await supabase
     .from("training_registrations")
     .upsert(data, { onConflict: "session_id" });
@@ -50,6 +53,7 @@ export async function updateProgression(sessionId: string, updates: {
   certificate_obtained?: boolean;
   completed_at?: string;
 }) {
+  if (!supabase) { console.warn("Supabase not configured"); return { error: null }; }
   const { error } = await supabase
     .from("training_registrations")
     .update(updates)
@@ -60,6 +64,7 @@ export async function updateProgression(sessionId: string, updates: {
 
 // ── Fetch all registrations (admin) ──────────────────────────
 export async function fetchAllRegistrations(): Promise<TrainingRegistration[]> {
+  if (!supabase) { console.warn("Supabase not configured"); return []; }
   const { data, error } = await supabase
     .from("training_registrations")
     .select("*")
