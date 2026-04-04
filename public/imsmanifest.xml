@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest
+  identifier="IBM-FIRE-TRAINING-SCORM12"
+  version="1.0"
+  xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+  xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd
+    http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>1.2</schemaversion>
+    <adlcp:location>metadata.xml</adlcp:location>
+  </metadata>
+
+  <organizations default="IBM_FIRE_TRAINING">
+    <organization identifier="IBM_FIRE_TRAINING" structure="hierarchical">
+      <title>IBM — Formation Sécurité Lutte Incendie &amp; Évacuation</title>
+      <item identifier="ITEM_1" identifierref="RESOURCE_1" isvisible="true">
+        <title>IBM Formation Sécurité Incendie (14 modules)</title>
+        <adlcp:prerequisites type="aicc_script"></adlcp:prerequisites>
+        <adlcp:maxtimeallowed></adlcp:maxtimeallowed>
+        <adlcp:timelimitaction>continue,no message</adlcp:timelimitaction>
+        <adlcp:datafromlms></adlcp:datafromlms>
+        <adlcp:masteryscore>80</adlcp:masteryscore>
+      </item>
+    </organization>
+  </organizations>
+
+  <resources>
+    <resource
+      identifier="RESOURCE_1"
+      type="webcontent"
+      adlcp:scormtype="sco"
+      href="index.html">
+      <file href="index.html"/>
+    </resource>
+  </resources>
+
+</manifest>

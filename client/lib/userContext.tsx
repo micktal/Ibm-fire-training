@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { scorm } from "@/lib/scormApi";
 
 export interface UserData {
   prenom: string;
@@ -36,6 +37,8 @@ const MODULE_ORDER = [
   "ch2-m1", "ch2-m2", "ch2-m3", "ch2-m4", "ch2-m5", "ch2-m6", "ch2-m7",
 ];
 
+const TOTAL_MODULES = MODULE_ORDER.length;
+
 export function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUserState] = useState<UserData | null>(() => {
     try {
@@ -51,15 +54,44 @@ export function UserProvider({ children }: { children: ReactNode }) {
     } catch { return {}; }
   });
 
+  // Initialiser SCORM une seule fois au montage
+  useEffect(() => {
+    scorm.init();
+  }, []);
+
   const setUser = (userData: UserData) => {
     setUserState(userData);
     localStorage.setItem("ibm_user", JSON.stringify(userData));
+    // Mémoriser le nom de l'apprenant si le LMS le supporte
+    if (scorm.isConnected) {
+      scorm.setLocation("form-completed");
+    }
   };
 
   const setModuleProgress = (moduleId: string, prog: ModuleProgress) => {
     const updated = { ...progress, [moduleId]: prog };
     setProgressState(updated);
     localStorage.setItem("ibm_progress", JSON.stringify(updated));
+
+    // Mettre à jour SCORM à chaque complétion de module
+    if (scorm.isConnected) {
+      const completedCount = Object.values(updated).filter((p) => p.completed).length;
+      const avgScore = completedCount > 0
+        ? Math.round(Object.values(updated).reduce((s, p) => s + p.score, 0) / completedCount)
+        : 0;
+
+      // Bookmark = dernier module visité
+      scorm.setLocation(moduleId);
+
+      if (completedCount === TOTAL_MODULES) {
+        // Formation entièrement terminée
+        scorm.setScore(avgScore, avgScore >= 80);
+      } else if (completedCount > 0) {
+        // En cours — score intermédiaire, statut incomplet
+        scorm.setScore(avgScore, false);
+        scorm.setStatus("incomplete");
+      }
+    }
   };
 
   const isModuleUnlocked = (moduleId: string): boolean => {
