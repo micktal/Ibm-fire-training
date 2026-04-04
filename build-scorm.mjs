@@ -8,15 +8,19 @@
  * Résultat: ibm-fire-training-scorm.zip
  */
 
-import { readFileSync, readdirSync, statSync, writeFileSync } from "fs";
-import { join, relative } from "path";
+import { readFileSync, readdirSync, statSync, writeFileSync, mkdirSync } from "fs";
+import { join } from "path";
 import { createRequire } from "module";
 
 const require = createRequire(import.meta.url);
 const JSZip = require("jszip");
 
 const DIST = "dist/spa";
-const OUTPUT = "ibm-fire-training-scorm.zip";
+const OUTPUT_DIR = "scorm-package";
+const OUTPUT = `${OUTPUT_DIR}/ibm-fire-training-scorm.zip`;
+
+// Créer le dossier de sortie si nécessaire
+mkdirSync(OUTPUT_DIR, { recursive: true });
 
 /**
  * Ajoute récursivement un dossier dans le ZIP
