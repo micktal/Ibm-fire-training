@@ -5,8 +5,32 @@ import GeometricBg from "@/components/layout/GeometricBg";
 import BottomNav from "@/components/layout/BottomNav";
 import { useUser } from "@/lib/userContext";
 import { getChapterModules, CourseModule } from "@/lib/courseData";
+import { getChapterModulesEn } from "@/lib/courseDataEn";
+import { useLanguage } from "@/lib/languageContext";
+import { t } from "@/lib/i18n";
 
-// ── (GeometricBg is now a shared component) ────────────────────────
+// ── Flag SVG components ───────────────────────────────────────────
+function FlagFR({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size * 0.67} viewBox="0 0 30 20" style={{ borderRadius: "3px", display: "block" }}>
+      <rect width="10" height="20" fill="#002395" />
+      <rect x="10" width="10" height="20" fill="#fff" />
+      <rect x="20" width="10" height="20" fill="#ED2939" />
+    </svg>
+  );
+}
+
+function FlagEN({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size * 0.6} viewBox="0 0 60 36" style={{ borderRadius: "3px", display: "block" }}>
+      <rect width="60" height="36" fill="#012169" />
+      <path d="M0,0 L60,36 M60,0 L0,36" stroke="#fff" strokeWidth="6" />
+      <path d="M0,0 L60,36 M60,0 L0,36" stroke="#C8102E" strokeWidth="4" />
+      <path d="M30,0 V36 M0,18 H60" stroke="#fff" strokeWidth="10" />
+      <path d="M30,0 V36 M0,18 H60" stroke="#C8102E" strokeWidth="6" />
+    </svg>
+  );
+}
 
 // ── Module tile ──────────────────────────────────────────────────
 function ModuleTile({ mod, unlocked, completed, score }: {
@@ -16,6 +40,7 @@ function ModuleTile({ mod, unlocked, completed, score }: {
   score: number;
 }) {
   const navigate = useNavigate();
+  const { lang } = useLanguage();
 
   return (
     <div
@@ -104,7 +129,7 @@ function ModuleTile({ mod, unlocked, completed, score }: {
           {unlocked && !completed && (
             <div className="flex items-center gap-0.5" style={{ color: "#0D47A1" }}>
               <Play size={9} fill="#0D47A1" />
-              <span style={{ fontSize: "10px", fontWeight: 700 }}>Start</span>
+              <span style={{ fontSize: "10px", fontWeight: 700 }}>{t("hub.play", lang)}</span>
             </div>
           )}
         </div>
@@ -120,7 +145,8 @@ function ChapterSection({ chapter, mods, completedCount }: {
   completedCount: number;
 }) {
   const { isModuleUnlocked, progress } = useUser();
-  const label = chapter === 1 ? "Chapitre 1 — Lutte Incendie" : "Chapitre 2 — Évacuation";
+  const { lang } = useLanguage();
+  const label = chapter === 1 ? t("hub.chapter1", lang) : t("hub.chapter2", lang);
   const isComplete = completedCount === 7;
 
   return (
@@ -139,7 +165,7 @@ function ChapterSection({ chapter, mods, completedCount }: {
         <div className="flex-1">
           <div className="font-bold text-sm" style={{ color: "#0a2052" }}>{label}</div>
           <div className="text-xs" style={{ color: "#8d95aa" }}>
-            {completedCount}/7 modules complétés
+            {completedCount}/7 {t("hub.mods_completed", lang)}
           </div>
         </div>
         <span
@@ -189,8 +215,9 @@ export default function Hub() {
   const navigate = useNavigate();
   const { user, globalScore, totalCompleted, progress } = useUser();
 
-  const ch1Mods = getChapterModules(1);
-  const ch2Mods = getChapterModules(2);
+  const { lang, setLang } = useLanguage();
+  const ch1Mods = lang === "en" ? getChapterModulesEn(1) : getChapterModules(1);
+  const ch2Mods = lang === "en" ? getChapterModulesEn(2) : getChapterModules(2);
 
   const completedCh1 = ch1Mods.filter((m) => progress[m.id]?.completed).length;
   const completedCh2 = ch2Mods.filter((m) => progress[m.id]?.completed).length;
@@ -205,13 +232,13 @@ export default function Hub() {
         style={{ height: "52px", background: "#fff", borderBottom: "1px solid #e4e7f0", zIndex: 20 }}
       >
         <IBMLogo variant="light" height={26} />
-        <nav className="flex items-center gap-5">
+        <nav className="flex items-center gap-4">
           <button
             onClick={() => navigate("/")}
             className="text-xs font-semibold uppercase hover:opacity-70 transition-opacity"
             style={{ color: "#0D47A1", letterSpacing: "0.1em", background: "none", border: "none", cursor: "pointer" }}
           >
-            Accueil
+            {t("hub.home", lang)}
           </button>
           <div className="flex items-center gap-1.5" style={{ color: "#0D47A1" }}>
             <BarChart2 size={13} />
@@ -219,6 +246,18 @@ export default function Hub() {
               {totalCompleted}/14 — {globalScore}%
             </span>
           </div>
+          {/* Language toggle */}
+          <button
+            onClick={() => setLang(lang === "fr" ? "en" : "fr")}
+            className="flex items-center gap-1.5 rounded-lg px-2 py-1 transition-all"
+            style={{ background: "rgba(13,71,161,0.06)", border: "1px solid rgba(13,71,161,0.15)", cursor: "pointer" }}
+            title={lang === "fr" ? "Switch to English" : "Passer en français"}
+          >
+            {lang === "fr" ? <FlagEN size={16} /> : <FlagFR size={16} />}
+            <span className="font-mono text-xs font-bold" style={{ fontFamily: "'IBM Plex Mono', monospace", color: "#0D47A1", fontSize: "10px" }}>
+              {lang === "fr" ? "EN" : "FR"}
+            </span>
+          </button>
         </nav>
       </header>
 
@@ -236,7 +275,7 @@ export default function Hub() {
               <div className="flex items-end justify-between">
                 <div>
                   <div className="text-xs font-mono mb-0.5" style={{ color: "rgba(255,255,255,0.5)", fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.12em" }}>
-                    BONJOUR,
+                    {t("hub.bonjour", lang)}
                   </div>
                   <div className="font-bold text-white" style={{ fontSize: "1.2rem", letterSpacing: "-0.02em" }}>
                     {user.prenom} {user.nom}
@@ -309,8 +348,8 @@ export default function Hub() {
                 <Award size={18} color="#fff" />
               </div>
               <div className="flex-1">
-                <div className="font-bold text-sm" style={{ color: "#0e6027" }}>Formation certifiée — {globalScore}%</div>
-                <div className="text-xs" style={{ color: "#6f7897" }}>Cliquez pour voir et télécharger votre certificat</div>
+                <div className="font-bold text-sm" style={{ color: "#0e6027" }}>{t("hub.cert_title", lang)} — {globalScore}%</div>
+                <div className="text-xs" style={{ color: "#6f7897" }}>{t("hub.cert_desc", lang)}</div>
               </div>
               <ArrowRight size={15} style={{ color: "#198038", flexShrink: 0 }} />
             </button>
@@ -339,10 +378,10 @@ export default function Hub() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="font-bold text-white" style={{ fontSize: "0.88rem", letterSpacing: "-0.01em" }}>
-                  Récapitulatif Chapitre 1
+                  {t("hub.summary", lang)}
                 </div>
                 <div style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.76rem", marginTop: "1px" }}>
-                  Points clés · Bonnes pratiques · Aperçu Chapitre 2
+                  {t("hub.bridge_desc", lang)}
                 </div>
               </div>
               <ArrowRight size={18} color="rgba(255,255,255,0.7)" />

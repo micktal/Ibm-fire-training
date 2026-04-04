@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { UserProvider } from "@/lib/userContext";
+import { LanguageProvider } from "@/lib/languageContext";
 import Index from "./pages/Index";
 import Form from "./pages/Form";
 import Hub from "./pages/Hub";
@@ -24,23 +25,25 @@ export default function App() {
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <UserProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/form" element={<Form />} />
-              <Route path="/hub" element={<Hub />} />
-              <Route path="/module/:id" element={<ModulePage />} />
-              <Route path="/chapter-intro/:chapter" element={<ChapterIntroPage />} />
-              <Route path="/certificat" element={<CertificatePage />} />
-              {/* Pages Builder.io — catch-all avant NotFound */}
-              <Route path="/builder/:slug" element={<BuilderPage />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            <BottomNav />
-          </BrowserRouter>
-        </UserProvider>
+        <LanguageProvider>
+          <UserProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/form" element={<Form />} />
+                <Route path="/hub" element={<Hub />} />
+                <Route path="/module/:id" element={<ModulePage />} />
+                <Route path="/chapter-intro/:chapter" element={<ChapterIntroPage />} />
+                <Route path="/certificat" element={<CertificatePage />} />
+                {/* Pages Builder.io — catch-all avant NotFound */}
+                <Route path="/builder/:slug" element={<BuilderPage />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+              <BottomNav />
+            </BrowserRouter>
+          </UserProvider>
+        </LanguageProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );

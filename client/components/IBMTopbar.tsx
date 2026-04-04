@@ -1,7 +1,31 @@
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, Home, BarChart2, Shield } from "lucide-react";
 import { useUser } from "@/lib/userContext";
+import { useLanguage } from "@/lib/languageContext";
 import IBMLogo from "@/components/IBMLogo";
+
+// ── Flag SVG components ──────────────────────────────────────────
+function FlagFR({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size * 0.67} viewBox="0 0 30 20" style={{ borderRadius: "3px", display: "block" }}>
+      <rect width="10" height="20" fill="#002395" />
+      <rect x="10" width="10" height="20" fill="#fff" />
+      <rect x="20" width="10" height="20" fill="#ED2939" />
+    </svg>
+  );
+}
+
+function FlagEN({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size * 0.6} viewBox="0 0 60 36" style={{ borderRadius: "3px", display: "block" }}>
+      <rect width="60" height="36" fill="#012169" />
+      <path d="M0,0 L60,36 M60,0 L0,36" stroke="#fff" strokeWidth="6" />
+      <path d="M0,0 L60,36 M60,0 L0,36" stroke="#C8102E" strokeWidth="4" />
+      <path d="M30,0 V36 M0,18 H60" stroke="#fff" strokeWidth="10" />
+      <path d="M30,0 V36 M0,18 H60" stroke="#C8102E" strokeWidth="6" />
+    </svg>
+  );
+}
 
 interface IBMTopbarProps {
   title?: string;
@@ -26,6 +50,7 @@ export default function IBMTopbar({
 }: IBMTopbarProps) {
   const navigate = useNavigate();
   const { globalScore, totalCompleted } = useUser();
+  const { lang, setLang } = useLanguage();
 
   const handleBack = () => {
     if (backTo) {
@@ -124,6 +149,19 @@ export default function IBMTopbar({
         >
           <Home size={12} />
           <span className="hidden md:inline">Tableau de bord</span>
+        </button>
+
+        {/* Language toggle */}
+        <button
+          onClick={() => setLang(lang === "fr" ? "en" : "fr")}
+          className="flex items-center gap-1.5 rounded-lg px-2 py-1 transition-all"
+          style={{ background: "rgba(13,71,161,0.06)", border: "1px solid rgba(13,71,161,0.15)", cursor: "pointer" }}
+          title={lang === "fr" ? "Switch to English" : "Passer en français"}
+        >
+          {lang === "fr" ? <FlagEN size={18} /> : <FlagFR size={18} />}
+          <span className="font-mono text-xs font-bold" style={{ fontFamily: "'IBM Plex Mono', monospace", color: "#0D47A1", fontSize: "10px" }}>
+            {lang === "fr" ? "EN" : "FR"}
+          </span>
         </button>
 
         <div className="flex items-center gap-1.5">

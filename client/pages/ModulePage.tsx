@@ -24,6 +24,8 @@ import TipFlipCards from "@/components/interactions/TipFlipCards";
 import BottomNav from "@/components/layout/BottomNav";
 import SituationAlertPopup from "@/components/SituationAlertPopup";
 import { getModuleById, QuizQuestion, ModuleContent, PreTestQuestion } from "@/lib/courseData";
+import { getModuleByIdEn } from "@/lib/courseDataEn";
+import { useLanguage } from "@/lib/languageContext";
 import { MODULE_INTERACTIONS, AnyExercise } from "@/lib/interactionData";
 import { ALERT_BY_MODULE } from "@/lib/situationAlerts";
 import { useUser } from "@/lib/userContext";
@@ -844,7 +846,8 @@ export default function ModulePage() {
   const alertShownRef = useRef(false);
   const alertTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const mod = id ? getModuleById(id) : null;
+  const { lang } = useLanguage();
+  const mod = id ? (lang === "en" ? getModuleByIdEn(id) : getModuleById(id)) : null;
 
   // Réinitialise l'overlay intro à chaque changement de module
   useEffect(() => {
