@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft, Shield } from "lucide-react";
+import { ChevronLeft, Home, BarChart2 } from "lucide-react";
 import { useUser } from "@/lib/userContext";
 import IBMLogo from "@/components/IBMLogo";
 
@@ -79,8 +79,8 @@ export default function IBMTopbar({
         )}
       </div>
 
-      {/* Right: progress + score */}
-      <div className="flex items-center gap-3">
+      {/* Right: nav links + score */}
+      <div className="flex items-center gap-4">
         {showProgress && currentModule !== undefined && (
           <div className="hidden sm:flex items-center gap-1.5">
             {Array.from({ length: totalModules }).map((_, i) => (
@@ -94,7 +94,7 @@ export default function IBMTopbar({
                     i < (currentModule - 1)
                       ? "#198038"
                       : i === currentModule - 1
-                      ? "#0f62fe"
+                      ? "#0D47A1"
                       : "#e4e7f0",
                 }}
               />
@@ -102,29 +102,24 @@ export default function IBMTopbar({
           </div>
         )}
 
-        {chapter && (
-          <span
-            className="hidden sm:inline font-mono text-xs font-semibold px-2 py-0.5 rounded-full"
-            style={{
-              fontFamily: "'IBM Plex Mono', monospace",
-              color: chapter === 1 ? "#b45309" : "#0043ce",
-              background: chapter === 1 ? "rgba(180,83,9,0.07)" : "rgba(0,67,206,0.07)",
-              border: `1px solid ${chapter === 1 ? "rgba(180,83,9,0.2)" : "rgba(0,67,206,0.2)"}`,
-            }}
-          >
-            Chapitre {chapter}
-          </span>
-        )}
+        <button
+          onClick={() => navigate("/hub")}
+          className="hidden sm:flex items-center gap-1 text-xs font-semibold uppercase hover:opacity-70 transition-opacity"
+          style={{ color: "#0D47A1", letterSpacing: "0.08em", background: "none", border: "none", cursor: "pointer" }}
+        >
+          <Home size={12} />
+          Tableau de bord
+        </button>
 
         <div className="flex items-center gap-1.5">
-          <Shield size={12} style={{ color: "#0043ce" }} />
+          <BarChart2 size={13} style={{ color: "#0D47A1" }} />
           <span
             className="font-mono text-xs font-semibold px-2 py-0.5 rounded-full"
             style={{
               fontFamily: "'IBM Plex Mono', monospace",
-              color: "#0043ce",
-              background: "rgba(15,98,254,0.07)",
-              border: "1px solid rgba(15,98,254,0.15)",
+              color: "#0D47A1",
+              background: "rgba(13,71,161,0.07)",
+              border: "1px solid rgba(13,71,161,0.15)",
             }}
           >
             {totalCompleted}/14 — {globalScore}%

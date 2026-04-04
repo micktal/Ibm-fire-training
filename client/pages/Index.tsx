@@ -1,165 +1,196 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Home, BookOpen, BarChart2, HelpCircle, Users, PlayCircle, ChevronLeft, ChevronRight, Menu } from "lucide-react";
 import IBMLogo from "@/components/IBMLogo";
 
-const TITLE = "Formation Sécurité Incendie";
+// ── Geometric background ─────────────────────────────────────────
+function GeometricBg() {
+  return (
+    <div className="absolute inset-0 overflow-hidden" style={{ background: "#0D47A1" }}>
+      {/* Base layer shapes */}
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(145deg, #0A3882 0%, #0D47A1 40%, #1565C0 100%)" }} />
+      {/* Large right polygon */}
+      <div style={{ position: "absolute", top: 0, right: 0, width: "62%", height: "100%", background: "#0E4DB8", clipPath: "polygon(18% 0, 100% 0, 100% 100%, 0 100%)" }} />
+      {/* Center diamond */}
+      <div style={{ position: "absolute", top: "8%", left: "8%", width: "55%", height: "60%", background: "#1565C0", clipPath: "polygon(0 0, 100% 0, 88% 100%, 0% 90%)" }} />
+      {/* Mid right lighter */}
+      <div style={{ position: "absolute", top: "15%", right: "5%", width: "42%", height: "52%", background: "#1976D2", clipPath: "polygon(12% 0, 100% 0, 100% 100%, 0 88%)" }} />
+      {/* Bottom left dark */}
+      <div style={{ position: "absolute", bottom: 0, left: 0, width: "45%", height: "40%", background: "#083070", clipPath: "polygon(0 20%, 100% 0, 100% 100%, 0 100%)" }} />
+      {/* Center accent - brightest */}
+      <div style={{ position: "absolute", top: "28%", left: "22%", width: "38%", height: "38%", background: "#1E88E5", clipPath: "polygon(8% 0, 100% 0, 92% 100%, 0 100%)" }} />
+      {/* Top left triangle */}
+      <div style={{ position: "absolute", top: 0, left: 0, width: "30%", height: "35%", background: "#0A3882", clipPath: "polygon(0 0, 100% 0, 60% 100%, 0 100%)" }} />
+      {/* White glass sheen */}
+      <div style={{ position: "absolute", top: "35%", right: "18%", width: "28%", height: "25%", background: "rgba(255,255,255,0.04)", clipPath: "polygon(10% 0, 100% 0, 90% 100%, 0 100%)" }} />
+      <div style={{ position: "absolute", bottom: "12%", right: "8%", width: "22%", height: "20%", background: "rgba(255,255,255,0.05)", clipPath: "polygon(0 0, 100% 10%, 88% 100%, 0 90%)" }} />
+    </div>
+  );
+}
+
+// ── Tile button ──────────────────────────────────────────────────
+function Tile({ icon, label, onClick }: { icon: React.ReactNode; label: string; onClick?: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      className="flex flex-col items-center justify-center gap-3 rounded-2xl transition-all duration-200 cursor-pointer"
+      style={{
+        background: "#fff",
+        border: "none",
+        padding: "1.5rem 1rem",
+        boxShadow: "0 4px 20px rgba(0,0,0,0.10)",
+        minHeight: "110px",
+      }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-3px)";
+        (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 10px 32px rgba(0,0,0,0.16)";
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
+        (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 20px rgba(0,0,0,0.10)";
+      }}
+    >
+      <div style={{ color: "#0D47A1" }}>{icon}</div>
+      <span style={{ fontWeight: 700, fontSize: "0.8rem", color: "#0D47A1", letterSpacing: "0.08em", textTransform: "uppercase", fontFamily: "'IBM Plex Sans', sans-serif" }}>
+        {label}
+      </span>
+    </button>
+  );
+}
 
 export default function Index() {
   const navigate = useNavigate();
-  const [typed, setTyped] = useState("");
-  const [inkReady, setInkReady] = useState(false);
-
-  // Ink reveal: trigger after short delay
-  useEffect(() => {
-    const t = setTimeout(() => setInkReady(true), 300);
-    return () => clearTimeout(t);
-  }, []);
-
-  // Typewriter effect for title (starts after ink animation settles)
-  useEffect(() => {
-    if (!inkReady) return;
-    let i = 0;
-    const delay = setTimeout(() => {
-      const interval = setInterval(() => {
-        setTyped(TITLE.slice(0, i + 1));
-        i++;
-        if (i >= TITLE.length) clearInterval(interval);
-      }, 52);
-      return () => clearInterval(interval);
-    }, 600);
-    return () => clearTimeout(delay);
-  }, [inkReady]);
 
   return (
-    <div
-      className="fixed inset-0 overflow-hidden flex flex-col items-center justify-center"
-      style={{ background: "linear-gradient(160deg, #040609 0%, #08101e 45%, #050c18 100%)" }}
-    >
-      {/* Ambient orbs */}
-      <div className="absolute pointer-events-none" style={{ width: "900px", height: "900px", borderRadius: "50%", background: "radial-gradient(circle, rgba(0,67,206,0.10) 0%, transparent 68%)", top: "-300px", left: "-250px" }} />
-      <div className="absolute pointer-events-none" style={{ width: "700px", height: "700px", borderRadius: "50%", background: "radial-gradient(circle, rgba(255,107,26,0.06) 0%, transparent 68%)", bottom: "-200px", right: "-150px" }} />
+    <div className="fixed inset-0 flex flex-col overflow-hidden" style={{ fontFamily: "'IBM Plex Sans', sans-serif" }}>
+      {/* ── Top nav bar ─────────────────────────────────────── */}
+      <header
+        className="flex-shrink-0 flex items-center justify-between px-6"
+        style={{ height: "52px", background: "#fff", borderBottom: "1px solid #e4e7f0", zIndex: 20, position: "relative" }}
+      >
+        <IBMLogo variant="light" height={26} />
+        <nav className="flex items-center gap-6">
+          <span className="text-xs font-semibold uppercase tracking-widest cursor-pointer hover:text-blue-700 transition-colors" style={{ color: "#0D47A1", letterSpacing: "0.12em" }}>
+            Démo du cours
+          </span>
+          <span className="text-xs font-semibold uppercase tracking-widest cursor-pointer hover:text-blue-700 transition-colors" style={{ color: "#0D47A1", letterSpacing: "0.12em" }}>
+            Contact
+          </span>
+          <div className="flex items-center gap-1.5 cursor-pointer" style={{ color: "#0D47A1" }}>
+            <Users size={15} />
+            <span className="text-xs font-semibold uppercase" style={{ letterSpacing: "0.12em" }}>Utilisateur</span>
+          </div>
+        </nav>
+      </header>
 
-      {/* Center content */}
-      <div className="relative z-10 flex flex-col items-center text-center px-8 w-full" style={{ maxWidth: "700px" }}>
+      {/* ── Main area with geometric background ─────────────── */}
+      <div className="flex-1 relative flex items-center justify-center p-6" style={{ overflow: "hidden" }}>
+        <GeometricBg />
 
-        {/* IBM logo — direct, sans animation */}
-        <div style={{ marginBottom: "2.2rem" }}>
-          <IBMLogo variant="dark" height={80} />
-        </div>
-
-        {/* Tag line */}
+        {/* Content card */}
         <div
-          className="flex items-center gap-[0.9rem] mb-8"
+          className="relative z-10 w-full"
           style={{
-            fontFamily: "'IBM Plex Mono', monospace",
-            fontSize: "0.78rem",
-            color: "rgba(255,255,255,0.35)",
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            opacity: inkReady ? 1 : 0,
-            transition: "opacity 0.6s ease 0.6s",
+            maxWidth: "640px",
+            background: "rgba(255,255,255,0.97)",
+            borderRadius: "16px",
+            padding: "2.5rem 2.5rem 2rem",
+            boxShadow: "0 24px 64px rgba(0,0,0,0.22)",
           }}
         >
-          <span className="flex-1 h-px" style={{ maxWidth: "80px", background: "rgba(255,255,255,0.1)" }} />
-          Health &bull; Safety &bull; Environment
-          <span className="flex-1 h-px" style={{ maxWidth: "80px", background: "rgba(255,255,255,0.1)" }} />
-        </div>
-
-        {/* Title — typewriter */}
-        <h1
-          className="text-white font-bold mb-4"
-          style={{
-            fontSize: "clamp(2rem, 5vw, 2.6rem)",
-            letterSpacing: "-0.03em",
-            lineHeight: "1.12",
-            minHeight: "3.5rem",
-          }}
-        >
-          {typed}
-          {/* Blinking cursor while typing */}
-          {typed.length < TITLE.length && inkReady && (
+          {/* Title */}
+          <div className="mb-1">
             <span
               style={{
-                display: "inline-block",
-                width: "2px",
-                height: "0.85em",
-                background: "#ff6b1a",
-                marginLeft: "2px",
-                verticalAlign: "middle",
-                animation: "cursorBlink 0.7s step-end infinite",
+                fontSize: "0.7rem",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "0.18em",
+                color: "#8d95aa",
+                fontFamily: "'IBM Plex Mono', monospace",
               }}
-            />
-          )}
-        </h1>
+            >
+              IBM France · HSE · 2026
+            </span>
+          </div>
+          <h1
+            className="font-bold mb-1"
+            style={{ fontSize: "clamp(1.6rem, 4vw, 2.2rem)", color: "#0a2052", lineHeight: "1.1", letterSpacing: "-0.01em", textTransform: "uppercase" }}
+          >
+            Bienvenue sur{" "}
+            <span style={{ color: "#0D47A1" }}>la Formation</span>
+          </h1>
+          <h2
+            className="font-bold mb-4"
+            style={{ fontSize: "clamp(1.2rem, 3vw, 1.6rem)", color: "#1565C0", lineHeight: "1.1", letterSpacing: "-0.01em", textTransform: "uppercase" }}
+          >
+            Sécurité Incendie
+          </h2>
+          <p className="mb-6 text-sm" style={{ color: "#6f7897", lineHeight: "1.65", maxWidth: "480px" }}>
+            Programme de formation obligatoire IBM France. Acquérez les réflexes essentiels pour prévenir et gérer un départ d'incendie dans vos locaux.
+          </p>
 
-        {/* Description */}
-        <p
-          className="mb-10"
-          style={{
-            fontSize: "1.05rem",
-            color: "rgba(255,255,255,0.45)",
-            lineHeight: "1.78",
-            maxWidth: "520px",
-            opacity: typed.length > 10 ? 1 : 0,
-            transform: typed.length > 10 ? "translateY(0)" : "translateY(10px)",
-            transition: "opacity 0.6s ease, transform 0.6s ease",
-          }}
-        >
-          Programme de formation obligatoire IBM France. Acquérez les réflexes
-          et compétences essentiels pour prévenir et gérer un départ d'incendie
-          dans vos locaux.
-        </p>
+          {/* Navigation tiles */}
+          <div className="grid grid-cols-3 gap-3 mb-6">
+            <Tile icon={<Home size={28} />} label="Accueil" onClick={() => navigate("/")} />
+            <Tile icon={<PlayCircle size={28} />} label="Chapitre 1" onClick={() => navigate("/hub")} />
+            <Tile icon={<BookOpen size={28} />} label="Chapitre 2" onClick={() => navigate("/hub")} />
+            <Tile icon={<BarChart2 size={28} />} label="Résultats" onClick={() => navigate("/hub")} />
+            <Tile icon={<Users size={28} />} label="Profil" onClick={() => navigate("/form")} />
+            <Tile icon={<HelpCircle size={28} />} label="Aide" />
+          </div>
 
-        {/* CTA — breathing pulse */}
-        <button
-          onClick={() => navigate("/form")}
-          className="group inline-flex items-center gap-3 font-semibold cursor-pointer"
-          style={{
-            fontFamily: "'IBM Plex Sans', sans-serif",
-            fontSize: "1rem",
-            fontWeight: 600,
-            padding: "1rem 2.6rem",
-            background: "#0043ce",
-            color: "#fff",
-            border: "none",
-            borderRadius: "4px",
-            boxShadow: "0 4px 24px rgba(0,67,206,0.4)",
-            animation: typed.length >= TITLE.length ? "breathePulse 2.8s ease-in-out infinite" : "none",
-            opacity: typed.length > 5 ? 1 : 0,
-            transform: typed.length > 5 ? "translateY(0)" : "translateY(12px)",
-            transition: "opacity 0.5s ease, transform 0.5s ease, background 0.2s",
-          }}
-          onMouseEnter={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.background = "#0031a9";
-            (e.currentTarget as HTMLButtonElement).style.animation = "none";
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.background = "#0043ce";
-            (e.currentTarget as HTMLButtonElement).style.animation = "breathePulse 2.8s ease-in-out infinite";
-          }}
-        >
-          Accéder à la formation
-          <ArrowRight
-            size={17}
-            className="transition-transform duration-200 group-hover:translate-x-1"
-          />
-        </button>
+          {/* CTA */}
+          <button
+            onClick={() => navigate("/form")}
+            className="w-full flex items-center justify-center gap-3 font-bold cursor-pointer transition-all"
+            style={{
+              background: "#0D47A1",
+              color: "#fff",
+              border: "none",
+              borderRadius: "8px",
+              padding: "1rem",
+              fontSize: "0.95rem",
+              letterSpacing: "0.06em",
+              textTransform: "uppercase",
+              boxShadow: "0 4px 20px rgba(13,71,161,0.4)",
+            }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#0A3882"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#0D47A1"; }}
+          >
+            Accéder à la formation
+            <ArrowRight size={18} />
+          </button>
+        </div>
       </div>
 
-      {/* Footer */}
-      <div
-        className="absolute bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap"
-        style={{
-          fontFamily: "'IBM Plex Mono', monospace",
-          fontSize: "0.62rem",
-          color: "rgba(255,255,255,0.18)",
-          letterSpacing: "0.14em",
-          textTransform: "uppercase",
-        }}
+      {/* ── Bottom nav bar ──────────────────────────────────── */}
+      <footer
+        className="flex-shrink-0 flex items-center justify-center gap-6"
+        style={{ height: "48px", background: "#fff", borderTop: "1px solid #e4e7f0", zIndex: 20 }}
       >
-        Formation obligatoire &bull; IBM France &bull; 2026
-      </div>
+        <button className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors" style={{ color: "#0D47A1" }}>
+          <ChevronLeft size={18} />
+        </button>
+        <div style={{ width: "1px", height: "20px", background: "#e4e7f0" }} />
+        <button className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors" style={{ color: "#0D47A1" }} onClick={() => navigate("/")}>
+          <Home size={16} />
+        </button>
+        <div style={{ width: "1px", height: "20px", background: "#e4e7f0" }} />
+        <button className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors" style={{ color: "#0D47A1" }} onClick={() => navigate("/hub")}>
+          <Menu size={16} />
+        </button>
+        <div style={{ width: "1px", height: "20px", background: "#e4e7f0" }} />
+        <button className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors" style={{ color: "#0D47A1" }} onClick={() => navigate("/form")}>
+          <ChevronRight size={18} />
+        </button>
+      </footer>
+
+      <style>{`
+        @keyframes breathePulse {
+          0%, 100% { box-shadow: 0 4px 20px rgba(13,71,161,0.4); }
+          50% { box-shadow: 0 6px 32px rgba(13,71,161,0.65); }
+        }
+      `}</style>
     </div>
   );
 }
