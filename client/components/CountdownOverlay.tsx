@@ -110,10 +110,10 @@ export default function CountdownOverlay({ onComplete, moduleImage }: Props) {
             key={step} // re-mounts on each step for CSS animation
             style={{
               fontFamily: "'IBM Plex Mono', monospace",
-              fontSize: isGo ? "2.8rem" : "4.5rem",
+              fontSize: isGo ? "2.6rem" : "4.5rem",
               fontWeight: 700,
               color: numColor,
-              letterSpacing: isGo ? "-0.02em" : "-0.04em",
+              letterSpacing: isGo ? "0.04em" : "-0.04em",
               lineHeight: 1,
               animation: animate ? (isGo ? "goReveal 0.5s cubic-bezier(0.34,1.56,0.64,1) both" : "numPop 0.45s cubic-bezier(0.34,1.56,0.64,1) both") : "none",
               textShadow: isGo
@@ -122,9 +122,17 @@ export default function CountdownOverlay({ onComplete, moduleImage }: Props) {
                 ? "0 0 30px rgba(255,107,26,0.6)"
                 : "0 0 20px rgba(15,98,254,0.5)",
               transition: "color 0.3s ease",
+              display: "flex",
+              alignItems: "center",
+              gap: isGo ? "0.15em" : 0,
             }}
           >
-            {isGo ? "PARTEZ !" : current}
+            {isGo ? (
+              <>
+                <span>PARTEZ</span>
+                <span style={{ fontSize: "2rem", lineHeight: 1, marginTop: "-0.1em" }}>!</span>
+              </>
+            ) : current}
           </div>
         </div>
 
