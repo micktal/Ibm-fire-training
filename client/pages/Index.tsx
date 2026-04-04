@@ -43,16 +43,8 @@ export default function Index() {
       {/* Center content */}
       <div className="relative z-10 flex flex-col items-center text-center px-8 w-full" style={{ maxWidth: "700px" }}>
 
-        {/* IBM logo officiel — ink diffusion reveal, fond sombre = logo blanc */}
-        <div
-          style={{
-            opacity: inkReady ? 1 : 0,
-            filter: inkReady ? "blur(0px)" : "blur(12px)",
-            transform: inkReady ? "scale(1)" : "scale(0.88)",
-            transition: "opacity 0.8s ease, filter 1s ease, transform 0.8s cubic-bezier(0.34,1.2,0.64,1)",
-            marginBottom: "2.2rem",
-          }}
-        >
+        {/* IBM logo — direct, sans animation */}
+        <div style={{ marginBottom: "2.2rem" }}>
           <IBMLogo variant="dark" height={56} />
         </div>
 
