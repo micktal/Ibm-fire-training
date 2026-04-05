@@ -860,6 +860,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     },
     duration: "12 min",
     image: `${CDN}dfd2975e7d864d029e522928a710aa05?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Module%207%20Simulation%20incendie.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL01vZHVsZSA3IFNpbXVsYXRpb24gaW5jZW5kaWUubXA0IiwiaWF0IjoxNzc1Mzg1NzMzLCJleHAiOjE4Mzg0NTc3MzN9.uxBS4qONMNpBLC7LjJS0vI_u_uWB3tWsc6kMQ5IAvNo",
     funFacts: [
       { stat: "40%", label: "de réduction du temps d'évacuation", detail: "Les entreprises qui organisent des exercices incendie réguliers réduisent leur temps d'évacuation de 40% en moyenne.", icon: "shield" },
       { stat: "2×/an", label: "exercices IBM obligatoires par site", detail: "IBM France organise 2 exercices incendie annuels par site. Chaque collaborateur doit y participer — l'absence est signalée aux RH.", icon: "eye" },
