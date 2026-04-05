@@ -709,20 +709,41 @@ function PreTestOverlay({
   return (
     <div className="fixed inset-0 z-50 flex flex-col" style={{ background: "rgba(10,24,82,0.97)", fontFamily: "'IBM Plex Sans', sans-serif" }}>
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-4 flex-shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
-        <div>
-          <div className="text-xs font-mono uppercase mb-0.5" style={{ color: "rgba(255,255,255,0.4)", letterSpacing: "0.14em", fontFamily: "'IBM Plex Mono', monospace" }}>
-            {t("pretest.title", lang)}
+      <div className="flex-shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
+        <div className="flex items-start justify-between px-5 pt-5 pb-4">
+          <div className="flex-1">
+            {/* Big label */}
+            <div
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-3"
+              style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.2)" }}
+            >
+              <span
+                className="font-mono font-bold uppercase"
+                style={{ color: "#78a9ff", fontSize: "0.7rem", letterSpacing: "0.16em", fontFamily: "'IBM Plex Mono', monospace" }}
+              >
+                {t("pretest.title", lang)}
+              </span>
+            </div>
+            <div
+              className="font-bold text-white mb-2"
+              style={{ fontSize: "clamp(1.4rem, 5vw, 2rem)", lineHeight: "1.15", letterSpacing: "-0.02em" }}
+            >
+              {moduleTitle}
+            </div>
+            <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.85rem", lineHeight: "1.5" }}>
+              {lang === "en"
+                ? "Answer these quick questions to assess your starting level. No pressure — there are no wrong answers."
+                : "Répondez à ces questions pour évaluer votre niveau de départ. Pas de stress — il n'y a pas de mauvaises réponses."}
+            </p>
           </div>
-          <div className="font-bold text-white" style={{ fontSize: "0.92rem" }}>{moduleTitle}</div>
+          <button
+            onClick={onSkip}
+            className="text-xs font-semibold px-3 py-1.5 rounded-lg ml-4 flex-shrink-0"
+            style={{ background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.5)", border: "1px solid rgba(255,255,255,0.12)", cursor: "pointer" }}
+          >
+            {t("pretest.skip", lang)}
+          </button>
         </div>
-        <button
-          onClick={onSkip}
-          className="text-xs font-semibold px-3 py-1.5 rounded-lg"
-          style={{ background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.5)", border: "1px solid rgba(255,255,255,0.12)", cursor: "pointer" }}
-        >
-          {t("pretest.skip", lang)}
-        </button>
       </div>
 
       {/* Progress dots */}
@@ -1040,7 +1061,7 @@ export default function ModulePage() {
                   >
                     <div className="flex">
                       {/* Left color sidebar */}
-                      <div style={{ width: "4px", flexShrink: 0, background: isOpen ? accent.border : "#e4e7f0", transition: "background 0.2s" }} />
+                      <div style={{ width: "5px", flexShrink: 0, background: isOpen ? accent.border : "#c8cfe0", transition: "background 0.2s" }} />
                       <div className="flex-1">
                         <button
                           className="w-full flex items-center gap-3 px-4 py-3.5 text-left"
@@ -1059,7 +1080,7 @@ export default function ModulePage() {
                             >
                               {getTypeLabel(section.type, lang)}
                             </div>
-                            <div className="font-bold truncate" style={{ color: "#0a2052", fontSize: "0.9rem" }}>
+                            <div className="font-bold truncate" style={{ color: "#061f5c", fontSize: "0.9rem" }}>
                               {section.title || mod.title}
                             </div>
                           </div>

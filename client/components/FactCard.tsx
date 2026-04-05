@@ -1,25 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 import { Flame, Clock, AlertTriangle, Shield, Zap, Eye } from "lucide-react";
 import { FunFact } from "@/lib/courseData";
-import { useLanguage } from "@/lib/languageContext";
-import { t } from "@/lib/i18n";
 
 const ICONS: Record<string, React.ReactNode> = {
-  flame:  <Flame  size={18} />,
-  clock:  <Clock  size={18} />,
-  alert:  <AlertTriangle size={18} />,
-  shield: <Shield size={18} />,
-  zap:    <Zap    size={18} />,
-  eye:    <Eye    size={18} />,
+  flame:  <Flame  size={20} />,
+  clock:  <Clock  size={20} />,
+  alert:  <AlertTriangle size={20} />,
+  shield: <Shield size={20} />,
+  zap:    <Zap    size={20} />,
+  eye:    <Eye    size={20} />,
 };
 
-const ACCENT: Record<string, { color: string; bg: string; border: string }> = {
-  flame:  { color: "#ff6b1a", bg: "rgba(255,107,26,0.10)", border: "rgba(255,107,26,0.22)" },
-  clock:  { color: "#0f62fe", bg: "rgba(15,98,254,0.09)",  border: "rgba(15,98,254,0.2)"  },
-  alert:  { color: "#da1e28", bg: "rgba(218,30,40,0.08)",  border: "rgba(218,30,40,0.2)"  },
-  shield: { color: "#198038", bg: "rgba(25,128,56,0.08)",  border: "rgba(25,128,56,0.2)"  },
-  zap:    { color: "#8a3ffc", bg: "rgba(138,63,252,0.08)", border: "rgba(138,63,252,0.2)" },
-  eye:    { color: "#0043ce", bg: "rgba(0,67,206,0.08)",   border: "rgba(0,67,206,0.2)"   },
+const ACCENT: Record<string, { color: string; dark: string; gradient: string; badge: string }> = {
+  flame:  { color: "#fff", dark: "#ff6b1a", gradient: "linear-gradient(145deg, #ff6b1a, #e8520a)", badge: "rgba(255,255,255,0.22)" },
+  clock:  { color: "#fff", dark: "#0f62fe", gradient: "linear-gradient(145deg, #0f62fe, #0043ce)", badge: "rgba(255,255,255,0.22)" },
+  alert:  { color: "#fff", dark: "#da1e28", gradient: "linear-gradient(145deg, #da1e28, #a2191f)", badge: "rgba(255,255,255,0.22)" },
+  shield: { color: "#fff", dark: "#198038", gradient: "linear-gradient(145deg, #198038, #0e6027)", badge: "rgba(255,255,255,0.22)" },
+  zap:    { color: "#fff", dark: "#6929c4", gradient: "linear-gradient(145deg, #8a3ffc, #6929c4)", badge: "rgba(255,255,255,0.22)" },
+  eye:    { color: "#fff", dark: "#0031a9", gradient: "linear-gradient(145deg, #0043ce, #0031a9)", badge: "rgba(255,255,255,0.22)" },
 };
 
 interface Props {
@@ -31,7 +29,6 @@ export default function FactCard({ fact, delay = 0 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const accent = ACCENT[fact.icon] ?? ACCENT.clock;
-  const { lang } = useLanguage();
 
   useEffect(() => {
     const el = ref.current;
@@ -49,74 +46,67 @@ export default function FactCard({ fact, delay = 0 }: Props) {
       ref={ref}
       style={{
         opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0) scale(1)" : "translateY(14px) scale(0.98)",
+        transform: visible ? "translateY(0) scale(1)" : "translateY(14px) scale(0.97)",
         transition: `opacity 0.4s ease ${delay}s, transform 0.4s ease ${delay}s`,
+        height: "100%",
       }}
     >
       <div
-        className="flex items-start gap-4 rounded-2xl p-4"
+        className="rounded-2xl p-4 flex flex-col gap-3 h-full"
         style={{
-          background: "rgba(255,255,255,0.72)",
-          backdropFilter: "blur(14px)",
-          WebkitBackdropFilter: "blur(14px)",
-          border: `1.5px solid ${accent.border}`,
-          boxShadow: `0 4px 20px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.6)`,
+          background: accent.gradient,
+          boxShadow: `0 6px 20px ${accent.dark}44`,
         }}
       >
-        {/* Icon badge */}
-        <div
-          className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
-          style={{ background: accent.bg, border: `1.5px solid ${accent.border}`, color: accent.color }}
-        >
-          {ICONS[fact.icon]}
-        </div>
-
-        <div className="flex-1 min-w-0">
-          <div className="flex items-baseline gap-2 flex-wrap mb-1">
-            {/* Big stat */}
-            <span
-              className="font-mono font-bold"
-              style={{
-                fontSize: "1.35rem",
-                lineHeight: 1,
-                color: accent.color,
-                fontFamily: "'IBM Plex Mono', monospace",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              {fact.stat}
-            </span>
-            <span
-              className="font-semibold text-sm"
-              style={{ color: "#2d3148", lineHeight: 1.3 }}
-            >
-              {fact.label}
-            </span>
-          </div>
-          {/* Detail */}
-          <p
-            className="text-xs leading-relaxed"
-            style={{ color: "#6f7897", fontStyle: "italic" }}
+        {/* Top: icon + tag */}
+        <div className="flex items-center justify-between">
+          <div
+            className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+            style={{ background: "rgba(255,255,255,0.2)", color: "#fff" }}
           >
-            {fact.detail}
-          </p>
+            {ICONS[fact.icon]}
+          </div>
+          <span
+            className="font-mono text-xs px-2 py-0.5 rounded-full uppercase"
+            style={{
+              fontFamily: "'IBM Plex Mono', monospace",
+              color: "#fff",
+              background: "rgba(255,255,255,0.2)",
+              fontSize: "8px",
+              letterSpacing: "0.08em",
+              whiteSpace: "nowrap",
+            }}
+          >
+            KEY FACT
+          </span>
         </div>
 
-        {/* "Le saviez-vous?" tag */}
-        <div
-          className="flex-shrink-0 self-start font-mono text-xs px-2 py-0.5 rounded-full whitespace-nowrap"
-          style={{
-            fontFamily: "'IBM Plex Mono', monospace",
-            color: accent.color,
-            background: accent.bg,
-            border: `1px solid ${accent.border}`,
-            fontSize: "9px",
-            letterSpacing: "0.06em",
-            textTransform: "uppercase",
-          }}
-        >
-          {t("factcard.did_you_know", lang)}
+        {/* Stat */}
+        <div>
+          <div
+            className="font-mono font-bold leading-none mb-1"
+            style={{
+              fontSize: "1.6rem",
+              color: "#fff",
+              fontFamily: "'IBM Plex Mono', monospace",
+              letterSpacing: "-0.02em",
+              textShadow: "0 1px 4px rgba(0,0,0,0.2)",
+            }}
+          >
+            {fact.stat}
+          </div>
+          <div className="font-bold text-xs leading-snug" style={{ color: "rgba(255,255,255,0.9)" }}>
+            {fact.label}
+          </div>
         </div>
+
+        {/* Detail */}
+        <p
+          className="text-xs leading-relaxed mt-auto"
+          style={{ color: "rgba(255,255,255,0.75)", fontStyle: "italic" }}
+        >
+          {fact.detail}
+        </p>
       </div>
     </div>
   );
