@@ -535,6 +535,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     },
     duration: "7 min",
     image: `${CDN}8f5fa15ec33749609150a2fef62457e9?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Reconnatre%20les%20feux%20et%20choisir%20lextincteur.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL1JlY29ubmF0cmUgbGVzIGZldXggZXQgY2hvaXNpciBsZXh0aW5jdGV1ci5tcDQiLCJpYXQiOjE3NzUzODU3NzksImV4cCI6MTgzODQ1Nzc3OX0.qNrp2HYGe3dKgbu9yUzfPurj_nckvQ5uIURGmaVZar8",
     funFacts: [
       { stat: "6 classes", label: "de feux — 1 erreur peut être mortelle", detail: "Utiliser un extincteur inadapté peut être plus dangereux que de ne pas intervenir. Eau sur feu électrique = risque d'électrocution.", icon: "alert" },
       { stat: "95%", label: "des feux de bureau : classe A ou électrique", detail: "Connaître ces 2 classes vous prépare à 95% des situations réelles en entreprise.", icon: "shield" },
