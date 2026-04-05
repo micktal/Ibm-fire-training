@@ -753,6 +753,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     },
     duration: "10 min",
     image: `${CDN}8e074d1b7bdf4b8fa872d5fd2451fbfe?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Dcider%20vite%20face%20un%20dbut%20dincendie.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL0RjaWRlciB2aXRlIGZhY2UgdW4gZGJ1dCBkaW5jZW5kaWUubXA0IiwiaWF0IjoxNzc1Mzg1ODE2LCJleHAiOjE4Mzg0NTc4MTZ9.DEXtguhi245ee4er64OnmZFC1moq5JePoBRg93qwIpw",
     funFacts: [
       { stat: "10 sec", label: "pour prendre la décision critique", detail: "IBM fixe un délai de 10 secondes d'observation. Au-delà, la décision doit être prise : intervenir ou évacuer. Pas de troisième option.", icon: "clock" },
       { stat: "70%", label: "des victimes auraient pu évacuer", detail: "70% des décès par incendie en entreprise concernent des personnes qui avaient encore le temps d'évacuer mais ont hésité.", icon: "alert" },
