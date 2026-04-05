@@ -710,39 +710,50 @@ function PreTestOverlay({
     <div className="fixed inset-0 z-50 flex flex-col" style={{ background: "rgba(10,24,82,0.97)", fontFamily: "'IBM Plex Sans', sans-serif" }}>
       {/* Header */}
       <div className="flex-shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
-        <div className="flex items-start justify-between px-5 pt-5 pb-4">
-          <div className="flex-1">
-            {/* Big label */}
-            <div
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-3"
-              style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.2)" }}
-            >
-              <span
-                className="font-mono font-bold uppercase"
-                style={{ color: "#78a9ff", fontSize: "0.7rem", letterSpacing: "0.16em", fontFamily: "'IBM Plex Mono', monospace" }}
-              >
-                {t("pretest.title", lang)}
-              </span>
-            </div>
-            <div
-              className="font-bold text-white mb-2"
-              style={{ fontSize: "clamp(1.4rem, 5vw, 2rem)", lineHeight: "1.15", letterSpacing: "-0.02em" }}
-            >
-              {moduleTitle}
-            </div>
-            <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.85rem", lineHeight: "1.5" }}>
-              {lang === "en"
-                ? "Answer these quick questions to assess your starting level. No pressure — there are no wrong answers."
-                : "Répondez à ces questions pour évaluer votre niveau de départ. Pas de stress — il n'y a pas de mauvaises réponses."}
-            </p>
-          </div>
+        {/* Top bar with skip */}
+        <div className="flex items-center justify-between px-5 pt-4 pb-0">
+          <div style={{ width: "1px" }} />
           <button
             onClick={onSkip}
-            className="text-xs font-semibold px-3 py-1.5 rounded-lg ml-4 flex-shrink-0"
-            style={{ background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.5)", border: "1px solid rgba(255,255,255,0.12)", cursor: "pointer" }}
+            className="text-xs font-semibold px-3 py-1.5 rounded-lg"
+            style={{ background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.45)", border: "1px solid rgba(255,255,255,0.1)", cursor: "pointer" }}
           >
             {t("pretest.skip", lang)}
           </button>
+        </div>
+
+        {/* Main header content */}
+        <div className="px-5 pt-4 pb-5">
+          {/* Giant label — the star of the show */}
+          <div className="mb-3">
+            <span
+              className="font-mono font-black uppercase"
+              style={{
+                fontSize: "clamp(1.6rem, 5vw, 2.4rem)",
+                letterSpacing: "0.04em",
+                fontFamily: "'IBM Plex Mono', monospace",
+                background: "linear-gradient(90deg, #78a9ff 0%, #a56eff 50%, #33b1ff 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                lineHeight: 1.1,
+                display: "block",
+              }}
+            >
+              {t("pretest.title", lang)}
+            </span>
+          </div>
+
+          {/* Module name */}
+          <div className="font-bold text-white mb-2" style={{ fontSize: "1rem", opacity: 0.75, lineHeight: "1.3" }}>
+            {moduleTitle}
+          </div>
+
+          <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.82rem", lineHeight: "1.5" }}>
+            {lang === "en"
+              ? "Answer these quick questions to assess your starting level. No pressure — there are no wrong answers."
+              : "Répondez à ces questions pour évaluer votre niveau de départ. Pas de stress — il n'y a pas de mauvaises réponses."}
+          </p>
         </div>
       </div>
 
