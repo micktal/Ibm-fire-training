@@ -957,6 +957,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     },
     duration: "6 min",
     image: `${CDN}2482acaedcdd4b2abad18b1011a424c6?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Dclencher%20l'alarme%20incendie.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL0RjbGVuY2hlciBsJ2FsYXJtZSBpbmNlbmRpZS5tcDQiLCJpYXQiOjE3NzU0MDk0NjgsImV4cCI6MTgzODQ4MTQ2OH0.aXpYf7-R6T_s_URpOt5IQdUs0UnhU_tT_efNlAOMxZw",
     funFacts: [
       { stat: "6 m²", label: "de propagation par seconde de retard", detail: "Chaque seconde de retard à déclencher l'alarme représente en moyenne 6m² de surface supplémentaire touchée par le feu.", icon: "flame" },
       { stat: "22 22", label: "le numéro IBM à composer EN PREMIER", detail: "Avant le 18 et le 15, composez le 22 22. La sécurité IBM connaît le plan des bâtiments et peut intervenir plus rapidement.", icon: "shield" },
