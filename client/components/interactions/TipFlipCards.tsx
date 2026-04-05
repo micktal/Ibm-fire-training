@@ -51,6 +51,8 @@ interface Props {
 }
 
 export default function TipFlipCards({ exercise, onComplete }: Props) {
+  const { lang } = useLanguage();
+  const isEN = lang === "en";
   const [flipped, setFlipped] = useState<Set<number>>(new Set());
   const [done, setDone] = useState(false);
 
