@@ -1132,6 +1132,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     },
     duration: "5 min",
     image: `${CDN}0385f320d59547b2b6d08166e29ab8f3?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Fermez%20les%20portes,%20sauvez%20du%20temps.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL0Zlcm1leiBsZXMgcG9ydGVzLCBzYXV2ZXogZHUgdGVtcHMubXA0IiwiaWF0IjoxNzc1NDA5Nzg0LCJleHAiOjE4Mzg0ODE3ODR9.Q0yr1AHf1sPqiNtLPKspQqCVF8jh-Ect3r4Dcpo2v8c",
     funFacts: [
       { stat: "20%", label: "reviennent chercher leurs affaires", detail: "20% des décès lors d'incendies surviennent chez des personnes revenues chercher leurs effets personnels. Rien ne vaut une vie.", icon: "alert" },
       { stat: "3 min", label: "les plus dangereuses de l'évacuation", detail: "Les 3 premières minutes d'évacuation concentrent 80% des risques. Une sortie rapide et ordonnée est la seule priorité.", icon: "clock" },
