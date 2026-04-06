@@ -2,6 +2,18 @@ import { useState, useEffect } from "react";
 import { useLanguage } from "@/lib/languageContext";
 import { t } from "@/lib/i18n";
 
+function playCountdownBeep(freq = 440) {
+  try {
+    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const osc = ctx.createOscillator(); const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.frequency.value = freq; osc.type = "sine";
+    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+    osc.start(); osc.stop(ctx.currentTime + 0.25);
+  } catch (_) {}
+}
+
 interface Props {
   onComplete: () => void;
   moduleImage?: string;
@@ -20,6 +32,9 @@ export default function CountdownOverlay({ onComplete, moduleImage }: Props) {
       onComplete();
       return;
     }
+
+    // Beep on each tick (higher pitch for GO!)
+    playCountdownBeep(SEQUENCE[step] === 0 ? 880 : 440);
 
     // Trigger re-animation on each tick
     setAnimate(false);
@@ -55,7 +70,7 @@ export default function CountdownOverlay({ onComplete, moduleImage }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center"
+      className="fixed inset-0 z-[80] flex items-center justify-center"
       style={{ background: "rgba(0,0,0,0.92)", backdropFilter: "blur(8px)" }}
     >
       {/* Background image */}

@@ -38,8 +38,9 @@ export default function BottomNav() {
     label: item.label === "home" ? (lang === "en" ? "Home" : "Accueil") : (lang === "en" ? "Modules" : "Modules"),
   }));
 
-  // Don't show on welcome/form screens — immersive onboarding
+  // Don't show on welcome/form/fiche screens
   if (HIDDEN_PATHS.includes(location.pathname)) return null;
+  if (location.pathname.startsWith("/fiche") || location.pathname === "/fiches") return null;
 
   const isActive = (item: NavItem) =>
     item.exact
@@ -56,7 +57,7 @@ export default function BottomNav() {
       <div style={{ height: "72px" }} />
 
       <nav
-        className="fixed bottom-0 left-0 right-0 z-50"
+        className="fixed bottom-0 left-0 right-0 z-40"
         style={{
           background: "rgba(255,255,255,0.95)",
           backdropFilter: "blur(16px)",

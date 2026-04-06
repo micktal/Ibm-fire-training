@@ -126,3 +126,17 @@
   70%  { opacity: 1; transform: scale(1.08) rotate(1deg); }
   100% { opacity: 1; transform: scale(1) rotate(0deg); }
 }
+
+@keyframes popupShake {
+  0%   { transform: translateX(0); }
+  10%  { transform: translateX(-8px) rotate(-1deg); }
+  20%  { transform: translateX(8px) rotate(1deg); }
+  30%  { transform: translateX(-7px) rotate(-0.8deg); }
+  40%  { transform: translateX(7px) rotate(0.8deg); }
+  50%  { transform: translateX(-4px); }
+  60%  { transform: translateX(4px); }
+  70%  { transform: translateX(-2px); }
+  80%  { transform: translateX(2px); }
+  90%  { transform: translateX(-1px); }
+  100% { transform: translateX(0); }
+}

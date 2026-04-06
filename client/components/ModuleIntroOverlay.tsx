@@ -1,8 +1,21 @@
 import { Play, Clock, Brain, Wrench, Heart, Zap, Shield, Video, Lightbulb } from "lucide-react";
+import { useEffect } from "react";
 import { CourseModule } from "@/lib/courseData";
 import { MODULE_INTERACTIONS } from "@/lib/interactionData";
 import { useLanguage } from "@/lib/languageContext";
 import { t } from "@/lib/i18n";
+
+function playAlertBeep() {
+  try {
+    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const osc = ctx.createOscillator(); const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.frequency.value = 660; osc.type = "sine";
+    gain.gain.setValueAtTime(0.25, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+    osc.start(); osc.stop(ctx.currentTime + 0.5);
+  } catch (_) {}
+}
 
 interface Props {
   mod: CourseModule;
@@ -11,13 +24,14 @@ interface Props {
 
 export default function ModuleIntroOverlay({ mod, onStart }: Props) {
   const { lang } = useLanguage();
+  useEffect(() => { playAlertBeep(); }, []);
   const interactionCount = MODULE_INTERACTIONS[mod.id]?.length ?? 0;
   const hasVideo = !!mod.videoUrl;
   const lo = mod.learningObjectives;
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-[80] flex items-center justify-center p-4"
       style={{ background: "rgba(0,0,0,0.92)", backdropFilter: "blur(12px)" }}
     >
       {/* Background image blurred */}
@@ -46,7 +60,7 @@ export default function ModuleIntroOverlay({ mod, onStart }: Props) {
           background: "rgba(8,12,24,0.96)",
           border: "1.5px solid rgba(255,255,255,0.12)",
           boxShadow: "0 32px 80px rgba(0,0,0,0.7)",
-          animation: "celebrationPop 0.4s cubic-bezier(0.34,1.56,0.64,1) both",
+          animation: "celebrationPop 0.4s cubic-bezier(0.34,1.56,0.64,1) both, popupShake 0.55s ease 0.4s both",
           maxHeight: "92vh",
         }}
       >

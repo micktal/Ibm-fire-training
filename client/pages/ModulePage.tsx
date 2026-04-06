@@ -732,6 +732,18 @@ function PreTestOverlay({
   const [answered, setAnswered] = useState(false);
   const [correct, setCorrect] = useState(0);
 
+  useEffect(() => {
+    try {
+      const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const osc = ctx.createOscillator(); const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.frequency.value = 660; osc.type = "sine";
+      gain.gain.setValueAtTime(0.25, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+      osc.start(); osc.stop(ctx.currentTime + 0.5);
+    } catch (_) {}
+  }, []);
+
   const q = questions[current];
 
   const handleSelect = (key: string) => {
@@ -753,16 +765,16 @@ function PreTestOverlay({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col" style={{ background: "rgba(10,24,82,0.97)", fontFamily: "'IBM Plex Sans', sans-serif" }}>
+    <div className="fixed inset-0 z-[80] flex flex-col" style={{ background: "rgba(10,24,82,0.97)", fontFamily: "'IBM Plex Sans', sans-serif" }}>
       {/* Header */}
-      <div className="flex-shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
+      <div className="flex-shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)", animation: "popupShake 0.55s ease 0.15s both" }}>
         {/* Top bar with skip */}
         <div className="flex items-center justify-between px-5 pt-4 pb-0">
           <div style={{ width: "1px" }} />
           <button
             onClick={onSkip}
             className="text-xs font-semibold px-3 py-1.5 rounded-lg"
-            style={{ background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.45)", border: "1px solid rgba(255,255,255,0.1)", cursor: "pointer" }}
+            style={{ background: "rgba(255,255,255,0.18)", color: "rgba(255,255,255,0.9)", border: "1px solid rgba(255,255,255,0.35)", cursor: "pointer" }}
           >
             {t("pretest.skip", lang)}
           </button>
@@ -876,12 +888,12 @@ function PreTestOverlay({
                   onClick={handleNext}
                   className="w-full flex items-center justify-center gap-2 rounded-xl py-3.5 font-bold mb-4"
                   style={{
-                    background: "linear-gradient(135deg, #0D47A1, #1565C0)",
-                    color: "#fff",
-                    border: "none",
+                    background: "#fff",
+                    color: "#0D47A1",
+                    border: "2px solid rgba(255,255,255,0.9)",
                     cursor: "pointer",
                     fontSize: "0.9375rem",
-                    boxShadow: "0 4px 16px rgba(13,71,161,0.4)",
+                    boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
                   }}
                 >
                   {current < questions.length - 1 ? t("pretest.next", lang) : t("pretest.start", lang)}

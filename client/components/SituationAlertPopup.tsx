@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import { AlertTriangle, X, CheckCircle2, XCircle, Mail, MessageSquare, Clock, ChevronRight } from "lucide-react";
 import { SituationAlert } from "@/lib/situationAlerts";
 import { useLanguage } from "@/lib/languageContext";
@@ -19,6 +20,21 @@ export default function SituationAlertPopup({ alert, onClose }: Props) {
   const isEN = lang === "en";
   const [selected, setSelected] = useState<string | null>(null);
   const [answered, setAnswered] = useState(false);
+
+  useEffect(() => {
+    try {
+      const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      // Two-tone alert beep
+      [0, 0.2].forEach((delay, i) => {
+        const osc = ctx.createOscillator(); const gain = ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.frequency.value = i === 0 ? 880 : 660; osc.type = "sine";
+        gain.gain.setValueAtTime(0.3, ctx.currentTime + delay);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.18);
+        osc.start(ctx.currentTime + delay); osc.stop(ctx.currentTime + delay + 0.18);
+      });
+    } catch (_) {}
+  }, []);
 
   const urgency = URGENCY_CONFIG[alert.urgency];
   const now = new Date().toLocaleTimeString(isEN ? "en-GB" : "fr-FR", { hour: "2-digit", minute: "2-digit" });
@@ -55,7 +71,7 @@ export default function SituationAlertPopup({ alert, onClose }: Props) {
           background: "#0a0e1a",
           border: "2px solid rgba(255,255,255,0.1)",
           boxShadow: `0 0 0 1px ${urgency.border}, 0 40px 100px rgba(0,0,0,0.7)`,
-          animation: "alertSlideIn 0.35s cubic-bezier(0.34,1.56,0.64,1) both",
+          animation: "alertSlideIn 0.35s cubic-bezier(0.34,1.56,0.64,1) both, popupShake 0.55s ease 0.35s both",
           maxHeight: "95vh",
           overflowY: "auto",
         }}

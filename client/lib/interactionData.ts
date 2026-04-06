@@ -593,13 +593,6 @@ const m5_hotspot: HotspotExercise = {
       type: "safe",
       detail: "Si le feu ne recule pas en 30s : reculez et évacuez",
     },
-    {
-      id: "h5", x: 62, y: 62,
-      label: "Étiquette de contrôle",
-      description: "Vérifiez toujours la date de dernier contrôle. Un extincteur non vérifié peut être vide ou défaillant. Contrôle annuel obligatoire.",
-      type: "danger",
-      detail: "Signaler tout extincteur périmé au service sécurité",
-    },
   ],
 };
 
