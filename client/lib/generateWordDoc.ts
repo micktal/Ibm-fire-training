@@ -116,7 +116,7 @@ function cell(
     bold?: boolean;
     color?: string;
     bg?: string;
-    align?: AlignmentType;
+    align?: (typeof AlignmentType)[keyof typeof AlignmentType];
     width?: number;
     size?: number;
     colspan?: number;
