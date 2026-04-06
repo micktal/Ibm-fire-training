@@ -182,7 +182,7 @@ const STRINGS = {
   "casefig.situation":  { fr: "Situation",                      en: "Situation" },
   "casefig.action":     { fr: "Action",                         en: "Action" },
   "casefig.good":       { fr: "Bonne décision",                 en: "Good decision" },
-  "casefig.bad":        { fr: "Mistake à éviter",               en: "Mistake to avoid" },
+  "casefig.bad":        { fr: "Erreur à éviter",                en: "Mistake to avoid" },
   "casefig.case":       { fr: "Cas",                            en: "Case" },
   "compare.do":         { fr: "À faire",                        en: "Do" },
   "compare.dont":       { fr: "À éviter",                       en: "Avoid" },

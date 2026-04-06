@@ -692,7 +692,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         body: "Mémorisez ces 4 étapes dans cet ordre exact :",
         bullets: [
           "P — Puller (tirer) : dégoupiller en retirant la goupille de sécurité",
-          "A — Aimer (viser) : pointer le tuyau à la base des flammes, pas en haut",
+          "A — Ajuster (viser) : pointer le tuyau à la base des flammes, pas en haut",
           "S — Squeeze (presser) : appuyer sur la poignée de déclenchement",
           "S — Sweep (balayer) : balayer lentement la base du feu de gauche à droite",
         ],
@@ -706,7 +706,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       },
     ],
     keyPoints: [
-      "PASS : Pointer, Allumer, Serrer, Souffler — 4 étapes dans cet ordre, sans exception.",
+      "PASS : Pull (dégoupiller) · Aim (viser la base) · Squeeze (presser) · Sweep (balayer) — 4 étapes dans l'ordre.",
       "Un extincteur CO2 s'épuise en 8 à 12 secondes — chaque geste doit être précis.",
       "Si le feu ne recule pas après 30 secondes d'intervention : évacuez immédiatement.",
     ],
@@ -1181,7 +1181,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       },
     ],
     keyPoints: [
-      "SOS : Sortir, Ouvrir/fermer les portes, Signaler — la séquence d'évacuation IBM en 3 actes.",
+      "SORS — FERME — SIGNALE : la séquence IBM en 3 étapes à appliquer à chaque pièce quittée.",
       "Fermer toutes les portes derrière soi ralentit la propagation du feu et de la fumée.",
       "20% des décès surviennent chez des personnes revenues chercher leurs affaires — ne jamais revenir.",
     ],
