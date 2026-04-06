@@ -1299,6 +1299,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     },
     duration: "8 min",
     image: `${CDN}cc5ab29f9fd543a2aff682cdd54297ad?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Ragir%20vite%20face%20la%20fume.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL1JhZ2lyIHZpdGUgZmFjZSBsYSBmdW1lLm1wNCIsImlhdCI6MTc3NTQ3MTEwNiwiZXhwIjoxODM4NTQzMTA2fQ.a4IIYxeCxueoMRyA00JKOohg9FMLM8pJNzlsY9rOIxM",
     funFacts: [
       { stat: "0.3 sec", label: "inhalation létale de certains gaz", detail: "Certains gaz issus de plastiques brûlés peuvent causer une perte de conscience en moins de 0.3 seconde à forte concentration.", icon: "zap" },
       { stat: "40°C", label: "la chaleur de la fumée à hauteur des yeux", detail: "À hauteur debout, la fumée peut atteindre 40 à 60°C lors d'un incendie de bureau — suffisant pour brûler les voies respiratoires.", icon: "flame" },
