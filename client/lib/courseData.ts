@@ -653,6 +653,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     duration: "9 min",
     image: `${CDN}d41dd2ee6d6d4cf4b7f112d3fc2460f3?format=webp&width=800`,
     videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Matriser%20la%20mthode%20PASS.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL01hdHJpc2VyIGxhIG10aG9kZSBQQVNTLm1wNCIsImlhdCI6MTc3NTM4NTcwOCwiZXhwIjoxODM4NDU3NzA4fQ.R7Icr31r6H7iLlZIuaP9MKm4MmfcTNEPWjmTS8rglGA",
+    podcastUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/ibm%20pd.mp3?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL2libSBwZC5tcDMiLCJpYXQiOjE3NzU0NzI4NTMsImV4cCI6MTgzODU0NDg1M30.i_VZ0DijQSMeN2OuXKbLT8RSVKwgMUKOk0xWAoiTO6A",
     funFacts: [
       { stat: "8-12 sec", label: "autonomie d'un extincteur CO2", detail: "Un extincteur CO2 standard se vide en 8 à 12 secondes. Chaque geste doit être précis et immédiat — pas de place à l'improvisation.", icon: "clock" },
       { stat: "-78°C", label: "température du cône CO2", detail: "Ne jamais tenir le cône d'un extincteur CO2 à mains nues. Le froid extrême provoque des brûlures en moins d'une seconde.", icon: "alert" },
