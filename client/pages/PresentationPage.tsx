@@ -301,48 +301,298 @@ export default function PresentationPage() {
             </div>
           </div>
 
-          {/* ── SECTION 5 — ACCÈS ─────────────────────────────────── */}
+          {/* ── SECTION 5 — ACCÈS + APERÇU ────────────────────────── */}
           <div style={{ marginBottom: "2rem" }}>
-            <SectionTitle>5. Liens d'accès à la plateforme</SectionTitle>
+            <SectionTitle>5. Liens d'accès et aperçu des plateformes</SectionTitle>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+            {/* URL cards */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "2rem" }}>
               {/* Lien apprenant */}
               <div style={{ background: "#f0fdf4", border: "1.5px solid #86efac", borderRadius: "0.75rem", padding: "1.25rem" }}>
                 <div style={{ fontWeight: 800, color: "#166534", fontSize: "0.85rem", marginBottom: "0.5rem" }}>
-                  🎓 Lien apprenant — Accès à la formation
+                  🎓 Plateforme e-learning — Apprenants
                 </div>
                 <p style={{ fontSize: "0.78rem", color: "#374151", lineHeight: 1.5, margin: "0 0 0.75rem" }}>
-                  Ce lien est à communiquer aux collaborateurs IBM pour accéder à la formation e-learning. La formation démarre par une page d'accueil avec sélection de la langue (FR/EN).
+                  Lien à communiquer aux collaborateurs IBM. Accessible depuis tout navigateur, sur ordinateur, tablette ou smartphone. Sélection de langue (FR/EN) au démarrage.
                 </p>
-                <div style={{ background: "white", border: "1px solid #86efac", borderRadius: "0.5rem", padding: "0.6rem 0.75rem", fontFamily: "monospace", fontSize: "0.75rem", color: "#166534", wordBreak: "break-all" }}>
-                  https://ibm-securite-incendie.netlify.app
+                <div style={{ background: "white", border: "1px solid #86efac", borderRadius: "0.5rem", padding: "0.6rem 0.75rem", fontFamily: "monospace", fontSize: "0.72rem", color: "#166534", wordBreak: "break-all" }}>
+                  https://8aeffa2c8f4f4a51b692463a7734bfac-main.builderio.xyz/
                 </div>
                 <div style={{ fontSize: "0.7rem", color: "#6b7280", marginTop: "0.4rem" }}>
-                  ⓘ URL définitive après déploiement en production
+                  ⓘ URL de développement — URL Netlify définitive après déploiement
                 </div>
               </div>
 
               {/* Lien admin */}
               <div style={{ background: "#eff6ff", border: "1.5px solid #93c5fd", borderRadius: "0.75rem", padding: "1.25rem" }}>
                 <div style={{ fontWeight: 800, color: "#1e40af", fontSize: "0.85rem", marginBottom: "0.5rem" }}>
-                  🔐 Lien administrateur — Suivi des apprenants
+                  🔐 Plateforme admin — Responsable HSE/RH
                 </div>
                 <p style={{ fontSize: "0.78rem", color: "#374151", lineHeight: 1.5, margin: "0 0 0.75rem" }}>
-                  Ce lien donne accès au tableau de bord RH/HSE permettant de visualiser les inscriptions, scores, modules complétés et certificats obtenus. Export CSV disponible.
+                  Tableau de bord sécurisé pour le responsable sécurité IBM. Visualisation des inscriptions, scores, modules complétés et certificats obtenus. Export CSV intégré.
                 </p>
-                <div style={{ background: "white", border: "1px solid #93c5fd", borderRadius: "0.5rem", padding: "0.6rem 0.75rem", fontFamily: "monospace", fontSize: "0.75rem", color: "#1e40af", wordBreak: "break-all" }}>
-                  https://ibm-securite-incendie.netlify.app/admin
+                <div style={{ background: "white", border: "1px solid #93c5fd", borderRadius: "0.5rem", padding: "0.6rem 0.75rem", fontFamily: "monospace", fontSize: "0.72rem", color: "#1e40af", wordBreak: "break-all" }}>
+                  https://8aeffa2c8f4f4a51b692463a7734bfac-main.builderio.xyz/admin
                 </div>
                 <div style={{ background: "#dbeafe", borderRadius: "0.4rem", padding: "0.4rem 0.6rem", marginTop: "0.5rem", fontSize: "0.72rem", color: "#1e40af" }}>
                   Mot de passe : <strong>ibm-securite-2026</strong>
                 </div>
               </div>
             </div>
+
+            {/* ── E-LEARNING SCREENSHOT ─────────────────────────────── */}
+            <div style={{ marginBottom: "1.5rem" }}>
+              <div style={{ fontSize: "0.78rem", fontWeight: 700, color: "#374151", marginBottom: "0.6rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <span style={{ background: "#166534", color: "white", borderRadius: "9999px", padding: "1px 8px", fontSize: "0.65rem" }}>APERÇU</span>
+                Plateforme e-learning — Interface apprenant (tableau de bord des modules)
+              </div>
+
+              {/* Browser frame */}
+              <div style={{ borderRadius: "0.75rem", overflow: "hidden", border: "1.5px solid #d1d5db", boxShadow: "0 8px 32px rgba(0,0,0,0.14)" }}>
+                {/* Browser chrome */}
+                <div style={{ background: "#f3f4f6", padding: "0.5rem 0.75rem", display: "flex", alignItems: "center", gap: "0.5rem", borderBottom: "1px solid #d1d5db" }}>
+                  <div style={{ display: "flex", gap: "0.3rem" }}>
+                    <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#ef4444" }} />
+                    <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#f59e0b" }} />
+                    <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#22c55e" }} />
+                  </div>
+                  <div style={{ flex: 1, background: "white", borderRadius: "0.3rem", padding: "0.2rem 0.6rem", fontSize: "0.65rem", color: "#6b7280", fontFamily: "monospace", border: "1px solid #e5e7eb" }}>
+                    ibm-securite-incendie.netlify.app/hub
+                  </div>
+                </div>
+
+                {/* App content */}
+                <div style={{ background: "#f0f4fa" }}>
+                  {/* Topbar */}
+                  <div style={{ background: "white", borderBottom: "1px solid #e4e7f0", padding: "0 1rem", height: "38px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <div style={{ fontWeight: 900, color: "#0d47a1", fontSize: "0.8rem", letterSpacing: "0.1em" }}>IBM</div>
+                    <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+                      <span style={{ fontSize: "0.6rem", color: "#6b7280", fontWeight: 600 }}>Accueil</span>
+                      <span style={{ fontSize: "0.6rem", color: "#0d47a1", fontWeight: 700, background: "rgba(13,71,161,0.08)", borderRadius: "0.25rem", padding: "2px 6px" }}>0/14 — 0%</span>
+                      <span style={{ fontSize: "0.6rem", color: "#374151", fontWeight: 700, background: "#f3f4f6", borderRadius: "0.25rem", padding: "2px 6px", border: "1px solid #d1d5db" }}>FR</span>
+                    </div>
+                  </div>
+
+                  {/* Hero banner */}
+                  <div style={{ background: "linear-gradient(145deg, #0a3882 0%, #0d47a1 40%, #1565c0 100%)", padding: "1.25rem 1rem 1rem", position: "relative" }}>
+                    <div style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.5)", letterSpacing: "0.12em", textTransform: "uppercase", fontFamily: "monospace" }}>IBM · HSE · 2026</div>
+                    <div style={{ fontSize: "0.9rem", fontWeight: 900, color: "white", lineHeight: 1.2, marginTop: "0.2rem" }}>BONJOUR,</div>
+                    <div style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.7)", marginTop: "0.15rem" }}>Formation Sécurité Incendie · 14 modules · FR/EN</div>
+                    <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.75rem" }}>
+                      {[
+                        { v: "0/14", l: "modules complétés" },
+                        { v: "0%", l: "score global" },
+                        { v: "115 min", l: "durée totale" },
+                      ].map((s) => (
+                        <div key={s.l} style={{ background: "rgba(255,255,255,0.12)", borderRadius: "0.4rem", padding: "0.3rem 0.5rem", textAlign: "center" }}>
+                          <div style={{ fontSize: "0.65rem", fontWeight: 900, color: "white", fontFamily: "monospace" }}>{s.v}</div>
+                          <div style={{ fontSize: "0.5rem", color: "rgba(255,255,255,0.6)" }}>{s.l}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Modules area */}
+                  <div style={{ padding: "0.75rem 0.75rem 0" }}>
+                    {/* Chapter 1 header */}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.5rem" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                        <div style={{ width: "18px", height: "18px", background: "rgba(218,30,40,0.1)", borderRadius: "0.3rem", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <span style={{ fontSize: "0.55rem" }}>🔥</span>
+                        </div>
+                        <div>
+                          <div style={{ fontSize: "0.65rem", fontWeight: 800, color: "#0a2052" }}>Chapitre 1 — Lutte incendie</div>
+                          <div style={{ fontSize: "0.5rem", color: "#9aa0b8" }}>0/7 modules complétés</div>
+                        </div>
+                      </div>
+                      <div style={{ fontSize: "0.55rem", fontWeight: 700, color: "#0d47a1", background: "rgba(13,71,161,0.08)", border: "1px solid rgba(13,71,161,0.2)", borderRadius: "9999px", padding: "1px 6px", fontFamily: "monospace" }}>0/7</div>
+                    </div>
+
+                    {/* Module grid */}
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "0.35rem", marginBottom: "0.75rem" }}>
+                      {[
+                        { n: "M01", t: "Comprendre un départ de feu", dur: "8 min", locked: false },
+                        { n: "M02", t: "Le triangle du feu", dur: "6 min", locked: true },
+                        { n: "M03", t: "Propagation d'un incendie", dur: "10 min", locked: true },
+                        { n: "M04", t: "Classes de feu", dur: "7 min", locked: true },
+                        { n: "M05", t: "Utiliser un extincteur", dur: "9 min", locked: true },
+                        { n: "M06", t: "Intervenir ou évacuer ?", dur: "10 min", locked: true },
+                        { n: "M07", t: "Simulation incendie", dur: "12 min", locked: true },
+                      ].map((m) => (
+                        <div key={m.n} style={{ background: m.locked ? "rgba(255,255,255,0.45)" : "white", borderRadius: "0.5rem", overflow: "hidden", border: m.locked ? "1.5px solid rgba(200,205,216,0.5)" : "1.5px solid rgba(13,71,161,0.2)", opacity: m.locked ? 0.7 : 1 }}>
+                          <div style={{ height: "28px", background: m.locked ? "linear-gradient(135deg,#8896b0,#a0aec0)" : "linear-gradient(135deg,#0d47a1,#1565c0)", position: "relative" }}>
+                            <span style={{ position: "absolute", top: "3px", left: "3px", fontSize: "0.4rem", fontWeight: 800, color: "white", fontFamily: "monospace", background: m.locked ? "rgba(100,110,130,0.7)" : "#0d47a1", padding: "1px 3px", borderRadius: "2px" }}>{m.n}</span>
+                            {m.locked && <span style={{ position: "absolute", top: "3px", right: "3px", fontSize: "0.5rem" }}>🔒</span>}
+                          </div>
+                          <div style={{ padding: "0.3rem" }}>
+                            <div style={{ fontSize: "0.48rem", fontWeight: 700, color: m.locked ? "#9aa0b8" : "#0a2052", lineHeight: 1.3, marginBottom: "0.2rem" }}>{m.t}</div>
+                            <div style={{ fontSize: "0.42rem", color: "#9aa0b8", fontFamily: "monospace" }}>{m.dur}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Chapter 2 header */}
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.5rem" }}>
+                      <div style={{ width: "18px", height: "18px", background: "rgba(13,71,161,0.1)", borderRadius: "0.3rem", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <span style={{ fontSize: "0.55rem" }}>🛡️</span>
+                      </div>
+                      <div>
+                        <div style={{ fontSize: "0.65rem", fontWeight: 800, color: "#0a2052" }}>Chapitre 2 — Évacuation</div>
+                        <div style={{ fontSize: "0.5rem", color: "#9aa0b8" }}>0/7 modules complétés</div>
+                      </div>
+                    </div>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "0.35rem", paddingBottom: "0.75rem" }}>
+                      {["M08","M09","M10","M11","M12","M13","M14"].map((n) => (
+                        <div key={n} style={{ background: "rgba(255,255,255,0.45)", borderRadius: "0.5rem", overflow: "hidden", border: "1.5px solid rgba(200,205,216,0.5)", opacity: 0.7 }}>
+                          <div style={{ height: "28px", background: "linear-gradient(135deg,#8896b0,#a0aec0)", position: "relative" }}>
+                            <span style={{ position: "absolute", top: "3px", left: "3px", fontSize: "0.4rem", fontWeight: 800, color: "white", fontFamily: "monospace", background: "rgba(100,110,130,0.7)", padding: "1px 3px", borderRadius: "2px" }}>{n}</span>
+                            <span style={{ position: "absolute", top: "3px", right: "3px", fontSize: "0.5rem" }}>🔒</span>
+                          </div>
+                          <div style={{ padding: "0.3rem" }}>
+                            <div style={{ height: "12px", background: "#e5e7eb", borderRadius: "2px", marginBottom: "0.2rem" }} />
+                            <div style={{ height: "8px", width: "50%", background: "#e5e7eb", borderRadius: "2px" }} />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Bottom nav */}
+                  <div style={{ background: "rgba(255,255,255,0.95)", borderTop: "1px solid rgba(0,0,0,0.08)", height: "36px", display: "flex", alignItems: "center", justifyContent: "center", gap: "2rem" }}>
+                    <div style={{ fontSize: "0.5rem", color: "#9aa0b8", textTransform: "uppercase", fontWeight: 700 }}>🏠 Accueil</div>
+                    <div style={{ fontSize: "0.5rem", color: "#0043ce", textTransform: "uppercase", fontWeight: 700 }}>⊞ Modules</div>
+                    <div style={{ fontSize: "0.5rem", color: "#9aa0b8", textTransform: "uppercase", fontWeight: 700, fontFamily: "monospace" }}>0/14 · 0%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* ── ADMIN SCREENSHOT ──────────────────────────────────── */}
+            <div>
+              <div style={{ fontSize: "0.78rem", fontWeight: 700, color: "#374151", marginBottom: "0.6rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <span style={{ background: "#1e40af", color: "white", borderRadius: "9999px", padding: "1px 8px", fontSize: "0.65rem" }}>APERÇU</span>
+                Plateforme admin — Interface responsable HSE (tableau de bord des apprenants)
+              </div>
+
+              {/* Browser frame */}
+              <div style={{ borderRadius: "0.75rem", overflow: "hidden", border: "1.5px solid #d1d5db", boxShadow: "0 8px 32px rgba(0,0,0,0.14)" }}>
+                {/* Browser chrome */}
+                <div style={{ background: "#f3f4f6", padding: "0.5rem 0.75rem", display: "flex", alignItems: "center", gap: "0.5rem", borderBottom: "1px solid #d1d5db" }}>
+                  <div style={{ display: "flex", gap: "0.3rem" }}>
+                    <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#ef4444" }} />
+                    <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#f59e0b" }} />
+                    <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#22c55e" }} />
+                  </div>
+                  <div style={{ flex: 1, background: "white", borderRadius: "0.3rem", padding: "0.2rem 0.6rem", fontSize: "0.65rem", color: "#6b7280", fontFamily: "monospace", border: "1px solid #e5e7eb" }}>
+                    ibm-securite-incendie.netlify.app/admin
+                  </div>
+                </div>
+
+                {/* Admin app */}
+                <div style={{ background: "linear-gradient(145deg, #0a1628, #0d47a1)", minHeight: "280px", padding: "1rem" }}>
+                  {/* Admin header */}
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.75rem" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                      <div style={{ fontWeight: 900, color: "white", fontSize: "0.9rem", letterSpacing: "0.1em" }}>IBM</div>
+                      <div style={{ width: "1px", height: "14px", background: "rgba(255,255,255,0.3)" }} />
+                      <div style={{ fontSize: "0.6rem", color: "rgba(255,255,255,0.7)", fontWeight: 600 }}>Espace Administrateur · Sécurité Incendie</div>
+                    </div>
+                    <div style={{ display: "flex", gap: "0.5rem" }}>
+                      <div style={{ background: "#0043ce", color: "white", borderRadius: "0.3rem", padding: "3px 8px", fontSize: "0.58rem", fontWeight: 700, cursor: "pointer" }}>
+                        ↓ Exporter CSV
+                      </div>
+                      <div style={{ background: "rgba(255,255,255,0.12)", color: "white", borderRadius: "0.3rem", padding: "3px 8px", fontSize: "0.58rem", fontWeight: 600 }}>
+                        ↻ Actualiser
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Stats row */}
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.5rem", marginBottom: "0.75rem" }}>
+                    {[
+                      { v: "247", l: "Apprenants inscrits", c: "#0043ce" },
+                      { v: "189", l: "Formations complétées", c: "#16a34a" },
+                      { v: "76%", l: "Score moyen global", c: "#d97706" },
+                      { v: "163", l: "Certificats obtenus", c: "#7c3aed" },
+                    ].map((s) => (
+                      <div key={s.l} style={{ background: "rgba(255,255,255,0.08)", borderRadius: "0.5rem", padding: "0.6rem 0.5rem", border: "1px solid rgba(255,255,255,0.1)" }}>
+                        <div style={{ fontSize: "1rem", fontWeight: 900, color: "white", fontFamily: "monospace" }}>{s.v}</div>
+                        <div style={{ fontSize: "0.5rem", color: "rgba(255,255,255,0.6)", marginTop: "0.1rem", lineHeight: 1.3 }}>{s.l}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Table */}
+                  <div style={{ background: "white", borderRadius: "0.6rem", overflow: "hidden" }}>
+                    {/* Table header */}
+                    <div style={{ background: "#0043ce", display: "grid", gridTemplateColumns: "2fr 1.5fr 1fr 0.7fr 0.8fr 0.7fr", gap: 0 }}>
+                      {["Apprenant", "Site IBM", "Modules", "Score", "Certificat", "Date"].map((h) => (
+                        <div key={h} style={{ padding: "0.35rem 0.5rem", fontSize: "0.5rem", fontWeight: 700, color: "white", textTransform: "uppercase", letterSpacing: "0.06em" }}>{h}</div>
+                      ))}
+                    </div>
+                    {/* Table rows */}
+                    {[
+                      { name: "Sophie Martin", email: "s.martin@fr.ibm.com", site: "Bois-Colombes HQ", modules: "14/14", score: "88%", cert: true, date: "02/04/2026" },
+                      { name: "Thomas Dubois", email: "t.dubois@fr.ibm.com", site: "La Défense", modules: "11/14", score: "74%", cert: false, date: "03/04/2026" },
+                      { name: "Marie Leclerc", email: "m.leclerc@fr.ibm.com", site: "Montpellier Bellegarde", modules: "14/14", score: "92%", cert: true, date: "01/04/2026" },
+                      { name: "Nicolas Bernard", email: "n.bernard@fr.ibm.com", site: "Biot", modules: "7/14", score: "81%", cert: false, date: "04/04/2026" },
+                    ].map((r, i) => (
+                      <div key={r.name} style={{ display: "grid", gridTemplateColumns: "2fr 1.5fr 1fr 0.7fr 0.8fr 0.7fr", borderBottom: i < 3 ? "1px solid #f3f4f6" : "none", background: i % 2 === 0 ? "white" : "#f9fafb" }}>
+                        <div style={{ padding: "0.35rem 0.5rem" }}>
+                          <div style={{ fontSize: "0.55rem", fontWeight: 700, color: "#111827" }}>{r.name}</div>
+                          <div style={{ fontSize: "0.45rem", color: "#6b7280" }}>{r.email}</div>
+                        </div>
+                        <div style={{ padding: "0.35rem 0.5rem", fontSize: "0.5rem", color: "#374151", display: "flex", alignItems: "center" }}>{r.site}</div>
+                        <div style={{ padding: "0.35rem 0.5rem", fontSize: "0.55rem", color: "#0d47a1", fontWeight: 700, display: "flex", alignItems: "center", fontFamily: "monospace" }}>{r.modules}</div>
+                        <div style={{ padding: "0.35rem 0.5rem", fontSize: "0.55rem", fontWeight: 700, color: parseInt(r.score) >= 80 ? "#166534" : "#92400e", display: "flex", alignItems: "center" }}>{r.score}</div>
+                        <div style={{ padding: "0.35rem 0.5rem", display: "flex", alignItems: "center" }}>
+                          <span style={{ fontSize: "0.48rem", fontWeight: 700, background: r.cert ? "#d1fae5" : "#fef9c3", color: r.cert ? "#065f46" : "#78350f", borderRadius: "9999px", padding: "1px 5px" }}>
+                            {r.cert ? "✓ Obtenu" : "En cours"}
+                          </span>
+                        </div>
+                        <div style={{ padding: "0.35rem 0.5rem", fontSize: "0.48rem", color: "#6b7280", display: "flex", alignItems: "center" }}>{r.date}</div>
+                      </div>
+                    ))}
+                    {/* More rows indicator */}
+                    <div style={{ padding: "0.35rem 0.5rem", textAlign: "center", fontSize: "0.5rem", color: "#9ca3af", fontStyle: "italic", background: "#f9fafb" }}>
+                      … 243 apprenants supplémentaires
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* ── SECTION 6 — DONNÉES APPRENANTS ───────────────────── */}
+          {/* ── SECTION 6 — ADMIN PLATFORM ────────────────────────── */}
           <div style={{ marginBottom: "2rem" }}>
-            <SectionTitle>6. Données enregistrées par apprenant</SectionTitle>
+            <SectionTitle>6. Plateforme administrateur — Fonctionnalités</SectionTitle>
+            <p style={{ color: "#374151", lineHeight: 1.7, fontSize: "0.88rem", margin: "0 0 0.75rem" }}>
+              La plateforme admin est accessible uniquement au responsable sécurité IBM via un mot de passe dédié. Elle permet un suivi complet en temps réel de la progression de chaque apprenant.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.6rem", marginBottom: "0.75rem" }}>
+              {[
+                { icon: "👤", label: "Fiche complète par apprenant", desc: "Nom, email, site IBM, étage, zone, langue" },
+                { icon: "📊", label: "Progression détaillée", desc: "Modules complétés, score par module, score moyen" },
+                { icon: "🏆", label: "Suivi des certificats", desc: "Certificat obtenu, date de complétion" },
+                { icon: "⬇️", label: "Export CSV Excel", desc: "Toutes les données exportables en un clic" },
+                { icon: "🔍", label: "Recherche et filtres", desc: "Filtrer par site, score, statut de certification" },
+                { icon: "🔄", label: "Actualisation temps réel", desc: "Données synchronisées avec la base Supabase" },
+              ].map((f) => (
+                <div key={f.label} style={{ display: "flex", gap: "0.6rem", alignItems: "flex-start", background: "#f9fafb", borderRadius: "0.5rem", padding: "0.6rem 0.75rem" }}>
+                  <span style={{ fontSize: "1rem" }}>{f.icon}</span>
+                  <div>
+                    <div style={{ fontSize: "0.78rem", fontWeight: 700, color: "#111827" }}>{f.label}</div>
+                    <div style={{ fontSize: "0.7rem", color: "#6b7280" }}>{f.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ── SECTION 7 — DONNÉES APPRENANTS ───────────────────── */}
+          <div style={{ marginBottom: "2rem" }}>
+            <SectionTitle>8. Données enregistrées par apprenant</SectionTitle>
             <p style={{ color: "#374151", lineHeight: 1.7, fontSize: "0.88rem", margin: "0 0 0.75rem" }}>
               Pour chaque apprenant inscrit, la plateforme enregistre automatiquement les informations suivantes, accessibles depuis l'interface administrateur :
             </p>
@@ -368,9 +618,9 @@ export default function PresentationPage() {
             </div>
           </div>
 
-          {/* ── SECTION 7 — FONCTIONNALITÉS ──────────────────────── */}
+          {/* ── SECTION 9 — FONCTIONNALITÉS ──────────────────────── */}
           <div style={{ marginBottom: "2rem" }}>
-            <SectionTitle>7. Fonctionnalités clés de la plateforme</SectionTitle>
+            <SectionTitle>9. Fonctionnalités clés de la plateforme</SectionTitle>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.6rem" }}>
               {[
                 { icon: "🌐", label: "Bilingue FR / EN", desc: "Bascule dynamique à tout moment" },
