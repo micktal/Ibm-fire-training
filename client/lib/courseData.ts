@@ -1215,6 +1215,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     },
     duration: "8 min",
     image: `${CDN}b5ca9823c0ba42e492f17a707fd14708?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Ne%20laisser%20personne%20derrire.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL05lIGxhaXNzZXIgcGVyc29ubmUgZGVycmlyZS5tcDQiLCJpYXQiOjE3NzU0NzExNjEsImV4cCI6MTgzODU0MzE2MX0.DGpDG2JHbF7XOmCP7MEzt6ry9UHJ1Dim9DrtZ7WS_Uc",
     funFacts: [
       { stat: "3×", label: "la fumée tue plus que les flammes", detail: "L'inhalation de fumée toxique tue 3 fois plus que les brûlures directes. Se baisser sous 1m réduit l'exposition de 80%.", icon: "alert" },
       { stat: "1 m", label: "la hauteur de survie en fumée dense", detail: "En dessous de 1 mètre, l'air est 80% plus respirable qu'en position debout lors d'un incendie avec fumée dense.", icon: "shield" },
