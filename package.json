@@ -16,8 +16,11 @@
   "dependencies": {
     "@builder.io/react": "^9.3.0",
     "@supabase/supabase-js": "^2.101.1",
+    "@types/file-saver": "^2.0.7",
+    "docx": "^9.6.1",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "file-saver": "^2.0.5",
     "zod": "^3.25.76"
   },
   "devDependencies": {

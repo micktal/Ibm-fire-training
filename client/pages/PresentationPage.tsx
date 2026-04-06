@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { generateWordDoc } from "@/lib/generateWordDoc";
 
 // ── Data ─────────────────────────────────────────────────────────
 const MODULES_DATA = [
@@ -52,6 +53,43 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
   );
 }
 
+// ── Word download button ──────────────────────────────────────────
+function WordButton() {
+  const [loading, setLoading] = useState(false);
+
+  const handleDownload = async () => {
+    setLoading(true);
+    try {
+      await generateWordDoc();
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <button
+      onClick={handleDownload}
+      disabled={loading}
+      style={{
+        background: loading ? "rgba(255,255,255,0.2)" : "#2563eb",
+        color: "white",
+        border: "none",
+        borderRadius: "0.5rem",
+        padding: "0.5rem 1.25rem",
+        fontWeight: 700,
+        fontSize: "0.82rem",
+        cursor: loading ? "wait" : "pointer",
+        display: "flex",
+        alignItems: "center",
+        gap: "0.4rem",
+        transition: "background 0.2s",
+      }}
+    >
+      {loading ? "⏳ Génération..." : "📄 Télécharger Word (.docx)"}
+    </button>
+  );
+}
+
 // ── Main page ─────────────────────────────────────────────────────
 export default function PresentationPage() {
   const ch1 = MODULES_DATA.filter((m) => m.chapter === 1);
@@ -77,6 +115,7 @@ export default function PresentationPage() {
           IBM · Document de présentation e-learning
         </div>
         <div style={{ display: "flex", gap: "0.75rem" }}>
+          <WordButton />
           <button
             onClick={() => window.print()}
             style={{ background: "#4f86c6", color: "white", border: "none", borderRadius: "0.5rem", padding: "0.5rem 1.25rem", fontWeight: 700, fontSize: "0.82rem", cursor: "pointer" }}
