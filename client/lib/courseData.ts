@@ -1475,6 +1475,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     },
     duration: "12 min",
     image: `${CDN}2ee3c4ada85544aa87e2f4f440dc1a94?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Matriser%20lvacuation%20incendie%20IBM.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL01hdHJpc2VyIGx2YWN1YXRpb24gaW5jZW5kaWUgSUJNLm1wNCIsImlhdCI6MTc3NTQ3MTIyMSwiZXhwIjoxODM4NTQzMjIxfQ.6cg7SCanjHy2jPlrp60vUJOo0spctfMq7OR-lMRMmG0",
     funFacts: [
       { stat: "85%", label: "de réduction du risque de décès", detail: "Une formation incendie bien exécutée et régulièrement pratiquée réduit le risque de décès de 85% en situation réelle.", icon: "shield" },
       { stat: "14 modules", label: "pour être pleinement opérationnel", detail: "Vous terminez les 14 modules IBM. Chaque réflexe appris ici peut faire la différence entre une évacuation réussie et une tragédie.", icon: "zap" },
