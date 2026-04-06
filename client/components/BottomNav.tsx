@@ -41,6 +41,7 @@ export default function BottomNav() {
   // Don't show on welcome/form/fiche screens
   if (HIDDEN_PATHS.includes(location.pathname)) return null;
   if (location.pathname.startsWith("/fiche") || location.pathname === "/fiches") return null;
+  if (location.pathname === "/presentation") return null;
 
   const isActive = (item: NavItem) =>
     item.exact
