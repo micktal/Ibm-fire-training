@@ -276,6 +276,53 @@ function ContentIcon({ type }: { type: string }) {
   return <>{icons[type] ?? <FileText size={15} style={{ color: "#0043ce" }} />}</>;
 }
 
+// ── Podcast player ──────────────────────────────────────────────
+function PodcastPlayer({ url, title, lang }: { url: string; title: string; lang: "fr" | "en" }) {
+  return (
+    <div
+      className="rounded-2xl overflow-hidden"
+      style={{ background: "linear-gradient(135deg, #1a0533 0%, #2d0a5e 50%, #1a0533 100%)", boxShadow: "0 4px 24px rgba(138,63,252,0.2)" }}
+    >
+      {/* Header */}
+      <div className="flex items-center gap-3 px-4 py-3" style={{ borderBottom: "1px solid rgba(138,63,252,0.2)" }}>
+        <div className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(138,63,252,0.25)", border: "1.5px solid rgba(138,63,252,0.4)" }}>
+          {/* Mic icon SVG */}
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#a855f7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/>
+          </svg>
+        </div>
+        <div className="flex-1">
+          <div className="font-mono text-xs font-bold uppercase" style={{ color: "#a855f7", letterSpacing: "0.1em", fontFamily: "'IBM Plex Mono', monospace" }}>
+            {lang === "en" ? "PODCAST — GO FURTHER" : "PODCAST — POUR ALLER PLUS LOIN"}
+          </div>
+          <div className="font-semibold text-white" style={{ fontSize: "0.8rem", opacity: 0.85 }}>
+            {lang === "en" ? `Deep dive: ${title}` : `Approfondissement : ${title}`}
+          </div>
+        </div>
+        <div className="font-mono text-xs px-2 py-0.5 rounded-full" style={{ background: "rgba(138,63,252,0.2)", color: "#a855f7", border: "1px solid rgba(138,63,252,0.35)", fontFamily: "'IBM Plex Mono', monospace" }}>
+          AUDIO
+        </div>
+      </div>
+
+      {/* Audio player */}
+      <div className="px-4 py-3">
+        <audio
+          controls
+          style={{ width: "100%", accentColor: "#a855f7", borderRadius: "8px", height: "36px" }}
+          src={url}
+        >
+          {lang === "en" ? "Your browser does not support audio." : "Votre navigateur ne supporte pas l'audio."}
+        </audio>
+        <p className="text-xs mt-2" style={{ color: "rgba(255,255,255,0.4)", fontStyle: "italic" }}>
+          {lang === "en"
+            ? "Listen to this expert dialogue to reinforce your understanding before the quiz."
+            : "Écoutez ce dialogue d'experts pour renforcer votre compréhension avant le quiz."}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 // ── Quiz component ──────────────────────────────────────────────
 /** Fisher-Yates shuffle — retourne un nouveau tableau mélangé */
 function shuffle<T>(arr: T[]): T[] {
@@ -1164,6 +1211,13 @@ export default function ModulePage() {
                   ))}
                 </div>
               </div>
+            </FadeIn>
+          )}
+
+          {/* Podcast player */}
+          {mod.podcastUrl && (
+            <FadeIn delay={0.13}>
+              <PodcastPlayer url={mod.podcastUrl} title={mod.title} lang={lang} />
             </FadeIn>
           )}
 

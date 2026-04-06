@@ -54,6 +54,7 @@ export interface CourseModule {
   image: string;
   videoUrl?: string;
   captionsVtt?: string;
+  podcastUrl?: string;
   funFacts?: FunFact[];
   keyPoints?: string[];   // 3 bullet points shown before quiz
   preTest?: PreTestQuestion[]; // 2-question positioning test shown before module
@@ -102,6 +103,7 @@ export const MODULES: CourseModule[] = [
     duration: "8 min",
     image: `${CDN}68e7b7c3ea9048b4a797a2ceacec35aa?format=webp&width=800`,
     videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Prvenir%20un%20dpart%20de%20feu%20au%20bureau.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL1BydmVuaXIgdW4gZHBhcnQgZGUgZmV1IGF1IGJ1cmVhdS5tcDQiLCJpYXQiOjE3NzUzMzUyNTMsImV4cCI6MTgzODQwNzI1M30.KCyO1UCQfI8jNCA1LyOqAlMpzPMW2OWkPquVeo0z1bA",
+    podcastUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/podcat%20ibm.mp3?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL3BvZGNhdCBpYm0ubXAzIiwiaWF0IjoxNzc1NDcyNjg3LCJleHAiOjE4Mzg1NDQ2ODd9.Qqc6VyyTbtdI2vTfGE_K2Nm0p9l9tUAB0yoc-l1H40I",
     captionsVtt: `WEBVTT
 
 STYLE
