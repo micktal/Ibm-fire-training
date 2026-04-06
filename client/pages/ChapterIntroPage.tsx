@@ -6,7 +6,6 @@ import {
 } from "lucide-react";
 import IBMLogo from "@/components/IBMLogo";
 import GeometricBg from "@/components/layout/GeometricBg";
-import BottomNav from "@/components/layout/BottomNav";
 import { useLanguage } from "@/lib/languageContext";
 
 // ── Chapter 1 recap data ─────────────────────────────────────────
@@ -340,8 +339,6 @@ export default function ChapterIntroPage() {
         </div>
       </main>
 
-      {/* ── Bottom nav ───────────────────────────────────────── */}
-      <BottomNav onBack={() => navigate("/hub")} onNext={() => navigate("/module/ch2-m1")} />
     </div>
   );
 }

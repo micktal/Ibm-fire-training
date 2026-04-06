@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import {
   ChevronRight, ChevronLeft, CheckCircle2, XCircle, Target, Clock,
   Info, AlertTriangle, List, Eye, ChevronDown, Award,
-  ArrowRight, RotateCcw, Zap, BookOpen, FileText, Shield, Save,
+  ArrowRight, RotateCcw, Zap, BookOpen, FileText, Shield, Save, Download,
 } from "lucide-react";
 import IBMTopbar from "@/components/IBMTopbar";
 import VideoPlayer from "@/components/VideoPlayer";
@@ -24,7 +24,6 @@ import TipFlipCards from "@/components/interactions/TipFlipCards";
 import SpinWheel from "@/components/interactions/SpinWheel";
 import GridQuiz from "@/components/interactions/GridQuiz";
 import MindMap from "@/components/interactions/MindMap";
-import BottomNav from "@/components/layout/BottomNav";
 import SituationAlertPopup from "@/components/SituationAlertPopup";
 import { getModuleById, QuizQuestion, ModuleContent, PreTestQuestion } from "@/lib/courseData";
 import { getModuleByIdEn } from "@/lib/courseDataEn";
@@ -1350,6 +1349,16 @@ export default function ModulePage() {
                     {savedAt ? `${t("module.saved_at", lang)} ${savedAt} — ${t("module.lms_saved", lang)}` : t("module.save", lang)}
                   </button>
 
+                  {/* Fiche réflexe button */}
+                  <button
+                    onClick={() => navigate(`/fiche/${mod.id}`)}
+                    className="w-full flex items-center justify-center gap-2 rounded-xl py-2.5 font-semibold transition-all"
+                    style={{ background: "rgba(255,107,26,0.08)", border: "1.5px solid rgba(255,107,26,0.3)", color: "#e8520a", cursor: "pointer", fontSize: "0.875rem" }}
+                  >
+                    <Download size={15} />
+                    {isEN ? "Download Quick Reference Sheet" : "Télécharger la fiche réflexe"}
+                  </button>
+
                   {/* Nav buttons */}
                   <div className="flex flex-col sm:flex-row gap-2.5">
                     <button
@@ -1435,10 +1444,6 @@ export default function ModulePage() {
         />
       )}
 
-      <BottomNav
-        onBack={() => navigate("/hub")}
-        onMenu={() => navigate("/hub")}
-      />
     </div>
   );
 }

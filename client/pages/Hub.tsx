@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { Lock, CheckCircle2, Clock, Play, Flame, Shield, Award, BarChart2, ArrowRight, BookOpen } from "lucide-react";
 import IBMLogo from "@/components/IBMLogo";
 import GeometricBg from "@/components/layout/GeometricBg";
-import BottomNav from "@/components/layout/BottomNav";
 import { useUser } from "@/lib/userContext";
 import { getChapterModules, CourseModule } from "@/lib/courseData";
 import { getChapterModulesEn } from "@/lib/courseDataEn";
@@ -395,8 +394,6 @@ export default function Hub() {
         </div>
       </main>
 
-      {/* ── Bottom nav bar ──────────────────────────────────── */}
-      <BottomNav onBack={() => navigate(-1)} onMenu={() => navigate("/hub")} />
     </div>
   );
 }
