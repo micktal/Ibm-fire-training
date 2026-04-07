@@ -42,6 +42,7 @@ export default function BottomNav() {
   if (HIDDEN_PATHS.includes(location.pathname)) return null;
   if (location.pathname.startsWith("/fiche") || location.pathname === "/fiches") return null;
   if (location.pathname === "/presentation") return null;
+  if (location.pathname === "/certificat") return null;
 
   const isActive = (item: NavItem) =>
     item.exact

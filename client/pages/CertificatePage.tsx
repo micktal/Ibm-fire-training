@@ -75,6 +75,31 @@ export default function CertificatePage() {
       <main className="flex-1 overflow-y-auto">
         <div className="max-w-2xl mx-auto px-4 py-6 flex flex-col gap-5">
 
+          {/* ── Formation terminée banner (shown when all 14 done) ── */}
+          {isFullyCompleted && (
+            <div
+              className="rounded-2xl px-5 py-4 flex items-center gap-4"
+              style={{
+                background: "linear-gradient(135deg, #0a3882 0%, #198038 100%)",
+                boxShadow: "0 8px 32px rgba(25,128,56,0.3)",
+              }}
+            >
+              <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: "rgba(255,255,255,0.15)", border: "2px solid rgba(255,255,255,0.3)" }}>
+                <Award size={24} color="#FFD700" />
+              </div>
+              <div className="flex-1">
+                <div className="font-bold text-white" style={{ fontSize: "1rem" }}>
+                  {isEN ? "Training complete!" : "Formation terminée !"}
+                </div>
+                <div className="text-sm mt-0.5" style={{ color: "rgba(255,255,255,0.75)" }}>
+                  {isEN
+                    ? `Congratulations ${fullName} — all 14 modules validated with an average of ${avgScore}%.`
+                    : `Félicitations ${fullName} — les 14 modules sont validés avec une moyenne de ${avgScore}%.`}
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* ── Certificate card ─────────────────────────────── */}
           <div
             className="rounded-3xl overflow-hidden"

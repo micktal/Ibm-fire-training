@@ -13,12 +13,16 @@ export default function FillBlank({ exercise, onComplete }: Props) {
   const [checked, setChecked] = useState(false);
   const [done, setDone] = useState(false);
 
+  const isAnswerCorrect = (input: string, s: typeof exercise.sentences[0]) => {
+    const norm = input.trim().toLowerCase();
+    if (norm === s.answer.toLowerCase()) return true;
+    return s.acceptableAnswers?.some((a) => norm === a.toLowerCase()) ?? false;
+  };
+
   const handleCheck = () => {
     setChecked(true);
     setDone(true);
-    const correct = exercise.sentences.filter((s, i) =>
-      (inputs[i] ?? "").trim().toLowerCase() === s.answer.toLowerCase()
-    ).length;
+    const correct = exercise.sentences.filter((s, i) => isAnswerCorrect(inputs[i] ?? "", s)).length;
     const score = Math.round((correct / exercise.sentences.length) * 100);
     setTimeout(() => onComplete?.(score), 800);
   };
@@ -28,7 +32,7 @@ export default function FillBlank({ exercise, onComplete }: Props) {
   const { lang } = useLanguage();
   const isEN = lang === "en";
   const allFilled = exercise.sentences.every((_, i) => (inputs[i] ?? "").trim().length > 0);
-  const correct = checked ? exercise.sentences.filter((s, i) => (inputs[i] ?? "").trim().toLowerCase() === s.answer.toLowerCase()).length : 0;
+  const correct = checked ? exercise.sentences.filter((s, i) => isAnswerCorrect(inputs[i] ?? "", s)).length : 0;
 
   return (
     <div style={{ fontFamily: "'IBM Plex Sans', sans-serif" }}>
@@ -54,8 +58,8 @@ export default function FillBlank({ exercise, onComplete }: Props) {
       <div className="flex flex-col gap-3 mb-4">
         {exercise.sentences.map((sent, i) => {
           const val = inputs[i] ?? "";
-          const isCorrect = checked && val.trim().toLowerCase() === sent.answer.toLowerCase();
-          const isWrong = checked && val.trim().toLowerCase() !== sent.answer.toLowerCase();
+          const isCorrect = checked && isAnswerCorrect(val, sent);
+          const isWrong = checked && !isAnswerCorrect(val, sent);
           return (
             <div key={i} className="rounded-2xl px-4 py-3.5" style={{
               background: checked ? (isCorrect ? "rgba(25,128,56,0.06)" : "rgba(218,30,40,0.05)") : "#fff",

@@ -1108,7 +1108,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         question: "Quelle formulation est la plus adaptée pour guider des collègues en évacuation ?",
         choices: [
           { key: "A", label: "'Il y a le feu ! Sauvez-vous !' — crier fort" },
-          { key: "B", label: "'Attention, alarm déclenchée. Suivez-moi par l'escalier B.'", hint: "Calme et directif" },
+          { key: "B", label: "'Attention, alarme déclenchée. Suivez-moi par l'escalier B.'", hint: "Calme et directif" },
           { key: "C", label: "'Je ne sais pas où aller, essayons par là'" },
           { key: "D", label: "'Attendez ici, je vais chercher de l'aide'" },
         ],
@@ -1527,16 +1527,16 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     quiz: [
       {
         id: "q1",
-        question: "Première action après déclenchement de l'alarme ?",
+        question: "L'alarme retentit. Quelles sont vos DEUX premières actions dans l'ordre ?",
         choices: [
-          { key: "A", label: "Prendre mes affaires importantes avant de partir" },
-          { key: "B", label: "Déclencher l'alarme si ce n'est pas déjà fait et guider mes collègues", hint: "Alerte + guidage" },
-          { key: "C", label: "Appeler mon manager pour confirmation" },
-          { key: "D", label: "Attendre que les autres bougent d'abord" },
+          { key: "A", label: "Prendre mes affaires, puis évacuer" },
+          { key: "B", label: "Alerter le 22 22 avec ma localisation, puis guider mes collègues vers la sortie", hint: "Alerte 22 22 → guidage" },
+          { key: "C", label: "Rejoindre le point de rassemblement, puis appeler le 22 22" },
+          { key: "D", label: "Vérifier l'origine du feu, puis alerter" },
         ],
         correctKey: "B",
-        feedbackOk: "Parfait. Confirmer l'alerte et guider immédiatement — les affaires ne comptent pas.",
-        feedbackKo: "Aucune affaire ne vaut une vie. Confirmer l'alarme et guider les collègues est la priorité absolue.",
+        feedbackOk: "Parfait. Alerter le 22 22 en premier (avec votre localisation exacte), puis guider vos collègues. Jamais d'affaires.",
+        feedbackKo: "L'ordre correct : alerter le 22 22 (localisation précise) → guider les collègues vers la sortie. Aucune affaire ne vaut une vie.",
       },
       {
         id: "q2",

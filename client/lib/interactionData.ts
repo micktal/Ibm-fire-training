@@ -18,7 +18,7 @@ export interface FillBlankExercise {
   type: "fillblank";
   title: string;
   subtitle?: string;
-  sentences: Array<{ before: string; answer: string; after?: string; hint?: string }>;
+  sentences: Array<{ before: string; answer: string; acceptableAnswers?: string[]; after?: string; hint?: string }>;
   successMessage?: string;
 }
 
@@ -1463,11 +1463,11 @@ const m5_fillblank: FillBlankExercise = {
   subtitle: "Retrouvez les mots clés de la méthode d'extinction IBM",
   successMessage: "La séquence PASS est parfaitement mémorisée !",
   sentences: [
-    { before: "P — Tirez la", answer: "goupille", after: "de sécurité pour déverrouiller l'extincteur.", hint: "verrou de sécurité" },
-    { before: "A — Visez la", answer: "base", after: "des flammes, jamais le haut du feu.", hint: "où se trouve le combustible" },
-    { before: "S — Pressez la", answer: "poignée", after: "de déclenchement pour activer le jet.", hint: "mécanisme de déclenchement" },
-    { before: "S — Balayez de", answer: "gauche à droite", after: "en maintenant le jet sur la base.", hint: "mouvement horizontal" },
-    { before: "Distance optimale :", answer: "2 à 3 mètres", after: "du foyer pour une efficacité maximale.", hint: "distance de sécurité" },
+    { before: "P — Tirez la", answer: "goupille", acceptableAnswers: ["goupille de sécurité", "goupille de securite", "pin", "safety pin", "la goupille"], after: "de sécurité pour déverrouiller l'extincteur.", hint: "verrou de sécurité" },
+    { before: "A — Visez la", answer: "base", acceptableAnswers: ["la base", "base des flammes", "base du feu", "pied", "pied des flammes", "pied du feu"], after: "des flammes, jamais le haut du feu.", hint: "où se trouve le combustible" },
+    { before: "S — Pressez la", answer: "poignée", acceptableAnswers: ["la poignée", "gâchette", "gachette", "manette", "détente", "detente", "poignee"], after: "de déclenchement pour activer le jet.", hint: "mécanisme de déclenchement" },
+    { before: "S — Balayez de", answer: "gauche à droite", acceptableAnswers: ["gauche a droite", "de gauche à droite", "de gauche a droite", "left to right", "gauche-droite"], after: "en maintenant le jet sur la base.", hint: "mouvement horizontal" },
+    { before: "Distance optimale :", answer: "2 à 3 mètres", acceptableAnswers: ["2 à 3 metres", "2-3 mètres", "2-3 metres", "2-3m", "2 à 3m", "2 a 3 mètres", "2 a 3 metres", "2 a 3m", "2 mètres", "3 mètres", "2 metres", "3 metres"], after: "du foyer pour une efficacité maximale.", hint: "distance de sécurité" },
   ],
 };
 
@@ -1477,10 +1477,10 @@ const ch2m3_fillblank: FillBlankExercise = {
   subtitle: "Les 3 actions fondamentales de l'évacuation IBM",
   successMessage: "Séquence SORS-FERME-SIGNALE parfaitement maîtrisée !",
   sentences: [
-    { before: "Quittez la pièce", answer: "sans attendre", after: "— chaque seconde compte.", hint: "ne pas hésiter" },
-    { before: "Fermez la porte", answer: "sans la verrouiller", after: "pour ralentir le feu sans piéger les autres.", hint: "fermer mais pas bloquer" },
-    { before: "Signalez les zones vérifiées au", answer: "responsable évacuation", after: "au point de rassemblement.", hint: "personne en charge" },
-    { before: "Ne", answer: "jamais revenir", after: "chercher ses affaires une fois l'évacuation lancée.", hint: "interdiction absolue" },
+    { before: "Quittez la pièce", answer: "sans attendre", acceptableAnswers: ["immédiatement", "immediatement", "rapidement", "de suite", "tout de suite", "aussitôt", "aussitot", "sans délai", "sans delai"], after: "— chaque seconde compte.", hint: "ne pas hésiter" },
+    { before: "Fermez la porte", answer: "sans la verrouiller", acceptableAnswers: ["sans verrouiller", "sans fermer à clé", "sans fermer a clé", "sans clé", "sans cle", "sans la fermer à clé", "sans fermer a cle"], after: "pour ralentir le feu sans piéger les autres.", hint: "fermer mais pas bloquer" },
+    { before: "Signalez les zones vérifiées au", answer: "responsable évacuation", acceptableAnswers: ["responsable de l'évacuation", "responsable evacuation", "chef évacuation", "chef evacuation", "responsable", "responsable d'évacuation", "responsable d evacuation"], after: "au point de rassemblement.", hint: "personne en charge" },
+    { before: "Ne", answer: "jamais revenir", acceptableAnswers: ["ne jamais revenir", "pas revenir", "ne pas revenir", "jamais retourner", "ne jamais retourner"], after: "chercher ses affaires une fois l'évacuation lancée.", hint: "interdiction absolue" },
   ],
 };
 

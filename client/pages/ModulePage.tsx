@@ -937,7 +937,7 @@ const typeAccent: Record<string, { border: string; icon: string; headerBg: strin
 export default function ModulePage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { setModuleProgress, progress } = useUser();
+  const { setModuleProgress, progress, totalCompleted } = useUser();
   const [phase, setPhase] = useState<"intro" | "pretest" | "countdown" | "module">("intro");
   const [quizDone, setQuizDone] = useState(false);
   const [quizScore, setQuizScore] = useState(0);
@@ -952,6 +952,9 @@ export default function ModulePage() {
   const [elapsedMin, setElapsedMin] = useState<number | null>(null);
   const [showAlert, setShowAlert] = useState(false);
   const alertShownRef = useRef(false);
+  const mainRef = useRef<HTMLDivElement>(null);
+  const savedScrollRef = useRef<number>(0);
+  const allModulesDoneRef = useRef(false);
   const alertTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const { lang } = useLanguage();
@@ -997,7 +1000,12 @@ export default function ModulePage() {
     }
     // Only mark completed if score >= 80%
     if (score >= 80) {
+      savedScrollRef.current = mainRef.current?.scrollTop ?? 0;
+      // Detect if completing this module finishes the full training (14 modules)
+      const wasAlreadyDone = !!progress[mod.id]?.completed;
+      const willFinishAll = !wasAlreadyDone && totalCompleted === 13; // 13 + this one = 14
       setShowCelebration(true);
+      if (willFinishAll) allModulesDoneRef.current = true;
       setModuleProgress(mod.id, {
         moduleId: mod.id,
         completed: true,
@@ -1026,7 +1034,7 @@ export default function ModulePage() {
         chapter={mod.chapter}
       />
 
-      <main className="flex-1 overflow-y-auto">
+      <main ref={mainRef} className="flex-1 overflow-y-auto">
         {/* Hero — geometric IBM blue header */}
         <div className="relative overflow-hidden" style={{ minHeight: "180px" }}>
           <div className="absolute inset-0" style={{ background: "linear-gradient(145deg, #0A3882 0%, #0D47A1 45%, #1565C0 100%)" }}>
@@ -1516,6 +1524,7 @@ export default function ModulePage() {
             if (mod && ALERT_BY_MODULE[mod.id] && !alertShownRef.current) {
               alertTimerRef.current = setTimeout(() => {
                 if (!alertShownRef.current) {
+                  savedScrollRef.current = mainRef.current?.scrollTop ?? 0;
                   setShowAlert(true);
                   alertShownRef.current = true;
                 }
@@ -1529,7 +1538,15 @@ export default function ModulePage() {
       {showAlert && mod && ALERT_BY_MODULE[mod.id] && (
         <SituationAlertPopup
           alert={ALERT_BY_MODULE[mod.id]}
-          onClose={() => setShowAlert(false)}
+          onClose={() => {
+            setShowAlert(false);
+            // Restore scroll position after popup closes (fixes mobile scroll-to-top bug)
+            requestAnimationFrame(() => {
+              if (mainRef.current && savedScrollRef.current > 0) {
+                mainRef.current.scrollTop = savedScrollRef.current;
+              }
+            });
+          }}
         />
       )}
 
@@ -1540,7 +1557,19 @@ export default function ModulePage() {
           moduleName={mod.title}
           onContinue={() => {
             setShowCelebration(false);
-            if (quizScore >= 80) navigate("/hub");
+            if (quizScore >= 80) {
+              if (allModulesDoneRef.current) {
+                navigate("/certificat");
+              } else {
+                navigate("/hub");
+              }
+            } else {
+              requestAnimationFrame(() => {
+                if (mainRef.current && savedScrollRef.current > 0) {
+                  mainRef.current.scrollTop = savedScrollRef.current;
+                }
+              });
+            }
           }}
         />
       )}
