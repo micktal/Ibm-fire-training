@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { Lock, CheckCircle2, Clock, Play, Flame, Shield, Award, BarChart2, ArrowRight, BookOpen } from "lucide-react";
 import IBMLogo from "@/components/IBMLogo";
 import GeometricBg from "@/components/layout/GeometricBg";
@@ -215,6 +216,12 @@ export default function Hub() {
   const { user, globalScore, totalCompleted, progress } = useUser();
 
   const { lang, setLang } = useLanguage();
+
+  // Guard: must complete registration form before accessing hub
+  useEffect(() => {
+    if (!user) navigate("/form", { replace: true });
+  }, [user, navigate]);
+
   const ch1Mods = lang === "en" ? getChapterModulesEn(1) : getChapterModules(1);
   const ch2Mods = lang === "en" ? getChapterModulesEn(2) : getChapterModules(2);
 

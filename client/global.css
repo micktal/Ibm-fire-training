@@ -127,6 +127,11 @@
   100% { opacity: 1; transform: scale(1) rotate(0deg); }
 }
 
+@keyframes ibmSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
 @keyframes popupShake {
   0%   { transform: translateX(0); }
   10%  { transform: translateX(-8px) rotate(-1deg); }

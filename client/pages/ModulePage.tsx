@@ -32,6 +32,7 @@ import { t } from "@/lib/i18n";
 import { MODULE_INTERACTIONS, AnyExercise } from "@/lib/interactionData";
 import { ALERT_BY_MODULE } from "@/lib/situationAlerts";
 import { useUser } from "@/lib/userContext";
+import { updateProgression, getSessionId } from "@/lib/supabase";
 
 function InteractionBlock({ exercise }: { exercise: AnyExercise }) {
   if (exercise.type === "hotspot") return <HotspotImage exercise={exercise} />;
@@ -946,6 +947,7 @@ export default function ModulePage() {
   const [preTestScore, setPreTestScore] = useState<number | null>(null);
   const [selfAssessment, setSelfAssessment] = useState<number | null>(null);
   const [savedAt, setSavedAt] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
   const startTimeRef = useRef<number | null>(null);
   const [elapsedMin, setElapsedMin] = useState<number | null>(null);
   const [showAlert, setShowAlert] = useState(false);
@@ -967,6 +969,7 @@ export default function ModulePage() {
     setPreTestScore(null);
     setSelfAssessment(null);
     setSavedAt(null);
+    setSaving(false);
     startTimeRef.current = null;
     setElapsedMin(null);
     setShowAlert(false);
@@ -1395,24 +1398,56 @@ export default function ModulePage() {
                     </div>
                   </div>
 
-                  {/* LMS save button */}
+                  {/* Checkpoint / Save button */}
                   <button
-                    onClick={() => {
-                      // LMS save point — add API call here for external LMS integration
+                    disabled={saving}
+                    onClick={async () => {
+                      setSaving(true);
+                      try {
+                        const completedIds = Object.values(progress).filter((p) => p.completed);
+                        const avg = completedIds.length > 0
+                          ? Math.round(completedIds.reduce((s, p) => s + p.score, 0) / completedIds.length)
+                          : 0;
+                        await updateProgression(getSessionId(), {
+                          completed_modules: completedIds.length,
+                          average_score: avg,
+                        });
+                      } catch (_) { /* silent fail */ }
                       const ts = new Date().toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
                       setSavedAt(ts);
+                      setSaving(false);
                     }}
-                    className="w-full flex items-center justify-center gap-2 rounded-xl py-3 font-bold transition-all"
+                    className="w-full flex items-center justify-center gap-2 rounded-xl font-bold transition-all"
                     style={{
-                      background: savedAt ? "rgba(25,128,56,0.1)" : "rgba(13,71,161,0.08)",
-                      border: `2px solid ${savedAt ? "rgba(25,128,56,0.3)" : "rgba(13,71,161,0.2)"}`,
-                      color: savedAt ? "#198038" : "#0D47A1",
-                      cursor: "pointer",
-                      fontSize: "0.875rem",
+                      padding: "0.85rem 1rem",
+                      background: savedAt
+                        ? "rgba(25,128,56,0.1)"
+                        : saving
+                        ? "rgba(13,71,161,0.06)"
+                        : "linear-gradient(135deg, #0D47A1 0%, #1565C0 100%)",
+                      border: `2px solid ${savedAt ? "rgba(25,128,56,0.35)" : saving ? "rgba(13,71,161,0.2)" : "transparent"}`,
+                      color: savedAt ? "#198038" : saving ? "#0D47A1" : "white",
+                      cursor: saving ? "wait" : "pointer",
+                      fontSize: "0.9rem",
+                      boxShadow: savedAt || saving ? "none" : "0 4px 16px rgba(13,71,161,0.35)",
                     }}
                   >
-                    {savedAt ? <CheckCircle2 size={15} /> : <Save size={15} />}
-                    {savedAt ? `${t("module.saved_at", lang)} ${savedAt} — ${t("module.lms_saved", lang)}` : t("module.save", lang)}
+                    {saving ? (
+                      <>
+                        <span style={{ display: "inline-block", animation: "ibmSpin 1s linear infinite", fontSize: "1rem" }}>⏳</span>
+                        {isEN ? "Saving…" : "Sauvegarde en cours…"}
+                      </>
+                    ) : savedAt ? (
+                      <>
+                        <CheckCircle2 size={16} />
+                        {isEN ? `Checkpoint saved at ${savedAt}` : `Point de sauvegarde — ${savedAt}`}
+                      </>
+                    ) : (
+                      <>
+                        <Save size={16} />
+                        {isEN ? "Save checkpoint" : "Enregistrer le point de sauvegarde"}
+                      </>
+                    )}
                   </button>
 
                   {/* Fiche réflexe button */}

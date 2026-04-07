@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, Home, BookOpen, BarChart2, HelpCircle, Users, PlayCircle } from "lucide-react";
+import { ArrowRight, Home, BookOpen, BarChart2, HelpCircle, PlayCircle } from "lucide-react";
 import IBMLogo from "@/components/IBMLogo";
 import GeometricBg from "@/components/layout/GeometricBg";
 import BottomNav from "@/components/layout/BottomNav";
@@ -124,6 +124,7 @@ export default function Index() {
   const navigate = useNavigate();
   const { lang, setLang } = useLanguage();
   const [langChosen, setLangChosen] = useState(() => !!localStorage.getItem("ibm_lang"));
+  const [showHelp, setShowHelp] = useState(false);
 
   const handleLangSelect = (l: Lang) => {
     setLang(l);
@@ -176,19 +177,98 @@ export default function Index() {
           <h2 className="font-bold mb-4" style={{ fontSize: "clamp(1.1rem, 3.5vw, 1.75rem)", color: "#1565C0", lineHeight: "1.1", letterSpacing: "-0.01em", textTransform: "uppercase" }}>
             {t("landing.title", lang)}
           </h2>
-          <p className="mb-6" style={{ fontSize: "0.95rem", color: "#6f7897", lineHeight: "1.65", maxWidth: "480px" }}>
+          <p className="mb-3" style={{ fontSize: "0.95rem", color: "#6f7897", lineHeight: "1.65", maxWidth: "480px" }}>
             {t("landing.desc", lang)}
           </p>
+          <p className="mb-5" style={{ fontSize: "0.88rem", color: "#374151", lineHeight: "1.65", maxWidth: "480px", background: "rgba(13,71,161,0.06)", borderLeft: "3px solid #1565C0", borderRadius: "0 6px 6px 0", padding: "0.6rem 0.9rem" }}>
+            {t("landing.skills", lang)}
+          </p>
 
-          {/* Navigation tiles */}
-          <div className="grid grid-cols-3 gap-3 mb-6">
-            <Tile icon={<Home size={28} />} label={t("landing.home", lang)} onClick={() => navigate("/")} />
-            <Tile icon={<PlayCircle size={28} />} label={t("landing.ch1", lang)} onClick={() => navigate("/hub")} />
-            <Tile icon={<BookOpen size={28} />} label={t("landing.ch2", lang)} onClick={() => navigate("/hub")} />
-            <Tile icon={<BarChart2 size={28} />} label={t("landing.results", lang)} onClick={() => navigate("/hub")} />
-            <Tile icon={<Users size={28} />} label={t("landing.profile", lang)} onClick={() => navigate("/form")} />
-            <Tile icon={<HelpCircle size={28} />} label={t("landing.help", lang)} />
+          {/* Navigation tiles — 2 rows */}
+          <div className="grid grid-cols-3 gap-3 mb-3">
+            <Tile icon={<PlayCircle size={28} />} label={t("landing.ch1", lang)} onClick={() => navigate("/form")} />
+            <Tile icon={<BookOpen size={28} />} label={t("landing.ch2", lang)} onClick={() => navigate("/form")} />
+            <Tile icon={<BarChart2 size={28} />} label={t("landing.results", lang)} onClick={() => navigate("/form")} />
           </div>
+          <div className="grid grid-cols-2 gap-3 mb-6">
+            <Tile icon={<Home size={28} />} label={t("landing.home", lang)} onClick={() => navigate("/")} />
+            <Tile icon={<HelpCircle size={28} />} label={t("landing.help", lang)} onClick={() => setShowHelp(true)} />
+          </div>
+
+          {/* Help modal */}
+          {showHelp && (
+            <div
+              className="fixed inset-0 z-50 flex items-center justify-center"
+              style={{ background: "rgba(10,32,82,0.55)", backdropFilter: "blur(4px)" }}
+              onClick={() => setShowHelp(false)}
+            >
+              <div
+                className="relative rounded-2xl overflow-hidden"
+                style={{ maxWidth: "440px", width: "90%", background: "white", boxShadow: "0 24px 64px rgba(0,0,0,0.3)" }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Header */}
+                <div style={{ background: "#0D47A1", padding: "1.25rem 1.5rem" }}>
+                  <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.25rem" }}>
+                    IBM · Sécurité Incendie
+                  </div>
+                  <div style={{ color: "white", fontWeight: 800, fontSize: "1.1rem" }}>
+                    {lang === "fr" ? "Aide & Informations" : "Help & Information"}
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div style={{ padding: "1.25rem 1.5rem" }}>
+                  {/* Emergency */}
+                  <div style={{ background: "#fef2f2", border: "1.5px solid #fca5a5", borderRadius: "0.75rem", padding: "0.9rem 1rem", marginBottom: "1rem", display: "flex", gap: "0.75rem", alignItems: "center" }}>
+                    <div style={{ fontSize: "1.5rem" }}>🚨</div>
+                    <div>
+                      <div style={{ fontWeight: 800, color: "#dc2626", fontSize: "0.85rem" }}>
+                        {lang === "fr" ? "Numéro d'urgence IBM" : "IBM Emergency Number"}
+                      </div>
+                      <div style={{ fontWeight: 900, color: "#0a2052", fontSize: "1.4rem", fontFamily: "'IBM Plex Mono', monospace" }}>22 22</div>
+                      <div style={{ fontSize: "0.72rem", color: "#6b7280" }}>
+                        {lang === "fr" ? "Sécurité IBM — à composer EN PREMIER avant le 18 et le 15" : "IBM Security — call FIRST before 18 or 15"}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Training info */}
+                  <div style={{ marginBottom: "1rem" }}>
+                    <div style={{ fontWeight: 700, color: "#0a2052", fontSize: "0.82rem", marginBottom: "0.5rem" }}>
+                      {lang === "fr" ? "À propos de la formation" : "About this training"}
+                    </div>
+                    {[
+                      lang === "fr" ? "14 modules répartis en 2 chapitres (Lutte incendie + Évacuation)" : "14 modules across 2 chapters (Fire fighting + Evacuation)",
+                      lang === "fr" ? "Score minimum requis : 80% par module pour valider" : "Minimum score required: 80% per module to pass",
+                      lang === "fr" ? "Disponible en français et en anglais" : "Available in French and English",
+                      lang === "fr" ? "Certificat généré automatiquement à la fin" : "Certificate automatically generated at the end",
+                      lang === "fr" ? "Votre progression est sauvegardée automatiquement" : "Your progress is saved automatically",
+                    ].map((item) => (
+                      <div key={item} style={{ display: "flex", gap: "0.5rem", alignItems: "flex-start", fontSize: "0.78rem", color: "#374151", marginBottom: "0.3rem" }}>
+                        <span style={{ color: "#0D47A1", fontWeight: 700, flexShrink: 0 }}>·</span>
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Registration reminder */}
+                  <div style={{ background: "rgba(13,71,161,0.06)", borderLeft: "3px solid #1565C0", borderRadius: "0 0.4rem 0.4rem 0", padding: "0.6rem 0.75rem", fontSize: "0.75rem", color: "#1e40af", marginBottom: "1rem" }}>
+                    {lang === "fr"
+                      ? "⓵ Complétez le formulaire d'inscription avant de commencer la formation."
+                      : "⓵ Complete the registration form before starting the training."}
+                  </div>
+
+                  <button
+                    onClick={() => setShowHelp(false)}
+                    style={{ width: "100%", background: "#0D47A1", color: "white", border: "none", borderRadius: "0.5rem", padding: "0.7rem", fontWeight: 700, fontSize: "0.85rem", cursor: "pointer" }}
+                  >
+                    {lang === "fr" ? "Fermer" : "Close"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* CTA */}
           <button
