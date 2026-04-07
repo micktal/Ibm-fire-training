@@ -760,8 +760,8 @@ function PreTestOverlay({
       setSelected(null);
       setAnswered(false);
     } else {
-      const finalCorrect = selected === q.correctKey ? correct + 1 : correct;
-      onComplete(Math.round((finalCorrect / questions.length) * 100));
+      // `correct` is already up-to-date (state updated after handleSelect click + re-render)
+      onComplete(Math.round((correct / questions.length) * 100));
     }
   };
 
@@ -946,6 +946,7 @@ export default function ModulePage() {
   const [showCelebration, setShowCelebration] = useState(false);
   const [preTestScore, setPreTestScore] = useState<number | null>(null);
   const [selfAssessment, setSelfAssessment] = useState<number | null>(null);
+  const [forceQuiz, setForceQuiz] = useState(false); // allows retake on already-done modules
   const [savedAt, setSavedAt] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const startTimeRef = useRef<number | null>(null);
@@ -971,6 +972,7 @@ export default function ModulePage() {
     setShowCelebration(false);
     setPreTestScore(null);
     setSelfAssessment(null);
+    setForceQuiz(false);
     setSavedAt(null);
     setSaving(false);
     startTimeRef.current = null;
@@ -978,6 +980,8 @@ export default function ModulePage() {
     setShowAlert(false);
     alertShownRef.current = false;
     if (alertTimerRef.current) clearTimeout(alertTimerRef.current);
+    // Cleanup on unmount
+    return () => { if (alertTimerRef.current) clearTimeout(alertTimerRef.current); };
   }, [id]);
 
   useEffect(() => {
@@ -1272,7 +1276,7 @@ export default function ModulePage() {
                 </span>
               </div>
 
-              {alreadyDone && !quizDone ? (
+              {alreadyDone && !quizDone && !forceQuiz ? (
                 <div
                   className="rounded-2xl p-6 flex items-center gap-5"
                   style={{ background: "rgba(25,128,56,0.04)", border: "2px solid rgba(25,128,56,0.2)" }}
@@ -1289,7 +1293,7 @@ export default function ModulePage() {
                     </div>
                   </div>
                   <button
-                    onClick={() => setQuizDone(false)}
+                    onClick={() => { setForceQuiz(true); setQuizDone(false); setQuizScore(0); setQuizAttempts(0); }}
                     className="flex items-center gap-1.5 text-sm font-semibold px-4 py-2.5 rounded-xl transition-all"
                     style={{ background: "#198038", color: "#fff", border: "none", cursor: "pointer" }}
                   >
@@ -1434,7 +1438,7 @@ export default function ModulePage() {
                           average_score: avg,
                         });
                       } catch (_) { /* silent fail */ }
-                      const ts = new Date().toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+                      const ts = new Date().toLocaleTimeString(isEN ? "en-GB" : "fr-FR", { hour: "2-digit", minute: "2-digit" });
                       setSavedAt(ts);
                       setSaving(false);
                     }}

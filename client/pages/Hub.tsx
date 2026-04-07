@@ -303,7 +303,7 @@ export default function Hub() {
                     >
                       {globalScore}%
                     </div>
-                    <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.5)" }}>Score</div>
+                    <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.5)" }}>{lang === "en" ? "Score" : "Score"}</div>
                   </div>
                   <div
                     className="rounded-xl px-3 py-2 text-center"
@@ -315,7 +315,7 @@ export default function Hub() {
                     >
                       {totalCompleted}<span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.4)" }}>/14</span>
                     </div>
-                    <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.5)" }}>Modules</div>
+                    <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.5)" }}>{lang === "en" ? "Modules" : "Modules"}</div>
                   </div>
                 </div>
               </div>

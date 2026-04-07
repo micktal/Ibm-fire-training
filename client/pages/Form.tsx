@@ -240,7 +240,7 @@ export default function Form() {
                   <input
                     id="f-email"
                     type="email"
-                    placeholder="votre@email.com"
+                    placeholder={isEN ? "your@email.com" : "votre@email.com"}
                     value={fields.email}
                     onChange={(e) => set("email", e.target.value)}
                     style={{ ...(errors.email ? inputErr : inputBase), paddingLeft: "2rem" }}
@@ -279,7 +279,7 @@ export default function Form() {
                     <input
                       id="f-batiment"
                       type="text"
-                      placeholder="Bât. A, Tour 2"
+                      placeholder={isEN ? "Bldg. A, Tower 2" : "Bât. A, Tour 2"}
                       value={fields.batiment}
                       onChange={(e) => set("batiment", e.target.value)}
                       style={{ ...inputBase, paddingLeft: "2rem" }}
@@ -296,7 +296,7 @@ export default function Form() {
                     <input
                       id="f-etage"
                       type="text"
-                      placeholder="3e étage"
+                      placeholder={isEN ? "3rd floor" : "3e étage"}
                       value={fields.etage}
                       onChange={(e) => set("etage", e.target.value)}
                       style={{ ...inputBase, paddingLeft: "2rem" }}
@@ -309,7 +309,7 @@ export default function Form() {
                     <input
                       id="f-zone"
                       type="text"
-                      placeholder="Zone Nord"
+                      placeholder={isEN ? "North Zone" : "Zone Nord"}
                       value={fields.zone}
                       onChange={(e) => set("zone", e.target.value)}
                       style={{ ...inputBase, paddingLeft: "2rem" }}
