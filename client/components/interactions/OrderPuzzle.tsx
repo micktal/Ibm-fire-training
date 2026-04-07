@@ -86,13 +86,13 @@ export default function OrderPuzzle({ exercise, onComplete }: Props) {
           <Puzzle size={14} color="#fff" />
         </div>
         <div className="flex-1">
-          <span className="font-bold text-white uppercase" style={{ fontSize: "0.82rem", letterSpacing: "0.08em" }}>{exercise.title}</span>
-          {exercise.subtitle && <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.65)" }}>{exercise.subtitle}</div>}
+          <span className="font-bold text-white uppercase" style={{ fontSize: "0.82rem", letterSpacing: "0.08em" }}>{isEN ? (exercise.titleEn ?? exercise.title) : exercise.title}</span>
+          {exercise.subtitle && <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.65)" }}>{isEN ? (exercise.subtitleEn ?? exercise.subtitle) : exercise.subtitle}</div>}
         </div>
       </div>
 
       <div className="text-xs text-center mb-3 px-3 py-2 rounded-lg" style={{ background: "rgba(180,83,9,0.07)", color: "#92400e", border: "1px solid rgba(180,83,9,0.2)" }}>
-        {exercise.instruction}
+        {isEN ? (exercise.instructionEn ?? exercise.instruction) : exercise.instruction}
       </div>
 
       {/* Pieces list */}
@@ -125,8 +125,8 @@ export default function OrderPuzzle({ exercise, onComplete }: Props) {
 
               {/* Content */}
               <div className="flex-1 min-w-0">
-                <div className="font-semibold" style={{ fontSize: "0.85rem", color: "#0a2052" }}>{piece.label}</div>
-                {piece.sublabel && <div className="text-xs" style={{ color: "#8d95aa", marginTop: "1px" }}>{piece.sublabel}</div>}
+                <div className="font-semibold" style={{ fontSize: "0.85rem", color: "#0a2052" }}>{isEN ? (piece.labelEn ?? piece.label) : piece.label}</div>
+                {piece.sublabel && <div className="text-xs" style={{ color: "#8d95aa", marginTop: "1px" }}>{isEN ? (piece.sublabelEn ?? piece.sublabel) : piece.sublabel}</div>}
               </div>
 
               {/* Status or arrows */}

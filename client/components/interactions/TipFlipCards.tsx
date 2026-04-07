@@ -80,16 +80,16 @@ export default function TipFlipCards({ exercise, onComplete }: Props) {
           <Lightbulb size={14} color="#fff" />
         </div>
         <div className="flex-1">
-          <span className="font-bold text-white uppercase" style={{ fontSize: "0.82rem", letterSpacing: "0.08em" }}>{exercise.title}</span>
+          <span className="font-bold text-white uppercase" style={{ fontSize: "0.82rem", letterSpacing: "0.08em" }}>{isEN ? (exercise.titleEn ?? exercise.title) : exercise.title}</span>
           {exercise.subtitle && (
-            <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.6)" }}>{exercise.subtitle}</div>
+            <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.6)" }}>{isEN ? (exercise.subtitleEn ?? exercise.subtitle) : exercise.subtitle}</div>
           )}
         </div>
         <span
           className="font-mono text-xs px-2.5 py-1 rounded-full"
           style={{ color: "#fff", background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.25)", fontFamily: "'IBM Plex Mono', monospace" }}
         >
-          {flipped.size}/{exercise.cards.length} retournées
+          {flipped.size}/{exercise.cards.length} {isEN ? "flipped" : "retournées"}
         </span>
       </div>
 
@@ -177,7 +177,7 @@ export default function TipFlipCards({ exercise, onComplete }: Props) {
                       className="font-semibold mt-1"
                       style={{ fontSize: "0.8rem", color: "#2d3148", lineHeight: "1.3" }}
                     >
-                      {card.label}
+                      {isEN ? (card.labelEn ?? card.label) : card.label}
                     </div>
                   </div>
 
@@ -236,7 +236,7 @@ export default function TipFlipCards({ exercise, onComplete }: Props) {
                       className="font-bold"
                       style={{ color: accent.color, fontSize: "0.72rem", letterSpacing: "0.08em", textTransform: "uppercase" }}
                     >
-                      {card.tipTitle ?? card.label}
+                      {(isEN ? (card.tipTitleEn ?? card.tipTitle) : card.tipTitle) ?? (isEN ? (card.labelEn ?? card.label) : card.label)}
                     </div>
                   </div>
 
@@ -250,7 +250,7 @@ export default function TipFlipCards({ exercise, onComplete }: Props) {
                       overflow: "hidden",
                     }}
                   >
-                    {card.tip}
+                    {isEN ? (card.tipEn ?? card.tip) : card.tip}
                   </div>
 
                   {/* Flip back hint */}

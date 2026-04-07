@@ -77,8 +77,8 @@ export default function MatchingExercise({ exercise, onComplete }: Props) {
           <GitMerge size={14} color="#fff" />
         </div>
         <div className="flex-1">
-          <span className="font-bold text-white uppercase" style={{ fontSize: "0.82rem", letterSpacing: "0.08em" }}>{exercise.title}</span>
-          {exercise.subtitle && <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.65)" }}>{exercise.subtitle}</div>}
+          <span className="font-bold text-white uppercase" style={{ fontSize: "0.82rem", letterSpacing: "0.08em" }}>{isEN ? (exercise.titleEn ?? exercise.title) : exercise.title}</span>
+          {exercise.subtitle && <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.65)" }}>{isEN ? (exercise.subtitleEn ?? exercise.subtitle) : exercise.subtitle}</div>}
         </div>
         <span className="font-mono text-xs px-2.5 py-1 rounded-full" style={{ color: "#fff", background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.25)", fontFamily: "'IBM Plex Mono', monospace" }}>
           {matches.length}/{exercise.pairs.length}
@@ -87,7 +87,7 @@ export default function MatchingExercise({ exercise, onComplete }: Props) {
 
       {!validated && selectedLeft !== null && (
         <div className="text-xs text-center mb-3 px-3 py-2 rounded-lg" style={{ background: "rgba(13,71,161,0.08)", color: "#0D47A1", border: "1px solid rgba(13,71,161,0.2)" }}>
-          {isEN ? "Selected:" : "Sélectionné :"} <strong>{exercise.pairs[selectedLeft].left}</strong> — {isEN ? "Now click the correct match on the right" : "Cliquez maintenant sur la bonne correspondance à droite"}
+          {isEN ? "Selected:" : "Sélectionné :"} <strong>{isEN ? (exercise.pairs[selectedLeft].leftEn ?? exercise.pairs[selectedLeft].left) : exercise.pairs[selectedLeft].left}</strong> — {isEN ? "Now click the correct match on the right" : "Cliquez maintenant sur la bonne correspondance à droite"}
         </div>
       )}
 
@@ -124,7 +124,7 @@ export default function MatchingExercise({ exercise, onComplete }: Props) {
                       ? <XCircle size={13} style={{ color: "#da1e28", flexShrink: 0, marginRight: "6px" }} />
                       : null
                 )}
-                {pair.left}
+                {isEN ? (pair.leftEn ?? pair.left) : pair.left}
               </button>
             );
           })}
@@ -155,7 +155,7 @@ export default function MatchingExercise({ exercise, onComplete }: Props) {
                   opacity: !validated && selectedLeft === null && !color ? 0.7 : 1,
                 }}
               >
-                {exercise.pairs[origIdx].right}
+                {isEN ? (exercise.pairs[origIdx].rightEn ?? exercise.pairs[origIdx].right) : exercise.pairs[origIdx].right}
               </button>
             );
           })}
@@ -183,7 +183,7 @@ export default function MatchingExercise({ exercise, onComplete }: Props) {
         <div className="flex items-center gap-3 rounded-xl px-4 py-3" style={{ background: correctCount === exercise.pairs.length ? "rgba(25,128,56,0.08)" : "rgba(180,83,9,0.08)", border: `1.5px solid ${correctCount === exercise.pairs.length ? "rgba(25,128,56,0.25)" : "rgba(180,83,9,0.25)"}` }}>
           <div className="flex-1">
             <div className="font-bold text-sm" style={{ color: correctCount === exercise.pairs.length ? "#0e6027" : "#92400e" }}>
-              {correctCount === exercise.pairs.length ? (exercise.successMessage ?? (isEN ? "Perfect matches!" : "Associations parfaites !")) : (isEN ? `${correctCount}/${exercise.pairs.length} correct matches` : `${correctCount}/${exercise.pairs.length} associations correctes`)}
+              {correctCount === exercise.pairs.length ? ((isEN ? exercise.successMessageEn : null) ?? exercise.successMessage ?? (isEN ? "Perfect matches!" : "Associations parfaites !")) : (isEN ? `${correctCount}/${exercise.pairs.length} correct matches` : `${correctCount}/${exercise.pairs.length} associations correctes`)}
             </div>
           </div>
           <button onClick={reset} className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg" style={{ background: "rgba(13,71,161,0.08)", color: "#0D47A1", border: "1px solid rgba(13,71,161,0.2)", cursor: "pointer" }}>

@@ -41,6 +41,14 @@ export default function SituationAlertPopup({ alert, onClose }: Props) {
   const correctChoice = alert.choices.find((c) => c.correct);
   const selectedChoice = alert.choices.find((c) => c.key === selected);
 
+  // Localised content helpers
+  const alertSubject = isEN ? (alert.subjectEn ?? alert.subject) : alert.subject;
+  const alertBody = isEN ? (alert.bodyEn ?? alert.body) : alert.body;
+  const alertQuestion = isEN ? (alert.questionEn ?? alert.question) : alert.question;
+  const alertSenderRole = isEN ? (alert.senderRoleEn ?? alert.senderRole) : alert.senderRole;
+  const choiceLabel = (c: typeof alert.choices[0]) => isEN ? (c.labelEn ?? c.label) : c.label;
+  const choiceFeedback = (c: typeof alert.choices[0]) => isEN ? (c.feedbackEn ?? c.feedback) : c.feedback;
+
   const handleSelect = (key: string) => {
     if (answered) return;
     setSelected(key);
@@ -105,7 +113,7 @@ export default function SituationAlertPopup({ alert, onClose }: Props) {
             ? <Mail size={13} style={{ color: "#7eb3ff" }} />
             : <MessageSquare size={13} style={{ color: "#6fdc8c" }} />}
           <span className="text-xs font-semibold" style={{ color: isEmail ? "#7eb3ff" : "#6fdc8c" }}>
-            {isEmail ? (isEN ? "IBM Mail — Message received" : "IBM Mail — Message reçu") : `IBM Teams — ${isEN ? "Channel" : "Canal"} ${alert.subject}`}
+            {isEmail ? (isEN ? "IBM Mail — Message received" : "IBM Mail — Message reçu") : `IBM Teams — ${isEN ? "Channel" : "Canal"} ${alertSubject}`}
           </span>
         </div>
 
@@ -121,7 +129,7 @@ export default function SituationAlertPopup({ alert, onClose }: Props) {
             </div>
             <div className="flex-1 min-w-0">
               <div className="font-bold text-white" style={{ fontSize: "0.9rem" }}>{alert.senderName}</div>
-              <div className="text-xs truncate" style={{ color: "rgba(255,255,255,0.45)" }}>{alert.senderRole}</div>
+              <div className="text-xs truncate" style={{ color: "rgba(255,255,255,0.45)" }}>{alertSenderRole}</div>
             </div>
             {isEmail && (
               <div className="flex-shrink-0 font-mono text-xs px-2 py-0.5 rounded-full" style={{ fontFamily: "'IBM Plex Mono', monospace", background: urgency.bg, color: urgency.color, border: `1px solid ${urgency.border}`, fontSize: "9px", letterSpacing: "0.08em" }}>
@@ -133,7 +141,7 @@ export default function SituationAlertPopup({ alert, onClose }: Props) {
           {/* Subject (email only) */}
           {isEmail && (
             <div className="font-bold mb-3" style={{ color: "#fff", fontSize: "1rem", lineHeight: "1.3" }}>
-              {alert.subject}
+              {alertSubject}
             </div>
           )}
 
@@ -142,14 +150,14 @@ export default function SituationAlertPopup({ alert, onClose }: Props) {
             className="rounded-2xl p-4 mb-1"
             style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
           >
-            {alert.body.split("\n\n").map((para, i) => (
+            {alertBody.split("\n\n").map((para, i) => (
               <p
                 key={i}
                 style={{
                   color: "rgba(255,255,255,0.8)",
                   fontSize: "0.875rem",
                   lineHeight: "1.65",
-                  marginBottom: i < alert.body.split("\n\n").length - 1 ? "0.75rem" : 0,
+                  marginBottom: i < alertBody.split("\n\n").length - 1 ? "0.75rem" : 0,
                 }}
               >
                 {para}
@@ -171,7 +179,7 @@ export default function SituationAlertPopup({ alert, onClose }: Props) {
               {isEN ? "Question — What do you do?" : "Question — Que faites-vous ?"}
             </div>
             <div className="font-bold text-white" style={{ fontSize: "0.9375rem", lineHeight: "1.4" }}>
-              {alert.question}
+              {alertQuestion}
             </div>
           </div>
 
@@ -229,7 +237,7 @@ export default function SituationAlertPopup({ alert, onClose }: Props) {
                     {choice.key}
                   </span>
                   <span style={{ color: textColor, fontSize: "0.875rem", lineHeight: "1.45", flex: 1 }}>
-                    {choice.label}
+                    {choiceLabel(choice)}
                   </span>
                   {showResult && isCorrect && <CheckCircle2 size={15} color="#6fdc8c" className="flex-shrink-0" />}
                   {showResult && isSelected && !isCorrect && <XCircle size={15} color="#ff8b8b" className="flex-shrink-0" />}
@@ -255,10 +263,10 @@ export default function SituationAlertPopup({ alert, onClose }: Props) {
                   <div className="font-bold text-sm mb-0.5" style={{ color: selectedChoice.correct ? "#6fdc8c" : "#ff8b8b" }}>
                     {selectedChoice.correct
                         ? (isEN ? "Good reaction" : "Bonne réaction")
-                        : (isEN ? `Wrong answer — Correct one: ${correctChoice?.label}` : `Réponse incorrecte — La bonne : ${correctChoice?.label}`)}
+                        : (isEN ? `Wrong answer — Correct one: ${correctChoice ? choiceLabel(correctChoice) : ""}` : `Réponse incorrecte — La bonne : ${correctChoice ? choiceLabel(correctChoice) : ""}`)}
                   </div>
                   <div style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.82rem", lineHeight: "1.5" }}>
-                    {selectedChoice.feedback}
+                    {choiceFeedback(selectedChoice)}
                   </div>
                 </div>
               </div>

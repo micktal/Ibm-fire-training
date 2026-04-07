@@ -17,60 +17,81 @@ export interface BinaryExercise {
 export interface FillBlankExercise {
   type: "fillblank";
   title: string;
+  titleEn?: string;
   subtitle?: string;
-  sentences: Array<{ before: string; answer: string; acceptableAnswers?: string[]; after?: string; hint?: string }>;
+  subtitleEn?: string;
+  sentences: Array<{ before: string; beforeEn?: string; answer: string; answerEn?: string; acceptableAnswers?: string[]; acceptableAnswersEn?: string[]; after?: string; afterEn?: string; hint?: string; hintEn?: string }>;
   successMessage?: string;
+  successMessageEn?: string;
 }
 
 export interface MatchExercise {
   type: "matching";
   title: string;
+  titleEn?: string;
   subtitle?: string;
-  pairs: Array<{ left: string; right: string }>;
+  subtitleEn?: string;
+  pairs: Array<{ left: string; leftEn?: string; right: string; rightEn?: string }>;
   successMessage?: string;
+  successMessageEn?: string;
 }
 
 export interface FlipCardsExercise {
   type: "flipcards";
   title: string;
+  titleEn?: string;
   subtitle?: string;
-  cards: Array<{ front: string; back: string; icon?: string; color?: string }>;
+  subtitleEn?: string;
+  cards: Array<{ front: string; frontEn?: string; back: string; backEn?: string; icon?: string; color?: string }>;
 }
 
 export interface OrderPuzzleExercise {
   type: "orderpuzzle";
   title: string;
+  titleEn?: string;
   subtitle?: string;
+  subtitleEn?: string;
   instruction: string;
-  pieces: Array<{ id: string; label: string; sublabel?: string; correctPosition: number }>;
+  instructionEn?: string;
+  pieces: Array<{ id: string; label: string; labelEn?: string; sublabel?: string; sublabelEn?: string; correctPosition: number }>;
   successMessage?: string;
+  successMessageEn?: string;
 }
 
 export interface SeriousGameExercise {
   type: "seriousgame";
   title: string;
+  titleEn?: string;
   subtitle?: string;
+  subtitleEn?: string;
   rounds: Array<{
     image?: string;
     situation: string;
-    actions: Array<{ label: string; correct: boolean; feedback: string }>;
+    situationEn?: string;
+    actions: Array<{ label: string; labelEn?: string; correct: boolean; feedback: string; feedbackEn?: string }>;
     timeLimit: number;
   }>;
   successMessage?: string;
+  successMessageEn?: string;
 }
 
 export interface TipFlipExercise {
   type: "tipflip";
   title: string;
+  titleEn?: string;
   subtitle?: string;
+  subtitleEn?: string;
   cards: Array<{
-    icon: string;       // Lucide icon name
+    icon: string;
     accent: "flame" | "clock" | "alert" | "shield" | "zap" | "eye";
-    stat: string;       // valeur clé affichée en grand sur l'avant
-    label: string;      // titre court de la carte (avant)
+    stat: string;
+    label: string;
+    labelEn?: string;
     category: "funfact" | "astuce" | "chiffre";
-    tip: string;        // explication détaillée (dos)
-    tipTitle?: string;  // titre du verso
+    tip: string;
+    tipEn?: string;
+    tipTitle?: string;
+    tipTitleEn?: string;
   }>;
 }
 
@@ -1435,24 +1456,28 @@ const ch2m1_binary: BinaryExercise = {
 const m2_flipcards: FlipCardsExercise = {
   type: "flipcards",
   title: "Le Triangle du Feu — 3 éléments clés",
+  titleEn: "The Fire Triangle — 3 Key Elements",
   subtitle: "Retournez chaque carte pour comprendre le rôle de chaque élément",
+  subtitleEn: "Flip each card to understand the role of each element",
   cards: [
-    { front: "COMBUSTIBLE", back: "Matière qui brûle : papier, bois, tissu, plastique, câbles. Pour éteindre → retirer ou isoler la matière.", icon: "Flame", color: "#b45309" },
-    { front: "COMBURANT\n(Oxygène)", back: "L'air contient 21% d'O₂ qui alimente la combustion. Pour éteindre → étouffer avec couverture anti-feu ou CO2.", icon: "Wind", color: "#0D47A1" },
-    { front: "CHALEUR\n(Énergie)", back: "L'énergie qui déclenche la réaction : étincelle, court-circuit, friction. Pour éteindre → refroidir avec eau ou CO2.", icon: "Zap", color: "#da1e28" },
-    { front: "BRISER LE\nTRIANGLE", back: "Supprimer UN seul élément suffit à éteindre le feu. C'est le principe de tous les agents extincteurs.", icon: "Shield", color: "#198038" },
+    { front: "COMBUSTIBLE", frontEn: "FUEL", back: "Matière qui brûle : papier, bois, tissu, plastique, câbles. Pour éteindre → retirer ou isoler la matière.", backEn: "Material that burns: paper, wood, fabric, plastic, cables. To extinguish → remove or isolate the material.", icon: "Flame", color: "#b45309" },
+    { front: "COMBURANT\n(Oxygène)", frontEn: "OXIDISER\n(Oxygen)", back: "L'air contient 21% d'O₂ qui alimente la combustion. Pour éteindre → étouffer avec couverture anti-feu ou CO2.", backEn: "Air contains 21% O₂ which feeds combustion. To extinguish → smother with fire blanket or CO2.", icon: "Wind", color: "#0D47A1" },
+    { front: "CHALEUR\n(Énergie)", frontEn: "HEAT\n(Energy)", back: "L'énergie qui déclenche la réaction : étincelle, court-circuit, friction. Pour éteindre → refroidir avec eau ou CO2.", backEn: "The energy that triggers the reaction: spark, short-circuit, friction. To extinguish → cool with water or CO2.", icon: "Zap", color: "#da1e28" },
+    { front: "BRISER LE\nTRIANGLE", frontEn: "BREAK THE\nTRIANGLE", back: "Supprimer UN seul élément suffit à éteindre le feu. C'est le principe de tous les agents extincteurs.", backEn: "Removing just ONE element is enough to extinguish a fire. This is the principle behind all extinguishing agents.", icon: "Shield", color: "#198038" },
   ],
 };
 
 const ch2m2_flipcards: FlipCardsExercise = {
   type: "flipcards",
   title: "Posture en crise — 4 règles d'or",
+  titleEn: "Crisis Posture — 4 Golden Rules",
   subtitle: "Retournez chaque carte pour maîtriser la communication en urgence",
+  subtitleEn: "Flip each card to master emergency communication",
   cards: [
-    { front: "CALME", back: "Voix posée et ferme. L'urgence s'entend dans votre ton, pas dans votre volume. Pas de cris — ils amplifient la panique.", icon: "Shield", color: "#0D47A1" },
-    { front: "CLAIR", back: "'Tout le monde sort par là.' Instructions courtes et directes. Pas d'explications complexes en situation de crise.", icon: "Eye", color: "#198038" },
-    { front: "RASSURANT", back: "Votre posture physique (position, démarche) influence le groupe. Marchez, ne courez pas. Le groupe vous imite.", icon: "Users", color: "#7c3aed" },
-    { front: "COMPLET", back: "Vérifiez que tout le monde suit avant de continuer. Comptez si possible. Ne laissez personne derrière.", icon: "CheckCircle", color: "#b45309" },
+    { front: "CALME", frontEn: "CALM", back: "Voix posée et ferme. L'urgence s'entend dans votre ton, pas dans votre volume. Pas de cris — ils amplifient la panique.", backEn: "Steady, firm voice. Urgency is in your tone, not your volume. No shouting — it amplifies panic.", icon: "Shield", color: "#0D47A1" },
+    { front: "CLAIR", frontEn: "CLEAR", back: "'Tout le monde sort par là.' Instructions courtes et directes. Pas d'explications complexes en situation de crise.", backEn: "'Everyone this way.' Short, direct instructions. No complex explanations in a crisis.", icon: "Eye", color: "#198038" },
+    { front: "RASSURANT", frontEn: "REASSURING", back: "Votre posture physique (position, démarche) influence le groupe. Marchez, ne courez pas. Le groupe vous imite.", backEn: "Your physical posture (stance, walk) influences the group. Walk, don't run. The group mirrors you.", icon: "Users", color: "#7c3aed" },
+    { front: "COMPLET", frontEn: "THOROUGH", back: "Vérifiez que tout le monde suit avant de continuer. Comptez si possible. Ne laissez personne derrière.", backEn: "Check everyone is following before moving on. Count if possible. Leave no one behind.", icon: "CheckCircle", color: "#b45309" },
   ],
 };
 
@@ -1460,27 +1485,33 @@ const ch2m2_flipcards: FlipCardsExercise = {
 const m5_fillblank: FillBlankExercise = {
   type: "fillblank",
   title: "Complétez la séquence PASS",
+  titleEn: "Complete the PASS sequence",
   subtitle: "Retrouvez les mots clés de la méthode d'extinction IBM",
+  subtitleEn: "Fill in the key words of the IBM PASS extinguisher method",
   successMessage: "La séquence PASS est parfaitement mémorisée !",
+  successMessageEn: "PASS sequence perfectly memorised!",
   sentences: [
-    { before: "P — Tirez la", answer: "goupille", acceptableAnswers: ["goupille de sécurité", "goupille de securite", "pin", "safety pin", "la goupille"], after: "de sécurité pour déverrouiller l'extincteur.", hint: "verrou de sécurité" },
-    { before: "A — Visez la", answer: "base", acceptableAnswers: ["la base", "base des flammes", "base du feu", "pied", "pied des flammes", "pied du feu"], after: "des flammes, jamais le haut du feu.", hint: "où se trouve le combustible" },
-    { before: "S — Pressez la", answer: "poignée", acceptableAnswers: ["la poignée", "gâchette", "gachette", "manette", "détente", "detente", "poignee"], after: "de déclenchement pour activer le jet.", hint: "mécanisme de déclenchement" },
-    { before: "S — Balayez de", answer: "gauche à droite", acceptableAnswers: ["gauche a droite", "de gauche à droite", "de gauche a droite", "left to right", "gauche-droite"], after: "en maintenant le jet sur la base.", hint: "mouvement horizontal" },
-    { before: "Distance optimale :", answer: "2 à 3 mètres", acceptableAnswers: ["2 à 3 metres", "2-3 mètres", "2-3 metres", "2-3m", "2 à 3m", "2 a 3 mètres", "2 a 3 metres", "2 a 3m", "2 mètres", "3 mètres", "2 metres", "3 metres"], after: "du foyer pour une efficacité maximale.", hint: "distance de sécurité" },
+    { before: "P — Tirez la", beforeEn: "P — Pull the", answer: "goupille", answerEn: "pin", acceptableAnswers: ["goupille de sécurité", "goupille de securite", "pin", "safety pin", "la goupille"], acceptableAnswersEn: ["safety pin", "goupille", "pin"], after: "de sécurité pour déverrouiller l'extincteur.", afterEn: "to unlock the extinguisher.", hint: "verrou de sécurité", hintEn: "safety lock" },
+    { before: "A — Visez la", beforeEn: "A — Aim at the", answer: "base", answerEn: "base", acceptableAnswers: ["la base", "base des flammes", "base du feu", "pied", "pied des flammes", "pied du feu"], acceptableAnswersEn: ["bottom", "foot", "base of the flames", "base of the fire"], after: "des flammes, jamais le haut du feu.", afterEn: "of the flames, never the top.", hint: "où se trouve le combustible", hintEn: "where the fuel is" },
+    { before: "S — Pressez la", beforeEn: "S — Squeeze the", answer: "poignée", answerEn: "handle", acceptableAnswers: ["la poignée", "gâchette", "gachette", "manette", "détente", "detente", "poignee"], acceptableAnswersEn: ["lever", "trigger", "grip", "handle"], after: "de déclenchement pour activer le jet.", afterEn: "to activate the discharge.", hint: "mécanisme de déclenchement", hintEn: "discharge mechanism" },
+    { before: "S — Balayez de", beforeEn: "S — Sweep from", answer: "gauche à droite", answerEn: "side to side", acceptableAnswers: ["gauche a droite", "de gauche à droite", "de gauche a droite", "left to right", "gauche-droite"], acceptableAnswersEn: ["left to right", "left-to-right", "side to side", "left and right"], after: "en maintenant le jet sur la base.", afterEn: "keeping the jet on the base.", hint: "mouvement horizontal", hintEn: "horizontal motion" },
+    { before: "Distance optimale :", beforeEn: "Optimal distance:", answer: "2 à 3 mètres", answerEn: "2 to 3 metres", acceptableAnswers: ["2 à 3 metres", "2-3 mètres", "2-3 metres", "2-3m", "2 à 3m", "2 a 3 mètres", "2 a 3 metres", "2 a 3m", "2 mètres", "3 mètres", "2 metres", "3 metres"], acceptableAnswersEn: ["2-3 metres", "2-3m", "2 to 3 meters", "2-3 meters", "2 metres", "3 metres", "2 meters", "3 meters"], after: "du foyer pour une efficacité maximale.", afterEn: "from the fire for maximum effectiveness.", hint: "distance de sécurité", hintEn: "safe distance" },
   ],
 };
 
 const ch2m3_fillblank: FillBlankExercise = {
   type: "fillblank",
   title: "Complétez : SORS — FERME — SIGNALE",
+  titleEn: "Complete: EXIT — CLOSE — SIGNAL",
   subtitle: "Les 3 actions fondamentales de l'évacuation IBM",
+  subtitleEn: "The 3 fundamental actions of IBM evacuation",
   successMessage: "Séquence SORS-FERME-SIGNALE parfaitement maîtrisée !",
+  successMessageEn: "EXIT-CLOSE-SIGNAL sequence perfectly mastered!",
   sentences: [
-    { before: "Quittez la pièce", answer: "sans attendre", acceptableAnswers: ["immédiatement", "immediatement", "rapidement", "de suite", "tout de suite", "aussitôt", "aussitot", "sans délai", "sans delai"], after: "— chaque seconde compte.", hint: "ne pas hésiter" },
-    { before: "Fermez la porte", answer: "sans la verrouiller", acceptableAnswers: ["sans verrouiller", "sans fermer à clé", "sans fermer a clé", "sans clé", "sans cle", "sans la fermer à clé", "sans fermer a cle"], after: "pour ralentir le feu sans piéger les autres.", hint: "fermer mais pas bloquer" },
-    { before: "Signalez les zones vérifiées au", answer: "responsable évacuation", acceptableAnswers: ["responsable de l'évacuation", "responsable evacuation", "chef évacuation", "chef evacuation", "responsable", "responsable d'évacuation", "responsable d evacuation"], after: "au point de rassemblement.", hint: "personne en charge" },
-    { before: "Ne", answer: "jamais revenir", acceptableAnswers: ["ne jamais revenir", "pas revenir", "ne pas revenir", "jamais retourner", "ne jamais retourner"], after: "chercher ses affaires une fois l'évacuation lancée.", hint: "interdiction absolue" },
+    { before: "Quittez la pièce", beforeEn: "Leave the room", answer: "sans attendre", answerEn: "immediately", acceptableAnswers: ["immédiatement", "immediatement", "rapidement", "de suite", "tout de suite", "aussitôt", "aussitot", "sans délai", "sans delai"], acceptableAnswersEn: ["right away", "at once", "without delay", "now", "straight away"], after: "— chaque seconde compte.", afterEn: "— every second counts.", hint: "ne pas hésiter", hintEn: "no hesitation" },
+    { before: "Fermez la porte", beforeEn: "Close the door", answer: "sans la verrouiller", answerEn: "without locking it", acceptableAnswers: ["sans verrouiller", "sans fermer à clé", "sans fermer a clé", "sans clé", "sans cle", "sans la fermer à clé", "sans fermer a cle"], acceptableAnswersEn: ["without locking", "but don't lock", "don't lock it", "not locked"], after: "pour ralentir le feu sans piéger les autres.", afterEn: "to slow fire without trapping others.", hint: "fermer mais pas bloquer", hintEn: "close but don't lock" },
+    { before: "Signalez les zones vérifiées au", beforeEn: "Report checked areas to the", answer: "responsable évacuation", answerEn: "evacuation warden", acceptableAnswers: ["responsable de l'évacuation", "responsable evacuation", "chef évacuation", "chef evacuation", "responsable", "responsable d'évacuation", "responsable d evacuation"], acceptableAnswersEn: ["warden", "floor warden", "fire warden", "evacuation officer", "marshal"], after: "au point de rassemblement.", afterEn: "at the assembly point.", hint: "personne en charge", hintEn: "person in charge" },
+    { before: "Ne", beforeEn: "Never", answer: "jamais revenir", answerEn: "go back", acceptableAnswers: ["ne jamais revenir", "pas revenir", "ne pas revenir", "jamais retourner", "ne jamais retourner"], acceptableAnswersEn: ["return", "come back", "go back in", "re-enter"], after: "chercher ses affaires une fois l'évacuation lancée.", afterEn: "to collect belongings once evacuation has started.", hint: "interdiction absolue", hintEn: "absolute rule" },
   ],
 };
 
@@ -1488,28 +1519,34 @@ const ch2m3_fillblank: FillBlankExercise = {
 const m4_matching: MatchExercise = {
   type: "matching",
   title: "Associez chaque classe de feu à son extincteur",
+  titleEn: "Match each fire class to its extinguisher",
   subtitle: "Le bon agent extincteur selon la nature du feu",
+  subtitleEn: "The correct extinguishing agent based on fire type",
   successMessage: "Parfait — vous choisissez le bon extincteur selon le type de feu !",
+  successMessageEn: "Perfect — you can choose the right extinguisher for each fire type!",
   pairs: [
-    { left: "Classe A — Bois, papier, tissu", right: "Eau, Poudre ABC" },
-    { left: "Classe B — Liquides inflammables", right: "Mousse, Poudre ABC" },
-    { left: "Classe C — Gaz inflammables", right: "Poudre ABC (coupure gaz en premier)" },
-    { left: "Classe E — Feux électriques", right: "CO2 uniquement (jamais d'eau)" },
-    { left: "Classe F — Huiles / graisses", right: "Émulseur F spécifique" },
+    { left: "Classe A — Bois, papier, tissu", leftEn: "Class A — Wood, paper, fabric", right: "Eau, Poudre ABC", rightEn: "Water, ABC Powder" },
+    { left: "Classe B — Liquides inflammables", leftEn: "Class B — Flammable liquids", right: "Mousse, Poudre ABC", rightEn: "Foam, ABC Powder" },
+    { left: "Classe C — Gaz inflammables", leftEn: "Class C — Flammable gases", right: "Poudre ABC (coupure gaz en premier)", rightEn: "ABC Powder (cut gas first)" },
+    { left: "Classe E — Feux électriques", leftEn: "Class E — Electrical fires", right: "CO2 uniquement (jamais d'eau)", rightEn: "CO2 only (never water)" },
+    { left: "Classe F — Huiles / graisses", leftEn: "Class F — Oils / grease", right: "Émulseur F spécifique", rightEn: "Class F wet chemical agent" },
   ],
 };
 
 const ch2m6_matching: MatchExercise = {
   type: "matching",
   title: "Situatations → Bonne action",
+  titleEn: "Situations → Correct action",
   subtitle: "Associez chaque situation d'évacuation à la réponse correcte",
+  subtitleEn: "Match each evacuation situation to the correct response",
   successMessage: "Excellent — vos réflexes d'évacuation sont calibrés !",
+  successMessageEn: "Excellent — your evacuation reflexes are spot on!",
   pairs: [
-    { left: "La porte est chaude au toucher", right: "Ne pas ouvrir — rebrousser chemin" },
-    { left: "Fumée dense dans le couloir", right: "S'accroupir — progresser sous la fumée" },
-    { left: "L'ascenseur est disponible", right: "Ignorer — prendre les escaliers de secours" },
-    { left: "Une personne est manquante au rassemblement", right: "Signaler immédiatement aux secours" },
-    { left: "Le point de rassemblement est atteint", right: "Se signaler au responsable évacuation" },
+    { left: "La porte est chaude au toucher", leftEn: "The door is hot to the touch", right: "Ne pas ouvrir — rebrousser chemin", rightEn: "Do not open — turn back" },
+    { left: "Fumée dense dans le couloir", leftEn: "Dense smoke in the corridor", right: "S'accroupir — progresser sous la fumée", rightEn: "Crouch — move below the smoke" },
+    { left: "L'ascenseur est disponible", leftEn: "The elevator is available", right: "Ignorer — prendre les escaliers de secours", rightEn: "Ignore — use the emergency stairs" },
+    { left: "Une personne est manquante au rassemblement", leftEn: "Someone is missing at the assembly point", right: "Signaler immédiatement aux secours", rightEn: "Report immediately to fire services" },
+    { left: "Le point de rassemblement est atteint", leftEn: "The assembly point is reached", right: "Se signaler au responsable évacuation", rightEn: "Report to the evacuation warden" },
   ],
 };
 
@@ -1517,31 +1554,39 @@ const ch2m6_matching: MatchExercise = {
 const m3_orderpuzzle: OrderPuzzleExercise = {
   type: "orderpuzzle",
   title: "Remettez la séquence de confinement dans l'ordre",
+  titleEn: "Put the confinement sequence in the correct order",
   subtitle: "En cas d'incendie, l'ordre des actions est crucial",
+  subtitleEn: "In a fire, the order of actions is critical",
   instruction: "Faites glisser les étapes pour reconstituer la bonne séquence",
+  instructionEn: "Drag the steps to rebuild the correct sequence",
   successMessage: "Séquence de confinement maîtrisée !",
+  successMessageEn: "Confinement sequence mastered!",
   pieces: [
-    { id: "p1", label: "Détecter le signal", sublabel: "Fumée, odeur ou chaleur anormale", correctPosition: 1 },
-    { id: "p2", label: "Alerter les collègues", sublabel: "Sans panique, ton calme", correctPosition: 2 },
-    { id: "p3", label: "Fermer toutes les portes", sublabel: "Ralentit la propagation de 5x", correctPosition: 3 },
-    { id: "p4", label: "Déclencher l'alarme (22 22)", sublabel: "Avant d'évacuer", correctPosition: 4 },
-    { id: "p5", label: "Évacuer par les sorties de secours", sublabel: "Ne jamais prendre l'ascenseur", correctPosition: 5 },
-    { id: "p6", label: "Rejoindre le point de rassemblement", sublabel: "Se signaler au responsable", correctPosition: 6 },
+    { id: "p1", label: "Détecter le signal", labelEn: "Detect the signal", sublabel: "Fumée, odeur ou chaleur anormale", sublabelEn: "Smoke, smell or abnormal heat", correctPosition: 1 },
+    { id: "p2", label: "Alerter les collègues", labelEn: "Alert colleagues", sublabel: "Sans panique, ton calme", sublabelEn: "Calmly, no panic", correctPosition: 2 },
+    { id: "p3", label: "Fermer toutes les portes", labelEn: "Close all doors", sublabel: "Ralentit la propagation de 5x", sublabelEn: "Slows spread by 5x", correctPosition: 3 },
+    { id: "p4", label: "Déclencher l'alarme (22 22)", labelEn: "Trigger the alarm (22 22)", sublabel: "Avant d'évacuer", sublabelEn: "Before evacuating", correctPosition: 4 },
+    { id: "p5", label: "Évacuer par les sorties de secours", labelEn: "Evacuate via emergency exits", sublabel: "Ne jamais prendre l'ascenseur", sublabelEn: "Never use the elevator", correctPosition: 5 },
+    { id: "p6", label: "Rejoindre le point de rassemblement", labelEn: "Reach the assembly point", sublabel: "Se signaler au responsable", sublabelEn: "Report to the warden", correctPosition: 6 },
   ],
 };
 
 const ch2m7_orderpuzzle: OrderPuzzleExercise = {
   type: "orderpuzzle",
   title: "Procédure complète d'évacuation IBM",
+  titleEn: "Full IBM Evacuation Procedure",
   subtitle: "Remettez les 7 étapes de la procédure dans le bon ordre",
+  subtitleEn: "Put the 7 procedure steps in the correct order",
   instruction: "Faites glisser les étapes pour reconstituer la séquence officielle",
+  instructionEn: "Drag the steps to rebuild the official sequence",
   successMessage: "Procédure d'évacuation IBM parfaitement maîtrisée !",
+  successMessageEn: "IBM evacuation procedure perfectly mastered!",
   pieces: [
-    { id: "e1", label: "Détecter et confirmer l'alerte", sublabel: "Signal sonore ou visuel", correctPosition: 1 },
-    { id: "e2", label: "Composer le 22 22", sublabel: "Sécurité IBM avant le 18", correctPosition: 2 },
-    { id: "e3", label: "Alerter les collègues à voix posée", sublabel: "Pas de panique", correctPosition: 3 },
-    { id: "e4", label: "Fermer les portes en partant", sublabel: "Sans verrouiller", correctPosition: 4 },
-    { id: "e5", label: "Évacuer par les escaliers", sublabel: "Jamais l'ascenseur", correctPosition: 5 },
+    { id: "e1", label: "Détecter et confirmer l'alerte", labelEn: "Detect and confirm the alert", sublabel: "Signal sonore ou visuel", sublabelEn: "Audible or visual signal", correctPosition: 1 },
+    { id: "e2", label: "Composer le 22 22", labelEn: "Call 22 22", sublabel: "Sécurité IBM avant le 18", sublabelEn: "IBM Security before 18", correctPosition: 2 },
+    { id: "e3", label: "Alerter les collègues à voix posée", labelEn: "Alert colleagues calmly", sublabel: "Pas de panique", sublabelEn: "No panic", correctPosition: 3 },
+    { id: "e4", label: "Fermer les portes en partant", labelEn: "Close doors when leaving", sublabel: "Sans verrouiller", sublabelEn: "Without locking", correctPosition: 4 },
+    { id: "e5", label: "Évacuer par les escaliers", labelEn: "Evacuate via stairs", sublabel: "Jamais l'ascenseur", sublabelEn: "Never the elevator", correctPosition: 5 },
     { id: "e6", label: "Vérifier les zones accessibles", sublabel: "S'assurer que personne ne reste", correctPosition: 6 },
     { id: "e7", label: "Se signaler au responsable évacuation", sublabel: "Au point de rassemblement", correctPosition: 7 },
   ],
@@ -1551,67 +1596,76 @@ const ch2m7_orderpuzzle: OrderPuzzleExercise = {
 const m7_seriousgame: SeriousGameExercise = {
   type: "seriousgame",
   title: "Réflexes Incendie — Challenge Chronométré",
+  titleEn: "Fire Reflexes — Timed Challenge",
   subtitle: "3 vies · 6 situations · Décisions en temps réel",
+  subtitleEn: "3 lives · 6 situations · Real-time decisions",
   successMessage: "Score Réflexes Expert — Tous les bons réflexes acquis !",
+  successMessageEn: "Expert Reflex Score — All the right reflexes mastered!",
   rounds: [
     {
       situation: "14h30. L'alarme retentit. Une fumée légère entre par la porte. Un extincteur CO2 est à 3m. Que faites-vous EN PREMIER ?",
+      situationEn: "2:30pm. The alarm sounds. Light smoke comes through the door. A CO2 extinguisher is 3m away. What do you do FIRST?",
       timeLimit: 8,
       actions: [
-        { label: "Évaluer rapidement la situation (5 sec)", correct: true, feedback: "Correct. 5 secondes d'évaluation avant d'agir — c'est la règle IBM." },
-        { label: "Prendre l'extincteur et chercher le feu", correct: false, feedback: "Risqué. Sans évaluation, vous pourriez foncer vers un feu trop développé." },
-        { label: "Rester à son bureau et attendre", correct: false, feedback: "Erreur grave. L'inaction face à l'alarme est la pire réponse." },
-        { label: "Appeler son manager pour confirmation", correct: false, feedback: "Faux. En cas d'alarme, pas besoin de confirmation — agir immédiatement." },
+        { label: "Évaluer rapidement la situation (5 sec)", labelEn: "Quickly assess the situation (5 sec)", correct: true, feedback: "Correct. 5 secondes d'évaluation avant d'agir — c'est la règle IBM.", feedbackEn: "Correct. 5 seconds of assessment before acting — that's the IBM rule." },
+        { label: "Prendre l'extincteur et chercher le feu", labelEn: "Grab the extinguisher and find the fire", correct: false, feedback: "Risqué. Sans évaluation, vous pourriez foncer vers un feu trop développé.", feedbackEn: "Risky. Without assessment, you could rush toward a fire that's already too large." },
+        { label: "Rester à son bureau et attendre", labelEn: "Stay at your desk and wait", correct: false, feedback: "Erreur grave. L'inaction face à l'alarme est la pire réponse.", feedbackEn: "Serious mistake. Inaction when the alarm sounds is the worst response." },
+        { label: "Appeler son manager pour confirmation", labelEn: "Call your manager for confirmation", correct: false, feedback: "Faux. En cas d'alarme, pas besoin de confirmation — agir immédiatement.", feedbackEn: "Wrong. When the alarm sounds, no confirmation needed — act immediately." },
       ],
     },
     {
       situation: "Vous approchez d'une porte. Elle est CHAUDE au toucher. De la fumée noire passe dessous.",
+      situationEn: "You approach a door. It is HOT to the touch. Black smoke is coming from underneath.",
       timeLimit: 6,
       actions: [
-        { label: "Ouvrir doucement pour évaluer", correct: false, feedback: "Erreur fatale. Porte chaude + fumée noire = feu développé. L'ouvrir aspire le feu vers vous." },
-        { label: "Ne pas ouvrir — rebrousser et évacuer", correct: true, feedback: "Décision vitale. Porte chaude = feu de l'autre côté. Retraite immédiate." },
-        { label: "Arroser la porte avec le CO2", correct: false, feedback: "Inutile. Le CO2 refroidit la surface mais ne change rien au feu de l'autre côté." },
-        { label: "Attendre devant la porte", correct: false, feedback: "Dangereux. Rester expose à la chaleur et aux gaz toxiques." },
+        { label: "Ouvrir doucement pour évaluer", labelEn: "Open it slowly to assess", correct: false, feedback: "Erreur fatale. Porte chaude + fumée noire = feu développé. L'ouvrir aspire le feu vers vous.", feedbackEn: "Fatal mistake. Hot door + black smoke = developed fire. Opening it draws the fire toward you." },
+        { label: "Ne pas ouvrir — rebrousser et évacuer", labelEn: "Don't open — turn back and evacuate", correct: true, feedback: "Décision vitale. Porte chaude = feu de l'autre côté. Retraite immédiate.", feedbackEn: "Vital decision. Hot door = fire on the other side. Immediate retreat." },
+        { label: "Arroser la porte avec le CO2", labelEn: "Spray the door with CO2", correct: false, feedback: "Inutile. Le CO2 refroidit la surface mais ne change rien au feu de l'autre côté.", feedbackEn: "Useless. CO2 cools the surface but doesn't affect the fire on the other side." },
+        { label: "Attendre devant la porte", labelEn: "Wait in front of the door", correct: false, feedback: "Dangereux. Rester expose à la chaleur et aux gaz toxiques.", feedbackEn: "Dangerous. Staying exposes you to heat and toxic gases." },
       ],
     },
     {
       situation: "Feu de câbles visible — taille d'une corbeille. Sortie dans votre dos à 4m. CO2 disponible. Que faites-vous ?",
+      situationEn: "Visible cable fire — bin-sized. Exit is 4m behind you. CO2 available. What do you do?",
       timeLimit: 8,
       actions: [
-        { label: "Intervenir avec le CO2 — PASS", correct: true, feedback: "Correct. Toutes les conditions sont réunies : petit feu, CO2 adapté, sortie libre." },
-        { label: "Évacuer directement sans intervenir", correct: false, feedback: "Acceptable mais sous-optimal. Le feu est contrôlable et les conditions sont réunies." },
-        { label: "Appeler les pompiers d'abord", correct: false, feedback: "Faux. Agir d'abord (max 30s), alerter ensuite. Le 22 22 puis le 18." },
-        { label: "Verser de l'eau sur les câbles", correct: false, feedback: "Interdit. Jamais d'eau sur un feu électrique — risque d'électrocution." },
+        { label: "Intervenir avec le CO2 — PASS", labelEn: "Use the CO2 — PASS sequence", correct: true, feedback: "Correct. Toutes les conditions sont réunies : petit feu, CO2 adapté, sortie libre.", feedbackEn: "Correct. All conditions are met: small fire, suitable CO2, clear exit." },
+        { label: "Évacuer directement sans intervenir", labelEn: "Evacuate directly without intervening", correct: false, feedback: "Acceptable mais sous-optimal. Le feu est contrôlable et les conditions sont réunies.", feedbackEn: "Acceptable but not optimal. The fire is controllable and conditions are right." },
+        { label: "Appeler les pompiers d'abord", labelEn: "Call fire services first", correct: false, feedback: "Faux. Agir d'abord (max 30s), alerter ensuite. Le 22 22 puis le 18.", feedbackEn: "Wrong. Act first (max 30s), alert afterwards. 22 22 then 18." },
+        { label: "Verser de l'eau sur les câbles", labelEn: "Pour water on the cables", correct: false, feedback: "Interdit. Jamais d'eau sur un feu électrique — risque d'électrocution.", feedbackEn: "Forbidden. Never use water on an electrical fire — electrocution risk." },
       ],
     },
     {
       situation: "Fumée envahit le couloir. Vous ne voyez plus la sortie. Quelle est votre position ?",
+      situationEn: "Smoke fills the corridor. You can no longer see the exit. What position do you take?",
       timeLimit: 7,
       actions: [
-        { label: "Rester debout, progresser rapidement", correct: false, feedback: "Faux. Debout vous respirez la fumée chaude. La toxicité est mortelle en secondes." },
-        { label: "S'accroupir et progresser sous la fumée", correct: true, feedback: "Exact. L'air respirable reste dans le tiers inférieur de la pièce." },
-        { label: "Faire demi-tour et retourner à son bureau", correct: false, feedback: "Risqué. Mieux vaut progresser vers la sortie que rester dans le bâtiment." },
-        { label: "Ouvrir toutes les fenêtres pour aérer", correct: false, feedback: "Faux. Ouvrir les fenêtres attire l'oxygène et intensifie l'incendie." },
+        { label: "Rester debout, progresser rapidement", labelEn: "Stay upright and move quickly", correct: false, feedback: "Faux. Debout vous respirez la fumée chaude. La toxicité est mortelle en secondes.", feedbackEn: "Wrong. Standing, you breathe hot smoke. Toxicity is fatal within seconds." },
+        { label: "S'accroupir et progresser sous la fumée", labelEn: "Crouch and move below the smoke", correct: true, feedback: "Exact. L'air respirable reste dans le tiers inférieur de la pièce.", feedbackEn: "Correct. Breathable air stays in the lower third of the space." },
+        { label: "Faire demi-tour et retourner à son bureau", labelEn: "Turn back and return to your desk", correct: false, feedback: "Risqué. Mieux vaut progresser vers la sortie que rester dans le bâtiment.", feedbackEn: "Risky. Moving toward the exit is safer than staying in the building." },
+        { label: "Ouvrir toutes les fenêtres pour aérer", labelEn: "Open all windows to ventilate", correct: false, feedback: "Faux. Ouvrir les fenêtres attire l'oxygène et intensifie l'incendie.", feedbackEn: "Wrong. Opening windows draws in oxygen and intensifies the fire." },
       ],
     },
     {
       situation: "Vous êtes au point de rassemblement. Une collègue est manquante. Que faites-vous ?",
+      situationEn: "You are at the assembly point. A colleague is missing. What do you do?",
       timeLimit: 6,
       actions: [
-        { label: "Retourner la chercher vous-même", correct: false, feedback: "Interdit et dangereux. Retourner sans équipement = risque vital pour vous aussi." },
-        { label: "Signaler immédiatement aux secours avec description et dernière localisation", correct: true, feedback: "Correct. Les secours ont l'équipement pour effectuer les recherches en sécurité." },
-        { label: "Attendre qu'elle arrive peut-être par un autre chemin", correct: false, feedback: "Insuffisant. Signaler sans délai permet d'agir rapidement." },
-        { label: "L'appeler sur son téléphone portable", correct: false, feedback: "Secondaire. Signaler d'abord aux secours, appel si possible en parallèle." },
+        { label: "Retourner la chercher vous-même", labelEn: "Go back in to find her yourself", correct: false, feedback: "Interdit et dangereux. Retourner sans équipement = risque vital pour vous aussi.", feedbackEn: "Forbidden and dangerous. Going back without equipment = vital risk for you too." },
+        { label: "Signaler immédiatement aux secours avec description et dernière localisation", labelEn: "Immediately report to fire services with description and last known location", correct: true, feedback: "Correct. Les secours ont l'équipement pour effectuer les recherches en sécurité.", feedbackEn: "Correct. Fire services have the equipment to search safely." },
+        { label: "Attendre qu'elle arrive peut-être par un autre chemin", labelEn: "Wait for her to arrive by another route", correct: false, feedback: "Insuffisant. Signaler sans délai permet d'agir rapidement.", feedbackEn: "Insufficient. Immediate reporting enables rapid action." },
+        { label: "L'appeler sur son téléphone portable", labelEn: "Call her mobile phone", correct: false, feedback: "Secondaire. Signaler d'abord aux secours, appel si possible en parallèle.", feedbackEn: "Secondary. Alert fire services first, call in parallel if possible." },
       ],
     },
     {
       situation: "L'extincteur est vide. Le feu ne recule pas. Vous êtes à 30 secondes d'intervention.",
+      situationEn: "The extinguisher is empty. The fire is not retreating. You have been intervening for 30 seconds.",
       timeLimit: 5,
       actions: [
-        { label: "Chercher un autre extincteur rapidement", correct: false, feedback: "Trop risqué. Après 30 secondes d'inefficacité, le feu est trop développé pour vous." },
-        { label: "Reculer et évacuer immédiatement", correct: true, feedback: "Bonne décision. La règle IBM : si le feu ne recule pas en 30s — évacuer sans hésiter." },
-        { label: "Continuer avec l'extincteur vide pour intimider le feu", correct: false, feedback: "Absurde et dangereux. Un extincteur vide n'a aucun effet." },
-        { label: "Appeler les collègues pour aider", correct: false, feedback: "Faux. En urgence, évacuer seul et rapidement, pas grouper des gens non équipés." },
+        { label: "Chercher un autre extincteur rapidement", labelEn: "Quickly find another extinguisher", correct: false, feedback: "Trop risqué. Après 30 secondes d'inefficacité, le feu est trop développé pour vous.", feedbackEn: "Too risky. After 30 seconds of no effect, the fire is too developed for you." },
+        { label: "Reculer et évacuer immédiatement", labelEn: "Step back and evacuate immediately", correct: true, feedback: "Bonne décision. La règle IBM : si le feu ne recule pas en 30s — évacuer sans hésiter.", feedbackEn: "Good decision. IBM rule: if the fire doesn't retreat in 30s — evacuate without hesitation." },
+        { label: "Continuer avec l'extincteur vide pour intimider le feu", labelEn: "Keep gesturing with the empty extinguisher", correct: false, feedback: "Absurde et dangereux. Un extincteur vide n'a aucun effet.", feedbackEn: "Absurd and dangerous. An empty extinguisher has no effect." },
+        { label: "Appeler les collègues pour aider", labelEn: "Call colleagues to help", correct: false, feedback: "Faux. En urgence, évacuer seul et rapidement, pas grouper des gens non équipés.", feedbackEn: "Wrong. In an emergency, evacuate alone quickly — don't group unequipped people." },
       ],
     },
   ],
@@ -1624,43 +1678,41 @@ const m7_seriousgame: SeriousGameExercise = {
 const m4_tipflip: TipFlipExercise = {
   type: "tipflip",
   title: "Le saviez-vous ? — Classes de feu",
+  titleEn: "Did you know? — Fire Classes",
   subtitle: "Retournez chaque carte pour découvrir l'explication complète",
+  subtitleEn: "Flip each card to discover the full explanation",
   cards: [
     {
-      icon: "Flame",
-      accent: "flame",
-      stat: "5",
-      label: "Classes de feu à maîtriser",
+      icon: "Flame", accent: "flame", stat: "5",
+      label: "Classes de feu à maîtriser", labelEn: "Fire classes to master",
       category: "chiffre",
-      tipTitle: "Pourquoi 5 classes ?",
+      tipTitle: "Pourquoi 5 classes ?", tipTitleEn: "Why 5 classes?",
       tip: "Chaque classe (A : solides, B : liquides, C : gaz, D : métaux, F : huiles) réclame un agent extincteur spécifique. Utiliser le mauvais agent peut propager le sinistre au lieu de l'éteindre.",
+      tipEn: "Each class (A: solids, B: liquids, C: gases, D: metals, F: oils) requires a specific extinguishing agent. Using the wrong agent can spread the fire instead of extinguishing it.",
     },
     {
-      icon: "Zap",
-      accent: "alert",
-      stat: "CO₂",
-      label: "Seul agent pour feux électriques",
+      icon: "Zap", accent: "alert", stat: "CO₂",
+      label: "Seul agent pour feux électriques", labelEn: "Only agent for electrical fires",
       category: "astuce",
-      tipTitle: "Jamais d'eau sur l'électrique",
+      tipTitle: "Jamais d'eau sur l'électrique", tipTitleEn: "Never water on electrical fires",
       tip: "L'eau est conductrice d'électricité — risque d'électrocution fatal. Le CO₂ étouffe la flamme sans conduire le courant et sans laisser de résidu sur les équipements.",
+      tipEn: "Water conducts electricity — fatal electrocution risk. CO₂ smothers the flame without conducting current and leaves no residue on equipment.",
     },
     {
-      icon: "Timer",
-      accent: "clock",
-      stat: "30s",
-      label: "Durée d'un extincteur CO₂ 2kg",
+      icon: "Timer", accent: "clock", stat: "30s",
+      label: "Durée d'un extincteur CO₂ 2kg", labelEn: "Duration of a 2kg CO₂ extinguisher",
       category: "chiffre",
-      tipTitle: "Un extincteur s'épuise vite",
+      tipTitle: "Un extincteur s'épuise vite", tipTitleEn: "An extinguisher runs out fast",
       tip: "30 secondes de décharge maximum pour un extincteur CO₂ de 2kg. Si le feu n'est pas maîtrisé à ce stade, évacuez immédiatement. Persister en rechargement zéro est dangereux.",
+      tipEn: "Maximum 30 seconds of discharge for a 2kg CO₂ extinguisher. If the fire is not under control at that point, evacuate immediately. Persisting with an empty extinguisher is dangerous.",
     },
     {
-      icon: "Target",
-      accent: "shield",
-      stat: "2–3m",
-      label: "Distance idéale d'intervention",
+      icon: "Target", accent: "shield", stat: "2–3m",
+      label: "Distance idéale d'intervention", labelEn: "Ideal intervention distance",
       category: "astuce",
-      tipTitle: "Ni trop près, ni trop loin",
+      tipTitle: "Ni trop près, ni trop loin", tipTitleEn: "Not too close, not too far",
       tip: "Le CO₂ sort à -78°C. Trop proche = brûlure par le froid. Trop loin = perte d'efficacité. 2 à 3 mètres du foyer est la distance qui combine sécurité et efficacité maximale.",
+      tipEn: "CO₂ is discharged at -78°C. Too close = cold burns. Too far = loss of effectiveness. 2–3 metres from the fire combines safety and maximum effectiveness.",
     },
   ],
 };
@@ -1668,43 +1720,41 @@ const m4_tipflip: TipFlipExercise = {
 const m6_tipflip: TipFlipExercise = {
   type: "tipflip",
   title: "Le saviez-vous ? — Intervenir ou évacuer",
+  titleEn: "Did you know? — Intervene or evacuate",
   subtitle: "Retournez chaque carte pour découvrir l'explication complète",
+  subtitleEn: "Flip each card to discover the full explanation",
   cards: [
     {
-      icon: "Clock",
-      accent: "clock",
-      stat: "10s",
-      label: "La règle de décision",
+      icon: "Clock", accent: "clock", stat: "10s",
+      label: "La règle de décision", labelEn: "The decision rule",
       category: "chiffre",
-      tipTitle: "Observer · Évaluer · Décider",
+      tipTitle: "Observer · Évaluer · Décider", tipTitleEn: "Observe · Assess · Decide",
       tip: "10 secondes maximum pour prendre votre décision. Observer la taille du feu, évaluer l'agent disponible, décider. Au-delà, le feu double de volume — vos options se réduisent.",
+      tipEn: "Maximum 10 seconds to make your decision. Observe fire size, assess available agent, decide. Beyond that, the fire doubles in volume — your options shrink.",
     },
     {
-      icon: "CheckSquare",
-      accent: "shield",
-      stat: "3",
-      label: "Critères pour intervenir sans risque",
+      icon: "CheckSquare", accent: "shield", stat: "3",
+      label: "Critères pour intervenir sans risque", labelEn: "Criteria for safe intervention",
       category: "astuce",
-      tipTitle: "Les 3 conditions obligatoires",
+      tipTitle: "Les 3 conditions obligatoires", tipTitleEn: "The 3 mandatory conditions",
       tip: "Feu inférieur à une corbeille à papier, extincteur adapté à portée, sortie dégagée dans le dos. Si UN seul critère manque, l'intervention est interdite. Évacuez.",
+      tipEn: "Fire smaller than a wastepaper bin, suitable extinguisher within reach, clear exit behind you. If ONE condition is missing, intervention is forbidden. Evacuate.",
     },
     {
-      icon: "AlertTriangle",
-      accent: "alert",
-      stat: "80%",
-      label: "Des victimes auraient pu survivre",
+      icon: "AlertTriangle", accent: "alert", stat: "80%",
+      label: "Des victimes auraient pu survivre", labelEn: "Of victims could have survived",
       category: "funfact",
-      tipTitle: "L'hésitation tue",
+      tipTitle: "L'hésitation tue", tipTitleEn: "Hesitation kills",
       tip: "Dans la majorité des incendies mortels d'entreprise, une évacuation plus rapide aurait changé l'issue. Le doute doit toujours conduire à l'évacuation — jamais à l'attente.",
+      tipEn: "In the majority of fatal workplace fires, faster evacuation would have changed the outcome. Doubt must always lead to evacuation — never to waiting.",
     },
     {
-      icon: "Eye",
-      accent: "eye",
-      stat: "1m80",
-      label: "Hauteur où la fumée asphyxie",
+      icon: "Eye", accent: "eye", stat: "1m80",
+      label: "Hauteur où la fumée asphyxie", labelEn: "Height where smoke suffocates",
       category: "funfact",
-      tipTitle: "Restez en dessous",
+      tipTitle: "Restez en dessous", tipTitleEn: "Stay below it",
       tip: "En dessous de 1m80, l'air reste respirable plus longtemps. Si vous traversez un couloir enfumé pour évacuer, baissez-vous. La fumée monte — l'air pur reste en bas.",
+      tipEn: "Below 1.8m, air remains breathable longer. If crossing a smoky corridor to evacuate, crouch down. Smoke rises — clean air stays low.",
     },
   ],
 };
@@ -1712,43 +1762,41 @@ const m6_tipflip: TipFlipExercise = {
 const ch2m3_tipflip: TipFlipExercise = {
   type: "tipflip",
   title: "Le saviez-vous ? — Fermer les portes",
+  titleEn: "Did you know? — Closing doors",
   subtitle: "Retournez chaque carte pour découvrir l'explication complète",
+  subtitleEn: "Flip each card to discover the full explanation",
   cards: [
     {
-      icon: "DoorClosed",
-      accent: "flame",
-      stat: "5×",
-      label: "Plus vite avec porte ouverte",
+      icon: "DoorClosed", accent: "flame", stat: "5×",
+      label: "Plus vite avec porte ouverte", labelEn: "Faster spread with open door",
       category: "chiffre",
-      tipTitle: "La porte comme bouclier",
+      tipTitle: "La porte comme bouclier", tipTitleEn: "The door as a shield",
       tip: "Une porte coupe-feu ouverte permet au feu de se propager 5 fois plus rapidement. Fermer une porte en fuyant est souvent plus efficace qu'utiliser un extincteur.",
+      tipEn: "An open fire door allows fire to spread 5 times faster. Closing a door while evacuating is often more effective than using an extinguisher.",
     },
     {
-      icon: "Shield",
-      accent: "shield",
-      stat: "30min",
-      label: "Résistance d'une porte EI30 fermée",
+      icon: "Shield", accent: "shield", stat: "30min",
+      label: "Résistance d'une porte EI30 fermée", labelEn: "Resistance of a closed EI30 door",
       category: "chiffre",
-      tipTitle: "Calée ouverte : protection zéro",
+      tipTitle: "Calée ouverte : protection zéro", tipTitleEn: "Propped open: zero protection",
       tip: "Une porte coupe-feu EI30 résiste 30 minutes au feu et à la fumée. Fermée, elle protège les voies d'évacuation. Calée ouverte, elle devient un accélérateur de sinistre.",
+      tipEn: "A closed EI30 fire door resists fire and smoke for 30 minutes. Propped open, it becomes a fire accelerator with zero protection.",
     },
     {
-      icon: "ArrowRight",
-      accent: "clock",
-      stat: "SORS",
-      label: "Première étape de la séquence",
+      icon: "ArrowRight", accent: "clock", stat: "EXIT",
+      label: "Première étape de la séquence", labelEn: "First step of the sequence",
       category: "astuce",
-      tipTitle: "La séquence ne s'inverse pas",
+      tipTitle: "La séquence ne s'inverse pas", tipTitleEn: "The sequence is not reversible",
       tip: "SORS d'abord, FERME ensuite, SIGNALE après. Ne jamais rester dans la pièce pour fermer avant de sortir. Ne jamais rouvrir pour récupérer des affaires — jamais d'exception.",
+      tipEn: "EXIT first, CLOSE next, SIGNAL after. Never stay in the room to close before going out. Never reopen to retrieve belongings — no exceptions.",
     },
     {
-      icon: "XCircle",
-      accent: "alert",
-      stat: "0",
-      label: "Exception à la règle de fermeture",
+      icon: "XCircle", accent: "alert", stat: "0",
+      label: "Exception à la règle de fermeture", labelEn: "Exceptions to the closing rule",
       category: "astuce",
-      tipTitle: "Règle absolue sans exception",
+      tipTitle: "Règle absolue sans exception", tipTitleEn: "Absolute rule with no exceptions",
       tip: "Zéro exception. Toutes les portes doivent être fermées lors d'une évacuation, quelle que soit la situation. Même si vous pensez revenir vite. Même si la pièce est vide.",
+      tipEn: "Zero exceptions. All doors must be closed during an evacuation, whatever the situation. Even if you expect to return quickly. Even if the room is empty.",
     },
   ],
 };
@@ -1756,43 +1804,41 @@ const ch2m3_tipflip: TipFlipExercise = {
 const ch2m5_tipflip: TipFlipExercise = {
   type: "tipflip",
   title: "Le saviez-vous ? — Faire face à la fumée",
+  titleEn: "Did you know? — Dealing with smoke",
   subtitle: "Retournez chaque carte pour découvrir l'explication complète",
+  subtitleEn: "Flip each card to discover the full explanation",
   cards: [
     {
-      icon: "Clock",
-      accent: "alert",
-      stat: "3min",
-      label: "Pour perdre connaissance",
+      icon: "Clock", accent: "alert", stat: "3min",
+      label: "Pour perdre connaissance", labelEn: "To lose consciousness",
       category: "chiffre",
-      tipTitle: "La fumée agit en silence",
+      tipTitle: "La fumée agit en silence", tipTitleEn: "Smoke acts silently",
       tip: "La fumée d'incendie contient du monoxyde de carbone, du CO₂ et des gaz toxiques. En 3 minutes d'exposition dans une zone enfumée, la perte de conscience est possible.",
+      tipEn: "Fire smoke contains carbon monoxide, CO₂ and toxic gases. After 3 minutes of exposure in a smoky area, loss of consciousness is possible.",
     },
     {
-      icon: "TrendingDown",
-      accent: "flame",
-      stat: "60%",
-      label: "Des morts par intoxication",
+      icon: "TrendingDown", accent: "flame", stat: "60%",
+      label: "Des morts par intoxication", labelEn: "Of deaths from smoke inhalation",
       category: "funfact",
-      tipTitle: "La fumée tue avant le feu",
+      tipTitle: "La fumée tue avant le feu", tipTitleEn: "Smoke kills before the flames",
       tip: "Plus de 60% des victimes d'incendie meurent d'intoxication et non des flammes. Fuir la fumée est la priorité absolue — même si vous ne voyez pas de feu directement.",
+      tipEn: "Over 60% of fire victims die from smoke inhalation, not flames. Escaping smoke is the absolute priority — even if you can't see any fire directly.",
     },
     {
-      icon: "Wind",
-      accent: "zap",
-      stat: "30m/min",
-      label: "Vitesse de montée de la fumée",
+      icon: "Wind", accent: "zap", stat: "30m/min",
+      label: "Vitesse de montée de la fumée", labelEn: "Speed at which smoke rises",
       category: "chiffre",
-      tipTitle: "Descendez toujours",
+      tipTitle: "Descendez toujours", tipTitleEn: "Always go down",
       tip: "La fumée monte à environ 30 mètres par minute verticalement. Un immeuble de 6 étages s'enfume en 2 minutes. En cas d'incendie, descendre est toujours plus sûr que monter.",
+      tipEn: "Smoke rises at around 30 metres per minute vertically. A 6-storey building fills with smoke in 2 minutes. In a fire, going down is always safer than going up.",
     },
     {
-      icon: "ArrowDown",
-      accent: "shield",
-      stat: "0,5m",
-      label: "Zone d'air respirable au sol",
+      icon: "ArrowDown", accent: "shield", stat: "0.5m",
+      label: "Zone d'air respirable au sol", labelEn: "Breathable air zone at floor level",
       category: "astuce",
-      tipTitle: "Rampez si vous le devez",
+      tipTitle: "Rampez si vous le devez", tipTitleEn: "Crawl if you must",
       tip: "À 50 cm du sol, l'air reste respirable plusieurs minutes supplémentaires. En cas de couloir enfumé : baissez-vous, protégez votre bouche avec un tissu humide si possible, avancez vite.",
+      tipEn: "At 50cm from the floor, air remains breathable for several extra minutes. In a smoky corridor: get low, cover your mouth with a damp cloth if possible, move quickly.",
     },
   ],
 };

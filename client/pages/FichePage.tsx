@@ -41,7 +41,7 @@ export default function FichePage() {
     : undefined;
 
   useEffect(() => {
-    if (!mod) navigate("/hub");
+    if (!mod) navigate("/hub", { replace: true });
   }, [mod]);
 
   if (!mod) return null;
@@ -72,7 +72,7 @@ export default function FichePage() {
         padding: "0.75rem 1.5rem",
       }}>
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => window.history.length > 2 ? navigate(-1) : navigate(`/module/${id}`)}
           style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "rgba(255,255,255,0.8)", background: "none", border: "none", cursor: "pointer", fontSize: "0.875rem", fontFamily: "'IBM Plex Sans', sans-serif" }}
         >
           <ArrowLeft size={16} /> {isEN ? "Back" : "Retour"}

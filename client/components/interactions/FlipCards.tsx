@@ -47,8 +47,8 @@ export default function FlipCards({ exercise, onComplete }: Props) {
           <Layers size={14} color="#fff" />
         </div>
         <div className="flex-1">
-          <span className="font-bold text-white uppercase" style={{ fontSize: "0.82rem", letterSpacing: "0.08em" }}>{exercise.title}</span>
-          {exercise.subtitle && <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.65)" }}>{exercise.subtitle}</div>}
+          <span className="font-bold text-white uppercase" style={{ fontSize: "0.82rem", letterSpacing: "0.08em" }}>{isEN ? (exercise.titleEn ?? exercise.title) : exercise.title}</span>
+          {exercise.subtitle && <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.65)" }}>{isEN ? (exercise.subtitleEn ?? exercise.subtitle) : exercise.subtitle}</div>}
         </div>
         <span className="font-mono text-xs px-2.5 py-1 rounded-full" style={{ color: "#fff", background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.25)", fontFamily: "'IBM Plex Mono', monospace" }}>
           {flipped.size}/{exercise.cards.length} {isEN ? "flipped" : "retournées"}
@@ -94,7 +94,7 @@ export default function FlipCards({ exercise, onComplete }: Props) {
                     {card.icon && ICON_MAP[card.icon]}
                   </div>
                   <div className="font-bold text-white text-center" style={{ fontSize: "0.95rem", letterSpacing: "0.02em", lineHeight: "1.25", whiteSpace: "pre-line" }}>
-                    {card.front}
+                    {isEN ? (card.frontEn ?? card.front) : card.front}
                   </div>
                   <div className="text-xs" style={{ color: "rgba(255,255,255,0.55)" }}>{isEN ? "Click to flip" : "Cliquer pour retourner"}</div>
                 </div>
@@ -116,8 +116,8 @@ export default function FlipCards({ exercise, onComplete }: Props) {
                   boxShadow: "0 4px 16px rgba(0,0,0,0.1)",
                   gap: "6px",
                 }}>
-                  <div className="font-bold text-xs uppercase mb-1" style={{ color, letterSpacing: "0.1em" }}>{card.front.replace("\n", " ")}</div>
-                  <div style={{ fontSize: "0.8rem", color: "#0a2052", lineHeight: "1.5", fontWeight: 500 }}>{card.back}</div>
+                  <div className="font-bold text-xs uppercase mb-1" style={{ color, letterSpacing: "0.1em" }}>{(isEN ? (card.frontEn ?? card.front) : card.front).replace("\n", " ")}</div>
+                  <div style={{ fontSize: "0.8rem", color: "#0a2052", lineHeight: "1.5", fontWeight: 500 }}>{isEN ? (card.backEn ?? card.back) : card.back}</div>
                 </div>
               </div>
             </div>

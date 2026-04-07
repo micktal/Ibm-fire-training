@@ -102,8 +102,11 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
       setTimeLeft((t) => {
         if (t === null || t <= 1) {
           clearInterval(timerRef.current!);
-          // Auto-select first wrong answer on timeout
-          if (chosenIdx === null) handleChoice(node.choices.length - 1, true);
+          // Auto-select first wrong (non-ok) answer on timeout
+          if (chosenIdx === null) {
+            const wrongIdx = node.choices.findIndex((c) => c.consequenceType !== "ok");
+            handleChoice(wrongIdx >= 0 ? wrongIdx : node.choices.length - 1, true);
+          }
           return null;
         }
         return t - 1;

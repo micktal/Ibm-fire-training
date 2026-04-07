@@ -145,7 +145,7 @@ export default function SeriousGame({ exercise, onComplete }: Props) {
         </div>
         <div className="flex-1 text-center">
           <span className="font-mono font-bold text-sm" style={{ color: "#fff", fontFamily: "'IBM Plex Mono', monospace" }}>
-            Situation {round + 1}/{exercise.rounds.length}
+            {isEN ? "Situation" : "Situation"} {round + 1}/{exercise.rounds.length}
           </span>
           {streak >= 2 && (
             <span className="ml-2 text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "#f59e0b", color: "#000" }}>
@@ -178,7 +178,7 @@ export default function SeriousGame({ exercise, onComplete }: Props) {
           </span>
         </div>
         <div className="font-semibold text-white" style={{ fontSize: "0.92rem", lineHeight: "1.5" }}>
-          {currentRound.situation}
+          {isEN ? (currentRound.situationEn ?? currentRound.situation) : currentRound.situation}
         </div>
       </div>
 
@@ -202,7 +202,7 @@ export default function SeriousGame({ exercise, onComplete }: Props) {
               <span className="flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center font-mono font-bold text-xs mt-0.5" style={{ background: "rgba(255,255,255,0.1)", fontFamily: "'IBM Plex Mono', monospace" }}>
                 {String.fromCharCode(65 + i)}
               </span>
-              <span className="flex-1">{action.label}</span>
+              <span className="flex-1">{isEN ? (action.labelEn ?? action.label) : action.label}</span>
               {showResult && action.correct && <CheckCircle2 size={16} style={{ color: "#6fdc8c", flexShrink: 0 }} />}
               {showResult && isSelected && !action.correct && <XCircle size={16} style={{ color: "#ff8b8b", flexShrink: 0 }} />}
             </button>
@@ -218,7 +218,7 @@ export default function SeriousGame({ exercise, onComplete }: Props) {
             border: `1.5px solid ${currentRound.actions[selected]?.correct ? "rgba(111,220,140,0.4)" : "rgba(255,100,100,0.4)"}`,
           }}>
             <div className="text-sm" style={{ color: currentRound.actions[selected]?.correct ? "#6fdc8c" : "#ff8b8b", lineHeight: "1.5" }}>
-              {selected === -1 ? (isEN ? "⏱ Time's up — automatic wrong answer" : "⏱ Temps écoulé — réponse automatiquement incorrecte") : currentRound.actions[selected]?.feedback}
+              {selected === -1 ? (isEN ? "⏱ Time's up — automatic wrong answer" : "⏱ Temps écoulé — réponse automatiquement incorrecte") : (isEN ? (currentRound.actions[selected]?.feedbackEn ?? currentRound.actions[selected]?.feedback) : currentRound.actions[selected]?.feedback)}
             </div>
           </div>
         </div>
