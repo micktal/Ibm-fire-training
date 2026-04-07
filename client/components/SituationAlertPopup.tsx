@@ -37,6 +37,11 @@ export default function SituationAlertPopup({ alert, onClose }: Props) {
   }, []);
 
   const urgency = URGENCY_CONFIG[alert.urgency];
+  const urgencyLabel = alert.urgency === "critical"
+    ? (isEN ? "CRITICAL" : "CRITIQUE")
+    : alert.urgency === "high"
+      ? "URGENT"
+      : (isEN ? "ALERT" : "ALERTE");
   const now = new Date().toLocaleTimeString(isEN ? "en-GB" : "fr-FR", { hour: "2-digit", minute: "2-digit" });
   const correctChoice = alert.choices.find((c) => c.correct);
   const selectedChoice = alert.choices.find((c) => c.key === selected);
@@ -97,7 +102,7 @@ export default function SituationAlertPopup({ alert, onClose }: Props) {
           }} />
           <AlertTriangle size={16} color="#fff" className="flex-shrink-0" style={{ position: "relative", zIndex: 1 }} />
           <span className="font-mono font-bold text-white uppercase" style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "11px", letterSpacing: "0.15em", position: "relative", zIndex: 1 }}>
-            {urgency.label} — {isEN ? "Ongoing situation" : "Situation en cours"}
+            {urgencyLabel} — {isEN ? "Ongoing situation" : "Situation en cours"}
           </span>
           <div className="ml-auto flex items-center gap-1.5" style={{ position: "relative", zIndex: 1 }}>
             <Clock size={11} color="rgba(255,255,255,0.7)" />

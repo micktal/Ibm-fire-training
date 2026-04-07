@@ -39,15 +39,16 @@ export default function CertificatePage() {
   const isFullyCompleted = totalCompleted >= TOTAL_MODULES;
   const today = new Date().toLocaleDateString(isEN ? "en-GB" : "fr-FR", { day: "2-digit", month: "long", year: "numeric" });
 
-  // Marquer le certificat obtenu dans Supabase (une seule fois au montage)
+  // Marquer le certificat obtenu dans Supabase — uniquement si vraiment terminé
   useEffect(() => {
+    if (!isFullyCompleted) return;
     updateProgression(getSessionId(), {
       certificate_obtained: true,
       completed_at: new Date().toISOString(),
       average_score: avgScore,
       completed_modules: completedModules.length,
     }).catch(console.error);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isFullyCompleted]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fullName = user ? `${user.prenom} ${user.nom}` : "Apprenant";
   const campus = user?.campus ?? "IBM France";
@@ -160,7 +161,7 @@ export default function CertificatePage() {
                 {[
                   { label: isEN ? "Avg. score" : "Score moyen", value: `${avgScore}%`, icon: <Star size={15} />, color: avgScore >= 80 ? "#198038" : "#b45309", bg: avgScore >= 80 ? "rgba(25,128,56,0.07)" : "rgba(180,83,9,0.07)" },
                   { label: isEN ? "Modules passed" : "Modules validés", value: `${totalCompleted}/${TOTAL_MODULES}`, icon: <CheckCircle2 size={15} />, color: "#0D47A1", bg: "rgba(13,71,161,0.07)" },
-                  { label: isEN ? "Issued on" : "Obtenu le", value: today.split(" ").slice(0, 2).join(" "), icon: <Clock size={15} />, color: "#6f7897", bg: "#f0f4fa" },
+                  { label: isEN ? "Issued on" : "Obtenu le", value: today, icon: <Clock size={15} />, color: "#6f7897", bg: "#f0f4fa" },
                 ].map((stat, i) => (
                   <div key={i} className="rounded-xl p-3 flex flex-col items-center text-center" style={{ background: stat.bg }}>
                     <div style={{ color: stat.color }}>{stat.icon}</div>

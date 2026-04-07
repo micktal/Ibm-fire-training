@@ -5,7 +5,9 @@ import { useLanguage } from "@/lib/languageContext";
 
 export interface ScenarioChoice {
   label: string;
+  labelEn?: string;
   consequence: string;
+  consequenceEn?: string;
   consequenceType: "ok" | "ko" | "critical";
   nextNode?: string; // undefined = end
   points?: number;
@@ -15,7 +17,9 @@ export interface ScenarioNode {
   id: string;
   image?: string;
   situation: string;
+  situationEn?: string;
   context?: string;
+  contextEn?: string;
   urgency?: "low" | "medium" | "high";
   choices: ScenarioChoice[];
   timed?: number; // seconds for choice, undefined = no timer
@@ -24,11 +28,15 @@ export interface ScenarioNode {
 export interface BranchingExercise {
   type: "branching";
   title: string;
+  titleEn?: string;
   subtitle?: string;
+  subtitleEn?: string;
   startNode: string;
   nodes: Record<string, ScenarioNode>;
   successMessage?: string;
+  successMessageEn?: string;
   failMessage?: string;
+  failMessageEn?: string;
 }
 
 interface HistoryEntry {
@@ -194,7 +202,7 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
         <div className="px-5 py-3.5 flex items-center gap-2" style={{ background: "#161616" }}>
           <GitBranch size={13} color="rgba(255,255,255,0.7)" />
           <span className="font-mono text-xs uppercase" style={{ color: "rgba(255,255,255,0.55)", fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.1em" }}>
-            {isEN ? "Branching scenario" : "Scénario à embranchements"} — {exercise.title}
+            {isEN ? "Branching scenario" : "Scénario à embranchements"} — {isEN ? (exercise.titleEn ?? exercise.title) : exercise.title}
           </span>
         </div>
         <div
@@ -215,8 +223,8 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
           </div>
           <div className="text-base font-bold mb-1.5" style={{ color: "#161616" }}>
             {passed
-              ? exercise.successMessage || (isEN ? "Excellent reflexes — scenario mastered!" : "Excellents réflexes — scénario maîtrisé !")
-              : exercise.failMessage || (isEN ? "Some decisions need review — retry the scenario" : "Des décisions à revoir — réessayez le scénario")}
+              ? (isEN ? exercise.successMessageEn : null) ?? exercise.successMessage ?? (isEN ? "Excellent reflexes — scenario mastered!" : "Excellents réflexes — scénario maîtrisé !")
+              : (isEN ? exercise.failMessageEn : null) ?? exercise.failMessage ?? (isEN ? "Some decisions need review — retry the scenario" : "Des décisions à revoir — réessayez le scénario")}
           </div>
           <div className="text-sm mb-5" style={{ color: "#6f7897" }}>
             {totalCorrect}/{totalDecisions} {isEN
@@ -235,8 +243,8 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
                   <div className="mt-0.5">{s.icon}</div>
                   <div className="flex-1">
                     <div className="text-xs font-semibold mb-0.5" style={{ color: "#8d95aa" }}>{isEN ? "Decision" : "Décision"} {i + 1}</div>
-                    <div className="text-xs font-medium" style={{ color: "#161616" }}>{choice.label}</div>
-                    <div className="text-xs mt-0.5" style={{ color: "#6f7897" }}>{choice.consequence}</div>
+                    <div className="text-xs font-medium" style={{ color: "#161616" }}>{isEN ? (choice.labelEn ?? choice.label) : choice.label}</div>
+                    <div className="text-xs mt-0.5" style={{ color: "#6f7897" }}>{isEN ? (choice.consequenceEn ?? choice.consequence) : choice.consequence}</div>
                   </div>
                 </div>
               );
@@ -274,7 +282,7 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
             className="font-mono text-xs uppercase"
             style={{ color: "rgba(255,255,255,0.55)", fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.1em" }}
           >
-            {isEN ? "Scenario" : "Scénario"} — {exercise.title}
+            {isEN ? "Scenario" : "Scénario"} — {isEN ? (exercise.titleEn ?? exercise.title) : exercise.title}
           </span>
         </div>
         <div className="flex items-center gap-3">
@@ -308,7 +316,7 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
           <CharacterDialogue
             lines={[{
               speaker: node.urgency === "high" ? "security" : node.urgency === "medium" ? "manager" : "instructor",
-              text: node.situation.length > 120 ? node.situation.slice(0, 117) + "…" : node.situation,
+              text: (() => { const s = isEN ? (node.situationEn ?? node.situation) : node.situation; return s.length > 120 ? s.slice(0, 117) + "…" : s; })(),
             }]}
             scene={node.urgency === "high" ? "corridor" : node.context ? "meeting" : "office"}
             autoAdvance={false}
@@ -367,11 +375,11 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
           {isEN ? "Situation" : "Situation"}
         </div>
         <p className="text-base font-bold text-white leading-snug mb-1" style={{ letterSpacing: "-0.01em" }}>
-          {node.situation}
+          {isEN ? (node.situationEn ?? node.situation) : node.situation}
         </p>
         {node.context && (
           <p className="text-xs" style={{ color: "rgba(255,255,255,0.55)", lineHeight: "1.55" }}>
-            {node.context}
+            {isEN ? (node.contextEn ?? node.context) : node.context}
           </p>
         )}
 
@@ -434,7 +442,7 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
               >
                 {String.fromCharCode(65 + idx)}
               </span>
-              <span className="flex-1 text-sm font-medium">{choice.label}</span>
+              <span className="flex-1 text-sm font-medium">{isEN ? (choice.labelEn ?? choice.label) : choice.label}</span>
               {chosenIdx === null && <ChevronRight size={14} style={{ color: "rgba(255,255,255,0.3)", flexShrink: 0 }} />}
             </button>
           );
@@ -456,7 +464,7 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
               {consequenceStyle.label}
             </div>
             <div className="text-sm leading-relaxed" style={{ color: "#4a5068" }}>
-              {currentChoice.consequence}
+              {isEN ? (currentChoice.consequenceEn ?? currentChoice.consequence) : currentChoice.consequence}
             </div>
             {currentChoice.nextNode && (
               <div className="text-xs mt-1.5 flex items-center gap-1" style={{ color: "#8d95aa" }}>

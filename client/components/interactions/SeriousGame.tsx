@@ -18,6 +18,8 @@ export default function SeriousGame({ exercise, onComplete }: Props) {
   const [streak, setStreak] = useState(0);
   const [maxStreak, setMaxStreak] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const pointsRef = useRef(0);
+  const isDeadRef = useRef(false);
 
   const currentRound = exercise.rounds[round];
   const maxPoints = exercise.rounds.length * 100;
@@ -49,7 +51,7 @@ export default function SeriousGame({ exercise, onComplete }: Props) {
     const isCorrect = idx >= 0 && exercise.rounds[round].actions[idx].correct;
     if (isCorrect) {
       const timeBonus = Math.round(timeLeft / currentRound.timeLimit * 50);
-      setPoints((p) => p + 50 + timeBonus);
+      setPoints((p) => { const np = p + 50 + timeBonus; pointsRef.current = np; return np; });
       setStreak((s) => {
         const ns = s + 1;
         setMaxStreak((ms) => Math.max(ms, ns));
@@ -59,6 +61,7 @@ export default function SeriousGame({ exercise, onComplete }: Props) {
       setLives((l) => {
         const nl = l - 1;
         if (nl <= 0) {
+          isDeadRef.current = true;
           setTimeout(() => setPhase("dead"), 1800);
         }
         return nl;
@@ -67,13 +70,14 @@ export default function SeriousGame({ exercise, onComplete }: Props) {
     }
 
     setTimeout(() => {
+      if (isDeadRef.current) return; // dead state already set, don’t overwrite
       if (round < exercise.rounds.length - 1) {
         setRound((r) => r + 1);
         setSelected(null);
         setPhase("playing");
       } else {
         setPhase("done");
-        const finalScore = Math.round((points / maxPoints) * 100);
+        const finalScore = Math.round((pointsRef.current / maxPoints) * 100);
         onComplete?.(finalScore);
       }
     }, 2000);
@@ -83,6 +87,8 @@ export default function SeriousGame({ exercise, onComplete }: Props) {
     setRound(0); setLives(3); setPoints(0);
     setSelected(null); setStreak(0); setMaxStreak(0);
     setPhase("playing"); setTimeLeft(exercise.rounds[0].timeLimit);
+    pointsRef.current = 0;
+    isDeadRef.current = false;
   };
 
   const { lang } = useLanguage();

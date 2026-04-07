@@ -39,10 +39,15 @@ const ACCENT = {
   eye:    { color: "#0043ce", bg: "rgba(0,67,206,0.08)",   border: "rgba(0,67,206,0.22)",   gradient: "linear-gradient(135deg, #0043ce, #0031a9)" },
 };
 
-const CATEGORY_LABELS: Record<string, string> = {
+const CATEGORY_LABELS_FR: Record<string, string> = {
   funfact: "Le saviez-vous ?",
   astuce:  "Astuce",
   chiffre: "Chiffre clé",
+};
+const CATEGORY_LABELS_EN: Record<string, string> = {
+  funfact: "Did you know?",
+  astuce:  "Tip",
+  chiffre: "Key figure",
 };
 
 interface Props {
@@ -155,7 +160,7 @@ export default function TipFlipCards({ exercise, onComplete }: Props) {
                         whiteSpace: "nowrap",
                       }}
                     >
-                      {CATEGORY_LABELS[card.category]}
+                      {(isEN ? CATEGORY_LABELS_EN : CATEGORY_LABELS_FR)[card.category]}
                     </div>
                   </div>
 
@@ -276,15 +281,15 @@ export default function TipFlipCards({ exercise, onComplete }: Props) {
         >
           <Star size={18} style={{ color: "#198038", flexShrink: 0 }} />
           <div className="flex-1">
-            <div className="font-bold text-sm" style={{ color: "#0e6027" }}>Toutes les cartes découvertes !</div>
-            <div className="text-xs" style={{ color: "#6f7897" }}>Ces informations font partie des points clés du module.</div>
+            <div className="font-bold text-sm" style={{ color: "#0e6027" }}>{isEN ? "All cards discovered!" : "Toutes les cartes découvertes !"}</div>
+            <div className="text-xs" style={{ color: "#6f7897" }}>{isEN ? "This information is part of the module’s key points." : "Ces informations font partie des points clés du module."}</div>
           </div>
           <button
             onClick={reset}
             style={{ background: "none", border: "none", cursor: "pointer", color: "#198038", display: "flex", alignItems: "center", gap: "4px", fontSize: "11px", fontWeight: 600 }}
           >
             <RotateCcw size={12} />
-            Revoir
+            {isEN ? "Review" : "Revoir"}
           </button>
         </div>
       )}

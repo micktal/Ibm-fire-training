@@ -35,7 +35,9 @@ const ICON_MAP: Record<string, React.ReactNode> = {
 export interface DragItem {
   id: string;
   label: string;
+  labelEn?: string;
   sublabel?: string;
+  sublabelEn?: string;
   emoji?: string;
   icon?: string;
   correctZone: string;
@@ -44,8 +46,11 @@ export interface DragItem {
 export interface DropZone {
   id: string;
   label: string;
+  labelEn?: string;
   sublabel?: string;
+  sublabelEn?: string;
   description?: string;
+  descriptionEn?: string;
   color: string;
   bgColor: string;
   borderColor: string;
@@ -54,10 +59,13 @@ export interface DropZone {
 export interface DragDropExercise {
   type: "dragdrop";
   instruction: string;
+  instructionEn?: string;
   context?: string;
+  contextEn?: string;
   items: DragItem[];
   zones: DropZone[];
   successMessage?: string;
+  successMessageEn?: string;
 }
 
 interface PlacedItem {
@@ -158,11 +166,11 @@ export default function DragAndDrop({ exercise, onComplete }: Props) {
           </span>
         </div>
         <p className="text-sm font-semibold text-white" style={{ lineHeight: "1.4" }}>
-          {exercise.instruction}
+          {isEN ? (exercise.instructionEn ?? exercise.instruction) : exercise.instruction}
         </p>
         {exercise.context && (
           <p className="text-xs mt-1" style={{ color: "rgba(255,255,255,0.5)" }}>
-            {exercise.context}
+            {isEN ? (exercise.contextEn ?? exercise.context) : exercise.context}
           </p>
         )}
       </div>
@@ -198,11 +206,11 @@ export default function DragAndDrop({ exercise, onComplete }: Props) {
                   ) : null}
                   <div>
                     <span className="text-sm font-semibold" style={{ color: "#161616" }}>
-                      {item.label}
+                      {isEN ? (item.labelEn ?? item.label) : item.label}
                     </span>
                     {item.sublabel && (
                       <div className="text-xs" style={{ color: "#8d95aa", lineHeight: "1.3", marginTop: "1px" }}>
-                        {item.sublabel}
+                        {isEN ? (item.sublabelEn ?? item.sublabel) : item.sublabel}
                       </div>
                     )}
                   </div>
@@ -237,14 +245,14 @@ export default function DragAndDrop({ exercise, onComplete }: Props) {
                 <div className="flex items-center gap-2 mb-2.5">
                   <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: zone.color }} />
                   <span className="text-xs font-bold" style={{ color: zone.color }}>
-                    {zone.label}
+                    {isEN ? (zone.labelEn ?? zone.label) : zone.label}
                   </span>
                 </div>
                 {zone.sublabel && (
-                  <div className="text-xs font-semibold mb-1" style={{ color: "#8d95aa" }}>{zone.sublabel}</div>
+                  <div className="text-xs font-semibold mb-1" style={{ color: "#8d95aa" }}>{isEN ? (zone.sublabelEn ?? zone.sublabel) : zone.sublabel}</div>
                 )}
                 {zone.description && (
-                  <div className="text-xs mb-2" style={{ color: "#a0a8bb", lineHeight: "1.4", fontStyle: "italic" }}>{zone.description}</div>
+                  <div className="text-xs mb-2" style={{ color: "#a0a8bb", lineHeight: "1.4", fontStyle: "italic" }}>{isEN ? (zone.descriptionEn ?? zone.description) : zone.description}</div>
                 )}
 
                 {/* Placed items */}
@@ -277,7 +285,7 @@ export default function DragAndDrop({ exercise, onComplete }: Props) {
                           <span style={{ color: "#4a5068", display: "flex", alignItems: "center" }}>{ICON_MAP[item.icon]}</span>
                         ) : null}
                         <span className="text-xs font-semibold" style={{ color: "#161616" }}>
-                          {item.label}
+                          {isEN ? (item.labelEn ?? item.label) : item.label}
                         </span>
                         {validated && (
                           placement.correct
@@ -362,7 +370,7 @@ export default function DragAndDrop({ exercise, onComplete }: Props) {
                   style={{ color: correctCount === exercise.items.length ? "#0e6027" : "#a2191f" }}
                 >
                   {correctCount === exercise.items.length
-                    ? exercise.successMessage || (isEN ? "Perfect — all matches are correct!" : "Parfait — toutes les associations sont correctes !")
+                    ? (isEN ? exercise.successMessageEn : null) ?? exercise.successMessage ?? (isEN ? "Perfect — all matches are correct!" : "Parfait — toutes les associations sont correctes !")
                     : (isEN ? `${correctCount}/${exercise.items.length} correct matches — retry!` : `${correctCount}/${exercise.items.length} associations correctes — réessayez !`)}
                 </div>
                 {correctCount < exercise.items.length && (
