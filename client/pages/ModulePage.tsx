@@ -989,6 +989,17 @@ export default function ModulePage() {
   const existingProgress = progress[mod.id];
   const alreadyDone = existingProgress?.completed;
 
+  // Compute next module in sequence
+  const MODULE_ORDER = [
+    "ch1-m1","ch1-m2","ch1-m3","ch1-m4","ch1-m5","ch1-m6","ch1-m7",
+    "ch2-m1","ch2-m2","ch2-m3","ch2-m4","ch2-m5","ch2-m6","ch2-m7",
+  ];
+  const currentIdx = MODULE_ORDER.indexOf(mod.id);
+  const nextModuleId = currentIdx >= 0 && currentIdx < MODULE_ORDER.length - 1
+    ? MODULE_ORDER[currentIdx + 1]
+    : null;
+  const isLastModule = currentIdx === MODULE_ORDER.length - 1;
+
   const handleQuizComplete = (score: number, correct: number) => {
     setQuizScore(score);
     setQuizDone(true);
@@ -1068,7 +1079,7 @@ export default function ModulePage() {
                   style={{ background: "rgba(25,128,56,0.3)", color: "#6fdc8c", border: "1px solid rgba(111,220,140,0.3)" }}
                 >
                   <CheckCircle2 size={11} />
-                  {t("hub.completed", lang)} · {existingProgress.score}%
+                  {t("hub.completed", lang)}{existingProgress.score > 0 ? ` · ${existingProgress.score}%` : ""}
                 </div>
               )}
             </div>
@@ -1272,7 +1283,9 @@ export default function ModulePage() {
                   <div className="flex-1">
                     <div className="font-bold mb-0.5" style={{ color: "#0e6027", fontSize: "0.9375rem" }}>{t("module.completed", lang)}</div>
                     <div className="text-sm" style={{ color: "#6f7897" }}>
-                      {t("module.score_label", lang)} : {existingProgress.score}% · {existingProgress.correctAnswers}/{existingProgress.totalQuestions} {t("module.correct_ans", lang)}
+                      {existingProgress.score > 0
+                        ? `${t("module.score_label", lang)} : ${existingProgress.score}% · ${existingProgress.correctAnswers}/${existingProgress.totalQuestions} ${t("module.correct_ans", lang)}`
+                        : t("module.completed", lang)}
                     </div>
                   </div>
                   <button
@@ -1479,11 +1492,21 @@ export default function ModulePage() {
                       {t("module.dashboard", lang)}
                     </button>
                     <button
-                      onClick={() => navigate("/hub")}
+                      onClick={() => {
+                        if (isLastModule) {
+                          navigate("/certificat");
+                        } else if (nextModuleId) {
+                          navigate(`/module/${nextModuleId}`);
+                        } else {
+                          navigate("/hub");
+                        }
+                      }}
                       className="flex-1 flex items-center justify-center gap-2 font-semibold px-6 py-2.5 rounded-xl transition-all whitespace-nowrap"
                       style={{ background: "#0D47A1", color: "#fff", border: "none", cursor: "pointer", fontSize: "0.9375rem" }}
                     >
-                      {t("module.next", lang)}
+                      {isLastModule
+                        ? (isEN ? "View certificate" : "Voir l'attestation")
+                        : t("module.next", lang)}
                       <ChevronRight size={16} />
                     </button>
                   </div>

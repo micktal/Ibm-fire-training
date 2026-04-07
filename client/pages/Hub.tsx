@@ -341,23 +341,25 @@ export default function Hub() {
       {/* ── Scrollable module content ────────────────────────── */}
       <main className="flex-1 overflow-y-auto" style={{ background: "#F0F4FA" }}>
         <div className="max-w-2xl mx-auto">
-          {/* Certification banner */}
-          {passed && (
+          {/* Certification banner — shown when all 14 modules are completed */}
+          {totalCompleted >= 14 && (
             <button
               onClick={() => navigate("/certificat")}
               className="mx-4 mt-4 w-[calc(100%-2rem)] rounded-2xl px-4 py-3 flex items-center gap-3 text-left transition-all"
-              style={{ background: "rgba(25,128,56,0.08)", border: "1.5px solid rgba(25,128,56,0.25)", cursor: "pointer" }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(25,128,56,0.13)")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(25,128,56,0.08)")}
+              style={{ background: passed ? "rgba(25,128,56,0.08)" : "rgba(13,71,161,0.08)", border: `1.5px solid ${passed ? "rgba(25,128,56,0.25)" : "rgba(13,71,161,0.25)"}`, cursor: "pointer" }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = passed ? "rgba(25,128,56,0.13)" : "rgba(13,71,161,0.13)")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = passed ? "rgba(25,128,56,0.08)" : "rgba(13,71,161,0.08)")}
             >
-              <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: "#198038" }}>
+              <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: passed ? "#198038" : "#0D47A1" }}>
                 <Award size={18} color="#fff" />
               </div>
               <div className="flex-1">
-                <div className="font-bold text-sm" style={{ color: "#0e6027" }}>{t("hub.cert_title", lang)} — {globalScore}%</div>
+                <div className="font-bold text-sm" style={{ color: passed ? "#0e6027" : "#0D47A1" }}>
+                  {t("hub.cert_title", lang)}{globalScore > 0 ? ` — ${globalScore}%` : ""}
+                </div>
                 <div className="text-xs" style={{ color: "#6f7897" }}>{t("hub.cert_desc", lang)}</div>
               </div>
-              <ArrowRight size={15} style={{ color: "#198038", flexShrink: 0 }} />
+              <ArrowRight size={15} style={{ color: passed ? "#198038" : "#0D47A1", flexShrink: 0 }} />
             </button>
           )}
 
