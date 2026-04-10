@@ -194,7 +194,7 @@ const m1_hotspot: HotspotExercise = {
       label: "2 — Déclencher l'alarme",
       description: "Ce déclencheur manuel 'FIRE — PULL DOWN' alerte immédiatement tout le bâtiment et le service de sécurité IBM. À activer avant d'évacuer.",
       type: "info",
-      detail: "IBM : composez aussi le 22 22 pour prévenir la sécurité interne, avant le 18.",
+      detail: "IBM : composez aussi le 777 pour prévenir la sécurité interne, avant le 18.",
     },
     {
       id: "hs3", x: 82, y: 50,
@@ -267,10 +267,10 @@ const m1_branching: BranchingExercise = {
       urgency: "high",
       choices: [
         {
-          label: "Je déclenche l'alarme et compose le 22 22 (sécurité IBM)",
-          labelEn: "I trigger the alarm and dial 22 22 (IBM Security)",
-          consequence: "Correct. L'alarme alerte tout le bâtiment. Le 22 22 prévient la sécurité IBM avant le 18 — c'est la procédure IBM.",
-          consequenceEn: "Correct. The alarm alerts the entire building. 22 22 notifies IBM Security before 18 — that's the IBM procedure.",
+          label: "Je déclenche l'alarme et compose le 777 (sécurité IBM)",
+          labelEn: "I trigger the alarm and dial 777 (IBM Security)",
+          consequence: "Correct. L'alarme alerte tout le bâtiment. Le 777 prévient la sécurité IBM avant le 18 — c'est la procédure IBM.",
+          consequenceEn: "Correct. The alarm alerts the entire building. 777 notifies IBM Security before 18 — that's the IBM procedure.",
           consequenceType: "ok",
           nextNode: "step3",
           points: 10,
@@ -1744,8 +1744,8 @@ const ch2m1_binary: BinaryExercise = {
       explanationEn: "False. It is impossible to trigger too early when facing a suspicious signal. IBM policy supports early alarm with no penalty.",
     },
     {
-      statement: "Le 22 22 doit être composé avant le 18 lors d'un incident IBM.",
-      statementEn: "22 22 must be called before 18 during an IBM incident.",
+      statement: "Le 777 doit être composé avant le 18 lors d'un incident IBM.",
+      statementEn: "777 must be called before 18 during an IBM incident.",
       isTrue: true,
       explanation: "Vrai. La sécurité IBM connaît les plans des bâtiments et peut intervenir plus rapidement que les services externes.",
       explanationEn: "True. IBM Security knows the building plans and can respond faster than external services.",
@@ -1884,10 +1884,10 @@ const m3_orderpuzzle: OrderPuzzleExercise = {
   successMessage: "Séquence de confinement maîtrisée !",
   successMessageEn: "Confinement sequence mastered!",
   pieces: [
-    { id: "p1", label: "Détecter le signal", labelEn: "Detect the signal", sublabel: "Fumée, odeur ou chaleur anormale", sublabelEn: "Smoke, smell or abnormal heat", correctPosition: 1 },
-    { id: "p2", label: "Alerter les collègues", labelEn: "Alert colleagues", sublabel: "Sans panique, ton calme", sublabelEn: "Calmly, no panic", correctPosition: 2 },
-    { id: "p3", label: "Fermer toutes les portes", labelEn: "Close all doors", sublabel: "Ralentit la propagation de 5x", sublabelEn: "Slows spread by 5x", correctPosition: 3 },
-    { id: "p4", label: "Déclencher l'alarme (22 22)", labelEn: "Trigger the alarm (22 22)", sublabel: "Avant d'évacuer", sublabelEn: "Before evacuating", correctPosition: 4 },
+    { id: "p4", label: "Déclencher l'alarme (777 / boîtier rouge)", labelEn: "Trigger the alarm (777 / red call point)", sublabel: "Dès le premier signe — toujours en premier", sublabelEn: "At the first sign — always first", correctPosition: 1 },
+    { id: "p1", label: "Détecter le signal", labelEn: "Detect the signal", sublabel: "Fumée, odeur ou chaleur anormale", sublabelEn: "Smoke, smell or abnormal heat", correctPosition: 2 },
+    { id: "p2", label: "Alerter les collègues", labelEn: "Alert colleagues", sublabel: "Sans panique, ton calme", sublabelEn: "Calmly, no panic", correctPosition: 3 },
+    { id: "p3", label: "Fermer toutes les portes", labelEn: "Close all doors", sublabel: "Ralentit la propagation de 5x", sublabelEn: "Slows spread by 5x", correctPosition: 4 },
     { id: "p5", label: "Évacuer par les sorties de secours", labelEn: "Evacuate via emergency exits", sublabel: "Ne jamais prendre l'ascenseur", sublabelEn: "Never use the elevator", correctPosition: 5 },
     { id: "p6", label: "Rejoindre le point de rassemblement", labelEn: "Reach the assembly point", sublabel: "Se signaler au responsable", sublabelEn: "Report to the warden", correctPosition: 6 },
   ],
@@ -1905,7 +1905,7 @@ const ch2m7_orderpuzzle: OrderPuzzleExercise = {
   successMessageEn: "IBM evacuation procedure perfectly mastered!",
   pieces: [
     { id: "e1", label: "Détecter et confirmer l'alerte", labelEn: "Detect and confirm the alert", sublabel: "Signal sonore ou visuel", sublabelEn: "Audible or visual signal", correctPosition: 1 },
-    { id: "e2", label: "Composer le 22 22", labelEn: "Call 22 22", sublabel: "Sécurité IBM avant le 18", sublabelEn: "IBM Security before 18", correctPosition: 2 },
+    { id: "e2", label: "Composer le 777", labelEn: "Call 777", sublabel: "Sécurité IBM avant le 18", sublabelEn: "IBM Security before 18", correctPosition: 2 },
     { id: "e3", label: "Alerter les collègues à voix posée", labelEn: "Alert colleagues calmly", sublabel: "Pas de panique", sublabelEn: "No panic", correctPosition: 3 },
     { id: "e4", label: "Fermer les portes en partant", labelEn: "Close doors when leaving", sublabel: "Sans verrouiller", sublabelEn: "Without locking", correctPosition: 4 },
     { id: "e5", label: "Évacuer par les escaliers", labelEn: "Evacuate via stairs", sublabel: "Jamais l'ascenseur", sublabelEn: "Never the elevator", correctPosition: 5 },
@@ -1953,7 +1953,7 @@ const m7_seriousgame: SeriousGameExercise = {
       actions: [
         { label: "Intervenir avec le CO2 — PASS", labelEn: "Use the CO2 — PASS sequence", correct: true, feedback: "Correct. Toutes les conditions sont réunies : petit feu, CO2 adapté, sortie libre.", feedbackEn: "Correct. All conditions are met: small fire, suitable CO2, clear exit." },
         { label: "Évacuer directement sans intervenir", labelEn: "Evacuate directly without intervening", correct: false, feedback: "Acceptable mais sous-optimal. Le feu est contrôlable et les conditions sont réunies.", feedbackEn: "Acceptable but not optimal. The fire is controllable and conditions are right." },
-        { label: "Appeler les pompiers d'abord", labelEn: "Call fire services first", correct: false, feedback: "Faux. Agir d'abord (max 30s), alerter ensuite. Le 22 22 puis le 18.", feedbackEn: "Wrong. Act first (max 30s), alert afterwards. 22 22 then 18." },
+        { label: "Appeler les pompiers d'abord", labelEn: "Call fire services first", correct: false, feedback: "Faux. Agir d'abord (max 30s), alerter ensuite. Le 777 puis le 18.", feedbackEn: "Wrong. Act first (max 30s), alert afterwards. 777 then 18." },
         { label: "Verser de l'eau sur les câbles", labelEn: "Pour water on the cables", correct: false, feedback: "Interdit. Jamais d'eau sur un feu électrique — risque d'électrocution.", feedbackEn: "Forbidden. Never use water on an electrical fire — electrocution risk." },
       ],
     },
@@ -2256,12 +2256,12 @@ const m2_spinwheel: SpinWheelExercise = {
       choices: [
         { key: "A", label: "Ouvrir les fenêtres", labelEn: "Open the windows" },
         { key: "B", label: "Appeler le 18 directement", labelEn: "Call 18 directly" },
-        { key: "C", label: "Appeler le 22 22 (Sécurité IBM)", labelEn: "Call 22 22 (IBM Security)" },
+        { key: "C", label: "Appeler le 777 (Sécurité IBM)", labelEn: "Call 777 (IBM Security)" },
         { key: "D", label: "Attendre de voir les flammes", labelEn: "Wait to see flames" },
       ],
       correctKey: "C",
-      explanation: "Le protocole IBM impose d'appeler le 22 22 (Sécurité interne) en premier — avant le 18. La sécurité IBM connaît les plans du bâtiment et coordonne l'intervention.",
-      explanationEn: "IBM protocol requires calling 22 22 (internal Security) first — before 18. IBM Security knows the building plans and coordinates the response.",
+      explanation: "Le protocole IBM impose d'appeler le 777 (Sécurité interne) en premier — avant le 18. La sécurité IBM connaît les plans du bâtiment et coordonne l'intervention.",
+      explanationEn: "IBM protocol requires calling 777 (internal Security) first — before 18. IBM Security knows the building plans and coordinates the response.",
     },
   ],
 };
@@ -2538,7 +2538,7 @@ const m3_mindmap: MindMapExercise = {
       explanationEn: "CORRECT — Sealing gaps under doors (with fabric, clothing) prevents toxic smoke from entering your room.",
     },
     {
-      id: "mm3", label: "Appeler le 22 22", labelEn: "Call 22 22",
+      id: "mm3", label: "Appeler le 777", labelEn: "Call 777",
       isCorrect: true,
       explanation: "CORRECT — Contacter la sécurité IBM permet aux secours de connaître votre position exacte et d'organiser votre évacuation.",
       explanationEn: "CORRECT — Contacting IBM security allows rescuers to know your exact position and organise your evacuation.",

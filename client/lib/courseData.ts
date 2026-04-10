@@ -97,7 +97,7 @@ export const MODULES: CourseModule[] = [
     objective: "Identifier un départ de feu en moins de 10 secondes.",
     learningObjectives: {
       savoir: "Les signes d'un départ de feu et le fonctionnement des détecteurs incendie IBM",
-      savoirFaire: "Identifier un départ de feu et déclencher l'alerte au 22 22 sans délai",
+      savoirFaire: "Identifier un départ de feu et déclencher l'alerte au 777 sans délai",
       savoirEtre: "Traiter tout signal comme une urgence réelle — jamais sous-estimer une alarme",
     },
     duration: "8 min",
@@ -191,7 +191,7 @@ vous évaluez,
 vous décidez.
 
 00:01:17.383 --> 00:01:24.721
-Et bien sûr composez le 22 22 pour prévenir le service de sécurité IBM avant le 18 et avant le 15.
+Et bien sûr composez le 777 pour prévenir le service de sécurité IBM avant le 18 et avant le 15.
 
 00:01:25.921 --> 00:01:27.128
 Un dernier point.
@@ -270,7 +270,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     ],
     keyPoints: [
       "Tout signal d'alerte (odeur, fumée, chaleur, grésil) doit être traité comme un départ de feu réel — jamais ignoré",
-      "Les 3 réflexes dans l'ordre : Débrancher → Déclencher l'alarme (22 22) → Évacuer",
+      "Les 3 réflexes dans l'ordre : Débrancher → Déclencher l'alarme (777) → Évacuer",
       "Jamais d'eau sur un feu électrique — CO2 uniquement pour les serveurs, câbles et data centers IBM",
     ],
     quiz: [
@@ -860,7 +860,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     objective: "Valider l'ensemble des compétences du chapitre en conditions proches du réel.",
     learningObjectives: {
       savoir: "La procédure complète de gestion d'un incendie en environnement IBM",
-      savoirFaire: "Enchaîner : détecter → alarme 22 22 → évaluer → intervenir ou évacuer",
+      savoirFaire: "Enchaîner : détecter → alarme 777 → évaluer → intervenir ou évacuer",
       savoirEtre: "Garder son sang-froid et coordonner ses actions sous pression chronométrée",
     },
     duration: "12 min",
@@ -875,7 +875,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         question: "En déclenchant l'alarme IBM, vous composez EN PREMIER :",
         choices: [
           { key: "A", label: "Le 18 (pompiers)" },
-          { key: "B", label: "Le 22 22 (sécurité IBM)" },
+          { key: "B", label: "Le 777 (sécurité IBM)" },
           { key: "C", label: "Le 15 (SAMU)" },
         ],
         correctKey: "B",
@@ -884,7 +884,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         question: "Les 3 réflexes IBM dans l'ordre sont :",
         choices: [
           { key: "A", label: "Évacuer → Alarme → Débrancher" },
-          { key: "B", label: "Débrancher → Alarme (22 22) → Évacuer" },
+          { key: "B", label: "Débrancher → Alarme (777) → Évacuer" },
           { key: "C", label: "Alarme → Débrancher → Appeler le 18" },
         ],
         correctKey: "B",
@@ -955,7 +955,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     objective: "Savoir identifier le bon moment pour activer l'alarme et localiser les points d'alerte.",
     learningObjectives: {
       savoir: "Les types d'alarmes incendie IBM et les numéros d'urgence à connaître",
-      savoirFaire: "Activer un déclencheur manuel et appeler le 22 22 avec les bons éléments",
+      savoirFaire: "Activer un déclencheur manuel et appeler le 777 avec les bons éléments",
       savoirEtre: "Alerter immédiatement sans chercher à éteindre soi-même dans le doute",
     },
     duration: "6 min",
@@ -963,7 +963,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Dclencher%20l'alarme%20incendie.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL0RjbGVuY2hlciBsJ2FsYXJtZSBpbmNlbmRpZS5tcDQiLCJpYXQiOjE3NzU0MDk0NjgsImV4cCI6MTgzODQ4MTQ2OH0.aXpYf7-R6T_s_URpOt5IQdUs0UnhU_tT_efNlAOMxZw",
     funFacts: [
       { stat: "6 m²", label: "de propagation par seconde de retard", detail: "Chaque seconde de retard à déclencher l'alarme représente en moyenne 6m² de surface supplémentaire touchée par le feu.", icon: "flame" },
-      { stat: "22 22", label: "le numéro IBM à composer EN PREMIER", detail: "Avant le 18 et le 15, composez le 22 22. La sécurité IBM connaît le plan des bâtiments et peut intervenir plus rapidement.", icon: "shield" },
+      { stat: "777", label: "le numéro IBM à composer EN PREMIER", detail: "Avant le 18 et le 15, composez le 777. La sécurité IBM connaît le plan des bâtiments et peut intervenir plus rapidement.", icon: "shield" },
     ],
     preTest: [
       {
@@ -1015,7 +1015,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       },
     ],
     keyPoints: [
-      "Composer le 22 22 EN PREMIER — avant le 18 et le 15. La sécurité IBM connaît le bâtiment.",
+      "Composer le 777 EN PREMIER — avant le 18 et le 15. La sécurité IBM connaît le bâtiment.",
       "Chaque seconde de retard à déclencher l'alarme = 6 m² de surface supplémentaire en feu.",
       "L'alarme manuelle n'attend pas les détecteurs — déclenchez-la dès confirmation du feu.",
     ],
@@ -1530,13 +1530,13 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         question: "L'alarme retentit. Quelles sont vos DEUX premières actions dans l'ordre ?",
         choices: [
           { key: "A", label: "Prendre mes affaires, puis évacuer" },
-          { key: "B", label: "Alerter le 22 22 avec ma localisation, puis guider mes collègues vers la sortie", hint: "Alerte 22 22 → guidage" },
-          { key: "C", label: "Rejoindre le point de rassemblement, puis appeler le 22 22" },
+          { key: "B", label: "Alerter le 777 avec ma localisation, puis guider mes collègues vers la sortie", hint: "Alerte 777 → guidage" },
+          { key: "C", label: "Rejoindre le point de rassemblement, puis appeler le 777" },
           { key: "D", label: "Vérifier l'origine du feu, puis alerter" },
         ],
         correctKey: "B",
-        feedbackOk: "Parfait. Alerter le 22 22 en premier (avec votre localisation exacte), puis guider vos collègues. Jamais d'affaires.",
-        feedbackKo: "L'ordre correct : alerter le 22 22 (localisation précise) → guider les collègues vers la sortie. Aucune affaire ne vaut une vie.",
+        feedbackOk: "Parfait. Alerter le 777 en premier (avec votre localisation exacte), puis guider vos collègues. Jamais d'affaires.",
+        feedbackKo: "L'ordre correct : alerter le 777 (localisation précise) → guider les collègues vers la sortie. Aucune affaire ne vaut une vie.",
       },
       {
         id: "q2",
