@@ -1909,8 +1909,8 @@ const ch2m7_orderpuzzle: OrderPuzzleExercise = {
     { id: "e3", label: "Alerter les collègues à voix posée", labelEn: "Alert colleagues calmly", sublabel: "Pas de panique", sublabelEn: "No panic", correctPosition: 3 },
     { id: "e4", label: "Fermer les portes en partant", labelEn: "Close doors when leaving", sublabel: "Sans verrouiller", sublabelEn: "Without locking", correctPosition: 4 },
     { id: "e5", label: "Évacuer par les escaliers", labelEn: "Evacuate via stairs", sublabel: "Jamais l'ascenseur", sublabelEn: "Never the elevator", correctPosition: 5 },
-    { id: "e6", label: "Vérifier les zones accessibles", sublabel: "S'assurer que personne ne reste", correctPosition: 6 },
-    { id: "e7", label: "Se signaler au responsable évacuation", sublabel: "Au point de rassemblement", correctPosition: 7 },
+    { id: "e6", label: "Vérifier les zones accessibles", labelEn: "Check all accessible areas", sublabel: "S'assurer que personne ne reste", sublabelEn: "Ensure no one is left behind", correctPosition: 6 },
+    { id: "e7", label: "Se signaler au responsable évacuation", labelEn: "Report to the evacuation warden", sublabel: "Au point de rassemblement", sublabelEn: "At the assembly point", correctPosition: 7 },
   ],
 };
 
