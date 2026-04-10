@@ -105,16 +105,17 @@ export default function MatchingExercise({ exercise, onComplete }: Props) {
                 onClick={() => handleLeft(i)}
                 className="rounded-xl px-3 py-2.5 text-left transition-all"
                 style={{
-                  background: color ? `${color}15` : isSelected ? "rgba(13,71,161,0.12)" : "#fff",
-                  border: `2px solid ${color ?? (isSelected ? "#0D47A1" : "#e4e7f0")}`,
-                  color: "#0a2052",
+                  background: color ? `${color}28` : isSelected ? "rgba(13,71,161,0.12)" : "#fff",
+                  border: `2.5px solid ${color ?? (isSelected ? "#0D47A1" : "#e4e7f0")}`,
+                  color: color ? color : "#0a2052",
                   cursor: validated ? "default" : "pointer",
                   fontSize: "0.78rem",
-                  fontWeight: 600,
+                  fontWeight: 700,
                   lineHeight: "1.3",
                   minHeight: "52px",
                   display: "flex",
                   alignItems: "center",
+                  boxShadow: color ? `0 2px 8px ${color}30` : "none",
                 }}
               >
                 {validated && (
@@ -142,17 +143,18 @@ export default function MatchingExercise({ exercise, onComplete }: Props) {
                 onClick={() => handleRight(origIdx)}
                 className="rounded-xl px-3 py-2.5 text-left transition-all"
                 style={{
-                  background: color ? `${color}15` : isAvailable ? "rgba(13,71,161,0.05)" : "#fff",
-                  border: `2px solid ${color ?? (isAvailable ? "#0D47A1" : "#e4e7f0")}`,
-                  color: "#0a2052",
+                  background: color ? `${color}28` : isAvailable ? "rgba(13,71,161,0.05)" : "#fff",
+                  border: `2.5px solid ${color ?? (isAvailable ? "#0D47A1" : "#e4e7f0")}`,
+                  color: color ? color : "#0a2052",
                   cursor: validated ? "default" : "pointer",
                   fontSize: "0.78rem",
-                  fontWeight: 500,
+                  fontWeight: color ? 700 : 500,
                   lineHeight: "1.3",
                   minHeight: "52px",
                   display: "flex",
                   alignItems: "center",
                   opacity: !validated && selectedLeft === null && !color ? 0.7 : 1,
+                  boxShadow: color ? `0 2px 8px ${color}30` : "none",
                 }}
               >
                 {isEN ? (exercise.pairs[origIdx].rightEn ?? exercise.pairs[origIdx].right) : exercise.pairs[origIdx].right}

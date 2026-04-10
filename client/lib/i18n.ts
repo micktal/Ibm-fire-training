@@ -102,7 +102,7 @@ const STRINGS = {
 
   // ── Pre-test ──────────────────────────────────────────────
   "pretest.title":    { fr: "Test de positionnement",           en: "Positioning test" },
-  "pretest.skip":     { fr: "Passer",                           en: "Skip" },
+  "pretest.skip":     { fr: "Poursuivre",                       en: "Continue" },
   "pretest.question": { fr: "Question",                         en: "Question" },
   "pretest.good":     { fr: "Bonne réponse !",                  en: "Correct!" },
   "pretest.wrong":    { fr: "Réponse incorrecte",               en: "Incorrect" },

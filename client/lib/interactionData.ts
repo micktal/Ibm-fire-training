@@ -1927,7 +1927,7 @@ const m7_seriousgame: SeriousGameExercise = {
     {
       situation: "14h30. L'alarme retentit. Une fumée légère entre par la porte. Un extincteur CO2 est à 3m. Que faites-vous EN PREMIER ?",
       situationEn: "2:30pm. The alarm sounds. Light smoke comes through the door. A CO2 extinguisher is 3m away. What do you do FIRST?",
-      timeLimit: 8,
+      timeLimit: 10,
       actions: [
         { label: "Évaluer rapidement la situation (5 sec)", labelEn: "Quickly assess the situation (5 sec)", correct: true, feedback: "Correct. 5 secondes d'évaluation avant d'agir — c'est la règle IBM.", feedbackEn: "Correct. 5 seconds of assessment before acting — that's the IBM rule." },
         { label: "Prendre l'extincteur et chercher le feu", labelEn: "Grab the extinguisher and find the fire", correct: false, feedback: "Risqué. Sans évaluation, vous pourriez foncer vers un feu trop développé.", feedbackEn: "Risky. Without assessment, you could rush toward a fire that's already too large." },
@@ -1938,7 +1938,7 @@ const m7_seriousgame: SeriousGameExercise = {
     {
       situation: "Vous approchez d'une porte. Elle est CHAUDE au toucher. De la fumée noire passe dessous.",
       situationEn: "You approach a door. It is HOT to the touch. Black smoke is coming from underneath.",
-      timeLimit: 6,
+      timeLimit: 10,
       actions: [
         { label: "Ouvrir doucement pour évaluer", labelEn: "Open it slowly to assess", correct: false, feedback: "Erreur fatale. Porte chaude + fumée noire = feu développé. L'ouvrir aspire le feu vers vous.", feedbackEn: "Fatal mistake. Hot door + black smoke = developed fire. Opening it draws the fire toward you." },
         { label: "Ne pas ouvrir — rebrousser et évacuer", labelEn: "Don't open — turn back and evacuate", correct: true, feedback: "Décision vitale. Porte chaude = feu de l'autre côté. Retraite immédiate.", feedbackEn: "Vital decision. Hot door = fire on the other side. Immediate retreat." },
@@ -1949,7 +1949,7 @@ const m7_seriousgame: SeriousGameExercise = {
     {
       situation: "Feu de câbles visible — taille d'une corbeille. Sortie dans votre dos à 4m. CO2 disponible. Que faites-vous ?",
       situationEn: "Visible cable fire — bin-sized. Exit is 4m behind you. CO2 available. What do you do?",
-      timeLimit: 8,
+      timeLimit: 10,
       actions: [
         { label: "Intervenir avec le CO2 — PASS", labelEn: "Use the CO2 — PASS sequence", correct: true, feedback: "Correct. Toutes les conditions sont réunies : petit feu, CO2 adapté, sortie libre.", feedbackEn: "Correct. All conditions are met: small fire, suitable CO2, clear exit." },
         { label: "Évacuer directement sans intervenir", labelEn: "Evacuate directly without intervening", correct: false, feedback: "Acceptable mais sous-optimal. Le feu est contrôlable et les conditions sont réunies.", feedbackEn: "Acceptable but not optimal. The fire is controllable and conditions are right." },
@@ -1960,7 +1960,7 @@ const m7_seriousgame: SeriousGameExercise = {
     {
       situation: "Fumée envahit le couloir. Vous ne voyez plus la sortie. Quelle est votre position ?",
       situationEn: "Smoke fills the corridor. You can no longer see the exit. What position do you take?",
-      timeLimit: 7,
+      timeLimit: 10,
       actions: [
         { label: "Rester debout, progresser rapidement", labelEn: "Stay upright and move quickly", correct: false, feedback: "Faux. Debout vous respirez la fumée chaude. La toxicité est mortelle en secondes.", feedbackEn: "Wrong. Standing, you breathe hot smoke. Toxicity is fatal within seconds." },
         { label: "S'accroupir et progresser sous la fumée", labelEn: "Crouch and move below the smoke", correct: true, feedback: "Exact. L'air respirable reste dans le tiers inférieur de la pièce.", feedbackEn: "Correct. Breathable air stays in the lower third of the space." },
@@ -1971,7 +1971,7 @@ const m7_seriousgame: SeriousGameExercise = {
     {
       situation: "Vous êtes au point de rassemblement. Une collègue est manquante. Que faites-vous ?",
       situationEn: "You are at the assembly point. A colleague is missing. What do you do?",
-      timeLimit: 6,
+      timeLimit: 10,
       actions: [
         { label: "Retourner la chercher vous-même", labelEn: "Go back in to find her yourself", correct: false, feedback: "Interdit et dangereux. Retourner sans équipement = risque vital pour vous aussi.", feedbackEn: "Forbidden and dangerous. Going back without equipment = vital risk for you too." },
         { label: "Signaler immédiatement aux secours avec description et dernière localisation", labelEn: "Immediately report to fire services with description and last known location", correct: true, feedback: "Correct. Les secours ont l'équipement pour effectuer les recherches en sécurité.", feedbackEn: "Correct. Fire services have the equipment to search safely." },
@@ -1982,7 +1982,7 @@ const m7_seriousgame: SeriousGameExercise = {
     {
       situation: "L'extincteur est vide. Le feu ne recule pas. Vous êtes à 30 secondes d'intervention.",
       situationEn: "The extinguisher is empty. The fire is not retreating. You have been intervening for 30 seconds.",
-      timeLimit: 5,
+      timeLimit: 10,
       actions: [
         { label: "Chercher un autre extincteur rapidement", labelEn: "Quickly find another extinguisher", correct: false, feedback: "Trop risqué. Après 30 secondes d'inefficacité, le feu est trop développé pour vous.", feedbackEn: "Too risky. After 30 seconds of no effect, the fire is too developed for you." },
         { label: "Reculer et évacuer immédiatement", labelEn: "Step back and evacuate immediately", correct: true, feedback: "Bonne décision. La règle IBM : si le feu ne recule pas en 30s — évacuer sans hésiter.", feedbackEn: "Good decision. IBM rule: if the fire doesn't retreat in 30s — evacuate without hesitation." },
