@@ -351,31 +351,54 @@ export default function SpinWheel({ exercise }: Props) {
                   ? (currentItem.explanationEn ?? currentItem.explanation)
                   : currentItem.explanation;
                 return (
-                  <div
-                    className="rounded-xl overflow-hidden"
-                    style={{ border: `2px solid ${isCorrect ? "rgba(25,128,56,0.35)" : "rgba(218,30,40,0.3)"}` }}
-                  >
+                  <div className="flex flex-col gap-3">
                     <div
-                      className="flex items-center gap-2 px-4 py-2.5"
-                      style={{ background: isCorrect ? "#198038" : "#da1e28" }}
+                      className="rounded-xl overflow-hidden"
+                      style={{ border: `2px solid ${isCorrect ? "rgba(25,128,56,0.35)" : "rgba(218,30,40,0.3)"}` }}
                     >
-                      {isCorrect
-                        ? <CheckCircle2 size={15} color="#fff" />
-                        : <XCircle size={15} color="#fff" />}
-                      <span className="font-bold text-white" style={{ fontSize: "0.85rem" }}>
+                      <div
+                        className="flex items-center gap-2 px-4 py-2.5"
+                        style={{ background: isCorrect ? "#198038" : "#da1e28" }}
+                      >
                         {isCorrect
-                          ? (lang === "en" ? "Correct!" : "Correct !")
-                          : (lang === "en" ? "Incorrect" : "Incorrect")}
-                      </span>
+                          ? <CheckCircle2 size={15} color="#fff" />
+                          : <XCircle size={15} color="#fff" />}
+                        <span className="font-bold text-white" style={{ fontSize: "0.85rem" }}>
+                          {isCorrect
+                            ? (lang === "en" ? "Correct!" : "Correct !")
+                            : (lang === "en" ? "Incorrect" : "Incorrect")}
+                        </span>
+                      </div>
+                      <div
+                        className="px-4 py-3"
+                        style={{ background: isCorrect ? "rgba(25,128,56,0.04)" : "rgba(218,30,40,0.04)" }}
+                      >
+                        <p style={{ color: "#2d3148", fontSize: "0.875rem", lineHeight: "1.6" }}>
+                          {explanation}
+                        </p>
+                      </div>
                     </div>
-                    <div
-                      className="px-4 py-3"
-                      style={{ background: isCorrect ? "rgba(25,128,56,0.04)" : "rgba(218,30,40,0.04)" }}
-                    >
-                      <p style={{ color: "#2d3148", fontSize: "0.875rem", lineHeight: "1.6" }}>
-                        {explanation}
-                      </p>
-                    </div>
+                    {/* Spin again button — appears right below feedback */}
+                    {!allDone && (
+                      <button
+                        onClick={spin}
+                        disabled={spinning}
+                        className="w-full flex items-center justify-center gap-2 rounded-xl py-3 font-bold"
+                        style={{
+                          background: "linear-gradient(135deg, #da1e28 0%, #ff6b1a 100%)",
+                          color: "#fff",
+                          border: "none",
+                          cursor: spinning ? "not-allowed" : "pointer",
+                          fontSize: "0.95rem",
+                          letterSpacing: "0.06em",
+                          textTransform: "uppercase",
+                          boxShadow: "0 4px 16px rgba(218,30,40,0.3)",
+                          opacity: spinning ? 0.6 : 1,
+                        }}
+                      >
+                        🎯 {lang === "en" ? "Spin again!" : "Tourner à nouveau !"}
+                      </button>
+                    )}
                   </div>
                 );
               })()}

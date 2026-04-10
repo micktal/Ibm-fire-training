@@ -236,7 +236,7 @@ export default function CertificatePage() {
                   <div>
                     <div className="font-semibold text-xs" style={{ color: "#0D47A1" }}>{isEN ? "IBM France Certificate · Fire Safety Training" : "Certificat IBM France · Formation Sécurité Incendie"}</div>
                     <div className="text-xs mt-0.5" style={{ color: "#6f7897", lineHeight: "1.45" }}>
-                      {isEN ? "Valid 1 year — renewal recommended before " : "Valable 1 an — renouvellement recommandé avant le "}{new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toLocaleDateString(isEN ? "en-GB" : "fr-FR")}
+                      {isEN ? "Valid 2 to 3 years — IBM recommends renewing every 2 to 3 years" : "Valable 2 à 3 ans — IBM recommande un renouvellement tous les 2 à 3 ans"}
                     </div>
                   </div>
                 </div>

@@ -1406,6 +1406,16 @@ const ch2m4_hotspot: HotspotExercise = {
       detail: "Signaler aux secours si la zone est inaccessible à cause du feu",
       detailEn: "Report to emergency services if the area is inaccessible due to fire",
     },
+    {
+      id: "h5", x: 85, y: 20,
+      label: "EAS — Espace d'Attente Sécurisé",
+      labelEn: "SWA — Safe Waiting Area",
+      description: "Zone identifiée sur les sites IBM en étage non sprinklé. L'EAS accueille les personnes à mobilité réduite (PMR) qui ne peuvent pas emprunter les escaliers. Consultez la fiche A4 affichée à l'entrée de l'EAS pour les instructions.",
+      descriptionEn: "Area identified on IBM upper-floor non-sprinklered sites. The SWA accommodates people with reduced mobility (PRM) who cannot use the stairs. Refer to the A4 instruction sheet posted at the SWA entrance.",
+      type: "danger",
+      detail: "Vérifier si une personne est présente dans l'EAS et signaler sa position aux secours à l'extérieur",
+      detailEn: "Check if anyone is in the SWA and report their location to emergency services outside",
+    },
   ],
 };
 
