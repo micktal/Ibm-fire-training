@@ -1,6 +1,6 @@
 // Logo IBM officiel — IBM_logo®_pos_blue60_CMYK
 const SRC =
-  "https://cdn.builder.io/api/v1/image/assets%2Fd93d9a0ec7824aa1ac4d890a1f90a2ec%2F8641a9ebabdc41b086b234efa6ff32bc?format=webp&width=800";
+  "https://cdn.builder.io/api/v1/image/assets%2Fd93d9a0ec7824aa1ac4d890a1f90a2ec%2F9188dc30f44a434a83d84f4c9130cf33?format=webp&width=800";
 
 interface Props {
   /** "dark" = logo blanc sur fond bleu marine | "light" = logo bleu sur fond clair */
