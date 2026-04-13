@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CheckCircle2, XCircle, RotateCcw, ToggleLeft } from "lucide-react";
 import { BinaryExercise } from "@/lib/interactionData";
 import { useLanguage } from "@/lib/languageContext";
+import IBMLogo from "@/components/IBMLogo";
 
 interface Props {
   exercise: BinaryExercise;
@@ -13,6 +14,16 @@ export default function BinaryQuiz({ exercise, onComplete }: Props) {
   const [revealed, setRevealed] = useState<Set<number>>(new Set());
   const [done, setDone] = useState(false);
 
+  // Shuffle statements once on mount
+  const [shuffled] = useState(() => {
+    const arr = [...exercise.statements];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  });
+
   const answer = (i: number, val: boolean) => {
     if (revealed.has(i)) return;
     const next = { ...answers, [i]: val };
@@ -20,8 +31,8 @@ export default function BinaryQuiz({ exercise, onComplete }: Props) {
     nextRevealed.add(i);
     setAnswers(next);
     setRevealed(nextRevealed);
-    if (nextRevealed.size === exercise.statements.length) {
-      const correct = exercise.statements.filter((s, idx) => next[idx] === s.isTrue).length;
+    if (nextRevealed.size === shuffled.length) {
+      const correct = shuffled.filter((s, idx) => next[idx] === s.isTrue).length;
       const score = Math.round((correct / exercise.statements.length) * 100);
       setDone(true);
       setTimeout(() => onComplete?.(score), 600);
@@ -32,7 +43,7 @@ export default function BinaryQuiz({ exercise, onComplete }: Props) {
 
   const { lang } = useLanguage();
   const isEN = lang === "en";
-  const correct = exercise.statements.filter((s, i) => answers[i] === s.isTrue).length;
+  const correct = shuffled.filter((s, i) => answers[i] === s.isTrue).length;
 
   return (
     <div style={{ fontFamily: "'IBM Plex Sans', sans-serif" }}>
@@ -47,14 +58,15 @@ export default function BinaryQuiz({ exercise, onComplete }: Props) {
           <span className="font-bold text-white uppercase" style={{ fontSize: "0.82rem", letterSpacing: "0.08em" }}>{isEN ? (exercise.titleEn ?? exercise.title) : exercise.title}</span>
           {exercise.subtitle && <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.65)" }}>{isEN ? (exercise.subtitleEn ?? exercise.subtitle) : exercise.subtitle}</div>}
         </div>
+        <IBMLogo variant="dark" height={20} />
         <span className="font-mono text-xs px-2.5 py-1 rounded-full" style={{ color: "#fff", background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.25)", fontFamily: "'IBM Plex Mono', monospace" }}>
-          {revealed.size}/{exercise.statements.length}
+          {revealed.size}/{shuffled.length}
         </span>
       </div>
 
       {/* Statements */}
       <div className="flex flex-col gap-3 mb-4">
-        {exercise.statements.map((stmt, i) => {
+        {shuffled.map((stmt, i) => {
           const answered = revealed.has(i);
           const userAnswer = answers[i];
           const isCorrect = userAnswer === stmt.isTrue;
@@ -127,9 +139,9 @@ export default function BinaryQuiz({ exercise, onComplete }: Props) {
         <div className="rounded-xl px-4 py-3 flex items-center gap-3" style={{ background: correct >= Math.ceil(exercise.statements.length * 0.8) ? "rgba(25,128,56,0.08)" : "rgba(180,83,9,0.08)", border: `1.5px solid ${correct >= Math.ceil(exercise.statements.length * 0.8) ? "rgba(25,128,56,0.25)" : "rgba(180,83,9,0.25)"}` }}>
           <div className="flex-1">
             <div className="font-bold text-sm" style={{ color: correct >= Math.ceil(exercise.statements.length * 0.8) ? "#0e6027" : "#92400e" }}>
-              {correct >= Math.ceil(exercise.statements.length * 0.8) ? (exercise.successMessage ?? (isEN ? "Excellent result!" : "Excellent résultat !")) : (isEN ? "Some review is needed" : "Quelques révisions s'imposent")}
+              {correct >= Math.ceil(shuffled.length * 0.8) ? (exercise.successMessage ?? (isEN ? "Excellent result!" : "Excellent résultat !")) : (isEN ? "Some review is needed" : "Quelques révisions s'imposent")}
             </div>
-            <div className="text-xs mt-0.5" style={{ color: "#6f7897" }}>{correct}/{exercise.statements.length} {isEN ? "correct answers" : "bonnes réponses"}</div>
+            <div className="text-xs mt-0.5" style={{ color: "#6f7897" }}>{correct}/{shuffled.length} {isEN ? "correct answers" : "bonnes réponses"}</div>
           </div>
           <button onClick={reset} className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg" style={{ background: "rgba(13,71,161,0.08)", color: "#0D47A1", border: "1px solid rgba(13,71,161,0.2)", cursor: "pointer" }}>
             <RotateCcw size={12} /> {isEN ? "Retry" : "Refaire"}

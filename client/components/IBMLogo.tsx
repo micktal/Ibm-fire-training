@@ -16,9 +16,9 @@ export default function IBMLogo({ variant = "light", height = 32, style }: Props
         style={{
           display: "inline-flex",
           alignItems: "center",
-          background: "#0D47A1",
-          borderRadius: "7px",
-          padding: "5px 11px",
+          background: "rgba(255,255,255,0.92)",
+          borderRadius: "6px",
+          padding: "4px 10px",
           flexShrink: 0,
           ...style,
         }}
@@ -30,12 +30,7 @@ export default function IBMLogo({ variant = "light", height = 32, style }: Props
             height: `${height}px`,
             width: "auto",
             display: "block",
-            // invert(1)        : white-bg → black | blue-bars → orange-yellow
-            // brightness(100)  : orange → clamps to white | black stays black
-            // screen blend     : black × blue-bg → blue (bg disappears) | white × blue-bg → white (bars visible)
-            // Result: IBM stripes appear WHITE, white background disappears into the blue container
-            filter: "invert(1) brightness(100)",
-            mixBlendMode: "screen",
+            mixBlendMode: "multiply",
           }}
         />
       </div>

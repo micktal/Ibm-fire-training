@@ -123,11 +123,7 @@ export default function AdminPage() {
           {/* Header */}
           <div className="px-8 py-6" style={{ background: "#0043ce" }}>
             <div className="flex items-center gap-3 mb-3">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg"
-                alt="IBM"
-                style={{ height: "28px", filter: "brightness(0) invert(1)" }}
-              />
+              <IBMLogo variant="dark" height={28} style={{ background: "rgba(255,255,255,0.15)", borderRadius: "6px" }} />
             </div>
             <div className="mb-2">
               <div className="font-bold text-white" style={{ fontSize: "1rem" }}>Espace Administrateur</div>
