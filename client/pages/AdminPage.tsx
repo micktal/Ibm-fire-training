@@ -185,15 +185,15 @@ export default function AdminPage() {
     <div className="min-h-screen" style={{ background: "#f0f4fa", fontFamily: "'IBM Plex Sans', sans-serif" }}>
       {/* Topbar */}
       <header
-        className="sticky top-0 z-20 flex items-center justify-between px-6 h-14 bg-white"
-        style={{ borderBottom: "1px solid #e4e7f0", boxShadow: "0 1px 4px rgba(0,0,0,0.06)" }}
+        className="sticky top-0 z-20 flex items-center justify-between px-6 h-14"
+        style={{ background: "#0a1628", boxShadow: "0 2px 8px rgba(0,0,0,0.25)" }}
       >
-        <div className="flex items-center gap-3">
-          <IBMLogo variant="light" height={26} />
-          <div className="w-px h-5" style={{ background: "#e4e7f0" }} />
+        <div className="flex items-center gap-4">
+          <IBMLogo variant="dark" height={26} />
+          <div className="w-px h-5" style={{ background: "rgba(255,255,255,0.18)" }} />
           <div className="flex items-center gap-2">
-            <Shield size={15} style={{ color: "#0D47A1" }} />
-            <span className="font-bold text-sm uppercase" style={{ color: "#0D47A1", letterSpacing: "0.08em" }}>
+            <Shield size={15} style={{ color: "rgba(255,255,255,0.7)" }} />
+            <span className="font-bold text-sm uppercase" style={{ color: "#fff", letterSpacing: "0.08em" }}>
               Tableau de bord — Responsable Sécurité
             </span>
           </div>
