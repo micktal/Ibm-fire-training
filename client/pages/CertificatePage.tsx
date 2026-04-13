@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useUser } from "@/lib/userContext";
 import { useLanguage } from "@/lib/languageContext";
-import { Award, CheckCircle2, Shield, Clock, Star, Download, ChevronLeft } from "lucide-react";
+import { Award, CheckCircle2, Shield, Download, ChevronLeft, BookOpen } from "lucide-react";
 import IBMLogo from "@/components/IBMLogo";
 import { updateProgression, getSessionId } from "@/lib/supabase";
 
@@ -38,8 +38,8 @@ export default function CertificatePage() {
 
   const isFullyCompleted = totalCompleted >= TOTAL_MODULES;
   const today = new Date().toLocaleDateString(isEN ? "en-GB" : "fr-FR", { day: "2-digit", month: "long", year: "numeric" });
+  const certId = `IBM-FS-${new Date().getFullYear()}-${getSessionId().slice(-6).toUpperCase()}`;
 
-  // Marquer le certificat obtenu dans Supabase — uniquement si vraiment terminé
   useEffect(() => {
     if (!isFullyCompleted) return;
     updateProgression(getSessionId(), {
@@ -54,11 +54,21 @@ export default function CertificatePage() {
   const campus = user?.campus ?? "IBM France";
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "#F0F4FA", fontFamily: "'IBM Plex Sans', sans-serif" }}>
+    <div className="min-h-screen flex flex-col" style={{ background: "#eef2f9", fontFamily: "'IBM Plex Sans', sans-serif" }}>
+
+      {/* Print styles */}
+      <style>{`
+        @media print {
+          body { margin: 0; }
+          .no-print { display: none !important; }
+          .cert-card { box-shadow: none !important; border: 2px solid #0D47A1 !important; }
+          @page { size: A4 portrait; margin: 12mm; }
+        }
+      `}</style>
 
       {/* Topbar */}
       <header
-        className="flex-shrink-0 flex items-center gap-3 px-5"
+        className="no-print flex-shrink-0 flex items-center gap-3 px-5"
         style={{ height: "52px", background: "#fff", borderBottom: "1px solid #e4e7f0", zIndex: 20 }}
       >
         <button
@@ -74,178 +84,228 @@ export default function CertificatePage() {
       </header>
 
       <main className="flex-1 overflow-y-auto">
-        <div className="max-w-2xl mx-auto px-4 py-6 flex flex-col gap-5">
+        <div className="max-w-2xl mx-auto px-4 py-6 flex flex-col gap-4">
 
-          {/* ── Formation terminée banner (shown when all 14 done) ── */}
-          {isFullyCompleted && (
-            <div
-              className="rounded-2xl px-5 py-4 flex items-center gap-4"
-              style={{
-                background: "linear-gradient(135deg, #0a3882 0%, #198038 100%)",
-                boxShadow: "0 8px 32px rgba(25,128,56,0.3)",
-              }}
-            >
-              <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: "rgba(255,255,255,0.15)", border: "2px solid rgba(255,255,255,0.3)" }}>
-                <Award size={24} color="#FFD700" />
-              </div>
-              <div className="flex-1">
-                <div className="font-bold text-white" style={{ fontSize: "1rem" }}>
-                  {isEN ? "Training complete!" : "Formation terminée !"}
-                </div>
-                <div className="text-sm mt-0.5" style={{ color: "rgba(255,255,255,0.75)" }}>
-                  {isEN
-                    ? `Congratulations ${fullName} — all 14 modules validated with an average of ${avgScore}%.`
-                    : `Félicitations ${fullName} — les 14 modules sont validés avec une moyenne de ${avgScore}%.`}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* ── Certificate card ─────────────────────────────── */}
+          {/* ── CERTIFICATE CARD ─────────────────────────────── */}
           <div
-            className="rounded-3xl overflow-hidden"
+            className="cert-card rounded-2xl overflow-hidden"
             style={{
               background: "#fff",
-              border: "2px solid rgba(13,71,161,0.18)",
-              boxShadow: "0 8px 40px rgba(13,71,161,0.12)",
+              boxShadow: "0 12px 48px rgba(13,71,161,0.15)",
+              border: "1px solid rgba(13,71,161,0.12)",
             }}
           >
-            {/* Header gradient */}
-            <div
-              className="relative flex flex-col items-center px-6 py-8 text-center"
-              style={{ background: "linear-gradient(145deg, #0A3882 0%, #0D47A1 50%, #1565C0 100%)" }}
-            >
-              {/* Geometric shapes */}
-              <div style={{ position: "absolute", top: 0, right: 0, width: "40%", height: "100%", background: "#0E4DB8", clipPath: "polygon(25% 0, 100% 0, 100% 100%, 0 100%)", opacity: 0.5 }} />
-              <div style={{ position: "absolute", bottom: 0, left: 0, width: "30%", height: "60%", background: "rgba(255,255,255,0.04)", clipPath: "polygon(0 0, 100% 20%, 80% 100%, 0 100%)" }} />
+            {/* Top decorative band */}
+            <div style={{ height: "8px", background: "linear-gradient(90deg, #0D47A1 0%, #1565C0 40%, #0f62fe 70%, #0D47A1 100%)" }} />
 
-              <div className="relative z-10 flex flex-col items-center">
-                {/* IBM Logo */}
-                <IBMLogo variant="dark" height={36} />
+            {/* Main certificate area */}
+            <div className="px-8 py-8 flex flex-col items-center text-center" style={{ borderBottom: "1px solid #eef2f9" }}>
 
-                <div className="mt-4 w-16 h-16 rounded-full flex items-center justify-center" style={{ background: "rgba(255,255,255,0.15)", border: "2px solid rgba(255,255,255,0.3)" }}>
+              {/* IBM Logo + title row */}
+              <div className="flex items-center justify-between w-full mb-6">
+                <IBMLogo variant="light" height={32} />
+                <div style={{ textAlign: "right" }}>
+                  <div style={{ fontSize: "9px", color: "#adb3c8", fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+                    {isEN ? "Certificate N°" : "Certificat N°"}
+                  </div>
+                  <div style={{ fontSize: "10px", color: "#6f7897", fontFamily: "'IBM Plex Mono', monospace", fontWeight: 700 }}>
+                    {certId}
+                  </div>
+                </div>
+              </div>
+
+              {/* Decorative double border frame */}
+              <div style={{
+                width: "100%",
+                border: "1.5px solid rgba(13,71,161,0.15)",
+                borderRadius: "12px",
+                padding: "32px 24px",
+                position: "relative",
+                background: "linear-gradient(180deg, #fafbff 0%, #fff 100%)",
+              }}>
+                {/* Corner ornaments */}
+                {[
+                  { top: "8px", left: "8px" },
+                  { top: "8px", right: "8px" },
+                  { bottom: "8px", left: "8px" },
+                  { bottom: "8px", right: "8px" },
+                ].map((pos, i) => (
+                  <div key={i} style={{
+                    position: "absolute", ...pos,
+                    width: "18px", height: "18px",
+                    border: "2px solid rgba(13,71,161,0.25)",
+                    borderRadius: "3px",
+                  }} />
+                ))}
+
+                {/* Medal icon */}
+                <div style={{
+                  width: "64px", height: "64px",
+                  borderRadius: "50%",
+                  background: "linear-gradient(135deg, #0D47A1, #1565C0)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  margin: "0 auto 16px",
+                  boxShadow: "0 4px 20px rgba(13,71,161,0.35)",
+                }}>
                   <Award size={30} color="#FFD700" />
                 </div>
 
-                <div className="font-mono text-xs mt-3 uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.5)", fontFamily: "'IBM Plex Mono', monospace", fontSize: "9px" }}>
-                  {isEN ? "Training certificate" : "Certificat de formation"}
+                {/* "Certifies that" label */}
+                <div style={{
+                  fontSize: "9px",
+                  color: "#adb3c8",
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  fontFamily: "'IBM Plex Mono', monospace",
+                  marginBottom: "10px",
+                }}>
+                  {isEN ? "This certifies that" : "IBM France certifie que"}
                 </div>
-                <h1 className="font-bold text-white mt-1" style={{ fontSize: "1.3rem", letterSpacing: "-0.02em" }}>
-                  {isEN ? "IBM Fire Safety" : "Sécurité Incendie IBM"}
-                </h1>
-                <div className="text-sm mt-0.5" style={{ color: "rgba(255,255,255,0.6)" }}>
-                  {isEN ? "Full training — 2 chapters · 14 modules" : "Formation complète — 2 chapitres · 14 modules"}
-                </div>
-              </div>
-            </div>
 
-            {/* Body */}
-            <div className="px-6 py-6 flex flex-col gap-5">
-
-              {/* Certified person */}
-              <div className="text-center">
-                <div className="text-xs uppercase font-mono" style={{ color: "#adb3c8", letterSpacing: "0.12em", fontFamily: "'IBM Plex Mono', monospace", fontSize: "9px" }}>
-                  {isEN ? "Awarded to" : "Décerné à"}
-                </div>
-                <div className="font-bold mt-1" style={{ fontSize: "1.5rem", color: "#0a2052", letterSpacing: "-0.02em" }}>
+                {/* Learner name — LARGE */}
+                <div style={{
+                  fontSize: "2.1rem",
+                  fontWeight: 800,
+                  color: "#0a2052",
+                  letterSpacing: "-0.03em",
+                  lineHeight: 1.1,
+                  marginBottom: "6px",
+                }}>
                   {fullName}
                 </div>
-                <div className="text-sm mt-0.5" style={{ color: "#6f7897" }}>{campus}</div>
-              </div>
 
-              {/* Divider */}
-              <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, #e4e7f0, transparent)" }} />
+                {/* Campus */}
+                <div style={{ fontSize: "0.85rem", color: "#6f7897", marginBottom: "20px" }}>
+                  {campus}
+                </div>
 
-              {/* Stats */}
-              <div className="grid grid-cols-3 gap-3">
-                {[
-                  { label: isEN ? "Avg. score" : "Score moyen", value: `${avgScore}%`, icon: <Star size={15} />, color: avgScore >= 80 ? "#198038" : "#b45309", bg: avgScore >= 80 ? "rgba(25,128,56,0.07)" : "rgba(180,83,9,0.07)" },
-                  { label: isEN ? "Modules passed" : "Modules validés", value: `${totalCompleted}/${TOTAL_MODULES}`, icon: <CheckCircle2 size={15} />, color: "#0D47A1", bg: "rgba(13,71,161,0.07)" },
-                  { label: isEN ? "Issued on" : "Obtenu le", value: today, icon: <Clock size={15} />, color: "#6f7897", bg: "#f0f4fa" },
-                ].map((stat, i) => (
-                  <div key={i} className="rounded-xl p-3 flex flex-col items-center text-center" style={{ background: stat.bg }}>
-                    <div style={{ color: stat.color }}>{stat.icon}</div>
-                    <div className="font-bold mt-1" style={{ fontSize: "1rem", color: stat.color }}>{stat.value}</div>
-                    <div className="text-xs mt-0.5" style={{ color: "#8d95aa", lineHeight: "1.3" }}>{stat.label}</div>
-                  </div>
-                ))}
-              </div>
+                {/* Thin divider */}
+                <div style={{
+                  width: "60px", height: "2px",
+                  background: "linear-gradient(90deg, #0D47A1, #0f62fe)",
+                  borderRadius: "2px",
+                  margin: "0 auto 20px",
+                }} />
 
-              {/* Divider */}
-              <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, #e4e7f0, transparent)" }} />
+                {/* "has successfully completed" */}
+                <div style={{ fontSize: "0.82rem", color: "#6f7897", marginBottom: "8px" }}>
+                  {isEN ? "has successfully completed the training" : "a suivi et validé avec succès la formation"}
+                </div>
 
-              {/* Competencies validated */}
-              <div>
-                <div className="font-bold text-sm mb-3" style={{ color: "#0a2052" }}>{isEN ? "Validated competencies" : "Compétences validées"}</div>
-                <div className="grid grid-cols-1 gap-1.5">
-                  {(isEN ? [
-                    "Identify and report a fire outbreak",
-                    "Use an extinguisher according to the fire class",
-                    "Trigger the fire alarm (22 22)",
-                    "Apply the EXIT-CLOSE-SIGNAL sequence",
-                    "Lead a safe evacuation",
-                    "Follow the full IBM procedure",
-                  ] : [
-                    "Identifier et signaler un départ de feu",
-                    "Utiliser un extincteur selon la classe de feu",
-                    "Déclencher l'alarme incendie (22 22)",
-                    "Appliquer la séquence SORS-FERME-SIGNALE",
-                    "Guider une évacuation en sécurité",
-                    "Respecter la procédure IBM complète",
-                  ]).map((comp, i) => (
-                    <div key={i} className="flex items-center gap-2.5 rounded-lg px-3 py-2" style={{ background: "#f8f9fc" }}>
-                      <CheckCircle2 size={13} style={{ color: "#198038", flexShrink: 0 }} />
-                      <span style={{ color: "#3d4259", fontSize: "0.82rem" }}>{comp}</span>
+                {/* Training name */}
+                <div style={{
+                  fontSize: "1.2rem",
+                  fontWeight: 700,
+                  color: "#0D47A1",
+                  letterSpacing: "-0.01em",
+                  marginBottom: "4px",
+                }}>
+                  {isEN ? "IBM Fire Safety & Evacuation" : "Sécurité Incendie & Évacuation IBM"}
+                </div>
+                <div style={{ fontSize: "0.78rem", color: "#adb3c8", marginBottom: "24px" }}>
+                  {isEN ? "2 chapters · 14 modules · IBM France mandatory training" : "2 chapitres · 14 modules · Formation obligatoire IBM France"}
+                </div>
+
+                {/* Score badge */}
+                <div style={{
+                  display: "inline-flex", alignItems: "center", gap: "8px",
+                  background: avgScore >= 80 ? "rgba(25,128,56,0.08)" : "rgba(180,83,9,0.08)",
+                  border: `1.5px solid ${avgScore >= 80 ? "rgba(25,128,56,0.25)" : "rgba(180,83,9,0.25)"}`,
+                  borderRadius: "99px",
+                  padding: "6px 18px",
+                  marginBottom: "24px",
+                }}>
+                  <CheckCircle2 size={14} style={{ color: avgScore >= 80 ? "#198038" : "#b45309" }} />
+                  <span style={{
+                    fontWeight: 700, fontSize: "0.88rem",
+                    color: avgScore >= 80 ? "#0e6027" : "#92400e",
+                    fontFamily: "'IBM Plex Mono', monospace",
+                  }}>
+                    {isEN ? `Score: ${avgScore}%` : `Score moyen : ${avgScore}%`}
+                  </span>
+                </div>
+
+                {/* Date row */}
+                <div style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-end",
+                  width: "100%",
+                  borderTop: "1px dashed rgba(13,71,161,0.12)",
+                  paddingTop: "20px",
+                  marginTop: "4px",
+                }}>
+                  <div style={{ textAlign: "left" }}>
+                    <div style={{ fontSize: "9px", color: "#adb3c8", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "'IBM Plex Mono', monospace" }}>
+                      {isEN ? "Date issued" : "Date d'obtention"}
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Divider */}
-              <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, #e4e7f0, transparent)" }} />
-
-              {/* Module scores */}
-              <div>
-                <div className="font-bold text-sm mb-3" style={{ color: "#0a2052" }}>{isEN ? "Module details" : "Détail par module"}</div>
-                <div className="flex flex-col gap-1">
-                  {Object.entries(MODULE_TITLES).map(([id, title]) => {
-                    const p = progress[id];
-                    return (
-                      <div key={id} className="flex items-center gap-2 px-3 py-2 rounded-lg" style={{ background: "#f8f9fc" }}>
-                        <div className="w-5 h-5 rounded-md flex items-center justify-center flex-shrink-0" style={{ background: p?.completed ? "#198038" : "#e4e7f0" }}>
-                          {p?.completed
-                            ? <CheckCircle2 size={11} color="#fff" />
-                            : <span style={{ fontSize: "8px", color: "#adb3c8", fontWeight: 700 }}>—</span>}
-                        </div>
-                        <span className="flex-1 text-xs" style={{ color: p?.completed ? "#0a2052" : "#adb3c8" }}>{isEN ? title.en : title.fr}</span>
-                        {p?.completed && (
-                          <span className="font-mono font-bold text-xs" style={{ fontFamily: "'IBM Plex Mono', monospace", color: p.score >= 80 ? "#198038" : "#b45309" }}>
-                            {p.score}%
-                          </span>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Validity note */}
-              <div className="rounded-xl px-4 py-3" style={{ background: "rgba(13,71,161,0.05)", border: "1px solid rgba(13,71,161,0.14)" }}>
-                <div className="flex items-start gap-2.5">
-                  <Shield size={14} style={{ color: "#0D47A1", flexShrink: 0, marginTop: "1px" }} />
-                  <div>
-                    <div className="font-semibold text-xs" style={{ color: "#0D47A1" }}>{isEN ? "IBM France Certificate · Fire Safety Training" : "Certificat IBM France · Formation Sécurité Incendie"}</div>
-                    <div className="text-xs mt-0.5" style={{ color: "#6f7897", lineHeight: "1.45" }}>
-                      {isEN ? "Valid 2 to 3 years — IBM recommends renewing every 2 to 3 years" : "Valable 2 à 3 ans — IBM recommande un renouvellement tous les 2 à 3 ans"}
+                    <div style={{ fontSize: "0.88rem", fontWeight: 700, color: "#0a2052", marginTop: "3px" }}>
+                      {today}
+                    </div>
+                  </div>
+                  <div style={{ textAlign: "center" }}>
+                    <div style={{
+                      width: "44px", height: "44px",
+                      borderRadius: "50%",
+                      background: "linear-gradient(135deg, #0D47A1, #0f62fe)",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                    }}>
+                      <Shield size={20} color="#fff" />
+                    </div>
+                  </div>
+                  <div style={{ textAlign: "right" }}>
+                    <div style={{ fontSize: "9px", color: "#adb3c8", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "'IBM Plex Mono', monospace" }}>
+                      {isEN ? "Valid" : "Validité"}
+                    </div>
+                    <div style={{ fontSize: "0.88rem", fontWeight: 700, color: "#0a2052", marginTop: "3px" }}>
+                      {isEN ? "2 to 3 years" : "2 à 3 ans"}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
+            {/* Module details section */}
+            <div className="px-8 py-5">
+              <div className="font-bold text-sm mb-3" style={{ color: "#0a2052" }}>
+                {isEN ? "Modules validated" : "Modules validés"}
+              </div>
+              <div className="grid grid-cols-2 gap-1">
+                {Object.entries(MODULE_TITLES).map(([id, title]) => {
+                  const p = progress[id];
+                  return (
+                    <div key={id} className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg" style={{ background: "#f8f9fc" }}>
+                      <div style={{
+                        width: "16px", height: "16px",
+                        borderRadius: "50%",
+                        background: p?.completed ? "#198038" : "#e4e7f0",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        flexShrink: 0,
+                      }}>
+                        {p?.completed
+                          ? <CheckCircle2 size={10} color="#fff" />
+                          : <span style={{ fontSize: "7px", color: "#adb3c8" }}>—</span>}
+                      </div>
+                      <span style={{ fontSize: "0.72rem", color: p?.completed ? "#0a2052" : "#adb3c8", flex: 1 }}>
+                        {isEN ? title.en : title.fr}
+                      </span>
+                      {p?.completed && (
+                        <span style={{ fontSize: "0.7rem", fontWeight: 700, color: p.score >= 80 ? "#198038" : "#b45309", fontFamily: "'IBM Plex Mono', monospace" }}>
+                          {p.score}%
+                        </span>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Bottom band */}
+            <div style={{ height: "8px", background: "linear-gradient(90deg, #0D47A1 0%, #1565C0 40%, #0f62fe 70%, #0D47A1 100%)" }} />
           </div>
 
           {/* Actions */}
-          <div className="flex flex-col gap-2.5">
+          <div className="no-print flex flex-col gap-2.5">
             <button
               onClick={() => window.print()}
               className="w-full flex items-center justify-center gap-2.5 rounded-2xl py-3.5 font-bold"
@@ -253,6 +313,14 @@ export default function CertificatePage() {
             >
               <Download size={17} />
               {isEN ? "Download / Print certificate" : "Télécharger / Imprimer le certificat"}
+            </button>
+            <button
+              onClick={() => window.open("/fiches", "_blank")}
+              className="w-full flex items-center justify-center gap-2.5 rounded-2xl py-3.5 font-bold"
+              style={{ background: "linear-gradient(135deg, #198038, #24a148)", color: "#fff", border: "none", cursor: "pointer", fontSize: "0.9375rem", boxShadow: "0 6px 24px rgba(25,128,56,0.2)" }}
+            >
+              <BookOpen size={17} />
+              {isEN ? "Download quick reference cards" : "Télécharger les fiches réflexes"}
             </button>
             <button
               onClick={() => navigate("/hub")}
@@ -263,8 +331,6 @@ export default function CertificatePage() {
               {isEN ? "Back to dashboard" : "Retour au tableau de bord"}
             </button>
           </div>
-
-          <div style={{ height: "8px" }} />
         </div>
       </main>
     </div>

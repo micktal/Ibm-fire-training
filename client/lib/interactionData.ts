@@ -1153,7 +1153,7 @@ const ch2m1_hotspot: HotspotExercise = {
   instructionEn: "Locate and identify all alarm triggers in this scene",
   context: "Dans un vrai bureau IBM, repérez les équipements d'alerte et comprenez leur fonctionnement.",
   contextEn: "In a real IBM office, spot the alert equipment and understand how it works.",
-  image: `${CDN}f70ab7cdd9114da8bfd5ad197221b46b?format=webp&width=800`,
+  image: "https://images.pexels.com/photos/31470430/pexels-photo-31470430.jpeg?auto=compress&cs=tinysrgb&w=800",
   successMessage: "Vous savez localiser et utiliser les systèmes d'alarme",
   successMessageEn: "You know how to locate and use the alarm systems",
   hotspots: [
@@ -1352,7 +1352,7 @@ const ch2m4_hotspot: HotspotExercise = {
   instructionEn: "Virtually explore this floor and identify all areas to check",
   context: "Avant d'évacuer définitivement, quelles zones d'un étage IBM doivent être contrôlées ?",
   contextEn: "Before definitively evacuating, which areas on an IBM floor need to be checked?",
-  image: `${CDN}b5ca9823c0ba42e492f17a707fd14708?format=webp&width=800`,
+  image: "https://images.pexels.com/photos/2294135/pexels-photo-2294135.jpeg?auto=compress&cs=tinysrgb&w=800",
   successMessage: "Vérification complète — toutes les zones ont été contrôlées",
   successMessageEn: "Full check — all areas have been verified",
   hotspots: [
@@ -1519,7 +1519,7 @@ const ch2m6_hotspot: HotspotExercise = {
   instructionEn: "On this IBM floor plan, identify the correct evacuation route",
   context: "Analysez les différentes options. Quelles voies sont sûres ? Lesquelles sont à éviter absolument ?",
   contextEn: "Analyse the different options. Which routes are safe? Which must absolutely be avoided?",
-  image: `${CDN}48e0cc79ee294fbbaf81f10232959ffb?format=webp&width=800`,
+  image: "https://images.pexels.com/photos/28281244/pexels-photo-28281244.jpeg?auto=compress&cs=tinysrgb&w=800",
   successMessage: "Vous connaissez les règles d'évacuation par les escaliers",
   successMessageEn: "You know the rules for staircase evacuation",
   hotspots: [

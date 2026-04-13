@@ -267,8 +267,8 @@ export default function SpinWheel({ exercise }: Props) {
                 {spinning
                   ? "⟳  " + (lang === "en" ? "Spinning…" : "En cours…")
                   : lang === "en"
-                  ? `🎯  SPIN! (${MAX_SPINS - spinCount} left)`
-                  : `🎯  TOURNER ! (${MAX_SPINS - spinCount} restant${MAX_SPINS - spinCount > 1 ? "s" : ""})`}
+                  ? `SPIN (${MAX_SPINS - spinCount} left)`
+                  : `TOURNER (${MAX_SPINS - spinCount} restant${MAX_SPINS - spinCount > 1 ? "s" : ""})`}
               </button>
               <div style={{ fontSize: "0.72rem", color: "#adb3c8", fontFamily: "'IBM Plex Mono', monospace" }}>
                 {spinCount}/{MAX_SPINS} {lang === "en" ? "spins used" : "tours utilisés"}
@@ -406,7 +406,7 @@ export default function SpinWheel({ exercise }: Props) {
                           opacity: spinning ? 0.6 : 1,
                         }}
                       >
-                        🎯 {lang === "en" ? "Spin again!" : "Tourner à nouveau !"}
+                        {lang === "en" ? "Spin again!" : "Tourner à nouveau !"}
                       </button>
                     )}
                   </div>
@@ -457,7 +457,7 @@ export default function SpinWheel({ exercise }: Props) {
             }}
           >
             <div className="font-bold mb-1" style={{ color: "#0043ce", fontSize: "1.15rem" }}>
-              {lang === "en" ? "🎉 All segments answered!" : "🎉 Toutes les questions répondues !"}
+              {lang === "en" ? "All segments answered!" : "Toutes les questions répondues !"}
             </div>
             <div style={{ color: "#6f7897", fontSize: "0.875rem" }}>
               {lang === "en"
