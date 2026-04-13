@@ -114,66 +114,98 @@ export default function AdminPage() {
     return (
       <div
         className="fixed inset-0 flex items-center justify-center"
-        style={{ background: "linear-gradient(145deg, #0a1628, #0D47A1)", fontFamily: "'IBM Plex Sans', sans-serif" }}
+        style={{ background: "#0a1628", fontFamily: "'IBM Plex Sans', sans-serif" }}
       >
-        <div
-          className="w-full rounded-2xl overflow-hidden"
-          style={{ maxWidth: "400px", background: "#fff", boxShadow: "0 20px 60px rgba(0,0,0,0.3)", margin: "1rem" }}
-        >
-          {/* Header */}
-          <div className="px-8 py-6" style={{ background: "#0043ce" }}>
-            <div className="flex items-center gap-3 mb-3">
-              <IBMLogo variant="dark" height={28} style={{ background: "rgba(255,255,255,0.15)", borderRadius: "6px" }} />
-            </div>
-            <div className="mb-2">
-              <div className="font-bold text-white" style={{ fontSize: "1rem" }}>Espace Administrateur</div>
-              <div className="text-xs" style={{ color: "rgba(255,255,255,0.65)" }}>IBM · Sécurité Incendie</div>
-            </div>
-            <p className="text-xs" style={{ color: "rgba(255,255,255,0.7)", lineHeight: "1.5" }}>
-              Accès réservé au responsable sécurité IBM. Entrez le mot de passe pour consulter les inscriptions.
-            </p>
+        {/* Subtle background grid */}
+        <div className="absolute inset-0 pointer-events-none" style={{
+          backgroundImage: "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
+          backgroundSize: "40px 40px"
+        }} />
+
+        <div className="relative w-full" style={{ maxWidth: "420px", margin: "1rem" }}>
+          {/* Logo bar */}
+          <div className="flex items-center gap-3 mb-8 px-1">
+            <IBMLogo variant="dark" height={30} />
+            <div className="w-px h-5" style={{ background: "rgba(255,255,255,0.2)" }} />
+            <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.45)", fontFamily: "'IBM Plex Mono', monospace" }}>
+              Fire Safety Platform
+            </span>
           </div>
 
-          {/* Login form */}
-          <div className="px-8 py-6">
-            <label className="text-xs font-semibold mb-1.5 block" style={{ color: "#4a5068" }}>
-              Mot de passe
-            </label>
-            <div className="relative mb-4">
-              <Lock size={14} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "#8d95aa" }} />
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => { setPassword(e.target.value); setPwError(false); }}
-                onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-                placeholder="••••••••••••••••"
-                style={{
-                  width: "100%",
-                  height: "40px",
-                  paddingLeft: "2.2rem",
-                  paddingRight: "0.75rem",
-                  border: `1.5px solid ${pwError ? "#da1e28" : "#d0d4e2"}`,
-                  borderRadius: "4px",
-                  fontFamily: "'IBM Plex Sans', sans-serif",
-                  fontSize: "0.875rem",
-                  outline: "none",
-                }}
-              />
+          {/* Card */}
+          <div className="rounded-2xl overflow-hidden" style={{ background: "#fff", boxShadow: "0 24px 64px rgba(0,0,0,0.5)" }}>
+            {/* Blue top band */}
+            <div className="px-8 py-7" style={{ background: "linear-gradient(135deg, #0043ce 0%, #0031a9 100%)", position: "relative", overflow: "hidden" }}>
+              <div style={{ position: "absolute", right: -24, top: -24, width: 120, height: 120, borderRadius: "50%", background: "rgba(255,255,255,0.06)" }} />
+              <div style={{ position: "absolute", right: 20, bottom: -30, width: 80, height: 80, borderRadius: "50%", background: "rgba(255,255,255,0.04)" }} />
+              <div className="relative">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "rgba(255,255,255,0.15)" }}>
+                    <Shield size={16} style={{ color: "#fff" }} />
+                  </div>
+                  <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.6)", fontFamily: "'IBM Plex Mono', monospace" }}>
+                    Accès restreint
+                  </span>
+                </div>
+                <h1 className="text-xl font-bold text-white mb-1" style={{ letterSpacing: "-0.01em" }}>
+                  Espace Administrateur
+                </h1>
+                <p className="text-sm" style={{ color: "rgba(255,255,255,0.65)", lineHeight: 1.55 }}>
+                  Tableau de bord — Responsable Sécurité IBM.<br />
+                  Accès réservé. Entrez le mot de passe pour consulter les données.
+                </p>
+              </div>
             </div>
-            {pwError && (
-              <p className="text-xs mb-4 flex items-center gap-1.5" style={{ color: "#da1e28" }}>
-                <XCircle size={13} /> Mot de passe incorrect
+
+            {/* Form */}
+            <div className="px-8 py-7">
+              <label className="text-xs font-semibold mb-2 block" style={{ color: "#4a5068", letterSpacing: "0.04em", textTransform: "uppercase" }}>
+                Mot de passe
+              </label>
+              <div className="relative mb-2">
+                <Lock size={14} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "#8d95aa" }} />
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => { setPassword(e.target.value); setPwError(false); }}
+                  onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+                  placeholder="••••••••••••••••"
+                  style={{
+                    width: "100%",
+                    height: "44px",
+                    paddingLeft: "2.4rem",
+                    paddingRight: "0.75rem",
+                    border: `1.5px solid ${pwError ? "#da1e28" : "#d0d4e2"}`,
+                    borderRadius: "6px",
+                    fontFamily: "'IBM Plex Sans', sans-serif",
+                    fontSize: "0.9rem",
+                    outline: "none",
+                    background: pwError ? "rgba(218,30,40,0.04)" : "#fff",
+                    transition: "border-color 0.15s",
+                    boxSizing: "border-box",
+                  }}
+                />
+              </div>
+              {pwError && (
+                <p className="text-xs mb-4 flex items-center gap-1.5" style={{ color: "#da1e28" }}>
+                  <XCircle size={13} /> Mot de passe incorrect. Veuillez réessayer.
+                </p>
+              )}
+              {!pwError && <div className="mb-5" />}
+              <button
+                onClick={handleLogin}
+                className="w-full flex items-center justify-center gap-2 font-semibold text-sm text-white rounded-lg"
+                style={{ padding: "0.8rem", background: "#0043ce", border: "none", cursor: "pointer", letterSpacing: "0.02em", transition: "background 0.15s" }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = "#0031a9")}
+                onMouseLeave={(e) => (e.currentTarget.style.background = "#0043ce")}
+              >
+                <Shield size={15} />
+                Accéder au tableau de bord
+              </button>
+              <p className="text-center text-xs mt-5" style={{ color: "#b0b7c8" }}>
+                IBM Fire Safety Training · Données confidentielles
               </p>
-            )}
-            <button
-              onClick={handleLogin}
-              className="w-full flex items-center justify-center gap-2 font-semibold text-sm text-white rounded"
-              style={{ padding: "0.7rem", background: "#0043ce", border: "none", cursor: "pointer" }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "#0031a9")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#0043ce")}
-            >
-              Accéder au tableau de bord
-            </button>
+            </div>
           </div>
         </div>
       </div>
