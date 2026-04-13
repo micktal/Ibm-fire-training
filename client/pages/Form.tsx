@@ -139,7 +139,7 @@ export default function Form() {
             <span className="hidden sm:inline">{isEN ? "Home" : "Accueil"}</span>
           </button>
           <div className="w-px h-4" style={{ background: "#e4e7f0" }} />
-          <IBMLogo variant="dark" height={28} />
+          <IBMLogo variant="light" height={28} />
           <div className="w-px h-4" style={{ background: "#e4e7f0" }} />
           <span className="text-xs hidden sm:inline font-semibold uppercase" style={{ color: "#0D47A1", letterSpacing: "0.1em", fontFamily: "'IBM Plex Mono', monospace" }}>
             {isEN ? "Mandatory training" : "Formation obligatoire"}
