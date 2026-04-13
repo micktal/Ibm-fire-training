@@ -188,7 +188,7 @@ export default function Index() {
           <div className="grid grid-cols-3 gap-3 mb-3">
             <Tile icon={<PlayCircle size={28} />} label={t("landing.ch1", lang)} onClick={() => navigate("/form")} />
             <Tile icon={<BookOpen size={28} />} label={t("landing.ch2", lang)} onClick={() => navigate("/form")} />
-            <Tile icon={<BarChart2 size={28} />} label={t("landing.results", lang)} onClick={() => navigate("/form")} />
+            <Tile icon={<BarChart2 size={28} />} label={t("landing.results", lang)} onClick={() => navigate("/hub")} />
           </div>
           <div className="grid grid-cols-2 gap-3 mb-6">
             <Tile icon={<Home size={28} />} label={t("landing.home", lang)} onClick={() => navigate("/")} />
