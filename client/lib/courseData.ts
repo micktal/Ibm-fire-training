@@ -1052,7 +1052,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     },
     duration: "7 min",
     image: `${CDN}73ee73f4c5c54adb943d454c10b797a9?format=webp&width=800`,
-    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Rester%20calme%20pendant%20une%20vacuation.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL1Jlc3RlciBjYWxtZSBwZW5kYW50IHVuZSB2YWN1YXRpb24ubXA0IiwiaWF0IjoxNzc1NDA5NTM4LCJleHAiOjE4Mzg0ODE1Mzh9.bcvnHNBMwRQBIZW0_dBpwejSm_gwLuZBDiI-JEmMx3E",
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Rester%20calme%20pendant%20une%20vacuation%20(1).mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL1Jlc3RlciBjYWxtZSBwZW5kYW50IHVuZSB2YWN1YXRpb24gKDEpLm1wNCIsImlhdCI6MTc3NjA3MzY0MCwiZXhwIjoxNzc2MjQ2NDQwfQ.uFe7Qgw0PrnqfD7Cn7qT-5k03bkQ4_BvhAXaFDFxfgo",
     funFacts: [
       { stat: "3×", label: "la panique ralentit l'évacuation", detail: "Une évacuation désordonnée et paniquée est 3 fois plus lente. Le sang-froid et les consignes claires sauvent des vies.", icon: "alert" },
       { stat: "1 voix", label: "suffit pour structurer 20 personnes", detail: "Un collaborateur formé qui prend le commandement vocal peut structurer une évacuation de 20 personnes en moins de 30 secondes.", icon: "zap" },
