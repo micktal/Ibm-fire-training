@@ -42,20 +42,23 @@ export default function SpinWheel({ exercise }: Props) {
   const n = items.length;
   const seg = 360 / n;
 
+  const MAX_SPINS = 3;
+
   const [rotation, setRotation] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [currentIdx, setCurrentIdx] = useState<number | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
   const [answered, setAnswered] = useState(false);
   const [results, setResults] = useState<Record<number, boolean>>({});
+  const [spinCount, setSpinCount] = useState(0);
 
   const title = lang === "en" ? (exercise.titleEn ?? exercise.title) : exercise.title;
   const subtitle = lang === "en" ? (exercise.subtitleEn ?? exercise.subtitle) : exercise.subtitle;
-  const allDone = Object.keys(results).length === n;
+  const allDone = Object.keys(results).length >= MAX_SPINS;
   const correctCount = Object.values(results).filter(Boolean).length;
 
   const spin = () => {
-    if (spinning || allDone) return;
+    if (spinning || allDone || spinCount >= MAX_SPINS) return;
     setSpinning(true);
     setCurrentIdx(null);
     setSelected(null);
@@ -76,6 +79,7 @@ export default function SpinWheel({ exercise }: Props) {
     setTimeout(() => {
       setCurrentIdx(target);
       setSpinning(false);
+      setSpinCount((c) => c + 1);
     }, 4200);
   };
 
@@ -95,6 +99,7 @@ export default function SpinWheel({ exercise }: Props) {
     setAnswered(false);
     setResults({});
     setSpinning(false);
+    setSpinCount(0);
   };
 
   const currentItem = currentIdx !== null ? items[currentIdx] : null;
@@ -238,32 +243,37 @@ export default function SpinWheel({ exercise }: Props) {
 
           {/* Spin button */}
           {!allDone && (
-            <button
-              onClick={spin}
-              disabled={spinning}
-              style={{
-                background: spinning
-                  ? "rgba(200,205,216,0.6)"
-                  : "linear-gradient(135deg, #da1e28 0%, #ff6b1a 100%)",
-                color: "#fff",
-                border: "none",
-                borderRadius: "50px",
-                padding: "0.85rem 2.5rem",
-                fontWeight: 800,
-                fontSize: "1.05rem",
-                cursor: spinning ? "not-allowed" : "pointer",
-                letterSpacing: "0.08em",
-                textTransform: "uppercase" as const,
-                boxShadow: spinning ? "none" : "0 6px 20px rgba(218,30,40,0.35)",
-                transition: "all 0.25s",
-              }}
-            >
-              {spinning
-                ? "⟳  " + (lang === "en" ? "Spinning…" : "En cours…")
-                : lang === "en"
-                ? "🎯  SPIN!"
-                : "🎯  TOURNER !"}
-            </button>
+            <div className="flex flex-col items-center gap-2">
+              <button
+                onClick={spin}
+                disabled={spinning}
+                style={{
+                  background: spinning
+                    ? "rgba(200,205,216,0.6)"
+                    : "linear-gradient(135deg, #da1e28 0%, #ff6b1a 100%)",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "50px",
+                  padding: "0.85rem 2.5rem",
+                  fontWeight: 800,
+                  fontSize: "1.05rem",
+                  cursor: spinning ? "not-allowed" : "pointer",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase" as const,
+                  boxShadow: spinning ? "none" : "0 6px 20px rgba(218,30,40,0.35)",
+                  transition: "all 0.25s",
+                }}
+              >
+                {spinning
+                  ? "⟳  " + (lang === "en" ? "Spinning…" : "En cours…")
+                  : lang === "en"
+                  ? `🎯  SPIN! (${MAX_SPINS - spinCount} left)`
+                  : `🎯  TOURNER ! (${MAX_SPINS - spinCount} restant${MAX_SPINS - spinCount > 1 ? "s" : ""})`}
+              </button>
+              <div style={{ fontSize: "0.72rem", color: "#adb3c8", fontFamily: "'IBM Plex Mono', monospace" }}>
+                {spinCount}/{MAX_SPINS} {lang === "en" ? "spins used" : "tours utilisés"}
+              </div>
+            </div>
           )}
         </div>
 
