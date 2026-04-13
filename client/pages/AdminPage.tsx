@@ -7,41 +7,50 @@ const ADMIN_PASSWORD = "ibm-securite-2026";
 
 function exportToCSV(data: TrainingRegistration[]) {
   const headers = [
-    "Date inscription",
-    "Prénom",
-    "Nom",
-    "Email",
-    "Bâtiment / Site",
-    "Étage",
-    "Zone",
-    "Langue",
-    "Modules complétés",
-    "Score moyen (%)",
-    "Certificat obtenu",
-    "Date complétion",
+    "DATE INSCRIPTION",
+    "PRENOM",
+    "NOM",
+    "EMAIL",
+    "BATIMENT / SITE",
+    "ETAGE",
+    "ZONE",
+    "LANGUE",
+    "MODULES COMPLETES",
+    "MODULES / TOTAL",
+    "SCORE MOYEN (%)",
+    "CERTIFICAT OBTENU",
+    "DATE COMPLETION",
+    "SESSION ID",
   ];
 
   const rows = data.map((r) => [
     r.created_at ? new Date(r.created_at).toLocaleDateString("fr-FR") : "",
-    r.first_name,
-    r.last_name,
-    r.email,
+    r.first_name ?? "",
+    r.last_name ?? "",
+    r.email ?? "",
     r.building ?? "",
     r.floor ?? "",
     r.zone ?? "",
-    r.language.toUpperCase(),
+    (r.language ?? "").toUpperCase(),
+    r.completed_modules ?? 0,
     `${r.completed_modules ?? 0}/${r.total_modules ?? 14}`,
-    r.average_score ?? 0,
+    r.average_score ? `${r.average_score.toFixed(1)}%` : "0%",
     r.certificate_obtained ? "OUI" : "NON",
     r.completed_at ? new Date(r.completed_at).toLocaleDateString("fr-FR") : "",
+    r.session_id ?? "",
   ]);
 
   const csv = [headers, ...rows]
     .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(";"))
-    .join("\n");
+    .join("\r\n");
 
-  // "sep=;" tells Excel (FR) to use semicolons as the column separator
-  const blob = new Blob(["\uFEFFsep=;\n" + csv], { type: "text/csv;charset=utf-8;" });
+  // Explicit UTF-8 BOM bytes (0xEF 0xBB 0xBF) for proper Excel encoding
+  const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+  const content = "sep=;\r\n" + csv;
+  const encoder = new TextEncoder();
+  const encoded = encoder.encode(content);
+  const blob = new Blob([bom, encoded], { type: "text/csv;charset=utf-8;" });
+
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
