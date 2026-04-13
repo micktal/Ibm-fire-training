@@ -1,106 +1,71 @@
 interface Props {
-  /** "dark" = logo blanc sur fond bleu | "light" = logo bleu sur fond clair */
+  /** "dark" = white logo (for dark/blue backgrounds) | "light" = IBM blue logo (for white backgrounds) */
   variant?: "dark" | "light";
   height?: number;
   style?: React.CSSProperties;
 }
 
 /**
- * IBM logo — 8-bar version, inline SVG.
- * Renders crisp at any size, no external image, no blend-mode tricks.
+ * IBM 8-bar logo — hand-crafted SVG with precise bar coordinates.
+ * ViewBox: 80 × 32. Each letter defined by 8 horizontal bars.
+ *
+ * I : x=0–11 (solid bars, full width)
+ * B : x=15, width varies per bar (top bump narrow, bottom bump large)
+ * M : x=50–80, two segments per bar (V-notch opens from top, widens at bottom)
  */
 export default function IBMLogo({ variant = "light", height = 32, style }: Props) {
-  const blue = "#0043ce";
-  const color = variant === "dark" ? "#fff" : blue;
+  const color = variant === "dark" ? "#ffffff" : "#0043ce";
+  const w = Math.round((height / 32) * 80);
 
-  // Proportions based on official IBM 8-bar logo
-  // width ≈ 1.95× height
-  const w = Math.round(height * 1.95);
-  const h = height;
+  // 8 equally-spaced bar y-positions (bar height 2.2, gap 1.9)
+  const y = [0.55, 4.65, 8.75, 12.85, 16.95, 21.05, 25.15, 29.25];
+  const bH = 2.2;
 
-  // Letter widths (relative, total = 100 units)
-  // I=22, gap=5, B=35, gap=5, M=33
-  const iW = w * 0.20;
-  const bW = w * 0.32;
-  const mW = w * 0.32;
-  const gap = w * 0.08;
+  // B: all bars start at x=15; width varies to form top & bottom bumps
+  // Top bump peaks at bar 2 (width 24), bottom bump peaks at bar 6 (width 31)
+  const bW = [13, 23, 24, 9, 15, 29, 31, 23];
 
-  // 8 horizontal bars: 8 bars + 7 gaps in height
-  // bar height ≈ h/15, gap between bars ≈ h/15 * 0.6
-  const barH = h / 15;
-  const barGap = h / 15 * 0.75;
-  const totalBars = 8;
-  const barsH = totalBars * barH + (totalBars - 1) * barGap;
-  const topPad = (h - barsH) / 2;
-
-  const bars = Array.from({ length: totalBars }, (_, i) => topPad + i * (barH + barGap));
-
-  // Letter shapes as clip paths
-  // I: simple rect
-  // B: rect with two bumps on right
-  // M: two diagonals in middle
-
-  const iX = 0;
-  const bX = iX + iW + gap;
-  const mX = bX + bW + gap;
+  // M: two rect segments per bar [x, width].
+  // Bar 0 is full-width (letter top). Gap widens toward bar 7 (letter bottom).
+  const mSegs: [number, number][][] = [
+    [[50, 30]],
+    [[50, 14], [66, 14]],
+    [[50, 13], [67, 13]],
+    [[50, 12], [68, 12]],
+    [[50, 10], [70, 10]],
+    [[50,  9], [71,  9]],
+    [[50,  8], [72,  8]],
+    [[50,  7], [73,  7]],
+  ];
 
   return (
     <svg
       width={w}
-      height={h}
-      viewBox={`0 0 ${w} ${h}`}
+      height={height}
+      viewBox="0 0 80 32"
       xmlns="http://www.w3.org/2000/svg"
       aria-label="IBM"
       role="img"
       style={{ display: "block", flexShrink: 0, ...style }}
     >
-      {/* Define letter clip paths */}
-      <defs>
-        {/* I letter */}
-        <clipPath id={`ibm-i-${variant}`}>
-          <rect x={iX} y={0} width={iW} height={h} />
-        </clipPath>
+      <g fill={color}>
+        {/* ── I ── */}
+        {y.map((yi, i) => (
+          <rect key={`i${i}`} x={0} y={yi} width={11} height={bH} />
+        ))}
 
-        {/* B letter */}
-        <clipPath id={`ibm-b-${variant}`}>
-          <path d={`
-            M ${bX} 0
-            H ${bX + bW * 0.6}
-            Q ${bX + bW} 0 ${bX + bW} ${h * 0.22}
-            Q ${bX + bW} ${h * 0.44} ${bX + bW * 0.7} ${h * 0.5}
-            Q ${bX + bW} ${h * 0.56} ${bX + bW} ${h * 0.78}
-            Q ${bX + bW} ${h} ${bX + bW * 0.6} ${h}
-            H ${bX} Z
-          `} />
-        </clipPath>
+        {/* ── B ── */}
+        {bW.map((wi, i) => (
+          <rect key={`b${i}`} x={15} y={y[i]} width={wi} height={bH} />
+        ))}
 
-        {/* M letter */}
-        <clipPath id={`ibm-m-${variant}`}>
-          <path d={`
-            M ${mX} 0
-            H ${mX + mW * 0.22}
-            L ${mX + mW * 0.5} ${h * 0.42}
-            L ${mX + mW * 0.78} 0
-            H ${mX + mW}
-            V ${h}
-            H ${mX + mW * 0.78}
-            V ${h * 0.3}
-            L ${mX + mW * 0.5} ${h * 0.62}
-            L ${mX + mW * 0.22} ${h * 0.3}
-            V ${h}
-            H ${mX} Z
-          `} />
-        </clipPath>
-      </defs>
-
-      {/* Draw 8 bars clipped to each letter */}
-      {bars.map((y, idx) => (
-        <g key={idx}>
-          <rect x={iX} y={y} width={iW} height={barH} fill={color} clipPath={`url(#ibm-i-${variant})`} />
-          <rect x={bX} y={y} width={bW} height={barH} fill={color} clipPath={`url(#ibm-b-${variant})`} />
-          <rect x={mX} y={y} width={mW} height={barH} fill={color} clipPath={`url(#ibm-m-${variant})`} />
-        </g>
-      ))}
+        {/* ── M ── */}
+        {mSegs.flatMap((segs, i) =>
+          segs.map(([x, wi], j) => (
+            <rect key={`m${i}-${j}`} x={x} y={y[i]} width={wi} height={bH} />
+          ))
+        )}
+      </g>
     </svg>
   );
 }
