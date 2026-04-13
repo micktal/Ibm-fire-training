@@ -65,14 +65,22 @@ export default function AdminPage() {
   const [pwError, setPwError] = useState(false);
   const [registrations, setRegistrations] = useState<TrainingRegistration[]>([]);
   const [loading, setLoading] = useState(false);
+  const [fetchError, setFetchError] = useState(false);
   const [search, setSearch] = useState("");
   const [filterCert, setFilterCert] = useState<"all" | "yes" | "no">("all");
 
   const load = async () => {
     setLoading(true);
-    const data = await fetchAllRegistrations();
-    setRegistrations(data);
-    setLoading(false);
+    setFetchError(false);
+    try {
+      const data = await fetchAllRegistrations();
+      setRegistrations(data);
+    } catch (e) {
+      console.error("Admin fetch failed:", e);
+      setFetchError(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -243,6 +251,27 @@ export default function AdminPage() {
       </header>
 
       <div className="px-6 py-6 max-w-7xl mx-auto">
+        {/* Error banner */}
+        {fetchError && (
+          <div className="flex items-center justify-between gap-4 rounded-xl px-5 py-4 mb-5" style={{ background: "rgba(218,30,40,0.08)", border: "1.5px solid rgba(218,30,40,0.25)" }}>
+            <div className="flex items-center gap-3">
+              <XCircle size={18} style={{ color: "#da1e28", flexShrink: 0 }} />
+              <div>
+                <div className="font-semibold text-sm" style={{ color: "#da1e28" }}>Erreur de connexion à la base de données</div>
+                <div className="text-xs mt-0.5" style={{ color: "#8d0a12" }}>Impossible de récupérer les données Supabase. Vérifiez la connexion réseau.</div>
+              </div>
+            </div>
+            <button
+              onClick={load}
+              className="flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-lg flex-shrink-0"
+              style={{ background: "#da1e28", color: "#fff", border: "none", cursor: "pointer" }}
+            >
+              <RefreshCw size={14} />
+              Réessayer
+            </button>
+          </div>
+        )}
+
         {/* Stats cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           {[

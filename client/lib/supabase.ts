@@ -69,6 +69,9 @@ export async function fetchAllRegistrations(): Promise<TrainingRegistration[]> {
     .from("training_registrations")
     .select("*")
     .order("created_at", { ascending: false });
-  if (error) { console.error("Supabase fetch error:", error); return []; }
+  if (error) {
+    console.error("Supabase fetch error:", JSON.stringify(error));
+    throw new Error(error.message ?? "Fetch failed");
+  }
   return (data ?? []) as TrainingRegistration[];
 }

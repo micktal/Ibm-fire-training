@@ -25,7 +25,7 @@ const BASE_ITEMS: NavItem[] = [
 ];
 
 // Hidden on welcome and form pages
-const HIDDEN_PATHS = ["/", "/form"];
+const HIDDEN_PATHS = ["/", "/form", "/admin"];
 
 export default function BottomNav() {
   const location = useLocation();
