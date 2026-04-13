@@ -131,8 +131,17 @@ export function UserProvider({ children }: { children: ReactNode }) {
   );
 }
 
+const USER_CONTEXT_FALLBACK: UserContextType = {
+  user: null,
+  setUser: () => {},
+  progress: {},
+  setModuleProgress: () => {},
+  isModuleUnlocked: () => false,
+  globalScore: 0,
+  totalCompleted: 0,
+};
+
 export function useUser() {
   const ctx = useContext(UserContext);
-  if (!ctx) throw new Error("useUser must be used inside UserProvider");
-  return ctx;
+  return ctx ?? USER_CONTEXT_FALLBACK;
 }
