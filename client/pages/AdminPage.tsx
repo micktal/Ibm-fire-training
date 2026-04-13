@@ -189,7 +189,7 @@ export default function AdminPage() {
         style={{ borderBottom: "1px solid #e4e7f0", boxShadow: "0 1px 4px rgba(0,0,0,0.06)" }}
       >
         <div className="flex items-center gap-3">
-          <IBMLogo variant="dark" height={26} />
+          <IBMLogo variant="light" height={26} />
           <div className="w-px h-5" style={{ background: "#e4e7f0" }} />
           <div className="flex items-center gap-2">
             <Shield size={15} style={{ color: "#0D47A1" }} />
