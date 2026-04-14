@@ -810,8 +810,8 @@ function PreTestOverlay({
 
           <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.82rem", lineHeight: "1.5" }}>
             {lang === "en"
-              ? "Answer these quick questions to assess your starting level. No pressure — there are no wrong answers."
-              : "Répondez à ces questions pour évaluer votre niveau de départ. Pas de stress — il n'y a pas de mauvaises réponses."}
+              ? "Answer these quick questions to assess your starting level."
+              : "Répondez à ces questions pour évaluer votre niveau de départ."}
           </p>
         </div>
       </div>
