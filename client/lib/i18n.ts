@@ -11,7 +11,7 @@ const STRINGS = {
   "landing.subtitle": { fr: "IBM France · HSE · 2026",         en: "IBM · HSE · 2026" },
   "landing.welcome":  { fr: "Bienvenue sur la Formation",       en: "Welcome to the Training" },
   "landing.title":    { fr: "Sécurité Incendie",                en: "Fire Safety" },
-  "landing.desc":     { fr: "Programme de formation obligatoire IBM France. Acquérez les réflexes essentiels pour prévenir et gérer un départ d'incendie dans vos locaux.", en: "Mandatory IBM training program. Acquire the essential reflexes to prevent and manage a fire in your premises." },
+  "landing.desc":     { fr: "Programme de formation obligatoire IBM France. Intégrez les réflexes essentiels pour prévenir et gérer un départ d'incendie dans vos locaux.", en: "Mandatory IBM training program. Integrate the essential reflexes to prevent and manage a fire in your premises." },
   "landing.skills":   { fr: "Cette formation vous permettra d'acquérir les compétences de serre-file et guide d'évacuation avec les bons réflexes et comportements en cas d'alarme et d'évacuation de votre site.", en: "This training will give you the skills to act as evacuation warden and floor marshal, with the right reflexes and behaviours in the event of an alarm or evacuation at your site." },
   "landing.register_required": { fr: "Veuillez compléter le formulaire d'inscription avant d'accéder à la formation.", en: "Please complete the registration form before accessing the training." },
   "landing.cta":      { fr: "Accéder à la formation",           en: "Access the training" },

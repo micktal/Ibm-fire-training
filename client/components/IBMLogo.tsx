@@ -22,7 +22,8 @@ export default function IBMLogo({ variant = "light", height = 32, style }: Props
       xmlns="http://www.w3.org/2000/svg"
       aria-label="IBM"
       role="img"
-      style={{ display: "block", flexShrink: 0, ...style }}
+      shapeRendering="geometricPrecision"
+      style={{ display: "block", flexShrink: 0, imageRendering: "crisp-edges", ...style }}
     >
       <path
         fill={color}

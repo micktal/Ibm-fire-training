@@ -60,7 +60,7 @@ function LanguageSelector({ onSelect }: { onSelect: (lang: Lang) => void }) {
 
       <div className="relative z-10 flex flex-col items-center gap-8 px-6" style={{ maxWidth: "420px", width: "100%" }}>
         {/* Logo */}
-        <IBMLogo variant="dark" height={36} />
+        <IBMLogo variant="dark" height={52} />
 
         {/* Title */}
         <div className="text-center">
