@@ -91,6 +91,7 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [done, setDone] = useState(false);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
+  const [pendingNext, setPendingNext] = useState<{ nextNode: string | undefined; nextHistory: HistoryEntry[]; isEnd: boolean; score: number } | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const node = exercise.nodes[currentId] ?? exercise.nodes[exercise.startNode];
@@ -136,24 +137,29 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
     const nextHistory = [...history, entry];
     setHistory(nextHistory);
 
-    // Move to next after delay
-    setTimeout(() => {
-      if (choice.nextNode && exercise.nodes[choice.nextNode]) {
-        setCurrentId(choice.nextNode);
-        setChosenIdx(null);
-        setTimeLeft(null);
-      } else {
-        // End
-        setDone(true);
-        const totalPossible = Object.values(exercise.nodes).reduce((sum, n) => {
-          const maxPts = Math.max(...n.choices.map((c) => c.points ?? (c.consequenceType === "ok" ? 10 : 0)));
-          return sum + maxPts;
-        }, 0);
-        const earned = nextHistory.reduce((sum, e) => sum + e.points, 0);
-        const score = Math.min(100, Math.round((earned / Math.max(totalPossible, 1)) * 100));
-        onComplete?.(score);
-      }
-    }, choice.consequenceType === "ok" ? 1600 : 2200);
+    // Compute pending transition — user will click "Continuer" to advance
+    const totalPossible = Object.values(exercise.nodes).reduce((sum, n) => {
+      const maxPts = Math.max(...n.choices.map((c) => c.points ?? (c.consequenceType === "ok" ? 10 : 0)));
+      return sum + maxPts;
+    }, 0);
+    const earned = nextHistory.reduce((sum, e) => sum + e.points, 0);
+    const score = Math.min(100, Math.round((earned / Math.max(totalPossible, 1)) * 100));
+    const isEnd = !choice.nextNode || !exercise.nodes[choice.nextNode];
+    setPendingNext({ nextNode: choice.nextNode, nextHistory, isEnd, score });
+  };
+
+  const handleContinue = () => {
+    if (!pendingNext) return;
+    if (!pendingNext.isEnd && pendingNext.nextNode && exercise.nodes[pendingNext.nextNode]) {
+      setCurrentId(pendingNext.nextNode);
+      setChosenIdx(null);
+      setTimeLeft(null);
+      setPendingNext(null);
+    } else {
+      setDone(true);
+      setPendingNext(null);
+      onComplete?.(pendingNext.score);
+    }
   };
 
   const reset = () => {
@@ -162,6 +168,7 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
     setHistory([]);
     setDone(false);
     setTimeLeft(null);
+    setPendingNext(null);
   };
 
   // Score summary
@@ -437,28 +444,42 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
 
       {/* Consequence feedback */}
       {chosenIdx !== null && consequenceStyle && currentChoice && (
-        <div
-          className="mx-4 mb-4 rounded-xl p-4 flex items-start gap-3 animate-fade-up"
-          style={{
-            background: consequenceStyle.bg,
-            border: `1.5px solid ${consequenceStyle.border}`,
-          }}
-        >
-          {consequenceStyle.icon}
-          <div>
-            <div className="text-xs font-bold mb-1" style={{ color: consequenceStyle.titleColor }}>
-              {consequenceStyle.label}
-            </div>
-            <div className="text-sm leading-relaxed" style={{ color: "#4a5068" }}>
-              {isEN ? (currentChoice.consequenceEn ?? currentChoice.consequence) : currentChoice.consequence}
-            </div>
-            {currentChoice.nextNode && (
-              <div className="text-xs mt-1.5 flex items-center gap-1" style={{ color: "#8d95aa" }}>
-                <ChevronRight size={11} />
-                {isEN ? "Continuing the scenario..." : "Suite de la situation en cours..."}
+        <div className="mx-4 mb-4 flex flex-col gap-3">
+          <div
+            className="rounded-xl p-4 flex items-start gap-3 animate-fade-up"
+            style={{
+              background: consequenceStyle.bg,
+              border: `1.5px solid ${consequenceStyle.border}`,
+            }}
+          >
+            {consequenceStyle.icon}
+            <div className="flex-1">
+              <div className="text-xs font-bold mb-1" style={{ color: consequenceStyle.titleColor }}>
+                {consequenceStyle.label}
               </div>
-            )}
+              <div className="text-sm leading-relaxed" style={{ color: "#4a5068" }}>
+                {isEN ? (currentChoice.consequenceEn ?? currentChoice.consequence) : currentChoice.consequence}
+              </div>
+            </div>
           </div>
+          {/* Manual continue button */}
+          <button
+            onClick={handleContinue}
+            className="w-full flex items-center justify-center gap-2 font-semibold text-sm rounded-lg py-3 transition-all"
+            style={{
+              background: pendingNext?.isEnd ? "#198038" : "#0043ce",
+              color: "#fff",
+              border: "none",
+              cursor: "pointer",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+          >
+            <ChevronRight size={15} />
+            {pendingNext?.isEnd
+              ? (isEN ? "See results" : "Voir les résultats")
+              : (isEN ? "Continue scenario" : "Continuer le scénario")}
+          </button>
         </div>
       )}
     </div>

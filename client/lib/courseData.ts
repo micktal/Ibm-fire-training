@@ -269,7 +269,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       },
     ],
     keyPoints: [
-      "Tout signal d'alerte (odeur, fumée, chaleur, grésil) doit être traité comme un départ de feu réel — jamais ignoré",
+      "Tout signal suspect doit être traité comme un départ de feu réel — jamais ignoré",
       "Les 3 réflexes dans l'ordre : Débrancher → Déclencher l'alarme (777) → Évacuer",
       "Jamais d'eau sur un feu électrique — CO2 uniquement pour les serveurs, câbles et data centers IBM",
     ],
