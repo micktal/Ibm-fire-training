@@ -355,9 +355,9 @@ function QuizBlock({
 
   const q = shuffledQuestions[current];
 
-  // Réponses mélangées pour chaque question (stable tant que current ne change pas)
+  // Réponses dans l'ordre alphabétique (A → B → C → D)
   const [shuffledChoices] = useState<typeof q.choices[]>(() =>
-    shuffledQuestions.map((sq) => shuffle(sq.choices))
+    shuffledQuestions.map((sq) => [...sq.choices].sort((a, b) => a.key.localeCompare(b.key)))
   );
 
   const handleSelect = (key: string) => {
