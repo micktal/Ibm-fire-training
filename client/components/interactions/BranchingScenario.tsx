@@ -91,8 +91,10 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [done, setDone] = useState(false);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
+  const [readingPhase, setReadingPhase] = useState(false); // grace period before countdown
   const [pendingNext, setPendingNext] = useState<{ nextNode: string | undefined; nextHistory: HistoryEntry[]; isEnd: boolean; score: number } | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const readingRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const node = exercise.nodes[currentId] ?? exercise.nodes[exercise.startNode];
 
@@ -101,26 +103,38 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
     if (!exercise.nodes[currentId]) setCurrentId(exercise.startNode);
   }, [exercise.startNode, currentId, exercise.nodes]);
 
-  // Timer
+  // Timer — with 6s reading grace period before countdown starts
+  const READING_GRACE = 6; // seconds to read before timer begins
   useEffect(() => {
     if (timerRef.current) clearInterval(timerRef.current);
-    if (!node || chosenIdx !== null || !node.timed) { setTimeLeft(null); return; }
+    if (readingRef.current) clearTimeout(readingRef.current);
+    if (!node || chosenIdx !== null || !node.timed) { setTimeLeft(null); setReadingPhase(false); return; }
+
+    // Reading phase: show "Lisez…" indicator, don't start countdown yet
+    setReadingPhase(true);
     setTimeLeft(node.timed);
-    timerRef.current = setInterval(() => {
-      setTimeLeft((t) => {
-        if (t === null || t <= 1) {
-          clearInterval(timerRef.current!);
-          // Auto-select first wrong (non-ok) answer on timeout
-          if (chosenIdx === null) {
-            const wrongIdx = node.choices.findIndex((c) => c.consequenceType !== "ok");
-            handleChoice(wrongIdx >= 0 ? wrongIdx : node.choices.length - 1, true);
+
+    readingRef.current = setTimeout(() => {
+      setReadingPhase(false);
+      timerRef.current = setInterval(() => {
+        setTimeLeft((t) => {
+          if (t === null || t <= 1) {
+            clearInterval(timerRef.current!);
+            if (chosenIdx === null) {
+              const wrongIdx = node.choices.findIndex((c) => c.consequenceType !== "ok");
+              handleChoice(wrongIdx >= 0 ? wrongIdx : node.choices.length - 1, true);
+            }
+            return null;
           }
-          return null;
-        }
-        return t - 1;
-      });
-    }, 1000);
-    return () => clearInterval(timerRef.current!);
+          return t - 1;
+        });
+      }, 1000);
+    }, READING_GRACE * 1000);
+
+    return () => {
+      clearInterval(timerRef.current!);
+      clearTimeout(readingRef.current!);
+    };
   }, [currentId, chosenIdx]);
 
   const handleChoice = (idx: number, timeout = false) => {
@@ -168,6 +182,7 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
     setHistory([]);
     setDone(false);
     setTimeLeft(null);
+    setReadingPhase(false);
     setPendingNext(null);
   };
 
@@ -306,13 +321,46 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
               {URGENCY_LABEL[node.urgency]}
             </span>
           )}
-          {/* Progress dots */}
-          <div className="flex gap-1">
-            {history.map((h, i) => (
-              <div key={i} className="w-2 h-2 rounded-full" style={{ background: h.consequenceType === "ok" ? "#6fdc8c" : "#ff8389" }} />
-            ))}
-            <div className="w-2 h-2 rounded-full" style={{ background: "rgba(255,255,255,0.4)", animation: "pulse 1.5s ease infinite" }} />
-          </div>
+          {/* Step counter — explicit "Étape X / Y" */}
+          {(() => {
+            const totalNodes = Object.keys(exercise.nodes).length;
+            const currentStep = history.length + 1;
+            return (
+              <div className="flex items-center gap-2">
+                {/* Past steps colored pills */}
+                {history.map((h, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center justify-center rounded-full font-mono font-bold text-xs"
+                    style={{
+                      width: "22px", height: "22px",
+                      background: h.consequenceType === "ok" ? "#198038" : "#da1e28",
+                      color: "#fff",
+                      fontSize: "10px",
+                    }}
+                  >
+                    {h.consequenceType === "ok" ? "✓" : "✗"}
+                  </div>
+                ))}
+                {/* Current step */}
+                <div
+                  className="flex items-center justify-center rounded-full font-mono font-bold text-xs"
+                  style={{
+                    width: "22px", height: "22px",
+                    background: "rgba(255,255,255,0.9)",
+                    color: "#161616",
+                    fontSize: "10px",
+                    boxShadow: "0 0 0 2px rgba(255,255,255,0.4)",
+                  }}
+                >
+                  {currentStep}
+                </div>
+                <span className="font-mono text-xs" style={{ color: "rgba(255,255,255,0.45)", fontFamily: "'IBM Plex Mono', monospace" }}>
+                  / {totalNodes}
+                </span>
+              </div>
+            );
+          })()}
         </div>
       </div>
 
@@ -346,14 +394,14 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
               className="absolute top-3 right-3 flex items-center gap-1.5 font-mono font-bold text-sm px-3 py-1.5 rounded-full"
               style={{
                 fontFamily: "'IBM Plex Mono', monospace",
-                background: timeLeft <= 3 ? "rgba(218,30,40,0.9)" : "rgba(0,0,0,0.7)",
+                background: readingPhase ? "rgba(0,67,206,0.85)" : timeLeft <= 3 ? "rgba(218,30,40,0.9)" : "rgba(0,0,0,0.7)",
                 color: "#fff",
-                border: `1px solid ${timeLeft <= 3 ? "#da1e28" : "rgba(255,255,255,0.2)"}`,
+                border: `1px solid ${readingPhase ? "#0043ce" : timeLeft <= 3 ? "#da1e28" : "rgba(255,255,255,0.2)"}`,
                 backdropFilter: "blur(6px)",
               }}
             >
               <Clock size={13} />
-              {timeLeft}s
+              {readingPhase ? (isEN ? "Read…" : "Lisez…") : `${timeLeft}s`}
             </div>
           )}
         </div>

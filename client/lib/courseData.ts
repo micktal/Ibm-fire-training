@@ -97,7 +97,7 @@ export const MODULES: CourseModule[] = [
     objective: "Identifier un départ de feu en moins de 10 secondes.",
     learningObjectives: {
       savoir: "Les signes d'un départ de feu et le fonctionnement des détecteurs incendie IBM",
-      savoirFaire: "Identifier un départ de feu et déclencher l'alerte au 777 sans délai",
+      savoirFaire: "Appliquer les 3 réflexes dans l'ordre : Débrancher → Déclencher l'alarme (777) → Évacuer",
       savoirEtre: "Traiter tout signal comme une urgence réelle — Ne jamais sous-estimer une alarme",
     },
     duration: "8 min",
@@ -860,7 +860,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     objective: "Valider l'ensemble des compétences du chapitre en conditions proches du réel.",
     learningObjectives: {
       savoir: "La procédure complète de gestion d'un incendie en environnement IBM",
-      savoirFaire: "Enchaîner : détecter → alarme 777 → évaluer → intervenir ou évacuer",
+      savoirFaire: "Enchaîner les 3 réflexes : Débrancher → Déclencher l'alarme (777) → Évacuer",
       savoirEtre: "Garder son sang-froid et coordonner ses actions sous pression chronométrée",
     },
     duration: "12 min",

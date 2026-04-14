@@ -1900,7 +1900,7 @@ const m3_orderpuzzle: OrderPuzzleExercise = {
   successMessage: "Séquence de confinement maîtrisée !",
   successMessageEn: "Confinement sequence mastered!",
   pieces: [
-    { id: "p4", label: "Déclencher l'alarme (777 / boîtier rouge)", labelEn: "Trigger the alarm (777 / red call point)", sublabel: "Dès le premier signe — toujours en premier", sublabelEn: "At the first sign — always first", correctPosition: 1 },
+    { id: "p4", label: "Déclencher l'alarme (777 / boîtier rouge)", labelEn: "Trigger the alarm (777 / red call point)", sublabel: "Dès le signal détecté — avant d'évacuer", sublabelEn: "As soon as signal detected — before evacuating", correctPosition: 1 },
     { id: "p1", label: "Détecter le signal", labelEn: "Detect the signal", sublabel: "Fumée, odeur ou chaleur anormale", sublabelEn: "Smoke, smell or abnormal heat", correctPosition: 2 },
     { id: "p2", label: "Alerter les collègues", labelEn: "Alert colleagues", sublabel: "Sans panique, ton calme", sublabelEn: "Calmly, no panic", correctPosition: 3 },
     { id: "p3", label: "Fermer toutes les portes", labelEn: "Close all doors", sublabel: "Ralentit la propagation de 5x", sublabelEn: "Slows spread by 5x", correctPosition: 4 },
