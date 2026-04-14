@@ -98,7 +98,7 @@ export const MODULES: CourseModule[] = [
     learningObjectives: {
       savoir: "Les signes d'un départ de feu et le fonctionnement des détecteurs incendie IBM",
       savoirFaire: "Identifier un départ de feu et déclencher l'alerte au 777 sans délai",
-      savoirEtre: "Traiter tout signal comme une urgence réelle — jamais sous-estimer une alarme",
+      savoirEtre: "Traiter tout signal comme une urgence réelle — Ne jamais sous-estimer une alarme",
     },
     duration: "8 min",
     image: `${CDN}68e7b7c3ea9048b4a797a2ceacec35aa?format=webp&width=800`,
