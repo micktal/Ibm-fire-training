@@ -770,16 +770,7 @@ function PreTestOverlay({
       {/* Header */}
       <div className="flex-shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)", animation: "popupShake 0.55s ease 0.15s both" }}>
         {/* Top bar with skip */}
-        <div className="flex items-center justify-between px-5 pt-4 pb-0">
-          <div style={{ width: "1px" }} />
-          <button
-            onClick={onSkip}
-            className="text-xs font-semibold px-3 py-1.5 rounded-lg"
-            style={{ background: "rgba(255,255,255,0.18)", color: "rgba(255,255,255,0.9)", border: "1px solid rgba(255,255,255,0.35)", cursor: "pointer" }}
-          >
-            {t("pretest.skip", lang)}
-          </button>
-        </div>
+        <div className="px-5 pt-4 pb-0" />
 
         {/* Main header content */}
         <div className="px-5 pt-4 pb-5">
