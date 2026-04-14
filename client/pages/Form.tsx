@@ -196,8 +196,8 @@ export default function Form() {
               <Info size={14} style={{ color: "#0043ce", flexShrink: 0, marginTop: "1px" }} />
               <p className="text-xs leading-relaxed" style={{ color: "#0031a9" }}>
                 {isEN
-                  ? "This form is required before accessing the module. Your responses are sent to IBM HR and are not visible in the interface."
-                  : "Ce formulaire est requis avant d'accéder au module. Vos réponses sont transmises au service RH IBM et ne sont pas visibles dans l'interface."}
+                  ? "Please fill in the form below. Your responses are sent to IBM HR and are not visible in the interface."
+                  : "Merci de renseigner le formulaire ci-dessous. Vos réponses sont transmises au service RH IBM et ne sont pas visibles dans l'interface."}
               </p>
             </div>
 
