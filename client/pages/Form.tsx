@@ -181,8 +181,8 @@ export default function Form() {
             </h1>
             <p className="text-sm" style={{ color: "rgba(255,255,255,0.7)", lineHeight: "1.55" }}>
               {isEN
-                ? "Please fill in your details before starting. This data enables IBM's internal tracking of your certifications."
-                : "Renseignez vos informations avant de démarrer. Ces données permettent le suivi interne IBM de vos certifications."}
+                ? "Please fill in your details before starting. This data enables IBM's internal tracking of your habilitations."
+                : "Renseignez vos informations avant de démarrer. Ces données permettent le suivi interne IBM de vos habilitations."}
             </p>
           </div>
 
