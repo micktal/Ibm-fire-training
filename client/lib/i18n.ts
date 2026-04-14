@@ -138,7 +138,7 @@ const STRINGS = {
   "intro.quiz_req":   { fr: "Quiz final — 80% requis pour valider", en: "Final quiz — 80% required to pass" },
   "intro.to_start":   { fr: "Démarrer le module",               en: "Start module" },
   "intro.objectives": { fr: "Objectifs pédagogiques",           en: "Learning objectives" },
-  "intro.at_end":     { fr: "À la fin, l'apprenant est capable de…", en: "By the end, the learner will be able to…" },
+  "intro.at_end":     { fr: "À l'issue du module, tu es capable de…", en: "At the end of this module, you will be able to…" },
 
   // ── Learning objective labels ─────────────────────────────
   "lo.savoir":        { fr: "SAVOIR",                           en: "KNOW" },
