@@ -314,7 +314,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       "Animation expliquant combustible / comburant / énergie. Manipulation d'un schéma interactif pour comprendre comment casser la combustion.",
     objective: "Comprendre comment casser le triangle du feu et stopper la combustion.",
     learningObjectives: {
-      savoir: "Les trois composants du triangle du feu : combustible, comburant, chaleur",
+      savoir: "Les trois composants du triangle du feu : combustible, comburant, énergie d'activation",
       savoirFaire: "Supprimer un élément du triangle pour éteindre ou prévenir un incendie",
       savoirEtre: "Anticiper les risques et ne jamais créer de conditions propices au feu",
     },
@@ -323,14 +323,14 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Matriser%20le%20triangle%20du%20feu.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL01hdHJpc2VyIGxlIHRyaWFuZ2xlIGR1IGZldS5tcDQiLCJpYXQiOjE3NzUzMzUyODksImV4cCI6MTgzODQwNzI4OX0.uEB3pGV29I6T0nSV5I6Rvb1gebXLIHptDNgGgCAGcCY",
     funFacts: [
       { stat: "200 gaz", label: "toxiques libérés par un câble PVC", detail: "La combustion d'un seul câble PVC libère plus de 200 composés toxiques. La fumée tue avant les flammes.", icon: "alert" },
-      { stat: "3 éléments", label: "suffisent à créer un incendie", detail: "Chaleur + combustible + oxygène. Supprimez-en un seul, le feu s'éteint. C'est le principe de toute intervention.", icon: "flame" },
+      { stat: "3 éléments", label: "suffisent à créer un incendie", detail: "Énergie d'activation + combustible + oxygène. Supprimez-en un seul, le feu s'éteint. C'est le principe de toute intervention.", icon: "flame" },
     ],
     preTest: [
       {
         question: "Le triangle du feu est composé de :",
         choices: [
-          { key: "A", label: "Fumée, flamme et chaleur" },
-          { key: "B", label: "Combustible, comburant et chaleur" },
+          { key: "A", label: "Fumée, flamme et énergie d'activation" },
+          { key: "B", label: "Combustible, comburant et énergie d'activation" },
           { key: "C", label: "Eau, air et feu" },
         ],
         correctKey: "B",
@@ -350,7 +350,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       {
         type: "intro",
         title: "Les 3 éléments du triangle du feu",
-        body: "Le feu ne peut exister que si trois éléments sont réunis simultanément : le combustible (ce qui brûle), le comburant (l'oxygène) et l'énergie (source de chaleur ou étincelle). Retirer un seul de ces éléments et le feu s'éteint.",
+        body: "Le feu ne peut exister que si trois éléments sont réunis simultanément : le combustible (ce qui brûle), le comburant (l'oxygène) et l'énergie d'activation (source d'ignition ou étincelle). Retirer un seul de ces éléments et le feu s'éteint.",
         image: `${CDN}d3c9b22a88e644d98bd46cd69cd9cf30?format=webp&width=800`,
       },
       {
@@ -403,7 +403,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         choices: [
           { key: "A", label: "Le combustible (les câbles)", hint: "Non, les câbles restent présents" },
           { key: "B", label: "Le comburant (l'oxygène)", hint: "Le CO2 chasse l'oxygène" },
-          { key: "C", label: "L'énergie (la chaleur)", hint: "Partiellement seulement" },
+          { key: "C", label: "L'énergie d'activation", hint: "Partiellement seulement" },
           { key: "D", label: "Les trois à la fois", hint: "Non, le CO2 agit principalement sur l'oxygène" },
         ],
         correctKey: "B",
@@ -500,7 +500,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       },
     ],
     keyPoints: [
-      "Chaleur + Combustible + Oxygène = Triangle du feu. Supprimez un seul élément pour éteindre.",
+      "Énergie d'activation + Combustible + Oxygène = Triangle du feu. Supprimez un seul élément pour éteindre.",
       "La fumée voyage 5× plus vite que les flammes — c'est elle qui tue en premier.",
       "Un feu peut envahir une pièce entière en moins de 5 minutes sans intervention.",
     ],

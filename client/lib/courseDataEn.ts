@@ -134,22 +134,22 @@ export const MODULES_EN: CourseModule[] = [
     chapter: 1,
     number: 2,
     title: "The fire triangle",
-    subtitle: "Fuel · Oxidant · Heat",
+    subtitle: "Fuel · Oxidant · Activation Energy",
     description: "Understanding the three elements of fire and how to remove each to extinguish it.",
     objective: "Understand the fire triangle and apply it to prevent and fight fires.",
     learningObjectives: {
-      savoir: "The three components of the fire triangle: fuel, oxidant, heat",
+      savoir: "The three components of the fire triangle: fuel, oxidant, activation energy",
       savoirFaire: "Remove one element of the triangle to extinguish or prevent a fire",
       savoirEtre: "Anticipate risks and never create conditions favorable to fire",
     },
     duration: "6 min",
     image: `${CDN}d3c9b22a88e644d98bd46cd69cd9cf30?format=webp&width=800`,
     funFacts: [
-      { stat: "3", label: "elements — remove 1 to extinguish", detail: "A fire cannot exist without fuel, oxidant and heat simultaneously. This is the basis of all firefighting: remove one element and the fire dies.", icon: "flame" },
+      { stat: "3", label: "elements — remove 1 to extinguish", detail: "A fire cannot exist without fuel, oxidant and activation energy simultaneously. This is the basis of all firefighting: remove one element and the fire dies.", icon: "flame" },
       { stat: "21%", label: "oxygen in air — 16% minimum for a fire", detail: "Below 16% oxygen, fire cannot be sustained. CO2 and dry powder extinguishers work by reducing this level or by chemical reaction.", icon: "eye" },
     ],
     keyPoints: [
-      "Fire triangle: fuel (paper, wood, gas) + oxidant (oxygen) + heat (ignition source)",
+      "Fire triangle: fuel (paper, wood, gas) + oxidant (oxygen) + activation energy (ignition source)",
       "Remove ONE element = fire goes out",
       "Water reduces heat — CO2 eliminates oxygen — powder chemical reaction",
     ],
@@ -159,7 +159,7 @@ export const MODULES_EN: CourseModule[] = [
         choices: [
           { key: "A", label: "Oxygen" },
           { key: "B", label: "Paper" },
-          { key: "C", label: "Heat" },
+          { key: "C", label: "Activation energy" },
           { key: "D", label: "CO2" },
         ],
         correctKey: "B",
@@ -167,7 +167,7 @@ export const MODULES_EN: CourseModule[] = [
       {
         question: "A CO2 extinguisher works by eliminating:",
         choices: [
-          { key: "A", label: "Heat" },
+          { key: "A", label: "Activation energy" },
           { key: "B", label: "Fuel" },
           { key: "C", label: "Oxygen" },
         ],
@@ -175,13 +175,13 @@ export const MODULES_EN: CourseModule[] = [
       },
     ],
     content: [
-      { type: "intro", title: "The three elements of fire", body: "Every fire requires exactly three elements: a fuel (something that burns), an oxidant (oxygen), and a heat source. Remove any one of these and the fire cannot exist. This is the theoretical basis of all firefighting techniques." },
+      { type: "intro", title: "The three elements of fire", body: "Every fire requires exactly three elements: a fuel (something that burns), an oxidant (oxygen), and an activation energy source (ignition source or spark). Remove any one of these and the fire cannot exist. This is the theoretical basis of all firefighting techniques." },
       { type: "info", title: "Fuels at IBM", body: "At IBM offices, common fuels include: paper and cardboard, cable insulation, furniture, flammable liquids (cleaning products), wooden partitions. A fuel alone cannot ignite without a heat source — but the presence of fuels near heat sources is a risk to manage.", bullets: ["Paper and cardboard — class A fire", "Electrical cables — electrical fire", "Flammable liquids — class B fire", "Gas — class C fire"] },
       { type: "info", title: "How extinguishers work", body: "Each extinguishing agent targets one element of the triangle: Water mist reduces temperature (heat). CO2 displaces oxygen (oxidant). ABC powder creates a chemical reaction that breaks the chain. Choosing the wrong agent can worsen the fire — especially water on an electrical fire.", bullets: ["Water: reduces temperature — forbidden on electrical fires", "CO2: eliminates oxygen — ideal for servers and cables", "ABC powder: chemical chain reaction — all-purpose", "Fire blanket: eliminates oxygen — smothers small fires"] },
       { type: "scenario", title: "Scenario: which extinguisher?", body: "A server rack starts smoking in the data center. Three extinguishers are nearby: water mist (red), CO2 (black), ABC powder (blue). Which do you use and why? The water is absolutely forbidden here — electrical and water don't mix." },
     ],
     quiz: [
-      { id: "q1", question: "Paper catches fire. Which element of the triangle would you act on by covering the fire with a blanket?", choices: [{ key: "A", label: "Heat" }, { key: "B", label: "Fuel" }, { key: "C", label: "Oxidant (oxygen)" }, { key: "D", label: "None of these" }], correctKey: "C", feedbackOk: "Correct. A blanket cuts off oxygen supply. No oxygen = fire dies.", feedbackKo: "A blanket isolates the fire from the air (oxygen). This removes the oxidant from the triangle, which extinguishes the fire." },
+      { id: "q1", question: "Paper catches fire. Which element of the triangle would you act on by covering the fire with a blanket?", choices: [{ key: "A", label: "Activation energy" }, { key: "B", label: "Fuel" }, { key: "C", label: "Oxidant (oxygen)" }, { key: "D", label: "None of these" }], correctKey: "C", feedbackOk: "Correct. A blanket cuts off oxygen supply. No oxygen = fire dies.", feedbackKo: "A blanket isolates the fire from the air (oxygen). This removes the oxidant from the triangle, which extinguishes the fire." },
       { id: "q2", question: "Which extinguisher must NEVER be used on an electrical fire?", choices: [{ key: "A", label: "CO2" }, { key: "B", label: "Water" }, { key: "C", label: "ABC Powder" }, { key: "D", label: "D Powder" }], correctKey: "B", feedbackOk: "Correct. Water conducts electricity — electrocution risk is fatal.", feedbackKo: "Water is a conductor. On an electrical fire, using water creates an electrocution risk. CO2 is the only safe agent for electrical fires." },
     ],
     locked: false,

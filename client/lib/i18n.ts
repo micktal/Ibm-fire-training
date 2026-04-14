@@ -69,7 +69,7 @@ const STRINGS = {
   "module.lms_saved":       { fr: "progression transmise au LMS",      en: "progress sent to LMS" },
   "module.next":            { fr: "Module suivant",                    en: "Next module" },
   "module.elapsed":         { fr: "min passées sur ce module",         en: "min spent on this module" },
-  "module.min_required":    { fr: "80% minimum requis pour valider",   en: "80% minimum required to validate" },
+  "module.min_required":    { fr: "Score requis : répondre correctement à toutes les questions",   en: "Score required: answer all questions correctly" },
   "module.start":           { fr: "Démarrer le module",                en: "Start module" },
   "module.restart":         { fr: "Recommencer",                       en: "Restart" },
   "module.chapter":         { fr: "CHAPITRE",                          en: "CHAPTER" },
@@ -81,7 +81,7 @@ const STRINGS = {
   "module.final_score":     { fr: "Score final",                       en: "Final score" },
   "module.correct_ans":     { fr: "bonnes réponses",                   en: "correct answers" },
   "module.saved_at":        { fr: "Sauvegardé à",                      en: "Saved at" },
-  "module.min_validate":    { fr: "80% minimum requis pour valider ce module", en: "80% minimum required to pass this module" },
+  "module.min_validate":    { fr: "Toutes les questions doivent être réussies pour valider le module", en: "All questions must be answered correctly to validate the module" },
   "module.read_content":    { fr: "Lisez bien le contenu avant de répondre", en: "Read the content carefully before answering" },
 
   // ── Quiz ─────────────────────────────────────────────────
@@ -135,7 +135,7 @@ const STRINGS = {
   "intro.video":      { fr: "Vidéo pédagogique avec sous-titres", en: "Educational video with subtitles" },
   "intro.exercises":  { fr: "exercice interactif",              en: "interactive exercise" },
   "intro.exercises_pl":{ fr: "exercices interactifs",           en: "interactive exercises" },
-  "intro.quiz_req":   { fr: "Quiz final — 80% requis pour valider", en: "Final quiz — 80% required to pass" },
+  "intro.quiz_req":   { fr: "Quiz final — toutes les réponses correctes requises", en: "Final quiz — all correct answers required" },
   "intro.to_start":   { fr: "Démarrer le module",               en: "Start module" },
   "intro.objectives": { fr: "Objectifs pédagogiques",           en: "Learning objectives" },
   "intro.at_end":     { fr: "À l'issue du module, tu es capable de…", en: "At the end of this module, you will be able to…" },
@@ -156,8 +156,8 @@ const STRINGS = {
   // ── Completion celebration ────────────────────────────────
   "completion.passed":    { fr: "Module validé !",              en: "Module validated!" },
   "completion.failed":    { fr: "Score insuffisant",            en: "Insufficient score" },
-  "completion.threshold_ok":  { fr: "✓ Seuil IBM de 80% atteint", en: "✓ IBM 80% threshold reached" },
-  "completion.threshold_ko":  { fr: "Seuil IBM : 80% requis",  en: "IBM threshold: 80% required" },
+  "completion.threshold_ok":  { fr: "✓ Module validé — objectif chapitre atteint", en: "✓ Module validated — chapter goal reached" },
+  "completion.threshold_ko":  { fr: "Module non validé — veuillez recommencer le quiz",  en: "Module not validated — please retry the quiz" },
   "completion.continue":  { fr: "Continuer le parcours",        en: "Continue training" },
   "completion.retry":     { fr: "Réessayer le quiz",            en: "Retry quiz" },
 

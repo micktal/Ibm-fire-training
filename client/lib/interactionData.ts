@@ -395,8 +395,8 @@ const m2_dragdrop: DragDropExercise = {
     },
     {
       id: "chaleur",
-      label: "Énergie / Chaleur",
-      labelEn: "Energy / Heat",
+      label: "Énergie d'activation",
+      labelEn: "Activation Energy",
       sublabel: "Ce qui enflamme — refroidir",
       sublabelEn: "What ignites — cool it down",
       color: "#da1e28",
@@ -2247,8 +2247,8 @@ const m2_spinwheel: SpinWheelExercise = {
         { key: "D", label: "Rien ne change", labelEn: "Nothing changes" },
       ],
       correctKey: "C",
-      explanation: "Le triangle du feu exige 3 éléments simultanés : combustible, chaleur et oxygène. Supprimer n'importe lequel — avec un extincteur, une porte fermée ou de l'eau — éteint le feu.",
-      explanationEn: "The fire triangle requires 3 simultaneous elements: fuel, heat and oxygen. Removing any one — with an extinguisher, a closed door or water — extinguishes the fire.",
+      explanation: "Le triangle du feu exige 3 éléments simultanés : combustible, énergie d'activation et oxygène. Supprimer n'importe lequel — avec un extincteur, une porte fermée ou de l'eau — éteint le feu.",
+      explanationEn: "The fire triangle requires 3 simultaneous elements: fuel, activation energy and oxygen. Removing any one — with an extinguisher, a closed door or water — extinguishes the fire.",
     },
     {
       label: "CLASSES",

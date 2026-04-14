@@ -410,23 +410,21 @@ function QuizBlock({
           >
             {passed ? <Award size={34} color="#fff" /> : <XCircle size={34} color="#fff" />}
           </div>
-          <div
-            className="font-mono font-bold mb-1"
-            style={{
-              fontSize: "3.5rem",
-              lineHeight: 1,
-              color: passed ? "#198038" : "#da1e28",
-              fontFamily: "'IBM Plex Mono', monospace",
-            }}
-          >
-            {finalScore}%
+          <div className="text-xl font-bold mt-2 mb-1" style={{ color: "#161616" }}>
+            {passed
+              ? (lang === "en" ? "Quiz passed — module validated ✓" : "Quiz réussi — module validé ✓")
+              : (lang === "en" ? "Quiz not validated — please retry" : "Quiz non validé — veuillez recommencer")}
           </div>
-          <div className="text-base font-bold mt-2 mb-1" style={{ color: "#161616" }}>
-            {passed ? (lang === "en" ? "Quiz passed — module validated" : "Quiz réussi — module validé") : (lang === "en" ? "Insufficient score — retry" : "Score insuffisant — réessayez")}
+          <div className="text-sm mb-2 font-semibold" style={{ color: passed ? "#198038" : "#da1e28" }}>
+            {finalCorrect} / {shuffledQuestions.length} {lang === "en" ? "correct answer(s)" : `bonne${finalCorrect > 1 ? "s" : ""} réponse${finalCorrect > 1 ? "s" : ""}`}
           </div>
-          <div className="text-sm mb-5" style={{ color: "#6f7897" }}>
-            {finalCorrect} {lang === "en" ? "correct answer(s) out of" : `bonne${finalCorrect > 1 ? "s" : ""} réponse${finalCorrect > 1 ? "s" : ""} sur`} {shuffledQuestions.length}
-          </div>
+          {!passed && (
+            <div className="text-xs mb-4 px-4 py-2 rounded-lg" style={{ background: "rgba(218,30,40,0.07)", color: "#a2191f", border: "1px solid rgba(218,30,40,0.2)" }}>
+              {lang === "en"
+                ? "The IBM standard requires all questions to be answered correctly to validate the chapter."
+                : "Le standard IBM requiert de répondre correctement à toutes les questions pour valider le chapitre."}
+            </div>
+          )}
           {/* Mini results row */}
           <div className="flex justify-center gap-2 mb-5">
             {results.map((r, i) => (
@@ -728,6 +726,25 @@ function PreTestOverlay({
   onSkip: () => void;
   lang?: "fr" | "en";
 }) {
+  // Shuffle choices for each question so the correct answer isn't always "B"
+  const [shuffledQuestions] = useState<PreTestQuestion[]>(() =>
+    questions.map((q) => {
+      // Fisher-Yates shuffle of a copy
+      const arr = [...q.choices];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      // Find the label of the original correct choice
+      const correctLabel = q.choices.find((c) => c.key === q.correctKey)?.label ?? "";
+      // Re-assign keys A, B, C… in new order
+      const keys = ["A", "B", "C", "D", "E"];
+      const remapped = arr.map((choice, idx) => ({ key: keys[idx], label: choice.label }));
+      const newCorrectKey = remapped.find((c) => c.label === correctLabel)?.key ?? q.correctKey;
+      return { ...q, choices: remapped, correctKey: newCorrectKey };
+    })
+  );
+
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [answered, setAnswered] = useState(false);
@@ -745,7 +762,7 @@ function PreTestOverlay({
     } catch (_) {}
   }, []);
 
-  const q = questions[current];
+  const q = shuffledQuestions[current];
 
   const handleSelect = (key: string) => {
     if (answered) return;
@@ -761,7 +778,7 @@ function PreTestOverlay({
       setAnswered(false);
     } else {
       // `correct` is already up-to-date (state updated after handleSelect click + re-render)
-      onComplete(Math.round((correct / questions.length) * 100));
+      onComplete(Math.round((correct / shuffledQuestions.length) * 100));
     }
   };
 
@@ -809,7 +826,7 @@ function PreTestOverlay({
 
       {/* Progress dots */}
       <div className="flex items-center gap-2 px-5 py-3 flex-shrink-0">
-        {questions.map((_, i) => (
+        {shuffledQuestions.map((_, i) => (
           <div key={i} className="rounded-full transition-all duration-300" style={{ height: "4px", flex: 1, background: i < current ? "#6fdc8c" : i === current ? "#fff" : "rgba(255,255,255,0.18)" }} />
         ))}
       </div>
@@ -818,7 +835,7 @@ function PreTestOverlay({
       <div className="flex-1 overflow-y-auto px-5 py-4">
         <div className="max-w-lg mx-auto">
           <div className="text-xs font-mono mb-3" style={{ color: "rgba(255,255,255,0.4)", fontFamily: "'IBM Plex Mono', monospace" }}>
-            {t("pretest.question", lang)} {current + 1} / {questions.length}
+            {t("pretest.question", lang)} {current + 1} / {shuffledQuestions.length}
           </div>
           <div className="font-bold text-white mb-5" style={{ fontSize: "1.05rem", lineHeight: "1.4" }}>
             {q.question}
@@ -888,7 +905,7 @@ function PreTestOverlay({
                     boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
                   }}
                 >
-                  {current < questions.length - 1 ? t("pretest.next", lang) : t("pretest.start", lang)}
+                  {current < shuffledQuestions.length - 1 ? t("pretest.next", lang) : t("pretest.start", lang)}
                   <ArrowRight size={16} />
                 </button>
               </div>
