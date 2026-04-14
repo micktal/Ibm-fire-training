@@ -16,7 +16,7 @@ export const MODULES_EN: CourseModule[] = [
     objective: "Identify the outbreak of a fire in under 10 seconds.",
     learningObjectives: {
       savoir: "The signs of a fire and how IBM fire detectors work",
-      savoirFaire: "Identify a fire outbreak and alert security at 777 without delay",
+      savoirFaire: "Apply the 3 reflexes in order: Alarm (777) → Unplug if safe → Evacuate",
       savoirEtre: "Treat every signal as a real emergency — never underestimate an alarm",
     },
     duration: "8 min",
@@ -359,7 +359,7 @@ export const MODULES_EN: CourseModule[] = [
     objective: "Validate the full IBM fire response procedure in a simulated situation.",
     learningObjectives: {
       savoir: "The complete IBM fire management procedure",
-      savoirFaire: "Chain: detect → alarm 777 → assess → intervene or evacuate",
+      savoirFaire: "Chain the 3 reflexes: Alarm (777) → Unplug if safe → Evacuate",
       savoirEtre: "Keep a cool head and coordinate actions under timed pressure",
     },
     duration: "12 min",
