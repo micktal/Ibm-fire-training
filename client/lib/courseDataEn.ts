@@ -21,7 +21,7 @@ export const MODULES_EN: CourseModule[] = [
     },
     duration: "8 min",
     image: `${CDN}68e7b7c3ea9048b4a797a2ceacec35aa?format=webp&width=800`,
-    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/ibm%20intro%20(2).mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL2libSBpbnRybyAoMikubXA0IiwiaWF0IjoxNzc1MjQxMjI3LCJleHAiOjE4Njk4NDkyMjd9.RBEu401aURzjAUFnNv6l8Miao-DYiC2QvtucX5cGiNA",
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Spot%20Fire%20Signs%20and%20Respond%20Fast.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL1Nwb3QgRmlyZSBTaWducyBhbmQgUmVzcG9uZCBGYXN0Lm1wNCIsImlhdCI6MTc3NjI2MTc2NCwiZXhwIjoxODM5MzMzNzY0fQ.MEZVyVO9SYnhgemqBHKU2edOzLgetETFfIxF5Lz7j8k",
     funFacts: [
       { stat: "30s", label: "to control a fire outbreak", detail: "A small fire can double in size every 60 seconds. The first 30 seconds are decisive. Every reflex trained here can make the difference.", icon: "flame" },
       { stat: "70%", label: "of alarms are false", detail: "Yet IBM procedure is clear: every alarm must be treated as real until proven otherwise. One moment of hesitation can cost a life.", icon: "alert" },
