@@ -144,6 +144,7 @@ export const MODULES_EN: CourseModule[] = [
     },
     duration: "6 min",
     image: `${CDN}d3c9b22a88e644d98bd46cd69cd9cf30?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Master%20the%20Fire%20Triangle.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL01hc3RlciB0aGUgRmlyZSBUcmlhbmdsZS5tcDQiLCJpYXQiOjE3NzYyNjE2OTcsImV4cCI6MTgzOTMzMzY5N30.khV_3xQuU4bhy0uU0s6OqvJiiG8HK487QUebm3X2ykw",
     funFacts: [
       { stat: "3", label: "elements — remove 1 to extinguish", detail: "A fire cannot exist without fuel, oxidant and activation energy simultaneously. This is the basis of all firefighting: remove one element and the fire dies.", icon: "flame" },
       { stat: "21%", label: "oxygen in air — 16% minimum for a fire", detail: "Below 16% oxygen, fire cannot be sustained. CO2 and dry powder extinguishers work by reducing this level or by chemical reaction.", icon: "eye" },
