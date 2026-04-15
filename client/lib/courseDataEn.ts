@@ -202,6 +202,7 @@ export const MODULES_EN: CourseModule[] = [
     },
     duration: "7 min",
     image: `${CDN}26706b11880d4b55b61df8e668695b14?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Stop%20Fire%20Spread%20Fast.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL1N0b3AgRmlyZSBTcHJlYWQgRmFzdC5tcDQiLCJpYXQiOjE3NzYyNjE2MTQsImV4cCI6MTgzOTMzMzYxNH0.wIdpGTSd8AXNzpbjC3Em0JgmNxdhS8mXsSIxnyJlGzY",
     funFacts: [
       { stat: "5×", label: "faster spread with an open door", detail: "A fire-door left open multiplies the spread speed by 5. Closing doors before evacuating is one of the most effective firefighting actions — more effective than most extinguishers.", icon: "flame" },
       { stat: "30 min", label: "fire resistance of a closed EI30 door", detail: "A fire door can resist a fire for 30 to 60 minutes when closed. Propped open, it provides zero protection.", icon: "shield" },
