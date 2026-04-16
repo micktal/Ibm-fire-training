@@ -286,6 +286,7 @@ export const MODULES_EN: CourseModule[] = [
     },
     duration: "6 min",
     image: `${CDN}d41dd2ee6d6d4cf4b7f112d3fc2460f3?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Use%20a%20Fire%20Extinguisher%20Safely.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL1VzZSBhIEZpcmUgRXh0aW5ndWlzaGVyIFNhZmVseS5tcDQiLCJpYXQiOjE3NzYzNDExMTMsImV4cCI6MTgzOTQxMzExM30.qFpDAuDyfWMcYlv-wJGjAdl-YOmFJQ5OdNd5ZLJlvjY",
     funFacts: [
       { stat: "PASS", label: "the 4 steps to remember", detail: "Pull (pin) · Aim (at base of fire) · Squeeze (handle) · Sweep (side to side). This sequence applies to all extinguisher types. Practice it mentally now.", icon: "shield" },
       { stat: "2-3m", label: "optimal distance from fire", detail: "CO2 exits at -78°C. Too close: cold burns. Too far: loss of effectiveness. 2-3 meters is the safety sweet spot for CO2 and ABC powder.", icon: "eye" },
