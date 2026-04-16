@@ -368,6 +368,7 @@ export const MODULES_EN: CourseModule[] = [
     },
     duration: "12 min",
     image: `${CDN}dfd2975e7d864d029e522928a710aa05?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Master%20IBM%20Fire%20Response.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL01hc3RlciBJQk0gRmlyZSBSZXNwb25zZS5tcDQiLCJpYXQiOjE3NzYzNTA2MjYsImV4cCI6MTgzOTQyMjYyNn0.uhvLvjTfw13S6BbI1p5h7kEFxk2gFGzZ6vhapiQHqMU",
     funFacts: [
       { stat: "3", label: "seconds to react on the first signal", detail: "In a real situation, every second counts. This simulation trains your automatic reflexes so that in a real emergency, you act without thinking.", icon: "zap" },
       { stat: "100%", label: "of reflexes must be automatic", detail: "A learned reflex acts faster than a reasoned decision. Repeat the procedure until it becomes automatic. That's the purpose of this simulation.", icon: "shield" },
