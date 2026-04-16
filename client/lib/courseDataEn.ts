@@ -327,6 +327,7 @@ export const MODULES_EN: CourseModule[] = [
     },
     duration: "8 min",
     image: `${CDN}8e074d1b7bdf4b8fa872d5fd2451fbfe?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Decide%20Fast%20in%20a%20Fire.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL0RlY2lkZSBGYXN0IGluIGEgRmlyZS5tcDQiLCJpYXQiOjE3NzYzNTA2NjksImV4cCI6MTgzOTQyMjY2OX0.--B0-iUrXNTMf4NTm-Fa3AEAFNtkBLjs5j2LQExEVK0",
     funFacts: [
       { stat: "10s", label: "maximum to make your decision", detail: "10 seconds to observe, assess, and decide. Beyond this, the fire has grown and your options narrow. Train your decision reflex now.", icon: "clock" },
       { stat: "80%", label: "of victims could have survived", detail: "In most fatal office fires, a faster evacuation decision would have changed the outcome. Doubt must always lead to evacuation — never to waiting.", icon: "alert" },
