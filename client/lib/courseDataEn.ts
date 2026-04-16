@@ -245,6 +245,7 @@ export const MODULES_EN: CourseModule[] = [
     },
     duration: "7 min",
     image: `${CDN}8f5fa15ec33749609150a2fef62457e9?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Match%20the%20Right%20Fire%20Extinguisher.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL01hdGNoIHRoZSBSaWdodCBGaXJlIEV4dGluZ3Vpc2hlci5tcDQiLCJpYXQiOjE3NzYzMjU3MDUsImV4cCI6MTgzOTM5NzcwNX0.MR8ZmMRx2YM2TbF3trHuIMP4SD1ERws4AfuDetGN9wI",
     funFacts: [
       { stat: "5", label: "fire classes to master", detail: "Class A (solids), B (liquids), C (gas), D (metals), F (cooking oils). Each requires a specific extinguishing agent. Using the wrong one can spread the fire.", icon: "flame" },
       { stat: "CO₂", label: "the only choice for electrical fires", detail: "Water conducts electricity and can cause fatal electrocution. CO2 extinguishes without conducting current, leaving no residue on equipment.", icon: "zap" },
