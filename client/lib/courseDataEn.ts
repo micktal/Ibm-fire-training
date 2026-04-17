@@ -450,6 +450,7 @@ export const MODULES_EN: CourseModule[] = [
     },
     duration: "7 min",
     image: `${CDN}73ee73f4c5c54adb943d454c10b797a9?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Lead%20Calmly%20During%20a%20Fire%20Alarm.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL0xlYWQgQ2FsbWx5IER1cmluZyBhIEZpcmUgQWxhcm0ubXA0IiwiaWF0IjoxNzc2NDEwMzk3LCJleHAiOjE4Mzk0ODIzOTd9.KAHs375GPyRUcrNgJB7XPNabXCiam_dZ5Ny_VSNl7k0",
     funFacts: [
       { stat: "85%", label: "of people freeze in an emergency", detail: "Research shows that most people hesitate for 3-5 seconds before reacting to a fire alarm. One person taking charge immediately can trigger evacuation for the whole group.", icon: "eye" },
       { stat: "1", label: "clear voice is worth 20 shouting", detail: "A calm, firm, directive voice is far more effective than shouting in a panic situation. Volume doesn't equal authority — clarity does.", icon: "shield" },
