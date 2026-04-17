@@ -411,6 +411,7 @@ export const MODULES_EN: CourseModule[] = [
     },
     duration: "5 min",
     image: `${CDN}2482acaedcdd4b2abad18b1011a424c6?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Trigger%20the%20Fire%20Alarm%20Fast.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL1RyaWdnZXIgdGhlIEZpcmUgQWxhcm0gRmFzdC5tcDQiLCJpYXQiOjE3NzY0MTA0MjYsImV4cCI6MTgzOTQ4MjQyNn0.ktDYm_vBoVeaWK9BMrq_NyCe_zs51BvclvLFuCp95gc",
     funFacts: [
       { stat: "777", label: "IBM Security — always first", detail: "IBM Security has building plans, knows zone locations, and coordinates with emergency services. Always call them before 18.", icon: "alert" },
       { stat: "3", label: "essential pieces of info to give", detail: "Your name, exact location (building/floor/zone), and description of what you see. 3 pieces of information — memorize them.", icon: "shield" },
