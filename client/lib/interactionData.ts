@@ -227,7 +227,7 @@ const m1_branching: BranchingExercise = {
       context: "Le boîtier d'alarme FIRE — PULL DOWN est à 3 mètres sur le mur. L'open space compte 12 personnes.",
       contextEn: "The FIRE — PULL DOWN alarm box is 3 metres away on the wall. The open-plan office has 12 people.",
       urgency: "high",
-      timed: 12,
+      timed: 25,
       choices: [
         {
           label: "Je déclenche l'alarme et compose le 777 (sécurité IBM)",
@@ -532,7 +532,7 @@ const m3_branching: BranchingExercise = {
       context: "Vous êtes à 3 mètres de la porte ouverte. Des collègues arrivent de l'autre côté du couloir.",
       contextEn: "You are 3 metres from the open door. Colleagues are approaching from the other side of the corridor.",
       urgency: "high",
-      timed: 12,
+      timed: 25,
       choices: [
         {
           label: "Je retourne fermer la porte de mon bureau",
@@ -740,7 +740,7 @@ const m5_branching: BranchingExercise = {
       situation: "Feu de câbles sur un bureau. Vous avez un extincteur CO2. Le feu est petit. La sortie est à 4 mètres derrière vous.",
       situationEn: "Cable fire on a desk. You have a CO2 extinguisher. The fire is small. The exit is 4 metres behind you.",
       urgency: "high",
-      timed: 15,
+      timed: 25,
       choices: [
         {
           label: "Je me positionne face au feu, sortie dans le dos, à 2-3m",
@@ -1012,7 +1012,7 @@ const m7_branching: BranchingExercise = {
       context: "Plusieurs collègues regardent autour d'eux, hésitants. Un extincteur CO2 est visible à 3 mètres.",
       contextEn: "Several colleagues look around, hesitant. A CO2 extinguisher is visible 3 metres away.",
       urgency: "high",
-      timed: 8,
+      timed: 25,
       choices: [
         {
           label: "Évaluer rapidement et guider mes collègues vers la sortie",
@@ -1049,7 +1049,7 @@ const m7_branching: BranchingExercise = {
       situation: "Vous quittez l'open space. La porte est encore ouverte derrière vous.",
       situationEn: "You leave the open-plan area. The door is still open behind you.",
       urgency: "high",
-      timed: 6,
+      timed: 20,
       choices: [
         {
           label: "Je ferme la porte derrière moi avant d'avancer",
@@ -1220,7 +1220,7 @@ const ch2m2_branching: BranchingExercise = {
       context: "Vous avez la présence d'esprit pour guider la situation. Quelle est votre réaction ?",
       contextEn: "You have the presence of mind to guide the situation. What is your reaction?",
       urgency: "high",
-      timed: 12,
+      timed: 25,
       choices: [
         {
           label: "Voix ferme : 'Attention tout le monde — suivez-moi par l'escalier B, maintenant, calmement.'",
@@ -1427,7 +1427,7 @@ const ch2m5_branching: BranchingExercise = {
       situation: "Vous ouvrez la porte du couloir. Une fumée grise à mi-hauteur remplit l'espace. La sortie est à 20 mètres.",
       situationEn: "You open the corridor door. Grey smoke at mid-height fills the space. The exit is 20 metres away.",
       urgency: "high",
-      timed: 10,
+      timed: 25,
       choices: [
         {
           label: "Je me baisse sous la fumée et avance rapidement en longeant le mur",
@@ -1588,7 +1588,7 @@ const ch2m7_branching: BranchingExercise = {
       context: "C'est le moment d'appliquer toute la procédure que vous avez apprise.",
       contextEn: "This is the moment to apply the full procedure you have learned.",
       urgency: "high",
-      timed: 10,
+      timed: 25,
       choices: [
         {
           label: "Lever la main, voix ferme : 'Alarme — on évacue par l'escalier B, suivez-moi'",
