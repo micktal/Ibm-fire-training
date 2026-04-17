@@ -530,6 +530,7 @@ export const MODULES_EN: CourseModule[] = [
     },
     duration: "8 min",
     image: `${CDN}b5ca9823c0ba42e492f17a707fd14708?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Master%20Fire%20Safety%20Room%20Clearance.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL01hc3RlciBGaXJlIFNhZmV0eSBSb29tIENsZWFyYW5jZS5tcDQiLCJpYXQiOjE3NzY0MTE5NjEsImV4cCI6MTgzOTQ4Mzk2MX0.Rj9X_v5Kx-5Q9O1asLsD8W1tXGrNLU04N5N5pFRXBL4",
     funFacts: [
       { stat: "3", label: "seconds to check a room", detail: "A rapid visual sweep from the doorway takes 3 seconds. You don't need to enter — look left, look right, call out if needed. Then close the door and move on.", icon: "eye" },
       { stat: "0", label: "the number of times to re-enter alone", detail: "Never re-enter a building alone to search for someone. Report to fire services immediately — it's their mission and they have equipment.", icon: "shield" },
