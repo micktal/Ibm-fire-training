@@ -491,6 +491,7 @@ export const MODULES_EN: CourseModule[] = [
     },
     duration: "6 min",
     image: `${CDN}0385f320d59547b2b6d08166e29ab8f3?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Close%20Doors%20During%20Evacuation.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL0Nsb3NlIERvb3JzIER1cmluZyBFdmFjdWF0aW9uLm1wNCIsImlhdCI6MTc3NjQxMjQ2MCwiZXhwIjoxODM5NDg0NDYwfQ.LOjMZg7xqfwKZqxRRoYQY-TRYDfiNS0H0vsFWMnI1ZE",
     funFacts: [
       { stat: "5×", label: "faster spread with open door", detail: "A fire door left open multiplies fire spread speed by 5. Closing a door while evacuating is often more effective than an extinguisher.", icon: "flame" },
       { stat: "30 min", label: "resistance of a closed EI30 door", detail: "Closed, an EI30 fire door resists fire for 30 minutes. Propped open: zero protection.", icon: "shield" },
