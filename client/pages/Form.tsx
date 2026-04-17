@@ -239,7 +239,13 @@ export default function Form() {
                   <Mail size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2" style={{ color: "#8d95aa" }} />
                   <input
                     id="f-email"
-                    type="email"
+                    type="text"
+                    inputMode="email"
+                    autoComplete="off"
+                    autoCorrect="off"
+                    autoCapitalize="off"
+                    spellCheck={false}
+                    data-form-type="other"
                     placeholder={isEN ? "your@email.com" : "votre@email.com"}
                     value={fields.email}
                     onChange={(e) => set("email", e.target.value)}

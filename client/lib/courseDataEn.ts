@@ -413,22 +413,23 @@ export const MODULES_EN: CourseModule[] = [
     image: `${CDN}2482acaedcdd4b2abad18b1011a424c6?format=webp&width=800`,
     videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Trigger%20the%20Fire%20Alarm%20Fast.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL1RyaWdnZXIgdGhlIEZpcmUgQWxhcm0gRmFzdC5tcDQiLCJpYXQiOjE3NzY0MTA0MjYsImV4cCI6MTgzOTQ4MjQyNn0.ktDYm_vBoVeaWK9BMrq_NyCe_zs51BvclvLFuCp95gc",
     funFacts: [
-      { stat: "777", label: "IBM Security — always first", detail: "IBM Security has building plans, knows zone locations, and coordinates with emergency services. Always call them before 18.", icon: "alert" },
+      { stat: "777", label: "IBM internal landline — security & first aid", detail: "777 is an IBM internal number, reachable only from a fixed IBM phone in the building — not from a mobile. It alerts IBM Security and first-aid services but does NOT trigger the fire alarm. Only the red call point triggers the alarm.", icon: "alert" },
       { stat: "3", label: "essential pieces of info to give", detail: "Your name, exact location (building/floor/zone), and description of what you see. 3 pieces of information — memorize them.", icon: "shield" },
     ],
     keyPoints: [
-      "777: IBM Security, always before 18",
-      "Manual call points: break the glass and press — no key needed",
-      "Give: name, exact location, what you see",
+      "Red call point (MCP) = triggers the general fire alarm. This is the absolute priority.",
+      "777 = IBM internal landline only (not from mobile). Alerts security and first-aid — does NOT trigger the fire alarm.",
+      "Only the Bois-Colombes site has a 24/7 security post. Availability may vary at other sites.",
     ],
     preTest: [
       { question: "Which number do you call first at IBM during a fire?", choices: [{ key: "A", label: "18 — Fire services" }, { key: "B", label: "777 — IBM Security" }, { key: "C", label: "112 — European emergency" }], correctKey: "B" },
       { question: "A manual call point (MCP) requires:", choices: [{ key: "A", label: "A special key to operate" }, { key: "B", label: "Breaking the glass and pressing" }, { key: "C", label: "Authorization from security" }], correctKey: "B" },
     ],
     content: [
-      { type: "intro", title: "Two types of alarm at IBM", body: "IBM offices have automatic detectors (triggered by smoke or heat) and manual call points (red boxes on walls). Both trigger the general alarm. But even if the automatic alarm goes off, you must call 777 to give your exact location." },
+      { type: "intro", title: "Two types of alarm at IBM", body: "IBM offices have automatic detectors (triggered by smoke or heat) and manual call points (red call boxes on walls). Both trigger the general alarm. Even if the automatic alarm goes off, try to reach 777 from a fixed IBM phone to report your exact location." },
+      { type: "info", title: "Red call point ≠ 777: two distinct actions", body: "A common confusion: the red call point and 777 are two completely different things.", bullets: ["🔴 Red call point (MCP) = triggers the general fire alarm (bell throughout the building). Absolute priority.", "📞 777 = IBM internal landline only. Not reachable from a mobile. Alerts IBM Security and first-aid services. Does NOT trigger the fire alarm.", "⚠️ In open-plan offices, fixed phones are not always available. If no fixed phone: use your mobile to call 18 (fire services) directly.", "🏢 Only the Bois-Colombes site has a 24/7 security post. Availability may vary at other IBM sites.", "✅ Correct sequence: Red call point FIRST → then 777 from a fixed phone if available → then 18 if needed."] },
       { type: "info", title: "Activating a manual call point", body: "Manual call points are red boxes marked with a flame symbol. To activate: 1) Break the glass (a small hammer is attached). 2) Press the button inside. That's all — no key, no code. The alarm will sound throughout the building.", bullets: ["Locate MCPs on every floor (marked in green on evacuation plans)", "Break glass + press button = alarm triggered", "No key, no code, no authorization needed", "If glass is already broken: press the button directly"] },
-      { type: "list", title: "What to say when calling 777", body: "When you reach 777, give these 3 pieces of information immediately:", bullets: ["1. Your full name", "2. Exact location: building name, floor, zone (e.g. 'Building B, 4th floor, zone A')", "3. What you see: 'I see smoke from the reprographics room', 'I smell burning near the servers'"] },
+      { type: "list", title: "What to say when calling 777", body: "When you reach 777 from a fixed IBM phone, give these 3 pieces of information immediately:", bullets: ["1. Your full name", "2. Exact location: building name, floor, zone (e.g. 'Building B, 4th floor, zone A')", "3. What you see: 'I see smoke from the reprographics room', 'I smell burning near the servers'"] },
     ],
     quiz: [
       { id: "q1", question: "The smoke detector triggers but you see nothing. What do you do?", choices: [{ key: "A", label: "Reset the detector — probably false alarm" }, { key: "B", label: "Call 777 and give your location" }, { key: "C", label: "Wait 2 minutes to see if it stops" }, { key: "D", label: "Investigate to find the source" }], correctKey: "B", feedbackOk: "Correct. Even without visible fire: call 777. The detector has picked up something, even if you can't see it.", feedbackKo: "Any triggered alarm = call 777. IBM Security will verify and dispatch the response. Never reset without authorization." },

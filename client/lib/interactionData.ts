@@ -185,10 +185,10 @@ const m1_hotspot: HotspotExercise = {
   hotspots: [
     {
       id: "hs2", x: 13, y: 30,
-      label: "1 — Déclencher l'alarme (777)",
-      description: "En premier lieu, déclenchez le boîtier d'alarme manuel et composez le 777. Cela alerte immédiatement tout le bâtiment et la sécurité IBM — avant toute autre action.",
+      label: "1 — Boîtier rouge (alarme incendie)",
+      description: "En premier lieu, déclenchez le boîtier rouge (déclencheur manuel) : il sonne l'alarme dans tout le bâtiment. Puis si un téléphone fixe IBM est disponible, composez le 777 pour alerter la sécurité. Le 777 seul ne déclenche pas l'alarme incendie.",
       type: "info",
-      detail: "IBM : composez le 777 (sécurité interne) avant le 18. L'alarme est toujours la première action.",
+      detail: "Boîtier rouge = alarme. 777 (fixe interne) = sécurité IBM. Deux actions distinctes et complémentaires.",
     },
     {
       id: "hs1", x: 62, y: 78,
@@ -230,10 +230,10 @@ const m1_branching: BranchingExercise = {
       timed: 25,
       choices: [
         {
-          label: "Je déclenche l'alarme et compose le 777 (sécurité IBM)",
-          labelEn: "I trigger the alarm and dial 777 (IBM Security)",
-          consequence: "Correct. L'alarme en premier alerte tout le bâtiment. Le 777 prévient la sécurité IBM — c'est le premier réflexe IBM.",
-          consequenceEn: "Correct. Alarm first alerts the entire building. 777 notifies IBM Security — this is the first IBM reflex.",
+          label: "Je déclenche le boîtier rouge, puis compose le 777 si téléphone fixe disponible",
+          labelEn: "I trigger the red call point, then dial 777 from a fixed IBM phone if available",
+          consequence: "Correct. Boîtier rouge EN PREMIER (déclenche l'alarme générale). Puis 777 depuis un téléphone fixe IBM pour alerter la sécurité — le 777 ne déclenche pas l'alarme lui-même.",
+          consequenceEn: "Correct. Red call point FIRST (triggers the general alarm). Then 777 from a fixed IBM landline to alert security — 777 does not trigger the alarm itself.",
           consequenceType: "ok",
           nextNode: "step2",
           points: 10,
@@ -1733,11 +1733,11 @@ const ch2m1_binary: GridQuizExercise = {
       explanationEn: "FALSE. It is impossible to trigger too early when facing a suspicious signal. IBM policy supports early alarm with no penalty.",
     },
     {
-      statement: "Le 777 doit être composé avant le 18 lors d'un incident IBM.",
-      statementEn: "777 must be called before 18 during an IBM incident.",
-      correct: "true",
-      explanation: "VRAI. La sécurité IBM connaît les plans des bâtiments et peut intervenir plus rapidement que les services externes.",
-      explanationEn: "TRUE. IBM Security knows the building plans and can respond faster than external services.",
+      statement: "Le 777 est joignable depuis n'importe quel téléphone, y compris un mobile personnel.",
+      statementEn: "777 can be reached from any phone, including a personal mobile.",
+      correct: "false",
+      explanation: "FAUX. Le 777 est une ligne fixe interne IBM, joignable uniquement depuis un téléphone fixe du bâtiment. En open space, les téléphones fixes ne sont pas toujours disponibles. Si aucun fixe n'est accessible, appelez directement le 18.",
+      explanationEn: "FALSE. 777 is an IBM internal landline, reachable only from a fixed phone in the building. In open-plan offices, fixed phones are not always available. If no fixed phone is accessible, call 18 directly.",
     },
     {
       statement: "Les détecteurs automatiques rendent le déclencheur manuel inutile.",

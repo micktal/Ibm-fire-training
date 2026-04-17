@@ -963,7 +963,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Dclencher%20l'alarme%20incendie.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL0RjbGVuY2hlciBsJ2FsYXJtZSBpbmNlbmRpZS5tcDQiLCJpYXQiOjE3NzU0MDk0NjgsImV4cCI6MTgzODQ4MTQ2OH0.aXpYf7-R6T_s_URpOt5IQdUs0UnhU_tT_efNlAOMxZw",
     funFacts: [
       { stat: "6 m²", label: "de propagation par seconde de retard", detail: "Chaque seconde de retard à déclencher l'alarme représente en moyenne 6m² de surface supplémentaire touchée par le feu.", icon: "flame" },
-      { stat: "777", label: "le numéro IBM à composer EN PREMIER", detail: "Avant le 18 et le 15, composez le 777. La sécurité IBM connaît le plan des bâtiments et peut intervenir plus rapidement.", icon: "shield" },
+      { stat: "777", label: "ligne fixe interne IBM — sécurité et secours", detail: "Le 777 est un numéro interne IBM, joignable uniquement depuis un téléphone fixe du bâtiment. Il alerte la sécurité IBM (et les secours si victime), mais ne déclenche PAS l'alarme incendie. Seul le boîtier rouge déclenche l'alarme.", icon: "shield" },
     ],
     preTest: [
       {
@@ -994,6 +994,18 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         image: `${CDN}2482acaedcdd4b2abad18b1011a424c6?format=webp&width=800`,
       },
       {
+        type: "info",
+        title: "Boîtier rouge ≠ 777 : deux actions distinctes",
+        body: "Attention à la confusion fréquente : le boîtier rouge (déclencheur manuel) et le 777 sont deux choses différentes.",
+        bullets: [
+          "🔴 Boîtier rouge = déclenche l'alarme incendie générale (sonnerie dans tout le bâtiment). Priorité absolue.",
+          "📞 777 = ligne fixe interne IBM uniquement. Prévient la sécurité IBM et les secours à victime. Ne déclenche PAS l'alarme.",
+          "⚠️ Le 777 n'est joignable que depuis un téléphone fixe IBM. Pas depuis un mobile. En open space, les téléphones fixes ne sont pas toujours disponibles.",
+          "🏢 Seul le site de Bois-Colombes dispose d'un poste de sécurité 24h/24. Sur les autres sites, la disponibilité varie.",
+          "✅ Séquence correcte : Boîtier rouge EN PREMIER → puis 777 si téléphone fixe disponible → puis 18 si nécessaire.",
+        ],
+      },
+      {
         type: "list",
         title: "Quand déclencher l'alarme ?",
         body: "Activez l'alarme dès que :",
@@ -1009,15 +1021,15 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
       {
         type: "scenario",
         title: "Comment utiliser un déclencheur manuel",
-        body: "Les déclencheurs manuels (boîtiers rouges) sont présents dans tous les couloirs IBM. Pour les activer : briser la vitre ou appuyer sur le bouton selon le modèle. L'action est irréversible et immédiate.",
+        body: "Les déclencheurs manuels (boîtiers rouges) sont présents dans tous les couloirs IBM. Pour les activer : briser la vitre ou appuyer sur le bouton selon le modèle. C'est cet acte qui déclenche l'alarme incendie générale — pas le 777. Le 777 (ligne fixe interne) prévient la sécurité IBM mais ne sonne pas l'alarme.",
         image: "https://images.pexels.com/photos/31470430/pexels-photo-31470430.jpeg?auto=compress&cs=tinysrgb&w=800",
-        highlight: "Après déclenchement : ne pas bloquer les issues et commencer l'évacuation.",
+        highlight: "Boîtier rouge = alarme incendie. 777 = alerte sécurité IBM (et secours à victime). Ce sont deux actions distinctes.",
       },
     ],
     keyPoints: [
-      "Composer le 777 EN PREMIER — avant le 18 et le 15. La sécurité IBM connaît le bâtiment.",
-      "Chaque seconde de retard à déclencher l'alarme = 6 m² de surface supplémentaire en feu.",
-      "L'alarme manuelle n'attend pas les détecteurs — déclenchez-la dès confirmation du feu.",
+      "Boîtier rouge (déclencheur manuel) = alarme incendie générale. C'est la priorité absolue.",
+      "777 = ligne fixe interne IBM uniquement (pas depuis un mobile). Prévient la sécurité et les secours à victime — ne déclenche PAS l'alarme.",
+      "Seul le site de Bois-Colombes dispose d'un poste de sécurité 24h/24. Sur les autres sites, la disponibilité peut varier.",
     ],
     quiz: [
       {
