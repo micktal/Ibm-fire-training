@@ -234,39 +234,43 @@ export const MODULES_EN: CourseModule[] = [
     id: "ch1-m4",
     chapter: 1,
     number: 4,
-    title: "Fire classes and extinguishers",
+    title: "CO2 or water mist?",
     subtitle: "Choose the right extinguisher",
-    description: "Interactive floor plan of an IBM floor. Exercise to choose the right route. Animations on smoke speed in stairwells.",
-    objective: "Choose and use the correct extinguisher for the type of fire.",
+    description: "In an IBM environment, two essential extinguishers. CO2 for all electrical fires. Water mist for solids (paper, plastic, furniture).",
+    objective: "Choose the right extinguisher in two seconds: CO2 or water mist.",
     learningObjectives: {
-      savoir: "Fire classes (A, B, C, D, F) and the appropriate extinguisher for each",
-      savoirFaire: "Choose and use the correct extinguisher for the fire",
+      savoir: "CO2 for electrical fires, water mist for solids (paper, furniture, plastic)",
+      savoirFaire: "Identify in 2 seconds if the fire is electrical or not, and choose the right agent",
       savoirEtre: "Never improvise — using the wrong agent can worsen the fire",
     },
     duration: "7 min",
     image: `${CDN}8f5fa15ec33749609150a2fef62457e9?format=webp&width=800`,
     videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Match%20the%20Right%20Fire%20Extinguisher.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL01hdGNoIHRoZSBSaWdodCBGaXJlIEV4dGluZ3Vpc2hlci5tcDQiLCJpYXQiOjE3NzYzMjU3MDUsImV4cCI6MTgzOTM5NzcwNX0.MR8ZmMRx2YM2TbF3trHuIMP4SD1ERws4AfuDetGN9wI",
     funFacts: [
-      { stat: "5", label: "fire classes to master", detail: "Class A (solids), B (liquids), C (gas), D (metals), F (cooking oils). Each requires a specific extinguishing agent. Using the wrong one can spread the fire.", icon: "flame" },
-      { stat: "CO₂", label: "the only choice for electrical fires", detail: "Water conducts electricity and can cause fatal electrocution. CO2 extinguishes without conducting current, leaving no residue on equipment.", icon: "zap" },
+      { stat: "CO₂", label: "the only safe agent for electrical fires", detail: "Water conducts electricity and causes fatal electrocution. CO2 smothers the flame without conducting current and leaves no residue on equipment.", icon: "alert" },
+      { stat: "95%", label: "of office fires: paper or electrical", detail: "Knowing these 2 situations prepares you for almost all real-life cases. CO2 or water mist — nothing more complex needed.", icon: "shield" },
     ],
     keyPoints: [
-      "5 fire classes — each requires a specific agent",
-      "NEVER water on an electrical fire: electrocution risk",
-      "CO2 (black) for servers and cables — ABC powder for everything else",
+      "Electrical fire (server, cable, charger, printer) = CO2 only. Never water on electrical equipment.",
+      "Solid fire (paper, plastic, furniture) = water mist. Effective and safe on these materials.",
+      "Simple rule: electrical → CO2. Paper/plastic → water mist. Any doubt: don't intervene, evacuate.",
     ],
     preTest: [
-      { question: "Which extinguisher for a server rack fire?", choices: [{ key: "A", label: "Water mist" }, { key: "B", label: "CO2" }, { key: "C", label: "ABC Powder" }, { key: "D", label: "Class D powder" }], correctKey: "B" },
-      { question: "A class A fire involves:", choices: [{ key: "A", label: "Flammable liquids" }, { key: "B", label: "Gas" }, { key: "C", label: "Ordinary solid materials (paper, wood, fabric)" }, { key: "D", label: "Metals" }], correctKey: "C" },
+      { question: "Which extinguisher for a server rack fire?", choices: [{ key: "A", label: "Water mist" }, { key: "B", label: "CO2" }, { key: "C", label: "Any available extinguisher" }], correctKey: "B" },
+      { question: "A wastepaper basket is on fire, away from all electrical equipment. Which extinguisher?", choices: [{ key: "A", label: "CO2" }, { key: "B", label: "Water mist" }, { key: "C", label: "Either one" }], correctKey: "B" },
     ],
     content: [
-      { type: "intro", title: "Why fire classes exist", body: "Not all fires are fought the same way. Using the wrong extinguishing agent can be ineffective — or dangerously worsen the fire. Water on a liquid fire creates a violent splatter of burning droplets. Water on an electrical fire creates an electrocution risk. This is why fire classes exist." },
-      { type: "info", title: "The 5 fire classes", body: "Class A: ordinary solid materials (paper, wood, fabric, plastic). Class B: flammable liquids (oil, solvent, petrol). Class C: gases (propane, natural gas). Class D: metals (lithium, magnesium). Class F: cooking oils and fats.", bullets: ["A — solids: water mist, ABC powder", "B — liquids: CO2, ABC powder, foam", "C — gases: ABC powder (cut gas source first)", "D — metals: specific D powder only", "F — cooking oils: Class F foam only"] },
-      { type: "comparison", title: "Which extinguisher at IBM?", body: "IBM offices mainly have three types of extinguisher:", doList: ["CO2 (black label): servers, cables, data centers", "ABC Powder (blue label): all fires except D and F", "Water mist (red label): class A fires only (paper, wood)"], dontList: ["Water on electrical fires", "CO2 on metals (class D)", "ABC powder on cooking oils (class F)", "Any extinguisher without checking the label"] },
+      { type: "intro", title: "Two extinguishers, two situations", body: "At IBM, you don't need to memorise 5 fire classes. You need to know one thing: is it electrical or not? Electrical → CO2. Solid material (paper, plastic, furniture) → water mist. That's it. Any other situation: don't intervene — evacuate and let the professionals handle it.", highlight: "Simple rule: electrical → CO2. Paper/plastic → water mist." },
+      { type: "list", title: "The 2 situations to know in an IBM environment", body: "In your offices, you will mainly encounter two types of fire:", bullets: ["Solid fire (paper, plastic, furniture, clothing) → water mist extinguisher", "Electrical fire (server, cable, charger, printer under power) → CO2 only — never water", "Memory rule: if it's electrical, it's CO2. If it's paper or plastic, it's water mist."], highlight: "Always cut the electrical power first if it's safe to do so." },
+      { type: "casefigure", title: "Real IBM scenarios", body: "In each case, identify the right extinguisher. An error can be fatal.", cases: [
+        { situation: "IBM server rack on fire in the IT room. Equipment under power, cables visibly burned.", action: "CO2 extinguisher.", result: "Correct. CO2 is the only safe agent on live equipment. Water would conduct electricity and cause electrocution.", correct: true },
+        { situation: "Paper bin on fire in an office, away from all electrical equipment.", action: "Water mist extinguisher.", result: "Correct. Paper is a solid. Water mist is effective and safe on this type of fuel.", correct: true },
+        { situation: "Laptop charger overheating and smoking. An employee reaches for the water mist extinguisher nearby.", action: "Water mist on live electrical equipment.", result: "Critical error. Water conducts electricity. Immediate electrocution risk. CO2 is mandatory on all live IBM equipment.", correct: false },
+      ]},
     ],
     quiz: [
-      { id: "q1", question: "A printer catches fire. Which extinguisher do you use?", choices: [{ key: "A", label: "Water mist — most common" }, { key: "B", label: "CO2 — electrical equipment" }, { key: "C", label: "Class D powder" }, { key: "D", label: "None — evacuate immediately" }], correctKey: "B", feedbackOk: "Correct. A printer is electrical equipment. CO2 is the only safe agent: no electrocution risk, no equipment damage.", feedbackKo: "A printer is electrical — water is forbidden. CO2 is non-conductive and leaves no residue on equipment." },
-      { id: "q2", question: "An oil fire in the break room kitchen. What do you do?", choices: [{ key: "A", label: "Throw water on it — to cool it down" }, { key: "B", label: "Use the ABC powder extinguisher" }, { key: "C", label: "Cover with a fire blanket and call 777" }, { key: "D", label: "Use the CO2 extinguisher" }], correctKey: "C", feedbackOk: "Correct. A fire blanket smothers the fire (Class F). If no blanket, call 777 immediately and evacuate.", feedbackKo: "Water on a cooking oil fire causes a violent fireball (steam explosion). A fire blanket is the safest option. If unavailable, evacuate and call 777." },
+      { id: "q1", question: "A server rack catches fire. Which extinguisher do you use?", choices: [{ key: "A", label: "Water mist" }, { key: "B", label: "CO2" }, { key: "C", label: "Any available extinguisher" }, { key: "D", label: "Evacuate immediately without intervening" }], correctKey: "B", feedbackOk: "Correct. A server rack is live electrical equipment. CO2 is the only safe agent: no electrocution risk, no equipment damage.", feedbackKo: "Server = electrical equipment. Water is forbidden. CO2 is non-conductive and leaves no residue on equipment." },
+      { id: "q2", question: "A paper bin is on fire in a meeting room. No electrical equipment nearby. Which extinguisher?", choices: [{ key: "A", label: "CO2" }, { key: "B", label: "Water mist" }, { key: "C", label: "Either one" }, { key: "D", label: "Don't intervene — evacuate" }], correctKey: "B", feedbackOk: "Correct. Paper = solid material. Water mist is effective and safe. CO2 is reserved for electrical fires.", feedbackKo: "Paper is not electrical — water mist is the correct choice here. CO2 is reserved for electrical fires only." },
     ],
     locked: false,
   },
@@ -281,7 +285,7 @@ export const MODULES_EN: CourseModule[] = [
     objective: "Use a fire extinguisher correctly using the PASS sequence.",
     learningObjectives: {
       savoir: "The PASS sequence (Pull · Aim · Squeeze · Sweep) and the safe intervention distance",
-      savoirFaire: "Use a CO2 or ABC powder extinguisher safely at 2–3 meters",
+      savoirFaire: "Use a CO2 or water mist extinguisher safely at 2-3 meters on a very small initial fire only",
       savoirEtre: "Keep an exit behind you and never put your life at risk",
     },
     duration: "6 min",
@@ -292,8 +296,9 @@ export const MODULES_EN: CourseModule[] = [
       { stat: "2-3m", label: "optimal distance from fire", detail: "CO2 exits at -78°C. Too close: cold burns. Too far: loss of effectiveness. 2-3 meters is the safety sweet spot for CO2 and ABC powder.", icon: "eye" },
     ],
     keyPoints: [
+      "Extinguisher = very small initial fire only (no bigger than a wastepaper basket). Any doubt: evacuate.",
+      "Distance: 2-3 meters — applies to both CO2 and water mist. Never get closer.",
       "PASS: Pull · Aim · Squeeze · Sweep",
-      "2-3 meters from the fire — never get closer",
       "Always keep an exit behind you before using an extinguisher",
     ],
     preTest: [
@@ -301,9 +306,9 @@ export const MODULES_EN: CourseModule[] = [
       { question: "Before using an extinguisher, you must:", choices: [{ key: "A", label: "Make sure you have an exit behind you" }, { key: "B", label: "Call a colleague for help" }, { key: "C", label: "Check the expiry date on the label" }], correctKey: "A" },
     ],
     content: [
-      { type: "intro", title: "Before reaching for the extinguisher", body: "Before using an extinguisher, verify 3 conditions: the fire is small enough (no bigger than a wastepaper basket), the right extinguisher is available, and you have a clear exit behind you. If any of these is missing, do not intervene — evacuate.", highlight: "Rule: if you have to move backward to use it, don't use it." },
+      { type: "intro", title: "Before reaching for the extinguisher", body: "A fire extinguisher is designed for one situation only: a very small, just-started fire — no bigger than a wastepaper basket and still contained. The moment the fire grows, spreads, or fills the room with smoke, an extinguisher is no longer the right tool. Before using one, verify 3 conditions: fire is very small and just starting, the right extinguisher is available, clear exit directly behind you. If any condition is missing: evacuate.", highlight: "Extinguisher = very small initial fire only. If in any doubt, evacuate immediately." },
       { type: "info", title: "The PASS sequence", body: "PASS is the universal extinguisher sequence: P — Pull: remove the safety pin. A — Aim: direct the nozzle at the base of the fire, not at the flames. S — Squeeze: press the handle to release the agent. S — Sweep: sweep the nozzle from side to side at the base of the fire.", bullets: ["Pull: remove the safety pin", "Aim: target the BASE of the fire", "Squeeze: press and hold the handle", "Sweep: side-to-side movement at the base"] },
-      { type: "info", title: "Specific distances and times", body: "CO2: 2-3 meters, maximum 30 seconds of discharge. ABC Powder: 2-4 meters, 15-30 seconds of discharge. Water mist: 1-2 meters, up to 60 seconds. The extinguisher empties quickly. If the fire isn't controlled after one discharge, evacuate immediately.", bullets: ["CO2: 2-3m, 30 seconds" , "ABC powder: 2-4m, 15-30 seconds", "If not controlled in 30s: evacuate"] },
+      { type: "info", title: "Distances and operating times", body: "CO2: 2-3 meters, maximum 30 seconds of discharge. Water mist: 2-3 meters, up to 60 seconds. ABC Powder: 2-4 meters, 15-30 seconds. These distances apply regardless of extinguisher type — never get closer. If the fire is not controlled after one discharge, evacuate immediately.", bullets: ["CO2: 2-3m, 30 seconds", "Water mist (eau pulvérisée): 2-3m, up to 60 seconds", "ABC powder: 2-4m, 15-30 seconds", "If not controlled in 30s: evacuate immediately"] },
     ],
     quiz: [
       { id: "q1", question: "Step 2 of PASS (Aim) means directing the nozzle:", choices: [{ key: "A", label: "At the flames themselves" }, { key: "B", label: "At the base of the fire" }, { key: "C", label: "At the smoke" }, { key: "D", label: "At the surrounding area" }], correctKey: "B", feedbackOk: "Correct. Aiming at the base extinguishes the source. Aiming at flames is ineffective.", feedbackKo: "Always aim at the BASE of the fire, not the flames. The base is where the fuel is — eliminating the source extinguishes the fire." },
@@ -333,7 +338,8 @@ export const MODULES_EN: CourseModule[] = [
       { stat: "80%", label: "of victims could have survived", detail: "In most fatal office fires, a faster evacuation decision would have changed the outcome. Doubt must always lead to evacuation — never to waiting.", icon: "alert" },
     ],
     keyPoints: [
-      "Intervene only if: fire < wastepaper basket, right extinguisher available, exit behind you",
+      "Extinguisher = very small initial fire only (wastepaper-basket sized). Any doubt: evacuate immediately.",
+      "Intervene only if ALL 3: fire < wastepaper basket, right extinguisher available, clear exit behind you",
       "10-second rule: observe → assess → decide",
       "If in doubt: always evacuate. No exceptions.",
     ],
@@ -343,7 +349,7 @@ export const MODULES_EN: CourseModule[] = [
     ],
     content: [
       { type: "intro", title: "The fundamental dilemma", body: "Every IBM employee who discovers a fire faces a dilemma: intervene with an extinguisher, or evacuate immediately? This decision must be made in 10 seconds — and made correctly. A bad decision costs time, and time costs lives." },
-      { type: "info", title: "The 3 conditions to intervene", body: "You can only intervene if ALL THREE conditions are met simultaneously: the fire is smaller than a wastepaper basket (early stage), the right extinguisher is within reach, and a clear exit is directly behind you. If even ONE condition is missing, you must evacuate.", bullets: ["Fire < size of a wastepaper basket", "Correct extinguisher within arm's reach", "Clear, unobstructed exit directly behind you", "All 3 must be true — otherwise EVACUATE"] },
+      { type: "info", title: "The 3 conditions to intervene", body: "You can only use an extinguisher on a very small, just-started fire — no bigger than a wastepaper basket and still contained. If ALL THREE conditions are met: fire is still very small (early stage), the right extinguisher is within reach, and a clear exit is directly behind you. If even ONE condition is missing: evacuate immediately.", bullets: ["Fire = very small, just starting, still contained (< wastepaper basket)", "Correct extinguisher within arm's reach", "Clear, unobstructed exit directly behind you", "All 3 must be true — otherwise EVACUATE immediately"] },
       { type: "scenario", title: "Scenario: the 10-second decision", body: "It's 3pm. A colleague shouts — fire in the break room. You arrive: a bin is on fire, flames about 40cm high. An ABC powder extinguisher is on the wall. The corridor behind you is clear. Do you intervene? The fire is still small (yes), the extinguisher is adapted (yes), the exit is clear (yes). You can intervene — but 777 first." },
       { type: "list", title: "When to choose evacuation", body: "Evacuate immediately without hesitation if:", bullets: ["Fire is bigger than a wastepaper basket", "Smoke already filling the corridor", "No adapted extinguisher available", "No clear exit behind you", "You feel any doubt whatsoever"] },
     ],
@@ -427,7 +433,7 @@ export const MODULES_EN: CourseModule[] = [
     ],
     content: [
       { type: "intro", title: "Two types of alarm at IBM", body: "IBM offices have automatic detectors (triggered by smoke or heat) and manual call points (red call boxes on walls). Both trigger the general alarm. Even if the automatic alarm goes off, try to reach 777 from a fixed IBM phone to report your exact location." },
-      { type: "info", title: "Red call point ≠ 777: two distinct actions", body: "A common confusion: the red call point and 777 are two completely different things.", bullets: ["🔴 Red call point (MCP) = triggers the general fire alarm (bell throughout the building). Absolute priority.", "📞 777 = IBM internal landline only. Not reachable from a mobile. Alerts IBM Security and first-aid services. Does NOT trigger the fire alarm.", "⚠️ In open-plan offices, fixed phones are not always available. If no fixed phone: use your mobile to call 18 (fire services) directly.", "🏢 Only the Bois-Colombes site has a 24/7 security post. Availability may vary at other IBM sites.", "✅ Correct sequence: Red call point FIRST → then 777 from a fixed phone if available → then 18 if needed."] },
+      { type: "info", title: "Red call point ≠ 777: two distinct actions", body: "A common confusion: the red call point and 777 are two completely different things.", bullets: ["Red call point (MCP) = triggers the general fire alarm (bell throughout the building). Absolute priority.", "777 = IBM internal landline only. Not reachable from a mobile. Alerts IBM Security and first-aid services. Does NOT trigger the fire alarm.", "In open-plan offices, fixed phones are not always available. If no fixed phone: use your mobile to call 18 (fire services) directly.", "Only the Bois-Colombes site has a 24/7 security post. Availability may vary at other IBM sites.", "Correct sequence: Red call point FIRST — then 777 from a fixed phone if available — then 18 if needed."] },
       { type: "info", title: "Activating a manual call point", body: "Manual call points are red boxes marked with a flame symbol. To activate: 1) Break the glass (a small hammer is attached). 2) Press the button inside. That's all — no key, no code. The alarm will sound throughout the building.", bullets: ["Locate MCPs on every floor (marked in green on evacuation plans)", "Break glass + press button = alarm triggered", "No key, no code, no authorization needed", "If glass is already broken: press the button directly"] },
       { type: "list", title: "What to say when calling 777", body: "When you reach 777 from a fixed IBM phone, give these 3 pieces of information immediately:", bullets: ["1. Your full name", "2. Exact location: building name, floor, zone (e.g. 'Building B, 4th floor, zone A')", "3. What you see: 'I see smoke from the reprographics room', 'I smell burning near the servers'"] },
     ],
@@ -548,8 +554,10 @@ export const MODULES_EN: CourseModule[] = [
     ],
     content: [
       { type: "intro", title: "Verify — without risking yourself", body: "Before declaring a floor clear, a rapid visual check is essential. But the rule is absolute: verify from the doorway, never enter a room where fire or smoke is present. Your safety takes priority." },
-      { type: "info", title: "The 3-second doorway sweep", body: "From the doorway: look left, look right, call out loudly ('Anyone here? Evacuation!'). Wait 2 seconds for a response. If clear: close the door and move on. If someone is there: guide them out.", bullets: ["Stand at the doorway — do not enter", "Look left, look right", "Call out loudly and wait 2 seconds", "Clear: close door and continue", "Someone there: guide out, close door"] },
-      { type: "scenario", title: "Scenario: a missing colleague", body: "At the assembly point, you count 23 people. There should be 25. Two colleagues are missing. One never came in today (confirmed). The other, Marc, is usually on the 4th floor. The building is still evacuating. What do you do? Report to the fire service team leader: 'One person unaccounted for: Marc Durand, 4th floor, zone B. Last badge entry: 9:15am.'" },
+      { type: "info", title: "EWS — Emergency Waiting Spaces: how they work", body: "An EWS (Emergency Waiting Space) is a regulated, signposted zone — usually located on stairwell landings — designed to shelter people who cannot evacuate via the stairs at that moment. This is not abandonment: it is a controlled procedure.", bullets: ["Fire-compartmented zone — resists fire and smoke for at least 30 minutes", "Marked with a standardised EWS sign on every stairwell landing", "Equipped with an interphone or communication system to reach emergency services", "Firefighters are trained and equipped to prioritise EWS interventions", "Variable capacity — plan for 1-2 wheelchair users per landing"] },
+      { type: "info", title: "Who needs an EWS?", body: "The inability to evacuate via stairs is not limited to permanent disability. It can be temporary, unexpected, and affect any employee at any time.", bullets: ["Person in a wheelchair or with permanent reduced mobility", "Colleague on crutches, in a cast, or with a sprained ankle — stair descent impossible or dangerous", "Person with a visual impairment, even partial", "Employee injured DURING evacuation: fall on stairs, sprain, cut", "Person intoxicated by smoke — disoriented, weakened, unable to descend alone", "Pregnant woman in late pregnancy or with mobility difficulties", "Visitor or contractor who is elderly or has an undisclosed medical condition"] , highlight: "Principle: if a person cannot descend the stairs alone and safely, they go to the EWS. This is a procedure, not an option." },
+      { type: "info", title: "The 3-second doorway sweep", body: "From the doorway: look left, look right, call out loudly ('Anyone here? Evacuation!'). Wait 2 seconds for a response. If clear: close the door and move on. If someone is there: guide them out.", bullets: ["Stand at the doorway — do not enter", "Look left, look right", "Call out loudly and wait 2 seconds", "Clear: close door and continue", "Someone there: guide them out or to the EWS — close door"] },
+      { type: "scenario", title: "Scenario: colleague on crutches + smoke intoxication", body: "You are evacuating the 5th floor. A colleague is on crutches after an operation — he cannot descend 5 floors. Another colleague just fell on the stairs and twisted her ankle. What do you do? In both cases: take the person to the EWS on the nearest landing. Make sure they can communicate with emergency services. Report their precise location: floor, EWS number, number of people, nature of the incapacity. Never attempt to carry someone down stairs without specific training." },
     ],
     quiz: [
       { id: "q1", question: "You reach a room — the door is warm to the touch. What do you do?", choices: [{ key: "A", label: "Open the door slowly to check" }, { key: "B", label: "Do not open — hot door means fire on the other side. Report to fire services." }, { key: "C", label: "Call out through the door" }, { key: "D", label: "Leave immediately without reporting" }], correctKey: "B", feedbackOk: "Correct. A warm door means fire is on the other side. Never open it — report to fire services.", feedbackKo: "A warm door is a critical warning signal. Do not open. Report to fire services with the location." },
@@ -627,7 +635,8 @@ export const MODULES_EN: CourseModule[] = [
     content: [
       { type: "intro", title: "Why never the elevator?", body: "During a fire: elevator shafts act as chimneys for smoke, power failure can trap people between floors, doors can open on the floor where the fire is, and heat can warp the mechanism. Emergency stairs are the ONLY safe exit during a fire." },
       { type: "info", title: "Emergency stairwells", body: "IBM emergency stairwells are fire-rated compartments, designed to remain safe for 30 minutes minimum. They have: self-closing fire doors, emergency lighting, air pressure systems to prevent smoke entry. Use them calmly, without running, staying to the right.", bullets: ["Self-closing fire doors — close behind you", "Emergency lighting — stays on even during power failure", "Stay right — leave space for fire services going up", "No running — fall risk in stairwells"] },
-      { type: "info", title: "People with reduced mobility", body: "People with reduced mobility cannot use stairs. IBM has designated Emergency Waiting Spaces (EWS) on each floor — usually on stairwell landings. Take the person there, call 777, give their name and location. Never attempt to carry someone down stairs without specific training.", bullets: ["EWS: marked on all floor evacuation plans", "Take the person to the EWS on the nearest landing", "Call 777 with name, floor, location", "Fire services are equipped and trained for this"] },
+      { type: "info", title: "Emergency Waiting Spaces (EWS): who needs them?", body: "The inability to evacuate via stairs is not limited to permanent disability. It can be temporary, unexpected, and concern any employee at any time.", bullets: ["Person in a wheelchair or with permanent reduced mobility", "Colleague on crutches, in a cast, or with a recent injury — stair descent impossible", "Person with visual impairment, even partial", "Employee injured during evacuation: fall, sprain, cut on the stairs", "Person intoxicated by smoke — disoriented, weakened, unable to descend alone", "Pregnant woman or person with an undisclosed medical condition", "Visitor or contractor unfamiliar with the building who cannot proceed safely"], highlight: "If a person cannot descend safely — EWS. This is a procedure, not an option." },
+      { type: "info", title: "EWS procedure: what to do step by step", body: "IBM has designated EWS on each floor — usually on stairwell landings, marked with a specific sign.", bullets: ["Take the person to the EWS on the nearest stairwell landing", "Make sure they can use the interphone to communicate with emergency services", "Do NOT attempt to carry anyone down stairs without specific rescue training", "Report immediately: floor, EWS location, number of people, nature of the incapacity", "Use a fixed IBM phone (777) if available, or tell the fire services coordinator at the assembly point", "Fire services are trained and equipped to prioritise EWS rescues"] },
     ],
     quiz: [
       { id: "q1", question: "You're on the 8th floor. The elevator is working. The fire is on floor 2. What do you do?", choices: [{ key: "A", label: "Use the elevator — fire is far away" }, { key: "B", label: "Use the emergency stairs — elevator is forbidden" }, { key: "C", label: "Wait on floor 8 for the all-clear" }, { key: "D", label: "Use the service staircase" }], correctKey: "B", feedbackOk: "Correct. Elevator is forbidden during any fire evacuation — regardless of where the fire is.", feedbackKo: "The elevator is ALWAYS forbidden during a fire, even if it seems far away. The fire can spread to the shaft, power can cut at any time." },
