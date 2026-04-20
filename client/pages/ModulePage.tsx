@@ -782,80 +782,60 @@ function PreTestOverlay({
     }
   };
 
+  const isCorrectAnswer = selected === q.correctKey;
+  const correctChoice = q.choices.find((c) => c.key === q.correctKey);
+
   return (
     <div className="fixed inset-0 z-[80] flex flex-col" style={{ background: "rgba(10,24,82,0.97)", fontFamily: "'IBM Plex Sans', sans-serif" }}>
-      {/* Header */}
-      <div className="flex-shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)", animation: "popupShake 0.55s ease 0.15s both" }}>
-        {/* Top bar with skip */}
-        <div className="px-5 pt-4 pb-0" />
 
-        {/* Main header content */}
-        <div className="px-5 pt-4 pb-5">
-          {/* Giant label — the star of the show */}
-          <div className="mb-3">
-            <span
-              className="font-mono font-black uppercase"
-              style={{
-                fontSize: "clamp(1.6rem, 5vw, 2.4rem)",
-                letterSpacing: "0.04em",
-                fontFamily: "'IBM Plex Mono', monospace",
-                background: "linear-gradient(90deg, #78a9ff 0%, #a56eff 50%, #33b1ff 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                lineHeight: 1.1,
-                display: "block",
-              }}
-            >
-              {t("pretest.title", lang)}
-            </span>
+      {/* ── Compact header ──────────────────────────────── */}
+      <div className="flex-shrink-0 px-6 pt-4 pb-3" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
+        <div className="max-w-2xl mx-auto">
+          <div className="flex items-center justify-between gap-4 mb-3">
+            <div>
+              <div className="font-mono font-bold text-xs uppercase mb-0.5" style={{ letterSpacing: "0.12em", fontFamily: "'IBM Plex Mono', monospace", background: "linear-gradient(90deg, #78a9ff, #a56eff)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                {t("pretest.title", lang)}
+              </div>
+              <div className="font-bold text-white" style={{ fontSize: "0.95rem", opacity: 0.8, lineHeight: "1.3" }}>
+                {moduleTitle}
+              </div>
+            </div>
+            <div className="font-mono text-sm flex-shrink-0 px-3 py-1 rounded-full" style={{ fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.5)", background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)" }}>
+              {current + 1} / {shuffledQuestions.length}
+            </div>
           </div>
-
-          {/* Module name */}
-          <div className="font-bold text-white mb-2" style={{ fontSize: "1rem", opacity: 0.75, lineHeight: "1.3" }}>
-            {moduleTitle}
+          {/* Progress bar */}
+          <div className="flex items-center gap-1.5">
+            {shuffledQuestions.map((_, i) => (
+              <div key={i} className="rounded-full transition-all duration-300" style={{ height: "3px", flex: 1, background: i < current ? "#6fdc8c" : i === current ? "#78a9ff" : "rgba(255,255,255,0.15)" }} />
+            ))}
           </div>
-
-          <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.82rem", lineHeight: "1.5" }}>
-            {lang === "en"
-              ? "Answer these quick questions to assess your starting level."
-              : "Répondez à ces questions pour évaluer votre niveau de départ."}
-          </p>
         </div>
       </div>
 
-      {/* Progress dots */}
-      <div className="flex items-center gap-2 px-5 py-3 flex-shrink-0">
-        {shuffledQuestions.map((_, i) => (
-          <div key={i} className="rounded-full transition-all duration-300" style={{ height: "4px", flex: 1, background: i < current ? "#6fdc8c" : i === current ? "#fff" : "rgba(255,255,255,0.18)" }} />
-        ))}
-      </div>
-
-      {/* Question */}
-      <div className="flex-1 overflow-y-auto px-5 py-4">
-        <div className="max-w-lg mx-auto">
-          <div className="text-xs font-mono mb-3" style={{ color: "rgba(255,255,255,0.4)", fontFamily: "'IBM Plex Mono', monospace" }}>
-            {t("pretest.question", lang)} {current + 1} / {shuffledQuestions.length}
-          </div>
-          <div className="font-bold text-white mb-5" style={{ fontSize: "1.05rem", lineHeight: "1.4" }}>
+      {/* ── Question + choices (scrollable only if truly needed) ─ */}
+      <div className="flex-1 overflow-y-auto px-6 py-5">
+        <div className="max-w-2xl mx-auto">
+          <div className="font-bold text-white mb-4" style={{ fontSize: "1.05rem", lineHeight: "1.45" }}>
             {q.question}
           </div>
 
-          <div className="flex flex-col gap-2.5">
+          {/* Choices — 2-col grid on wide screens to reduce height */}
+          <div className="grid gap-2" style={{ gridTemplateColumns: q.choices.length <= 3 ? "1fr" : "repeat(auto-fit, minmax(260px, 1fr))" }}>
             {q.choices.map((choice) => {
               const isSelected = selected === choice.key;
               const isCorrect = choice.key === q.correctKey;
               let bg = "rgba(255,255,255,0.06)";
               let border = "rgba(255,255,255,0.12)";
               let color = "#fff";
-              if (answered && isSelected && isCorrect) { bg = "rgba(25,128,56,0.2)"; border = "rgba(25,128,56,0.5)"; color = "#6fdc8c"; }
+              if (answered && isSelected && isCorrect)  { bg = "rgba(25,128,56,0.2)";  border = "rgba(25,128,56,0.5)";  color = "#6fdc8c"; }
               else if (answered && isSelected && !isCorrect) { bg = "rgba(218,30,40,0.2)"; border = "rgba(218,30,40,0.5)"; color = "#ff8b8b"; }
-              else if (answered && isCorrect) { bg = "rgba(25,128,56,0.12)"; border = "rgba(25,128,56,0.35)"; color = "#6fdc8c"; }
+              else if (answered && isCorrect) { bg = "rgba(25,128,56,0.1)"; border = "rgba(25,128,56,0.3)"; color = "#6fdc8c"; }
               return (
                 <button
                   key={choice.key}
                   onClick={() => handleSelect(choice.key)}
-                  className="flex items-center gap-3 rounded-xl px-4 py-3.5 text-left transition-all"
+                  className="flex items-center gap-3 rounded-xl px-4 py-3 text-left transition-all"
                   style={{ background: bg, border: `2px solid ${border}`, color, cursor: answered ? "default" : "pointer", fontSize: "0.9rem", lineHeight: "1.4" }}
                 >
                   <span className="font-mono font-bold flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center text-xs"
@@ -866,51 +846,45 @@ function PreTestOverlay({
               );
             })}
           </div>
+        </div>
+      </div>
 
-          {answered && (() => {
-            const isCorrect = selected === q.correctKey;
-            const correctChoice = q.choices.find((c) => c.key === q.correctKey);
-            return (
-              <div className="mt-4 flex flex-col gap-3">
-                {/* Feedback box */}
-                <div className="rounded-2xl overflow-hidden" style={{ border: `1.5px solid ${isCorrect ? "rgba(25,128,56,0.45)" : "rgba(218,30,40,0.45)"}` }}>
-                  <div className="flex items-center gap-2 px-4 py-2.5" style={{ background: isCorrect ? "#198038" : "#da1e28" }}>
-                    {isCorrect
-                      ? <CheckCircle2 size={14} color="#fff" />
-                      : <XCircle size={14} color="#fff" />}
-                    <span className="font-bold text-white text-sm">{isCorrect ? t("pretest.good", lang) : t("pretest.wrong", lang)}</span>
-                  </div>
-                  <div className="px-4 py-3" style={{ background: isCorrect ? "rgba(25,128,56,0.12)" : "rgba(218,30,40,0.1)" }}>
-                    {!isCorrect && correctChoice && (
-                      <div className="mb-2 text-sm font-semibold" style={{ color: "#6fdc8c" }}>
-                        {t("pretest.correct", lang)} {correctChoice.key}. {correctChoice.label}
-                      </div>
-                    )}
-                    <p className="text-sm" style={{ color: "rgba(255,255,255,0.7)", lineHeight: "1.55" }}>
-                      {isCorrect ? t("pretest.good_msg", lang) : t("pretest.ko_msg", lang)}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Next button — inside scrollable area, always accessible */}
-                <button
-                  onClick={handleNext}
-                  className="w-full flex items-center justify-center gap-2 rounded-xl py-3.5 font-bold mb-4"
-                  style={{
-                    background: "#fff",
-                    color: "#0D47A1",
-                    border: "2px solid rgba(255,255,255,0.9)",
-                    cursor: "pointer",
-                    fontSize: "0.9375rem",
-                    boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
-                  }}
-                >
-                  {current < shuffledQuestions.length - 1 ? t("pretest.next", lang) : t("pretest.start", lang)}
-                  <ArrowRight size={16} />
-                </button>
+      {/* ── Sticky footer: feedback + Next button (always visible) ─ */}
+      <div className="flex-shrink-0 px-6 pb-5 pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.08)", background: "rgba(10,24,82,0.98)" }}>
+        <div className="max-w-2xl mx-auto flex flex-col gap-3">
+          {answered && (
+            <div className="rounded-xl overflow-hidden" style={{ border: `1.5px solid ${isCorrectAnswer ? "rgba(25,128,56,0.45)" : "rgba(218,30,40,0.45)"}` }}>
+              <div className="flex items-center gap-2 px-4 py-2" style={{ background: isCorrectAnswer ? "#198038" : "#da1e28" }}>
+                {isCorrectAnswer ? <CheckCircle2 size={13} color="#fff" /> : <XCircle size={13} color="#fff" />}
+                <span className="font-bold text-white text-sm">{isCorrectAnswer ? t("pretest.good", lang) : t("pretest.wrong", lang)}</span>
+                {!isCorrectAnswer && correctChoice && (
+                  <span className="text-xs ml-2" style={{ color: "rgba(255,255,255,0.75)" }}>
+                    — {t("pretest.correct", lang)} {correctChoice.key}. {correctChoice.label}
+                  </span>
+                )}
               </div>
-            );
-          })()}
+              <div className="px-4 py-2.5" style={{ background: isCorrectAnswer ? "rgba(25,128,56,0.1)" : "rgba(218,30,40,0.08)" }}>
+                <p className="text-sm" style={{ color: "rgba(255,255,255,0.7)", lineHeight: "1.5" }}>
+                  {isCorrectAnswer ? t("pretest.good_msg", lang) : t("pretest.ko_msg", lang)}
+                </p>
+              </div>
+            </div>
+          )}
+          {answered && (
+            <button
+              onClick={handleNext}
+              className="w-full flex items-center justify-center gap-2 rounded-xl py-3 font-bold"
+              style={{ background: "#fff", color: "#0D47A1", border: "2px solid rgba(255,255,255,0.9)", cursor: "pointer", fontSize: "0.9375rem", boxShadow: "0 4px 20px rgba(0,0,0,0.3)" }}
+            >
+              {current < shuffledQuestions.length - 1 ? t("pretest.next", lang) : t("pretest.start", lang)}
+              <ArrowRight size={16} />
+            </button>
+          )}
+          {!answered && (
+            <div className="text-center" style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.8rem" }}>
+              {lang === "en" ? "Select an answer above to continue" : "Sélectionnez une réponse ci-dessus pour continuer"}
+            </div>
+          )}
         </div>
       </div>
     </div>
