@@ -794,7 +794,7 @@ function PreTestOverlay({
       <div
         className="w-full rounded-2xl overflow-hidden"
         style={{
-          maxWidth: "580px",
+          maxWidth: "660px",
           background: "rgba(255,255,255,0.04)",
           border: "1.5px solid rgba(255,255,255,0.12)",
           boxShadow: "0 24px 60px rgba(0,0,0,0.5)",
