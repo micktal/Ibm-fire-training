@@ -270,7 +270,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     ],
     keyPoints: [
       "Tout signal suspect doit être traité comme un départ de feu réel — jamais ignoré",
-      "Les 3 réflexes dans l'ordre : Alarme (777) → Débrancher (si sûr) → Évacuer",
+      "Les 3 réflexes dans l'ordre : Alarme (777) → Débrancher (si cela ne vous met pas en danger) → Évacuer",
       "Jamais d'eau sur un feu électrique — CO2 uniquement pour les serveurs, câbles et data centers IBM",
     ],
     quiz: [
@@ -860,7 +860,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     objective: "Valider l'ensemble des compétences du chapitre en conditions proches du réel.",
     learningObjectives: {
       savoir: "La procédure complète de gestion d'un incendie en environnement IBM",
-      savoirFaire: "Enchaîner les 3 réflexes : Alarme (777) → Débrancher (si sûr) → Évacuer",
+      savoirFaire: "Enchaîner les 3 réflexes : Alarme (777) → Débrancher (si cela ne vous met pas en danger) → Évacuer",
       savoirEtre: "Garder son sang-froid et coordonner ses actions sous pression chronométrée",
     },
     duration: "12 min",
@@ -884,7 +884,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         question: "Les 3 réflexes IBM dans l'ordre sont :",
         choices: [
           { key: "A", label: "Évacuer → Alarme → Débrancher" },
-          { key: "B", label: "Alarme (777) → Débrancher (si sûr) → Évacuer" },
+          { key: "B", label: "Alarme (777) → Débrancher (si cela ne vous met pas en danger) → Évacuer" },
           { key: "C", label: "Débrancher → Alarme → Appeler le 18" },
         ],
         correctKey: "B",

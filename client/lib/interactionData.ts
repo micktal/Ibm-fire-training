@@ -192,8 +192,8 @@ const m1_hotspot: HotspotExercise = {
     },
     {
       id: "hs1", x: 62, y: 78,
-      label: "2 — Débrancher la prise (si sûr)",
-      description: "Si c'est sans danger, coupez l'alimentation électrique de la source du feu. Jamais d'eau sur un feu électrique — CO2 uniquement. Si inaccessible, couper le disjoncteur.",
+      label: "2 — Débrancher la prise (si cela ne vous met pas en danger)",
+      description: "Si cela ne vous met pas en danger, coupez l'alimentation électrique de la source du feu. Jamais d'eau sur un feu électrique — CO2 uniquement. Si inaccessible, couper le disjoncteur.",
       type: "danger",
       detail: "Ne tentez de débrancher que si cela ne vous met pas en danger. Votre sécurité passe avant tout.",
     },
@@ -279,8 +279,8 @@ const m1_branching: BranchingExercise = {
         {
           label: "Je préviens uniquement mes collègues à voix haute",
           labelEn: "I warn only my colleagues verbally",
-          consequence: "Insuffisant. L'alarme est déjà déclenchée — maintenant coupez l'alimentation si c'est sûr, puis évacuez.",
-          consequenceEn: "Insufficient. The alarm is already triggered — now cut the power if safe, then evacuate.",
+          consequence: "Insuffisant. L'alarme est déjà déclenchée — maintenant coupez l'alimentation si cela ne vous met pas en danger, puis évacuez.",
+          consequenceEn: "Insufficient. The alarm is already triggered — now cut the power only if no risk to yourself, then evacuate.",
           consequenceType: "ko",
           nextNode: "step3",
           points: 3,
@@ -288,8 +288,8 @@ const m1_branching: BranchingExercise = {
         {
           label: "Je retourne vérifier si le feu est bien éteint",
           labelEn: "I go back to check if the fire is fully out",
-          consequence: "Erreur. Un feu électrique peut reprendre. Coupez l'alimentation si c'est sûr, puis évacuez immédiatement.",
-          consequenceEn: "Error. An electrical fire can restart. Cut the power if safe, then evacuate immediately.",
+          consequence: "Erreur. Un feu électrique peut reprendre. Coupez l'alimentation si cela ne vous met pas en danger, puis évacuez immédiatement.",
+          consequenceEn: "Error. An electrical fire can restart. Cut the power only if no risk to yourself, then evacuate immediately.",
           consequenceType: "ko",
           nextNode: "step3",
           points: 0,
