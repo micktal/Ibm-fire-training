@@ -157,52 +157,51 @@ export default function Form() {
       <div className="flex-1 relative overflow-hidden">
         <GeometricBg />
         <div className="relative z-10 h-full overflow-y-auto">
-          <div className="flex items-start justify-center px-4 py-6 min-h-full">
+          <div className="flex items-center justify-center px-4 py-3 min-h-full">
         <div
           className="w-full rounded-xl overflow-hidden"
           style={{ maxWidth: "600px", background: "#fff", border: "1px solid #e4e7f0", boxShadow: "0 4px 24px rgba(0,0,0,0.07)" }}
         >
           {/* Card header */}
-          <div className="relative overflow-hidden px-8 py-7" style={{ background: "#0043ce" }}>
+          <div className="relative overflow-hidden px-8 py-5" style={{ background: "#0043ce" }}>
             <div
               className="absolute pointer-events-none"
-              style={{ right: "-20px", top: "-20px", width: "160px", height: "160px", borderRadius: "50%", background: "rgba(255,255,255,0.05)" }}
+              style={{ right: "-20px", top: "-20px", width: "120px", height: "120px", borderRadius: "50%", background: "rgba(255,255,255,0.05)" }}
             />
-            <div className="flex items-end gap-0.5 mb-3" style={{ height: "20px" }}>
-              {[10, 18, 7, 16, 9, 20, 12, 16].map((h, i) => (
-                <span key={i} className="block rounded-sm" style={{ width: "3px", height: `${h}px`, background: "rgba(255,255,255,0.28)" }} />
-              ))}
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <div className="font-mono text-xs mb-1" style={{ color: "rgba(255,255,255,0.55)", fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.12em", textTransform: "uppercase" }}>
+                  IBM · {isEN ? "Mandatory training" : "Formation obligatoire"} · 2026
+                </div>
+                <h1 className="font-bold text-white" style={{ fontSize: "1.15rem", letterSpacing: "-0.02em", lineHeight: "1.2" }}>
+                  {isEN ? "Fire Safety & Evacuation" : "Sécurité Incendie & Évacuation"}
+                </h1>
+              </div>
+              <div className="flex items-end gap-0.5 flex-shrink-0" style={{ height: "18px" }}>
+                {[8, 16, 6, 14, 8, 18, 10, 14].map((h, i) => (
+                  <span key={i} className="block rounded-sm" style={{ width: "3px", height: `${h}px`, background: "rgba(255,255,255,0.25)" }} />
+                ))}
+              </div>
             </div>
-            <div className="font-mono text-xs mb-1.5" style={{ color: "rgba(255,255,255,0.55)", fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.12em", textTransform: "uppercase" }}>
-              IBM · {isEN ? "Mandatory training" : "Formation obligatoire"} · 2026
-            </div>
-            <h1 className="text-xl font-bold text-white mb-1.5" style={{ letterSpacing: "-0.02em" }}>
-              {isEN ? "Fire Safety & Evacuation" : "Sécurité Incendie & Évacuation"}
-            </h1>
-            <p className="text-sm" style={{ color: "rgba(255,255,255,0.7)", lineHeight: "1.55" }}>
-              {isEN
-                ? "Please fill in your details before starting. This data enables IBM's internal tracking of your habilitations."
-                : "Renseignez vos informations avant de démarrer. Ces données permettent le suivi interne IBM de vos habilitations."}
-            </p>
           </div>
 
           {/* Card body */}
-          <div className="px-8 py-6">
-            {/* Notice */}
+          <div className="px-7 py-4">
+            {/* Notice — compact inline strip */}
             <div
-              className="flex items-start gap-3 rounded-md px-4 py-3 mb-6"
+              className="flex items-center gap-2 rounded-md px-3 py-2 mb-4"
               style={{ background: "rgba(15,98,254,0.05)", border: "1px solid rgba(15,98,254,0.14)" }}
             >
-              <Info size={14} style={{ color: "#0043ce", flexShrink: 0, marginTop: "1px" }} />
-              <p className="text-xs leading-relaxed" style={{ color: "#0031a9" }}>
+              <Info size={13} style={{ color: "#0043ce", flexShrink: 0 }} />
+              <p className="text-xs" style={{ color: "#0031a9", lineHeight: "1.4" }}>
                 {isEN
-                  ? "Please fill in the form below. Your responses are sent to IBM HR and are not visible in the interface."
-                  : "Merci de renseigner le formulaire ci-dessous. Vos réponses sont transmises au service RH IBM et ne sont pas visibles dans l'interface."}
+                  ? "Fill in your details below. Responses are sent to IBM HR."
+                  : "Renseignez vos informations ci-dessous. Données transmises au service RH IBM."}
               </p>
             </div>
 
             {/* Fields */}
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-3.5">
               {/* Nom / Prénom */}
               <div className="grid grid-cols-2 gap-4">
                 <Field id="f-prenom" label={isEN ? "First name" : "Prénom"} required error={errors.prenom}>
@@ -328,7 +327,7 @@ export default function Form() {
 
           {/* Footer */}
           <div
-            className="flex items-center justify-between px-8 py-4"
+            className="flex items-center justify-between px-7 py-3"
             style={{ borderTop: "1px solid #e4e7f0", background: "#fafbfc" }}
           >
             <span className="text-xs" style={{ color: "#8d95aa" }}>

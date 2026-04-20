@@ -56,16 +56,16 @@ export default function ModuleIntroOverlay({ mod, onStart }: Props) {
       <div
         className="relative w-full rounded-3xl overflow-hidden overflow-y-auto"
         style={{
-          maxWidth: "680px",
+          maxWidth: "720px",
           background: "rgba(8,12,24,0.96)",
           border: "1.5px solid rgba(255,255,255,0.12)",
           boxShadow: "0 32px 80px rgba(0,0,0,0.7)",
           animation: "celebrationPop 0.4s cubic-bezier(0.34,1.56,0.64,1) both, popupShake 0.55s ease 0.4s both",
-          maxHeight: "92vh",
+          maxHeight: "90vh",
         }}
       >
         {/* Image strip + title */}
-        <div className="relative overflow-hidden flex-shrink-0" style={{ height: "110px" }}>
+        <div className="relative overflow-hidden flex-shrink-0" style={{ height: "80px" }}>
           <img
             src={mod.image}
             alt={mod.title}
@@ -97,22 +97,22 @@ export default function ModuleIntroOverlay({ mod, onStart }: Props) {
         <div style={{ height: "3px", background: "linear-gradient(90deg, #0f62fe 0%, #4589ff 60%, transparent 100%)", flexShrink: 0 }} />
 
         {/* Content */}
-        <div className="px-5 pt-5 pb-5 flex flex-col gap-5">
+        <div className="px-5 pt-4 pb-4 flex flex-col gap-3.5">
 
           {/* Title + objective — horizontal layout */}
-          <div className="flex gap-4 items-start">
+          <div className="flex gap-4 items-center">
             <div className="flex-1">
-              <h2 className="font-bold text-white mb-1" style={{ fontSize: "1.3rem", letterSpacing: "-0.02em", lineHeight: "1.2" }}>
+              <h2 className="font-bold text-white mb-0.5" style={{ fontSize: "1.2rem", letterSpacing: "-0.02em", lineHeight: "1.2" }}>
                 {mod.title}
               </h2>
-              <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.82rem", lineHeight: "1.4" }}>{mod.subtitle}</p>
+              <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.8rem", lineHeight: "1.4" }}>{mod.subtitle}</p>
             </div>
             {/* Objectif pill */}
-            <div className="flex-shrink-0 rounded-xl p-3" style={{ background: "rgba(15,98,254,0.18)", border: "1.5px solid rgba(15,98,254,0.35)", maxWidth: "200px" }}>
-              <div className="font-mono text-xs mb-1 uppercase" style={{ color: "#7eb3ff", letterSpacing: "0.1em", fontFamily: "'IBM Plex Mono', monospace", fontSize: "8px" }}>
+            <div className="flex-shrink-0 rounded-xl px-3 py-2.5" style={{ background: "rgba(15,98,254,0.18)", border: "1.5px solid rgba(15,98,254,0.35)", maxWidth: "200px" }}>
+              <div className="font-mono text-xs mb-0.5 uppercase" style={{ color: "#7eb3ff", letterSpacing: "0.1em", fontFamily: "'IBM Plex Mono', monospace", fontSize: "8px" }}>
                 {t("intro.at_end", lang)}
               </div>
-              <p style={{ color: "#fff", fontSize: "0.78rem", lineHeight: "1.45", fontWeight: 600 }}>
+              <p style={{ color: "#fff", fontSize: "0.77rem", lineHeight: "1.4", fontWeight: 600 }}>
                 {mod.objective}
               </p>
             </div>
@@ -124,36 +124,36 @@ export default function ModuleIntroOverlay({ mod, onStart }: Props) {
               <div className="font-mono text-xs mb-2.5 uppercase" style={{ color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", fontFamily: "'IBM Plex Mono', monospace", fontSize: "9px" }}>
                 {t("intro.objectives", lang)}
               </div>
-              <div className="grid grid-cols-3 gap-2.5">
+              <div className="grid grid-cols-3 gap-2">
 
                 {/* SAVOIR */}
-                <div className="rounded-xl p-3.5 flex flex-col gap-2"
+                <div className="rounded-xl p-3 flex flex-col gap-1.5"
                   style={{ background: "linear-gradient(145deg, #4c1d95, #6929c4)", border: "1.5px solid rgba(196,181,253,0.25)", boxShadow: "0 4px 16px rgba(105,41,196,0.35)" }}>
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "rgba(255,255,255,0.18)" }}>
-                    <Brain size={14} color="#fff" />
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "rgba(255,255,255,0.18)" }}>
+                    <Brain size={13} color="#fff" />
                   </div>
-                  <div className="font-bold text-xs uppercase" style={{ color: "#c4b5fd", letterSpacing: "0.08em" }}>{t("lo.savoir", lang)}</div>
-                  <div style={{ color: "rgba(255,255,255,0.82)", fontSize: "0.75rem", lineHeight: "1.45" }}>{lo.savoir}</div>
+                  <div className="font-bold text-xs uppercase" style={{ color: "#c4b5fd", letterSpacing: "0.08em", fontSize: "0.68rem" }}>{t("lo.savoir", lang)}</div>
+                  <div style={{ color: "rgba(255,255,255,0.82)", fontSize: "0.72rem", lineHeight: "1.4" }}>{lo.savoir}</div>
                 </div>
 
                 {/* SAVOIR-FAIRE */}
-                <div className="rounded-xl p-3.5 flex flex-col gap-2"
+                <div className="rounded-xl p-3 flex flex-col gap-1.5"
                   style={{ background: "linear-gradient(145deg, #003a8c, #0f62fe)", border: "1.5px solid rgba(126,179,255,0.25)", boxShadow: "0 4px 16px rgba(15,98,254,0.35)" }}>
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "rgba(255,255,255,0.18)" }}>
-                    <Wrench size={14} color="#fff" />
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "rgba(255,255,255,0.18)" }}>
+                    <Wrench size={13} color="#fff" />
                   </div>
-                  <div className="font-bold text-xs uppercase" style={{ color: "#7eb3ff", letterSpacing: "0.08em" }}>{t("lo.savoirFaire", lang)}</div>
-                  <div style={{ color: "rgba(255,255,255,0.82)", fontSize: "0.75rem", lineHeight: "1.45" }}>{lo.savoirFaire}</div>
+                  <div className="font-bold text-xs uppercase" style={{ color: "#7eb3ff", letterSpacing: "0.08em", fontSize: "0.68rem" }}>{t("lo.savoirFaire", lang)}</div>
+                  <div style={{ color: "rgba(255,255,255,0.82)", fontSize: "0.72rem", lineHeight: "1.4" }}>{lo.savoirFaire}</div>
                 </div>
 
                 {/* SAVOIR-ÊTRE */}
-                <div className="rounded-xl p-3.5 flex flex-col gap-2"
+                <div className="rounded-xl p-3 flex flex-col gap-1.5"
                   style={{ background: "linear-gradient(145deg, #0e4f1f, #198038)", border: "1.5px solid rgba(111,220,140,0.25)", boxShadow: "0 4px 16px rgba(25,128,56,0.35)" }}>
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "rgba(255,255,255,0.18)" }}>
-                    <Heart size={14} color="#fff" />
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "rgba(255,255,255,0.18)" }}>
+                    <Heart size={13} color="#fff" />
                   </div>
-                  <div className="font-bold text-xs uppercase" style={{ color: "#6fdc8c", letterSpacing: "0.08em" }}>{t("lo.savoirEtre", lang)}</div>
-                  <div style={{ color: "rgba(255,255,255,0.82)", fontSize: "0.75rem", lineHeight: "1.45" }}>{lo.savoirEtre}</div>
+                  <div className="font-bold text-xs uppercase" style={{ color: "#6fdc8c", letterSpacing: "0.08em", fontSize: "0.68rem" }}>{t("lo.savoirEtre", lang)}</div>
+                  <div style={{ color: "rgba(255,255,255,0.82)", fontSize: "0.72rem", lineHeight: "1.4" }}>{lo.savoirEtre}</div>
                 </div>
               </div>
             </div>
@@ -202,7 +202,7 @@ export default function ModuleIntroOverlay({ mod, onStart }: Props) {
             onClick={onStart}
             className="w-full flex items-center justify-center gap-2.5 font-bold rounded-2xl transition-all"
             style={{
-              padding: "1rem",
+              padding: "0.75rem",
               background: "linear-gradient(135deg, #0043ce 0%, #0f62fe 100%)",
               color: "#fff",
               border: "none",
