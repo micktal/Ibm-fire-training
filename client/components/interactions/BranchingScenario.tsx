@@ -103,8 +103,8 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
     if (!exercise.nodes[currentId]) setCurrentId(exercise.startNode);
   }, [exercise.startNode, currentId, exercise.nodes]);
 
-  // Timer — with 6s reading grace period before countdown starts
-  const READING_GRACE = 6; // seconds to read before timer begins
+  // Timer — visual urgency only, never auto-selects
+  const READING_GRACE = 6; // seconds to read before countdown starts
   useEffect(() => {
     if (timerRef.current) clearInterval(timerRef.current);
     if (readingRef.current) clearTimeout(readingRef.current);
@@ -120,11 +120,8 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
         setTimeLeft((t) => {
           if (t === null || t <= 1) {
             clearInterval(timerRef.current!);
-            if (chosenIdx === null) {
-              const wrongIdx = node.choices.findIndex((c) => c.consequenceType !== "ok");
-              handleChoice(wrongIdx >= 0 ? wrongIdx : node.choices.length - 1, true);
-            }
-            return null;
+            // Timer expired — do NOT auto-select. User must always click.
+            return 0;
           }
           return t - 1;
         });
@@ -394,14 +391,14 @@ export default function BranchingScenario({ exercise, onComplete }: Props) {
               className="absolute top-3 right-3 flex items-center gap-1.5 font-mono font-bold text-sm px-3 py-1.5 rounded-full"
               style={{
                 fontFamily: "'IBM Plex Mono', monospace",
-                background: readingPhase ? "rgba(0,67,206,0.85)" : timeLeft <= 3 ? "rgba(218,30,40,0.9)" : "rgba(0,0,0,0.7)",
+                background: readingPhase ? "rgba(0,67,206,0.85)" : timeLeft === 0 ? "rgba(180,83,9,0.9)" : timeLeft <= 3 ? "rgba(218,30,40,0.9)" : "rgba(0,0,0,0.7)",
                 color: "#fff",
-                border: `1px solid ${readingPhase ? "#0043ce" : timeLeft <= 3 ? "#da1e28" : "rgba(255,255,255,0.2)"}`,
+                border: `1px solid ${readingPhase ? "#0043ce" : timeLeft === 0 ? "#b45309" : timeLeft <= 3 ? "#da1e28" : "rgba(255,255,255,0.2)"}`,
                 backdropFilter: "blur(6px)",
               }}
             >
               <Clock size={13} />
-              {readingPhase ? (isEN ? "Read…" : "Lisez…") : `${timeLeft}s`}
+              {readingPhase ? (isEN ? "Read…" : "Lisez…") : timeLeft === 0 ? (isEN ? "Choose!" : "Choisissez !") : `${timeLeft}s`}
             </div>
           )}
         </div>

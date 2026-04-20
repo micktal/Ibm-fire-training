@@ -786,17 +786,28 @@ function PreTestOverlay({
   const correctChoice = q.choices.find((c) => c.key === q.correctKey);
 
   return (
-    <div className="fixed inset-0 z-[80] flex flex-col" style={{ background: "rgba(10,24,82,0.97)", fontFamily: "'IBM Plex Sans', sans-serif" }}>
-
-      {/* ── Compact header ──────────────────────────────── */}
-      <div className="flex-shrink-0 px-6 pt-4 pb-3" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
-        <div className="max-w-2xl mx-auto">
+    <div
+      className="fixed inset-0 z-[80] flex items-center justify-center p-4"
+      style={{ background: "rgba(10,24,82,0.97)", fontFamily: "'IBM Plex Sans', sans-serif" }}
+    >
+      {/* Single unified card — everything together, no split */}
+      <div
+        className="w-full rounded-2xl overflow-hidden"
+        style={{
+          maxWidth: "580px",
+          background: "rgba(255,255,255,0.04)",
+          border: "1.5px solid rgba(255,255,255,0.12)",
+          boxShadow: "0 24px 60px rgba(0,0,0,0.5)",
+        }}
+      >
+        {/* Header */}
+        <div className="px-6 pt-5 pb-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
           <div className="flex items-center justify-between gap-4 mb-3">
             <div>
               <div className="font-mono font-bold text-xs uppercase mb-0.5" style={{ letterSpacing: "0.12em", fontFamily: "'IBM Plex Mono', monospace", background: "linear-gradient(90deg, #78a9ff, #a56eff)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
                 {t("pretest.title", lang)}
               </div>
-              <div className="font-bold text-white" style={{ fontSize: "0.95rem", opacity: 0.8, lineHeight: "1.3" }}>
+              <div className="font-bold text-white" style={{ fontSize: "0.9rem", opacity: 0.8, lineHeight: "1.3" }}>
                 {moduleTitle}
               </div>
             </div>
@@ -804,24 +815,20 @@ function PreTestOverlay({
               {current + 1} / {shuffledQuestions.length}
             </div>
           </div>
-          {/* Progress bar */}
           <div className="flex items-center gap-1.5">
             {shuffledQuestions.map((_, i) => (
               <div key={i} className="rounded-full transition-all duration-300" style={{ height: "3px", flex: 1, background: i < current ? "#6fdc8c" : i === current ? "#78a9ff" : "rgba(255,255,255,0.15)" }} />
             ))}
           </div>
         </div>
-      </div>
 
-      {/* ── Question + choices (scrollable only if truly needed) ─ */}
-      <div className="flex-1 overflow-y-auto px-6 py-5">
-        <div className="max-w-2xl mx-auto">
-          <div className="font-bold text-white mb-4" style={{ fontSize: "1.05rem", lineHeight: "1.45" }}>
+        {/* Question + choices + feedback + button — all together */}
+        <div className="px-6 py-5 flex flex-col gap-3">
+          <div className="font-bold text-white" style={{ fontSize: "1rem", lineHeight: "1.45" }}>
             {q.question}
           </div>
 
-          {/* Choices — 2-col grid on wide screens to reduce height */}
-          <div className="grid gap-2" style={{ gridTemplateColumns: q.choices.length <= 3 ? "1fr" : "repeat(auto-fit, minmax(260px, 1fr))" }}>
+          <div className="flex flex-col gap-2">
             {q.choices.map((choice) => {
               const isSelected = selected === choice.key;
               const isCorrect = choice.key === q.correctKey;
@@ -835,8 +842,8 @@ function PreTestOverlay({
                 <button
                   key={choice.key}
                   onClick={() => handleSelect(choice.key)}
-                  className="flex items-center gap-3 rounded-xl px-4 py-3 text-left transition-all"
-                  style={{ background: bg, border: `2px solid ${border}`, color, cursor: answered ? "default" : "pointer", fontSize: "0.9rem", lineHeight: "1.4" }}
+                  className="flex items-center gap-3 rounded-xl px-4 py-2.5 text-left transition-all"
+                  style={{ background: bg, border: `2px solid ${border}`, color, cursor: answered ? "default" : "pointer", fontSize: "0.875rem", lineHeight: "1.4" }}
                 >
                   <span className="font-mono font-bold flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center text-xs"
                     style={{ background: "rgba(255,255,255,0.1)", fontFamily: "'IBM Plex Mono', monospace" }}
@@ -846,19 +853,15 @@ function PreTestOverlay({
               );
             })}
           </div>
-        </div>
-      </div>
 
-      {/* ── Sticky footer: feedback + Next button (always visible) ─ */}
-      <div className="flex-shrink-0 px-6 pb-5 pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.08)", background: "rgba(10,24,82,0.98)" }}>
-        <div className="max-w-2xl mx-auto flex flex-col gap-3">
+          {/* Feedback */}
           {answered && (
             <div className="rounded-xl overflow-hidden" style={{ border: `1.5px solid ${isCorrectAnswer ? "rgba(25,128,56,0.45)" : "rgba(218,30,40,0.45)"}` }}>
               <div className="flex items-center gap-2 px-4 py-2" style={{ background: isCorrectAnswer ? "#198038" : "#da1e28" }}>
                 {isCorrectAnswer ? <CheckCircle2 size={13} color="#fff" /> : <XCircle size={13} color="#fff" />}
                 <span className="font-bold text-white text-sm">{isCorrectAnswer ? t("pretest.good", lang) : t("pretest.wrong", lang)}</span>
                 {!isCorrectAnswer && correctChoice && (
-                  <span className="text-xs ml-2" style={{ color: "rgba(255,255,255,0.75)" }}>
+                  <span className="text-xs ml-2" style={{ color: "rgba(255,255,255,0.8)" }}>
                     — {t("pretest.correct", lang)} {correctChoice.key}. {correctChoice.label}
                   </span>
                 )}
@@ -870,6 +873,8 @@ function PreTestOverlay({
               </div>
             </div>
           )}
+
+          {/* Next button */}
           {answered && (
             <button
               onClick={handleNext}
@@ -879,11 +884,6 @@ function PreTestOverlay({
               {current < shuffledQuestions.length - 1 ? t("pretest.next", lang) : t("pretest.start", lang)}
               <ArrowRight size={16} />
             </button>
-          )}
-          {!answered && (
-            <div className="text-center" style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.8rem" }}>
-              {lang === "en" ? "Select an answer above to continue" : "Sélectionnez une réponse ci-dessus pour continuer"}
-            </div>
           )}
         </div>
       </div>
