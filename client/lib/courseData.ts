@@ -1433,6 +1433,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
     },
     duration: "7 min",
     image: `${CDN}48e0cc79ee294fbbaf81f10232959ffb?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Incendie%20au%20bureau.%20Escaliers%20ou%20EAS.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL0luY2VuZGllIGF1IGJ1cmVhdS4gRXNjYWxpZXJzIG91IEVBUy5tcDQiLCJpYXQiOjE3NzY5MzE1NDIsImV4cCI6MTg0MDAwMzU0Mn0.2Ds06tAcXylEdR6aJNEQSHxLhBBQvyHHQO9zG_xnayU",
     funFacts: [
       { stat: "100%", label: "des décès en ascenseur sont évitables", detail: "L'ascenseur en cas d'incendie est un piège : coupure électrique, enfumage, portes bloquées. Escaliers uniquement, toujours.", icon: "alert" },
       { stat: "4×", label: "plus lent en ascenseur qu'en escalier", detail: "Le temps d'évacuation via ascenseur est en moyenne 4 fois plus long qu'une évacuation ordonnée par les escaliers de secours.", icon: "clock" },
