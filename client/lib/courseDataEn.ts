@@ -661,6 +661,7 @@ export const MODULES_EN: CourseModule[] = [
     },
     duration: "12 min",
     image: `${CDN}2ee3c4ada85544aa87e2f4f440dc1a94?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Master%20IBM%20Full%20Evacuation.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL01hc3RlciBJQk0gRnVsbCBFdmFjdWF0aW9uLm1wNCIsImlhdCI6MTc3NjkzNzgwNSwiZXhwIjoxODQwMDA5ODA1fQ.E1DODefXdwGISBnVmdJ7vu9Q6qtm9CqW_hLbNX65MSE",
     funFacts: [
       { stat: "85%", label: "reduction in death risk with training", detail: "A well-executed and regularly practiced fire training reduces the risk of death by 85% in a real situation.", icon: "shield" },
       { stat: "14 modules", label: "to be fully operational", detail: "You are completing the 14 IBM modules. Every reflex learned here can make the difference between a successful evacuation and a tragedy.", icon: "zap" },
