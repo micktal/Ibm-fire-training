@@ -580,6 +580,7 @@ export const MODULES_EN: CourseModule[] = [
     },
     duration: "7 min",
     image: `${CDN}cc5ab29f9fd543a2aff682cdd54297ad?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Escape%20Smoke%20Safely.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL0VzY2FwZSBTbW9rZSBTYWZlbHkubXA0IiwiaWF0IjoxNzc2OTMyNzY3LCJleHAiOjE4NDAwMDQ3Njd9.QCLPiJkI3oU4UAWWNFOmJO7Z4uSfJ9FmzSsbuN_tqzA",
     funFacts: [
       { stat: "3min", label: "to lose consciousness in smoke", detail: "Fire smoke contains carbon monoxide, CO2 and toxic gases. Within 3 minutes of exposure in a heavily smoke-filled area, loss of consciousness is possible.", icon: "alert" },
       { stat: "60%", label: "of deaths by intoxication", detail: "More than 60% of fire victims die from smoke inhalation, not from flames. Escaping smoke is the absolute priority — even if you don't see visible fire.", icon: "flame" },
