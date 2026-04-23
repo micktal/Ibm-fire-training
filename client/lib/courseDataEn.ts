@@ -620,6 +620,7 @@ export const MODULES_EN: CourseModule[] = [
     },
     duration: "7 min",
     image: `${CDN}48e0cc79ee294fbbaf81f10232959ffb?format=webp&width=800`,
+    videoUrl: "https://xnwexjnaiffdcifcnton.supabase.co/storage/v1/object/sign/video%201/Fire%20Evacuation%20Essentials.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mMWE2Y2M1ZS1kN2E2LTRjY2EtOTg1Ny1iOTc0Njg3NGQzNmUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyAxL0ZpcmUgRXZhY3VhdGlvbiBFc3NlbnRpYWxzLm1wNCIsImlhdCI6MTc3NjkzNDc1NCwiZXhwIjoxODQwMDA2NzU0fQ.-nmBLDqKjP4uozRfnJT2hce-gLJ-bDPZS3FX_bG9Otw",
     funFacts: [
       { stat: "100%", label: "of elevator deaths during fires are preventable", detail: "Elevators during a fire are a trap: power cut, smoke entry, doors jamming. Stairs are always the only option.", icon: "alert" },
       { stat: "4×", label: "slower evacuation by elevator", detail: "Average elevator evacuation is 4 times slower than ordered staircase evacuation.", icon: "clock" },
