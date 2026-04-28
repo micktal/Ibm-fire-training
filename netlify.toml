@@ -7,6 +7,14 @@ publish = "dist/spa"
 [functions]
 external_node_modules = ["express"]
 node_bundler = "esbuild"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Allow embedding in any LMS iframe (required for SCORM)
+    X-Frame-Options = "ALLOWALL"
+    Content-Security-Policy = "frame-ancestors *;"
+
 [[redirects]]
 force = true
 from = "/api/*"
