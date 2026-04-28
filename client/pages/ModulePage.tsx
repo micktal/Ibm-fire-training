@@ -33,6 +33,7 @@ import { MODULE_INTERACTIONS, AnyExercise } from "@/lib/interactionData";
 import { ALERT_BY_MODULE } from "@/lib/situationAlerts";
 import { useUser } from "@/lib/userContext";
 import { updateProgression, getSessionId } from "@/lib/supabase";
+import { useScorm } from "@/hooks/useScorm";
 
 function InteractionBlock({ exercise }: { exercise: AnyExercise }) {
   if (exercise.type === "hotspot") return <HotspotImage exercise={exercise} />;
@@ -927,6 +928,7 @@ export default function ModulePage() {
   const [activeSection, setActiveSection] = useState<number | null>(0);
   const [showCelebration, setShowCelebration] = useState(false);
   const [preTestScore, setPreTestScore] = useState<number | null>(null);
+  const scorm = useScorm(id ?? "");
   const [selfAssessment, setSelfAssessment] = useState<number | null>(null);
   const [forceQuiz, setForceQuiz] = useState(false); // allows retake on already-done modules
   const [savedAt, setSavedAt] = useState<string | null>(null);
@@ -994,6 +996,12 @@ export default function ModulePage() {
     if (startTimeRef.current) {
       const mins = Math.round((Date.now() - startTimeRef.current) / 60000);
       setElapsedMin(mins);
+    }
+    // Report score to SCORM LMS
+    if (score >= 80) {
+      scorm.markCompleted(score);
+    } else {
+      scorm.markFailed(score);
     }
     // Only mark completed if score >= 80%
     if (score >= 80) {
@@ -1143,7 +1151,13 @@ export default function ModulePage() {
                         <button
                           className="w-full flex items-center gap-3 px-4 py-3.5 text-left"
                           style={{ background: isOpen ? accent.headerBg : "#fff", transition: "background 0.2s" }}
-                          onClick={() => setActiveSection(isOpen ? null : idx)}
+                          onClick={() => {
+                            const next = isOpen ? null : idx;
+                            setActiveSection(next);
+                            if (next !== null) {
+                              scorm.saveProgress({ currentSection: next });
+                            }
+                          }}
                         >
                           <div
                             className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
