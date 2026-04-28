@@ -103,9 +103,9 @@ function generateLauncher(mod) {
   <title>IBM Sécurité Incendie — ${mod.titleFr}</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #061178; }
+    #loading {
       font-family: 'IBM Plex Sans', Arial, sans-serif;
-      background: #061178;
       color: #fff;
       display: flex;
       flex-direction: column;
@@ -113,6 +113,11 @@ function generateLauncher(mod) {
       justify-content: center;
       height: 100vh;
       gap: 1rem;
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      background: #061178;
+      transition: opacity 0.4s;
     }
     .logo { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.05em; }
     .subtitle { font-size: 0.9rem; opacity: 0.7; }
@@ -124,15 +129,37 @@ function generateLauncher(mod) {
       animation: spin 0.8s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+    #content-frame {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
   </style>
 </head>
 <body>
-  <div class="logo">IBM</div>
-  <div class="subtitle">Sécurité Incendie &amp; Évacuation</div>
-  <div class="spinner"></div>
+  <!-- Loading screen shown while iframe loads -->
+  <div id="loading">
+    <div class="logo">IBM</div>
+    <div class="subtitle">Sécurité Incendie &amp; Évacuation — Ch${mod.chapter} M${mod.number}</div>
+    <div class="spinner"></div>
+  </div>
+
+  <!-- The module loads inside this iframe — the launcher page never navigates away -->
+  <iframe
+    id="content-frame"
+    src="${moduleUrl}"
+    allow="fullscreen"
+    title="${mod.titleFr}"
+  ></iframe>
 
   <script>
     // ── SCORM 1.2 API discovery ──────────────────────────────────────────────
+    // The API lives in a parent window (LMS). We find it here in the launcher,
+    // which stays in the LMS frame. The iframe content communicates back via
+    // postMessage if needed (for future use), but tracking is handled by the
+    // React app using the same parent-window API lookup.
     function findSCORMAPI(win) {
       var tries = 0;
       while (!win.API && win.parent && win.parent !== win && tries < 7) {
@@ -145,33 +172,43 @@ function generateLauncher(mod) {
     var API = findSCORMAPI(window);
 
     if (API) {
-      // Initialize the session
       API.LMSInitialize("");
 
-      // Store init flag so the React app knows SCORM is active
+      // Read and store saved data so the React app (in iframe) can restore state
       try {
-        sessionStorage.setItem("scorm_active", "1");
-        sessionStorage.setItem("scorm_module", "${mod.id}");
-        // Pass lesson status to app
-        var status = API.LMSGetValue("cmi.core.lesson_status");
-        sessionStorage.setItem("scorm_status", status);
         var suspendData = API.LMSGetValue("cmi.suspend_data");
-        if (suspendData) sessionStorage.setItem("scorm_suspend_data", suspendData);
-        var location = API.LMSGetValue("cmi.core.lesson_location");
-        if (location) sessionStorage.setItem("scorm_location", location);
+        var lessonLocation = API.LMSGetValue("cmi.core.lesson_location");
+        var lessonStatus = API.LMSGetValue("cmi.core.lesson_status");
+
+        // Pass data to iframe via URL hash once it loads
+        if (suspendData || lessonLocation) {
+          var url = "${moduleUrl}";
+          sessionStorage.setItem("scorm_active", "1");
+          sessionStorage.setItem("scorm_module", "${mod.id}");
+          if (suspendData) sessionStorage.setItem("scorm_suspend_data", suspendData);
+          if (lessonLocation) sessionStorage.setItem("scorm_location", lessonLocation);
+          if (lessonStatus) sessionStorage.setItem("scorm_status", lessonStatus);
+        }
       } catch(e) {}
 
-      // Commit and finish when window closes
+      // Commit + finish when launcher is unloaded (LMS closes the window)
       window.addEventListener("beforeunload", function() {
-        try {
-          API.LMSCommit("");
-          API.LMSFinish("");
-        } catch(e) {}
+        try { API.LMSCommit(""); } catch(e) {}
+        try { API.LMSFinish(""); } catch(e) {}
       });
+
+      // Periodic auto-commit every 60s
+      setInterval(function() {
+        try { API.LMSCommit(""); } catch(e) {}
+      }, 60000);
     }
 
-    // ── Redirect to the module ───────────────────────────────────────────────
-    window.location.replace("${moduleUrl}");
+    // ── Hide loading screen once iframe is ready ─────────────────────────────
+    document.getElementById("content-frame").addEventListener("load", function() {
+      var loading = document.getElementById("loading");
+      loading.style.opacity = "0";
+      setTimeout(function() { loading.style.display = "none"; }, 400);
+    });
   </script>
 </body>
 </html>`;
