@@ -1130,7 +1130,7 @@ export default function ModulePage() {
           )}
 
           {/* Content sections */}
-          <div className="flex flex-col gap-2.5">
+          <div className="flex flex-col gap-2">
             {mod.content.map((section, idx) => {
               const accent = typeAccent[section.type] ?? typeAccent.intro;
               const isOpen = activeSection === idx;
@@ -1139,55 +1139,61 @@ export default function ModulePage() {
                   <div
                     className="rounded-2xl overflow-hidden transition-all duration-200"
                     style={{
-                      border: `2px solid ${isOpen ? accent.border : "#e4e7f0"}`,
+                      border: `1.5px solid ${isOpen ? accent.border : "#e4e7f0"}`,
                       background: "#fff",
-                      boxShadow: isOpen ? "0 6px 24px rgba(0,0,0,0.09)" : "0 1px 4px rgba(0,0,0,0.04)",
+                      boxShadow: isOpen ? "0 4px 20px rgba(0,0,0,0.08)" : "none",
                     }}
                   >
-                    <div className="flex">
-                      {/* Left color sidebar */}
-                      <div style={{ width: "5px", flexShrink: 0, background: isOpen ? accent.border : "#c8cfe0", transition: "background 0.2s" }} />
-                      <div className="flex-1">
-                        <button
-                          className="w-full flex items-center gap-3 px-4 py-3.5 text-left"
-                          style={{ background: isOpen ? accent.headerBg : "#fff", transition: "background 0.2s" }}
-                          onClick={() => {
-                            const next = isOpen ? null : idx;
-                            setActiveSection(next);
-                            if (next !== null) {
-                              scorm.saveProgress({ currentSection: next });
-                            }
-                          }}
-                        >
-                          <div
-                            className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                            style={{ background: isOpen ? accent.icon : "#f2f3f7", transition: "background 0.2s" }}
-                          >
-                            <ContentIcon type={section.type} />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="text-xs font-bold uppercase mb-0.5"
-                              style={{ color: isOpen ? accent.labelColor : "#adb3c8", letterSpacing: "0.1em", transition: "color 0.2s" }}
-                            >
-                              {getTypeLabel(section.type, lang)}
-                            </div>
-                            <div className="font-bold truncate" style={{ color: "#061f5c", fontSize: "0.9rem" }}>
-                              {section.title || mod.title}
-                            </div>
-                          </div>
-                          <ChevronDown
-                            size={17}
-                            style={{
-                              color: isOpen ? accent.border : "#adb3c8",
-                              transform: isOpen ? "rotate(180deg)" : "rotate(0)",
-                              transition: "transform 0.25s, color 0.2s",
-                              flexShrink: 0,
-                            }}
-                          />
-                        </button>
-                        {isOpen && <SectionBody section={section} />}
+                    <button
+                      className="w-full flex items-center gap-3 px-4 py-3.5 text-left transition-all duration-200"
+                      style={{
+                        background: isOpen ? accent.headerBg : "#fff",
+                        cursor: "pointer",
+                        borderBottom: isOpen ? `1px solid ${accent.border}22` : "none",
+                      }}
+                      onClick={() => {
+                        const next = isOpen ? null : idx;
+                        setActiveSection(next);
+                        if (next !== null) scorm.saveProgress({ currentSection: next });
+                      }}
+                    >
+                      {/* Left accent bar */}
+                      <div style={{ width: "3px", height: "36px", borderRadius: "2px", flexShrink: 0, background: isOpen ? accent.border : "#e0e4ef", transition: "background 0.2s" }} />
+                      <div
+                        className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                        style={{ background: isOpen ? accent.icon : "#f2f4fa", transition: "background 0.2s" }}
+                      >
+                        <ContentIcon type={section.type} />
                       </div>
-                    </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-xs font-bold uppercase mb-0.5"
+                          style={{ color: isOpen ? accent.labelColor : "#9aa0b8", letterSpacing: "0.1em", transition: "color 0.2s" }}
+                        >
+                          {getTypeLabel(section.type, lang)}
+                        </div>
+                        <div className="font-bold truncate" style={{ color: "#061f5c", fontSize: "0.875rem" }}>
+                          {section.title || mod.title}
+                        </div>
+                      </div>
+                      {/* Clear click affordance */}
+                      <div className="flex items-center gap-1.5 flex-shrink-0">
+                        {!isOpen && (
+                          <span className="text-xs font-medium px-2 py-0.5 rounded-full"
+                            style={{ background: "#f0f3fa", color: "#9aa0b8", fontSize: "10px", letterSpacing: "0.05em" }}>
+                            {lang === "en" ? "Open" : "Ouvrir"}
+                          </span>
+                        )}
+                        <ChevronDown
+                          size={18}
+                          style={{
+                            color: isOpen ? accent.border : "#9aa0b8",
+                            transform: isOpen ? "rotate(180deg)" : "rotate(0)",
+                            transition: "transform 0.25s, color 0.2s",
+                          }}
+                        />
+                      </div>
+                    </button>
+                    {isOpen && <SectionBody section={section} />}
                   </div>
                 </FadeIn>
               );
@@ -1218,29 +1224,23 @@ export default function ModulePage() {
             </FadeIn>
           )}
 
-          {/* Key points recap before quiz */}
+          {/* Key points recap before quiz — icon-based */}
           {mod.keyPoints && mod.keyPoints.length > 0 && (
             <FadeIn delay={0.12}>
-              <div className="rounded-2xl overflow-hidden" style={{ border: "2px solid rgba(13,71,161,0.25)", boxShadow: "0 2px 12px rgba(13,71,161,0.07)" }}>
-                <div className="flex items-center gap-2.5 px-5 py-3"
-                  style={{ background: "rgba(13,71,161,0.07)", borderBottom: "1px solid rgba(13,71,161,0.12)" }}
+              <div className="rounded-2xl overflow-hidden" style={{ border: "1.5px solid #e4e7f0" }}>
+                <div className="flex items-center gap-2 px-4 py-2.5"
+                  style={{ background: "#f7f8fc", borderBottom: "1px solid #e4e7f0" }}
                 >
-                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "rgba(13,71,161,0.12)" }}>
-                    <BookOpen size={14} style={{ color: "#0D47A1" }} />
-                  </div>
-                  <span className="font-bold text-sm uppercase" style={{ color: "#0D47A1", letterSpacing: "0.08em" }}>{t("module.key_points", lang)}</span>
+                  <BookOpen size={13} style={{ color: "#0D47A1" }} />
+                  <span className="font-bold text-xs uppercase" style={{ color: "#0D47A1", letterSpacing: "0.1em" }}>{t("module.key_points", lang)}</span>
                 </div>
                 <div className="flex flex-col bg-white">
                   {mod.keyPoints.map((point, i) => (
-                    <div key={i} className="flex items-start gap-3 px-5 py-3"
+                    <div key={i} className="flex items-start gap-3 px-4 py-3"
                       style={{ borderBottom: i < mod.keyPoints!.length - 1 ? "1px solid #f0f2f8" : "none" }}
                     >
-                      <span className="font-mono text-xs font-bold flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center mt-0.5"
-                        style={{ background: "#0D47A1", color: "#fff", fontSize: "10px", fontFamily: "'IBM Plex Mono', monospace" }}
-                      >
-                        {i + 1}
-                      </span>
-                      <span style={{ color: "#0a2052", fontSize: "0.875rem", lineHeight: "1.55", fontWeight: 500 }}>{point}</span>
+                      <CheckCircle2 size={15} style={{ color: "#0D47A1", flexShrink: 0, marginTop: "2px" }} />
+                      <span style={{ color: "#1a2952", fontSize: "0.85rem", lineHeight: "1.55", fontWeight: 500 }}>{point}</span>
                     </div>
                   ))}
                 </div>
@@ -1306,24 +1306,6 @@ export default function ModulePage() {
           {/* Post-quiz section */}
           {(quizDone || alreadyDone) && (
             <FadeIn delay={0}>
-              {/* Key points recap */}
-              {mod.keyPoints && (
-                <div className="rounded-2xl overflow-hidden mb-4" style={{ border: "2px solid rgba(13,71,161,0.22)", boxShadow: "0 4px 16px rgba(13,71,161,0.08)" }}>
-                  <div className="flex items-center gap-2.5 px-5 py-3" style={{ background: "linear-gradient(135deg, #0D47A1, #1565C0)" }}>
-                    <BookOpen size={15} color="#fff" />
-                    <span className="font-bold text-white uppercase" style={{ fontSize: "0.8rem", letterSpacing: "0.1em" }}>{t("module.key_points_post", lang)}</span>
-                  </div>
-                  <div className="flex flex-col bg-white">
-                    {mod.keyPoints.map((point, i) => (
-                      <div key={i} className="flex items-start gap-3 px-5 py-3" style={{ borderBottom: i < mod.keyPoints!.length - 1 ? "1px solid #f0f2f8" : "none" }}>
-                        <CheckCircle2 size={15} style={{ color: "#0D47A1", flexShrink: 0, marginTop: "1px" }} />
-                        <span style={{ color: "#0a2052", fontSize: "0.875rem", lineHeight: "1.55", fontWeight: 500 }}>{point}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
               {/* Pre-test comparison */}
               {preTestScore !== null && (
                 <div className="rounded-xl px-4 py-3 mb-4 flex items-center gap-3" style={{ background: "rgba(124,58,237,0.07)", border: "1.5px solid rgba(124,58,237,0.2)" }}>

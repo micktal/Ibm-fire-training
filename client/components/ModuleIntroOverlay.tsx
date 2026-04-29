@@ -121,39 +121,45 @@ export default function ModuleIntroOverlay({ mod, onStart }: Props) {
           {/* ── 3 Learning objectives — HORIZONTAL grid ── */}
           {lo && (
             <div>
-              <div className="font-mono text-xs mb-2.5 uppercase" style={{ color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", fontFamily: "'IBM Plex Mono', monospace", fontSize: "9px" }}>
+              <div className="font-mono text-xs mb-2.5 uppercase" style={{ color: "rgba(255,255,255,0.6)", letterSpacing: "0.12em", fontFamily: "'IBM Plex Mono', monospace", fontSize: "9px", fontWeight: 700 }}>
                 {t("intro.objectives", lang)}
               </div>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="flex flex-col gap-1.5">
 
                 {/* SAVOIR */}
-                <div className="rounded-xl p-3 flex flex-col gap-1.5"
-                  style={{ background: "linear-gradient(145deg, #4c1d95, #6929c4)", border: "1.5px solid rgba(196,181,253,0.25)", boxShadow: "0 4px 16px rgba(105,41,196,0.35)" }}>
-                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "rgba(255,255,255,0.18)" }}>
-                    <Brain size={13} color="#fff" />
+                <div className="rounded-xl p-3 flex items-start gap-3"
+                  style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(196,181,253,0.15)" }}>
+                    <Brain size={13} color="#c4b5fd" />
                   </div>
-                  <div className="font-bold text-xs uppercase" style={{ color: "#c4b5fd", letterSpacing: "0.08em", fontSize: "0.68rem" }}>{t("lo.savoir", lang)}</div>
-                  <div style={{ color: "rgba(255,255,255,0.82)", fontSize: "0.72rem", lineHeight: "1.4" }}>{lo.savoir}</div>
+                  <div>
+                    <div className="font-bold text-xs uppercase mb-0.5" style={{ color: "#c4b5fd", letterSpacing: "0.08em", fontSize: "0.65rem" }}>{t("lo.savoir", lang)}</div>
+                    <div style={{ color: "rgba(255,255,255,0.8)", fontSize: "0.72rem", lineHeight: "1.4" }}>{lo.savoir}</div>
+                  </div>
                 </div>
 
                 {/* SAVOIR-FAIRE */}
-                <div className="rounded-xl p-3 flex flex-col gap-1.5"
-                  style={{ background: "linear-gradient(145deg, #003a8c, #0f62fe)", border: "1.5px solid rgba(126,179,255,0.25)", boxShadow: "0 4px 16px rgba(15,98,254,0.35)" }}>
-                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "rgba(255,255,255,0.18)" }}>
-                    <Wrench size={13} color="#fff" />
+                <div className="rounded-xl p-3 flex items-start gap-3"
+                  style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(126,179,255,0.15)" }}>
+                    <Wrench size={13} color="#78a9ff" />
                   </div>
-                  <div className="font-bold text-xs uppercase" style={{ color: "#7eb3ff", letterSpacing: "0.08em", fontSize: "0.68rem" }}>{t("lo.savoirFaire", lang)}</div>
-                  <div style={{ color: "rgba(255,255,255,0.82)", fontSize: "0.72rem", lineHeight: "1.4" }}>{lo.savoirFaire}</div>
+                  <div>
+                    <div className="font-bold text-xs uppercase mb-0.5" style={{ color: "#78a9ff", letterSpacing: "0.08em", fontSize: "0.65rem" }}>{t("lo.savoirFaire", lang)}</div>
+                    <div style={{ color: "rgba(255,255,255,0.8)", fontSize: "0.72rem", lineHeight: "1.4" }}>{lo.savoirFaire}</div>
+                  </div>
                 </div>
 
                 {/* SAVOIR-ÊTRE */}
-                <div className="rounded-xl p-3 flex flex-col gap-1.5"
-                  style={{ background: "linear-gradient(145deg, #0e4f1f, #198038)", border: "1.5px solid rgba(111,220,140,0.25)", boxShadow: "0 4px 16px rgba(25,128,56,0.35)" }}>
-                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "rgba(255,255,255,0.18)" }}>
-                    <Heart size={13} color="#fff" />
+                <div className="rounded-xl p-3 flex items-start gap-3"
+                  style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(111,220,140,0.15)" }}>
+                    <Heart size={13} color="#6fdc8c" />
                   </div>
-                  <div className="font-bold text-xs uppercase" style={{ color: "#6fdc8c", letterSpacing: "0.08em", fontSize: "0.68rem" }}>{t("lo.savoirEtre", lang)}</div>
-                  <div style={{ color: "rgba(255,255,255,0.82)", fontSize: "0.72rem", lineHeight: "1.4" }}>{lo.savoirEtre}</div>
+                  <div>
+                    <div className="font-bold text-xs uppercase mb-0.5" style={{ color: "#6fdc8c", letterSpacing: "0.08em", fontSize: "0.65rem" }}>{t("lo.savoirEtre", lang)}</div>
+                    <div style={{ color: "rgba(255,255,255,0.8)", fontSize: "0.72rem", lineHeight: "1.4" }}>{lo.savoirEtre}</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -162,7 +168,7 @@ export default function ModuleIntroOverlay({ mod, onStart }: Props) {
           {/* ── Ce module contient — horizontal pills ── */}
           <div>
             <div className="font-mono text-xs mb-2.5 uppercase"
-              style={{ color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", fontFamily: "'IBM Plex Mono', monospace", fontSize: "9px" }}>
+              style={{ color: "rgba(255,255,255,0.6)", letterSpacing: "0.12em", fontFamily: "'IBM Plex Mono', monospace", fontSize: "9px", fontWeight: 700 }}>
               {t("intro.contains", lang)}
             </div>
             <div className="flex flex-wrap gap-2">
