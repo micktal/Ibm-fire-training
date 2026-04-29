@@ -34,6 +34,8 @@ import { ALERT_BY_MODULE } from "@/lib/situationAlerts";
 import { useUser } from "@/lib/userContext";
 import { updateProgression, getSessionId } from "@/lib/supabase";
 import { useScorm } from "@/hooks/useScorm";
+import PictoSequence from "@/components/PictoSequence";
+import { PICTO_SEQUENCES } from "@/lib/pictoSequences";
 
 function InteractionBlock({ exercise }: { exercise: AnyExercise }) {
   if (exercise.type === "hotspot") return <HotspotImage exercise={exercise} />;
@@ -1252,6 +1254,13 @@ export default function ModulePage() {
           {mod.podcastUrl && (
             <FadeIn delay={0.13}>
               <PodcastPlayer url={mod.podcastUrl} title={mod.title} lang={lang} />
+            </FadeIn>
+          )}
+
+          {/* Picto sequence — visual procedure recap */}
+          {PICTO_SEQUENCES[mod.id] && (
+            <FadeIn delay={0.13}>
+              <PictoSequence data={PICTO_SEQUENCES[mod.id]} lang={lang} />
             </FadeIn>
           )}
 
