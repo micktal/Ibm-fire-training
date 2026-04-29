@@ -1,456 +1,149 @@
 /**
  * pictoSequences.ts
- * Visual step-by-step procedure sequences shown before the quiz in each module.
- * Keyed by module ID. Only modules with a clear procedure sequence have one.
+ * Premium visual procedure sequences displayed before the quiz.
+ * Uses Lucide icon names + CSS gradients for premium circles.
  */
 
 import { PictoSequenceData } from "@/components/PictoSequence";
 
+const G = {
+  red:      { gradient: "linear-gradient(145deg, #da1e28, #a2191f)", glow: "rgba(218,30,40,0.4)" },
+  blue:     { gradient: "linear-gradient(145deg, #0f62fe, #0031a9)", glow: "rgba(15,98,254,0.35)" },
+  green:    { gradient: "linear-gradient(145deg, #198038, #0b4f1e)", glow: "rgba(25,128,56,0.35)" },
+  orange:   { gradient: "linear-gradient(145deg, #ff6b1a, #c43d00)", glow: "rgba(255,107,26,0.35)" },
+  purple:   { gradient: "linear-gradient(145deg, #6929c4, #491d8b)", glow: "rgba(105,41,196,0.35)" },
+  darkblue: { gradient: "linear-gradient(145deg, #00539a, #003a75)", glow: "rgba(0,83,154,0.35)" },
+  teal:     { gradient: "linear-gradient(145deg, #007d79, #004144)", glow: "rgba(0,125,121,0.35)" },
+  charcoal: { gradient: "linear-gradient(145deg, #393939, #161616)", glow: "rgba(57,57,57,0.45)" },
+  gold:     { gradient: "linear-gradient(145deg, #b28600, #8a6500)", glow: "rgba(178,134,0,0.35)" },
+};
+
 export const PICTO_SEQUENCES: Record<string, PictoSequenceData> = {
 
-  // Ch1-M1 — Les 3 réflexes
   "ch1-m1": {
     titleFr: "Les 3 réflexes dans l'ordre",
     titleEn: "The 3 reflexes in order",
     steps: [
-      {
-        icon: "🔴",
-        labelFr: "Boîtier rouge",
-        labelEn: "Red call point",
-        sublabelFr: "Déclenche l'alarme",
-        sublabelEn: "Triggers the alarm",
-        bg: "#da1e28",
-      },
-      {
-        icon: "📞",
-        labelFr: "777",
-        labelEn: "777",
-        sublabelFr: "Téléphone fixe IBM",
-        sublabelEn: "IBM fixed phone",
-        bg: "#0043ce",
-      },
-      {
-        icon: "🚪",
-        labelFr: "Évacuer",
-        labelEn: "Evacuate",
-        sublabelFr: "Sans attendre",
-        sublabelEn: "Immediately",
-        bg: "#198038",
-      },
+      { icon: "bell-ring",  labelFr: "Boîtier rouge",    labelEn: "Red call point",   sublabelFr: "Déclenche l'alarme",  sublabelEn: "Triggers the alarm", ...G.red },
+      { icon: "phone",      labelFr: "777",               labelEn: "777",              sublabelFr: "Téléphone fixe IBM",  sublabelEn: "IBM fixed phone",    ...G.blue },
+      { icon: "log-out",    labelFr: "Évacuer",           labelEn: "Evacuate",         sublabelFr: "Sans attendre",       sublabelEn: "Immediately",        ...G.green },
     ],
   },
 
-  // Ch1-M3 — Propagation : Sors-Ferme-Signale
   "ch1-m3": {
     titleFr: "Ralentir la propagation",
     titleEn: "Slow the spread",
     steps: [
-      {
-        icon: "🚶",
-        labelFr: "Sortir",
-        labelEn: "Exit",
-        sublabelFr: "Quitter la pièce",
-        sublabelEn: "Leave the room",
-        bg: "#0043ce",
-      },
-      {
-        icon: "🚪",
-        labelFr: "Fermer",
-        labelEn: "Close",
-        sublabelFr: "Toutes les portes",
-        sublabelEn: "Every door",
-        bg: "#b45309",
-      },
-      {
-        icon: "📍",
-        labelFr: "Signaler",
-        labelEn: "Signal",
-        sublabelFr: "Sa position",
-        sublabelEn: "Your position",
-        bg: "#198038",
-      },
+      { icon: "log-out",      labelFr: "Sortir",   labelEn: "Exit",    sublabelFr: "Quitter la pièce",   sublabelEn: "Leave the room",  ...G.blue },
+      { icon: "door-closed",  labelFr: "Fermer",   labelEn: "Close",   sublabelFr: "Toutes les portes",  sublabelEn: "Every door",      ...G.orange },
+      { icon: "map-pin",      labelFr: "Signaler", labelEn: "Signal",  sublabelFr: "Sa position",        sublabelEn: "Your position",   ...G.green },
     ],
   },
 
-  // Ch1-M4 — Choisir le bon extincteur
   "ch1-m4": {
     titleFr: "Quel extincteur ?",
     titleEn: "Which extinguisher?",
     steps: [
-      {
-        icon: "⚡",
-        labelFr: "Feu électrique",
-        labelEn: "Electrical fire",
-        sublabelFr: "Serveur, câble…",
-        sublabelEn: "Server, cable…",
-        bg: "#6929c4",
-      },
-      {
-        icon: "➡️",
-        labelFr: "",
-        labelEn: "",
-        bg: "transparent",
-        iconColor: "#c8cfe0",
-      },
-      {
-        icon: "⬛",
-        labelFr: "CO₂",
-        labelEn: "CO₂",
-        sublabelFr: "Extincteur noir",
-        sublabelEn: "Black cylinder",
-        bg: "#1c1c1c",
-      },
-      {
-        icon: "🔥",
-        labelFr: "Feu solide",
-        labelEn: "Solid fire",
-        sublabelFr: "Papier, plastique…",
-        sublabelEn: "Paper, plastic…",
-        bg: "#b45309",
-      },
-      {
-        icon: "➡️",
-        labelFr: "",
-        labelEn: "",
-        bg: "transparent",
-        iconColor: "#c8cfe0",
-      },
-      {
-        icon: "💧",
-        labelFr: "Eau pulvérisée",
-        labelEn: "Water mist",
-        sublabelFr: "Extincteur rouge",
-        sublabelEn: "Red cylinder",
-        bg: "#0043ce",
-      },
+      { icon: "zap",       labelFr: "Feu électrique",  labelEn: "Electrical fire",  sublabelFr: "Serveur, câble…",   sublabelEn: "Server, cable…",    ...G.purple },
+      { icon: "wind",      labelFr: "CO₂ — Noir",      labelEn: "CO₂ — Black",      sublabelFr: "Extincteur noir",   sublabelEn: "Black cylinder",    ...G.charcoal },
+      { icon: "flame",     labelFr: "Feu solide",      labelEn: "Solid fire",       sublabelFr: "Papier, plastique", sublabelEn: "Paper, plastic…",   ...G.orange },
+      { icon: "droplets",  labelFr: "Eau pulvérisée",  labelEn: "Water mist",       sublabelFr: "Extincteur rouge",  sublabelEn: "Red cylinder",      ...G.blue },
     ],
   },
 
-  // Ch1-M5 — Méthode PASS
   "ch1-m5": {
     titleFr: "La méthode P.A.S.S.",
     titleEn: "The P.A.S.S. method",
     steps: [
-      {
-        icon: "📌",
-        labelFr: "P — Dégoupiller",
-        labelEn: "P — Pull",
-        sublabelFr: "Retirer la goupille",
-        sublabelEn: "Remove the pin",
-        bg: "#da1e28",
-      },
-      {
-        icon: "🎯",
-        labelFr: "A — Viser",
-        labelEn: "A — Aim",
-        sublabelFr: "La base du feu",
-        sublabelEn: "At the base",
-        bg: "#b45309",
-      },
-      {
-        icon: "✊",
-        labelFr: "S — Presser",
-        labelEn: "S — Squeeze",
-        sublabelFr: "La poignée",
-        sublabelEn: "The handle",
-        bg: "#6929c4",
-      },
-      {
-        icon: "↔️",
-        labelFr: "S — Balayer",
-        labelEn: "S — Sweep",
-        sublabelFr: "De gauche à droite",
-        sublabelEn: "Side to side",
-        bg: "#0043ce",
-      },
+      { icon: "grab",       labelFr: "P — Dégoupiller", labelEn: "P — Pull",    sublabelFr: "Retirer la goupille",  sublabelEn: "Remove the pin",    ...G.red },
+      { icon: "target",     labelFr: "A — Viser",       labelEn: "A — Aim",     sublabelFr: "La base du feu",       sublabelEn: "At the base",       ...G.orange },
+      { icon: "hand",       labelFr: "S — Presser",     labelEn: "S — Squeeze", sublabelFr: "La poignée",           sublabelEn: "The handle",        ...G.purple },
+      { icon: "scan",       labelFr: "S — Balayer",     labelEn: "S — Sweep",   sublabelFr: "De gauche à droite",   sublabelEn: "Side to side",      ...G.blue },
     ],
   },
 
-  // Ch1-M6 — Intervenir ou évacuer ?
   "ch1-m6": {
     titleFr: "Intervenir seulement si…",
     titleEn: "Intervene only if…",
     steps: [
-      {
-        icon: "🔥",
-        labelFr: "Feu naissant",
-        labelEn: "Very small fire",
-        sublabelFr: "≤ corbeille à papier",
-        sublabelEn: "≤ wastepaper basket",
-        bg: "#b45309",
-      },
-      {
-        icon: "🧯",
-        labelFr: "Extincteur adapté",
-        labelEn: "Right extinguisher",
-        sublabelFr: "À portée de main",
-        sublabelEn: "Within reach",
-        bg: "#da1e28",
-      },
-      {
-        icon: "🚪",
-        labelFr: "Sortie libre",
-        labelEn: "Exit clear",
-        sublabelFr: "Derrière vous",
-        sublabelEn: "Behind you",
-        bg: "#198038",
-      },
-      {
-        icon: "✅",
-        labelFr: "Alors agir",
-        labelEn: "Then act",
-        sublabelFr: "Sinon : évacuer",
-        sublabelEn: "Otherwise: evacuate",
-        bg: "#0043ce",
-      },
+      { icon: "flame",         labelFr: "Feu naissant",        labelEn: "Very small fire",     sublabelFr: "≤ corbeille papier",  sublabelEn: "≤ wastepaper basket", ...G.orange },
+      { icon: "shield",        labelFr: "Extincteur adapté",   labelEn: "Right extinguisher",  sublabelFr: "À portée de main",    sublabelEn: "Within reach",        ...G.red },
+      { icon: "door-open",     labelFr: "Sortie libre",        labelEn: "Exit clear",          sublabelFr: "Derrière vous",       sublabelEn: "Behind you",          ...G.green },
+      { icon: "check",         labelFr: "Alors agir",          labelEn: "Then act",            sublabelFr: "Sinon : évacuer",     sublabelEn: "Otherwise: evacuate", ...G.blue },
     ],
   },
 
-  // Ch2-M1 — Déclencher l'alarme
   "ch2-m1": {
     titleFr: "Séquence d'alerte",
     titleEn: "Alert sequence",
     steps: [
-      {
-        icon: "🔴",
-        labelFr: "Boîtier rouge",
-        labelEn: "Red call point",
-        sublabelFr: "En priorité",
-        sublabelEn: "First priority",
-        bg: "#da1e28",
-      },
-      {
-        icon: "📞",
-        labelFr: "777",
-        labelEn: "777",
-        sublabelFr: "Téléphone fixe IBM",
-        sublabelEn: "IBM fixed phone",
-        bg: "#0043ce",
-      },
-      {
-        icon: "🚒",
-        labelFr: "18",
-        labelEn: "18",
-        sublabelFr: "Si nécessaire",
-        sublabelEn: "If needed",
-        bg: "#b45309",
-      },
+      { icon: "bell-ring",       labelFr: "Boîtier rouge",  labelEn: "Red call point",  sublabelFr: "En priorité",         sublabelEn: "First priority",  ...G.red },
+      { icon: "phone",           labelFr: "777",            labelEn: "777",             sublabelFr: "Téléphone fixe IBM",  sublabelEn: "IBM fixed phone", ...G.blue },
+      { icon: "alert-triangle",  labelFr: "18",             labelEn: "18",              sublabelFr: "Si nécessaire",       sublabelEn: "If needed",       ...G.orange },
     ],
   },
 
-  // Ch2-M2 — Garder son calme et guider
   "ch2-m2": {
     titleFr: "Guider en urgence",
     titleEn: "Guide in emergency",
     steps: [
-      {
-        icon: "🧍",
-        labelFr: "Se positionner",
-        labelEn: "Step forward",
-        sublabelFr: "Face aux collègues",
-        sublabelEn: "Face colleagues",
-        bg: "#0043ce",
-      },
-      {
-        icon: "📢",
-        labelFr: "Parler clairement",
-        labelEn: "Speak clearly",
-        sublabelFr: "Voix ferme, calme",
-        sublabelEn: "Firm, calm voice",
-        bg: "#6929c4",
-      },
-      {
-        icon: "🚶",
-        labelFr: "Marcher en tête",
-        labelEn: "Lead the way",
-        sublabelFr: "Vers la sortie",
-        sublabelEn: "Toward exit",
-        bg: "#198038",
-      },
+      { icon: "users",      labelFr: "Se positionner",   labelEn: "Step forward",   sublabelFr: "Face aux collègues",  sublabelEn: "Face colleagues", ...G.blue },
+      { icon: "megaphone",  labelFr: "Parler clairement", labelEn: "Speak clearly",  sublabelFr: "Voix ferme, calme",   sublabelEn: "Firm, calm voice",...G.purple },
+      { icon: "log-out",    labelFr: "Marcher en tête",  labelEn: "Lead the way",   sublabelFr: "Vers la sortie",      sublabelEn: "Toward exit",     ...G.green },
     ],
   },
 
-  // Ch2-M3 — Fermer les portes
   "ch2-m3": {
     titleFr: "Sors — Ferme — Signale",
     titleEn: "EXIT — CLOSE — SIGNAL",
     steps: [
-      {
-        icon: "🚶",
-        labelFr: "Sortir",
-        labelEn: "EXIT",
-        sublabelFr: "La pièce d'abord",
-        sublabelEn: "Room first",
-        bg: "#0043ce",
-      },
-      {
-        icon: "🚪",
-        labelFr: "Fermer",
-        labelEn: "CLOSE",
-        sublabelFr: "Chaque porte",
-        sublabelEn: "Every door",
-        bg: "#b45309",
-      },
-      {
-        icon: "📍",
-        labelFr: "Signaler",
-        labelEn: "SIGNAL",
-        sublabelFr: "Sa position",
-        sublabelEn: "Your position",
-        bg: "#198038",
-      },
+      { icon: "log-out",      labelFr: "Sortir",   labelEn: "EXIT",    sublabelFr: "La pièce d'abord",   sublabelEn: "Room first",      ...G.blue },
+      { icon: "door-closed",  labelFr: "Fermer",   labelEn: "CLOSE",   sublabelFr: "Chaque porte",       sublabelEn: "Every door",      ...G.orange },
+      { icon: "map-pin",      labelFr: "Signaler", labelEn: "SIGNAL",  sublabelFr: "Sa position",        sublabelEn: "Your position",   ...G.green },
     ],
   },
 
-  // Ch2-M4 — Ne laisser personne
   "ch2-m4": {
     titleFr: "Si quelqu'un ne peut pas évacuer",
     titleEn: "If someone cannot evacuate",
     steps: [
-      {
-        icon: "🏃",
-        labelFr: "Conduire à l'EAS",
-        labelEn: "Take to EWS",
-        sublabelFr: "Palier d'escalier",
-        sublabelEn: "Stairwell landing",
-        bg: "#0043ce",
-      },
-      {
-        icon: "📞",
-        labelFr: "Interphone",
-        labelEn: "Interphone",
-        sublabelFr: "Communiquer",
-        sublabelEn: "Communicate",
-        bg: "#6929c4",
-      },
-      {
-        icon: "📍",
-        labelFr: "Signaler",
-        labelEn: "Report",
-        sublabelFr: "Étage + nombre",
-        sublabelEn: "Floor + count",
-        bg: "#198038",
-      },
+      { icon: "accessibility",  labelFr: "Conduire à l'EAS",  labelEn: "Take to EWS",   sublabelFr: "Palier d'escalier",  sublabelEn: "Stairwell landing", ...G.blue },
+      { icon: "phone",          labelFr: "Interphone",        labelEn: "Interphone",    sublabelFr: "Communiquer",        sublabelEn: "Communicate",       ...G.purple },
+      { icon: "map-pin",        labelFr: "Signaler",          labelEn: "Report",        sublabelFr: "Étage + nombre",     sublabelEn: "Floor + count",     ...G.green },
     ],
   },
 
-  // Ch2-M5 — Face à la fumée
   "ch2-m5": {
     titleFr: "Face à la fumée",
     titleEn: "In smoke",
     steps: [
-      {
-        icon: "⬇️",
-        labelFr: "S'abaisser",
-        labelEn: "Stay low",
-        sublabelFr: "Sous 1,8 m",
-        sublabelEn: "Below 1.8m",
-        bg: "#6929c4",
-      },
-      {
-        icon: "🤚",
-        labelFr: "Toucher la porte",
-        labelEn: "Touch the door",
-        sublabelFr: "Chaude = ne pas ouvrir",
-        sublabelEn: "Warm = don't open",
-        bg: "#b45309",
-      },
-      {
-        icon: "🧣",
-        labelFr: "Protéger",
-        labelEn: "Cover mouth",
-        sublabelFr: "Bouche et nez",
-        sublabelEn: "Nose and mouth",
-        bg: "#0043ce",
-      },
-      {
-        icon: "🚶",
-        labelFr: "Avancer vite",
-        labelEn: "Move quickly",
-        sublabelFr: "Sans courir",
-        sublabelEn: "Don't run",
-        bg: "#198038",
-      },
+      { icon: "arrow-down",   labelFr: "S'abaisser",     labelEn: "Stay low",      sublabelFr: "Sous 1,8 m",          sublabelEn: "Below 1.8m",        ...G.purple },
+      { icon: "hand",         labelFr: "Toucher la porte", labelEn: "Touch door",  sublabelFr: "Chaude = ne pas ouvrir", sublabelEn: "Warm = don't open",...G.orange },
+      { icon: "eye",          labelFr: "Protéger",       labelEn: "Cover mouth",   sublabelFr: "Bouche et nez",       sublabelEn: "Nose and mouth",    ...G.darkblue },
+      { icon: "log-out",      labelFr: "Avancer vite",   labelEn: "Move quickly",  sublabelFr: "Sans courir",         sublabelEn: "Don't run",         ...G.green },
     ],
   },
 
-  // Ch2-M6 — Escaliers ou EAS
   "ch2-m6": {
     titleFr: "Escaliers ou EAS",
     titleEn: "Stairs or EWS",
     steps: [
-      {
-        icon: "🚫",
-        labelFr: "Jamais l'ascenseur",
-        labelEn: "Never the elevator",
-        sublabelFr: "Interdit en incendie",
-        sublabelEn: "Forbidden in fire",
-        bg: "#da1e28",
-      },
-      {
-        icon: "🪜",
-        labelFr: "Escaliers",
-        labelEn: "Stairs",
-        sublabelFr: "À droite, calme",
-        sublabelEn: "Right side, calm",
-        bg: "#0043ce",
-      },
-      {
-        icon: "♿",
-        labelFr: "EAS si besoin",
-        labelEn: "EWS if needed",
-        sublabelFr: "Palier + interphone",
-        sublabelEn: "Landing + interphone",
-        bg: "#198038",
-      },
+      { icon: "ban",           labelFr: "Jamais l'ascenseur",  labelEn: "Never the elevator", sublabelFr: "Interdit",          sublabelEn: "Forbidden",         ...G.red },
+      { icon: "move-down",     labelFr: "Escaliers",           labelEn: "Stairs",             sublabelFr: "À droite, calme",   sublabelEn: "Right side, calm",  ...G.blue },
+      { icon: "accessibility", labelFr: "EAS si besoin",       labelEn: "EWS if needed",      sublabelFr: "Palier + interphone", sublabelEn: "Landing + phone",  ...G.green },
     ],
   },
 
-  // Ch2-M7 — Procédure complète
   "ch2-m7": {
-    titleFr: "Procédure complète d'évacuation",
-    titleEn: "Full evacuation procedure",
+    titleFr: "Procédure complète",
+    titleEn: "Full procedure",
     steps: [
-      {
-        icon: "🔴",
-        labelFr: "Alarme",
-        labelEn: "Alarm",
-        sublabelFr: "Boîtier rouge",
-        sublabelEn: "Red call point",
-        bg: "#da1e28",
-      },
-      {
-        icon: "📞",
-        labelFr: "777",
-        labelEn: "777",
-        sublabelFr: "Téléphone fixe",
-        sublabelEn: "Fixed phone",
-        bg: "#0043ce",
-      },
-      {
-        icon: "🚶",
-        labelFr: "Guider",
-        labelEn: "Guide",
-        sublabelFr: "Collègues proches",
-        sublabelEn: "Nearby colleagues",
-        bg: "#6929c4",
-      },
-      {
-        icon: "🚪",
-        labelFr: "Fermer",
-        labelEn: "Close",
-        sublabelFr: "Toutes les portes",
-        sublabelEn: "Every door",
-        bg: "#b45309",
-      },
-      {
-        icon: "📍",
-        labelFr: "Point de rassemblement",
-        labelEn: "Assembly point",
-        sublabelFr: "Rester — ne pas rentrer",
-        sublabelEn: "Stay — don't re-enter",
-        bg: "#198038",
-      },
+      { icon: "bell-ring",    labelFr: "Alarme",       labelEn: "Alarm",        sublabelFr: "Boîtier rouge",     sublabelEn: "Red call point",  ...G.red },
+      { icon: "phone",        labelFr: "777",          labelEn: "777",          sublabelFr: "Téléphone fixe",    sublabelEn: "Fixed phone",     ...G.blue },
+      { icon: "users",        labelFr: "Guider",       labelEn: "Guide",        sublabelFr: "Collègues proches", sublabelEn: "Nearby staff",    ...G.purple },
+      { icon: "door-closed",  labelFr: "Fermer",       labelEn: "Close",        sublabelFr: "Toutes les portes", sublabelEn: "Every door",      ...G.orange },
+      { icon: "map-pin",      labelFr: "Rassemblement",labelEn: "Assembly pt",  sublabelFr: "Rester, ne pas rentrer", sublabelEn: "Stay, don't re-enter", ...G.green },
     ],
   },
+
 };
