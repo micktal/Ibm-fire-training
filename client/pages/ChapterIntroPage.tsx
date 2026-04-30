@@ -43,7 +43,7 @@ const CH1_MODULES = [
   {
     num: "M07",
     title: { fr: "Simulation incendie", en: "Fire simulation" },
-    takeaway: { fr: "Réflexes validés : détecter → alarme 22 22 → intervenir ou évacuer en séquence.", en: "Validated reflexes: detect → alarm 22 22 → intervene or evacuate in sequence." },
+    takeaway: { fr: "Réflexes validés : détecter → boîtier rouge → 777 → intervenir ou évacuer en séquence.", en: "Validated reflexes: detect → red call point → 777 → intervene or evacuate in sequence." },
   },
 ];
 
@@ -70,8 +70,8 @@ const BEST_PRACTICES = [
     color: "#0D47A1",
     bg: "rgba(13,71,161,0.08)",
     border: "rgba(13,71,161,0.2)",
-    rule: { fr: "22 22 AVANT le 18", en: "22 22 BEFORE calling emergency services" },
-    detail: { fr: "La sécurité IBM connaît les plans. Prévenir l'interne en premier.", en: "IBM security knows the layouts. Alert internally first." },
+    rule: { fr: "777 AVANT le 18 (Bois-Colombes)", en: "777 BEFORE calling 18 (Bois-Colombes)" },
+    detail: { fr: "La sécurité IBM connaît les plans. Boîtier rouge d'abord — puis 777 depuis un fixe IBM.", en: "IBM security knows the layouts. Red call point first — then 777 from an IBM fixed phone." },
   },
   {
     icon: <Shield size={16} />,
@@ -104,7 +104,7 @@ const CH2_MODULES = [
   {
     num: "M01", icon: <Bell size={15} />,
     title: { fr: "Déclencher l'alarme", en: "Trigger the alarm" },
-    desc: { fr: "Quand et comment activer l'alerte — 22 22 et déclencheurs manuels", en: "When and how to activate the alert — 22 22 and manual triggers" },
+    desc: { fr: "Quand et comment activer l'alerte — boîtier rouge et 777 (fixe IBM)", en: "When and how to activate the alert — red call point and 777 (IBM fixed phone)" },
   },
   {
     num: "M02", icon: <Users size={15} />,
