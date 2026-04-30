@@ -220,15 +220,36 @@ export default function Index() {
                 {/* Content */}
                 <div style={{ padding: "1.25rem 1.5rem" }}>
                   {/* Emergency */}
-                  <div style={{ background: "#fef2f2", border: "1.5px solid #fca5a5", borderRadius: "0.75rem", padding: "0.9rem 1rem", marginBottom: "1rem", display: "flex", gap: "0.75rem", alignItems: "center" }}>
-                    <div style={{ fontSize: "1.5rem" }}>🚨</div>
+                  {/* Bois-Colombes */}
+                  <div style={{ background: "#fef2f2", border: "1.5px solid #fca5a5", borderRadius: "0.75rem", padding: "0.9rem 1rem", marginBottom: "0.6rem", display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
+                    <div style={{ fontSize: "1.4rem", flexShrink: 0 }}>🚨</div>
                     <div>
-                      <div style={{ fontWeight: 800, color: "#dc2626", fontSize: "0.85rem" }}>
-                        {lang === "fr" ? "Numéro d'urgence IBM" : "IBM Emergency Number"}
+                      <div style={{ fontWeight: 800, color: "#dc2626", fontSize: "0.8rem", marginBottom: "0.15rem" }}>
+                        {lang === "fr" ? "Bois-Colombes — Accident du travail" : "Bois-Colombes — Work accident"}
                       </div>
-                      <div style={{ fontWeight: 900, color: "#0a2052", fontSize: "1.4rem", fontFamily: "'IBM Plex Mono', monospace" }}>22 22</div>
-                      <div style={{ fontSize: "0.72rem", color: "#6b7280" }}>
-                        {lang === "fr" ? "Sécurité IBM — à composer EN PREMIER avant le 18 et le 15" : "IBM Security — call FIRST before 18 or 15"}
+                      <div style={{ fontWeight: 900, color: "#0a2052", fontSize: "1.4rem", fontFamily: "'IBM Plex Mono', monospace", lineHeight: 1.1 }}>777</div>
+                      <div style={{ fontSize: "0.7rem", color: "#6b7280", marginTop: "0.15rem" }}>
+                        {lang === "fr"
+                          ? "Ligne fixe IBM uniquement — Sécurité IBM & premiers secours"
+                          : "IBM fixed line only — IBM Security & first aid"}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Autres sites */}
+                  <div style={{ background: "#fef2f2", border: "1.5px solid #fca5a5", borderRadius: "0.75rem", padding: "0.9rem 1rem", marginBottom: "1rem", display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
+                    <div style={{ fontSize: "1.4rem", flexShrink: 0 }}>📞</div>
+                    <div>
+                      <div style={{ fontWeight: 800, color: "#dc2626", fontSize: "0.8rem", marginBottom: "0.15rem" }}>
+                        {lang === "fr" ? "Autres sites IBM — Accident du travail" : "Other IBM sites — Work accident"}
+                      </div>
+                      <div style={{ fontWeight: 800, color: "#0a2052", fontSize: "0.85rem", fontFamily: "'IBM Plex Mono', monospace", lineHeight: 1.3 }}>
+                        {lang === "fr" ? "Touche paramétrée SAMU" : "Pre-programmed SAMU key"}
+                      </div>
+                      <div style={{ fontSize: "0.7rem", color: "#6b7280", marginTop: "0.15rem" }}>
+                        {lang === "fr"
+                          ? "Sur téléphone fixe IBM — contacter le standard pour la procédure locale"
+                          : "On IBM fixed phone — contact switchboard for local procedure"}
                       </div>
                     </div>
                   </div>
