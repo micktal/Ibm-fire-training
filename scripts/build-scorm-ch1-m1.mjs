@@ -126,9 +126,19 @@ const launcher = `<!DOCTYPE html>
 </body>
 </html>`;
 
+// Files to exclude from dist/spa (Netlify-specific or would conflict with SCORM)
+const EXCLUDE = new Set([
+  "imsmanifest.xml",      // would create a 2nd manifest → 360Learning conflict
+  "_redirects",           // Netlify only
+  "robots.txt",           // not needed
+  "ibm-fire-training-scorm.zip", // old SCORM inside new SCORM
+]);
+
 // ── Add dist/spa recursively ─────────────────────────────────────────────────
 function addFolder(archive, dirPath, zipBase) {
   for (const entry of readdirSync(dirPath)) {
+    if (EXCLUDE.has(entry)) continue;           // skip unwanted files
+    if (entry.endsWith(".zip")) continue;       // skip any nested ZIPs
     const full    = join(dirPath, entry);
     const zipPath = zipBase ? `${zipBase}/${entry}` : entry;
     if (statSync(full).isDirectory()) {
