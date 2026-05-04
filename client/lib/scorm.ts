@@ -32,18 +32,29 @@ export type ScormSuspendData = {
 function findAPI(win: Window): ScormAPI | null {
   let tries = 0;
   let current: Window = win;
-  while (!(current as any).API && current.parent && current.parent !== current && tries < 7) {
+  while (tries < 7) {
+    try {
+      if ((current as any).API) return (current as any).API;
+    } catch {
+      // Cross-origin frame — no SCORM API accessible here
+      return null;
+    }
+    if (!current.parent || current.parent === current) break;
     current = current.parent;
     tries++;
   }
-  return (current as any).API ?? null;
+  return null;
 }
 
 function getAPI(): ScormAPI | null {
   // Try current window first, then opener
   const api = findAPI(window);
-  if (!api && window.opener) {
-    return findAPI(window.opener);
+  if (!api) {
+    try {
+      if (window.opener) return findAPI(window.opener);
+    } catch {
+      // opener is cross-origin, ignore
+    }
   }
   return api;
 }
