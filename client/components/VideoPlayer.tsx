@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Play, Pause, Volume2, VolumeX, Maximize2, Subtitles } from "lucide-react";
+import { Play, Pause, Volume2, VolumeX, Maximize2, Subtitles, Sparkles } from "lucide-react";
 import { useLanguage } from "@/lib/languageContext";
 
 interface VideoPlayerProps {
@@ -20,6 +20,7 @@ export default function VideoPlayer({ url, title, captionsVtt, onComplete }: Vid
   const [completed, setCompleted] = useState(false);
   const [captionsOn, setCaptionsOn] = useState(true);
   const [captionsBlobUrl, setCaptionsBlobUrl] = useState<string | null>(null);
+  const [aiDisclaimerDismissed, setAiDisclaimerDismissed] = useState(false);
 
   useEffect(() => {
     if (!captionsVtt) return;
@@ -103,22 +104,65 @@ export default function VideoPlayer({ url, title, captionsVtt, onComplete }: Vid
             <span className="text-xs font-semibold text-white">{title}</span>
           </div>
         )}
-        <div style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
-          <iframe
-            src={getEmbedUrl()}
-            title={title || "Video"}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              border: "none",
-            }}
-          />
-        </div>
+        {!aiDisclaimerDismissed ? (
+          <div
+            className="flex flex-col items-center justify-center"
+            style={{ background: "#0a0e1a", padding: "2rem 1.5rem", minHeight: "180px" }}
+          >
+            <div
+              className="flex items-center gap-2 mb-3"
+              style={{
+                background: "rgba(15,98,254,0.15)",
+                border: "1px solid rgba(15,98,254,0.35)",
+                borderRadius: "2rem",
+                padding: "0.35rem 0.9rem",
+              }}
+            >
+              <Sparkles size={13} color="#78a9ff" />
+              <span style={{ color: "#78a9ff", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.05em", fontFamily: "'IBM Plex Mono', monospace" }}>
+                {isEN ? "AI-GENERATED CONTENT" : "CONTENU GÉNÉRÉ PAR IA"}
+              </span>
+            </div>
+            <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.78rem", textAlign: "center", lineHeight: 1.5, marginBottom: "1.25rem", maxWidth: "280px" }}>
+              {isEN
+                ? "This video was produced using artificial intelligence. The fire safety procedures presented reflect IBM's official guidelines."
+                : "Cette vidéo a été réalisée à l'aide de l'intelligence artificielle. Les procédures de sécurité incendie présentées sont conformes aux consignes officielles IBM."}
+            </p>
+            <button
+              onClick={() => setAiDisclaimerDismissed(true)}
+              style={{
+                background: "#0043ce",
+                color: "#fff",
+                border: "none",
+                borderRadius: "0.5rem",
+                padding: "0.55rem 1.4rem",
+                fontSize: "0.78rem",
+                fontWeight: 700,
+                cursor: "pointer",
+                letterSpacing: "0.03em",
+              }}
+            >
+              {isEN ? "Understood — Watch video" : "Compris — Voir la vidéo"}
+            </button>
+          </div>
+        ) : (
+          <div style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
+            <iframe
+              src={getEmbedUrl()}
+              title={title || "Video"}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                border: "none",
+              }}
+            />
+          </div>
+        )}
       </div>
     );
   }
@@ -172,8 +216,51 @@ export default function VideoPlayer({ url, title, captionsVtt, onComplete }: Vid
             />
           )}
         </video>
+        {/* AI Disclaimer overlay — shown before first play */}
+        {!aiDisclaimerDismissed && (
+          <div
+            className="absolute inset-0 flex flex-col items-center justify-center"
+            style={{ background: "rgba(10,14,26,0.93)", zIndex: 10, padding: "1.5rem" }}
+          >
+            <div
+              className="flex items-center gap-2 mb-3"
+              style={{
+                background: "rgba(15,98,254,0.15)",
+                border: "1px solid rgba(15,98,254,0.35)",
+                borderRadius: "2rem",
+                padding: "0.35rem 0.9rem",
+              }}
+            >
+              <Sparkles size={13} color="#78a9ff" />
+              <span style={{ color: "#78a9ff", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.05em", fontFamily: "'IBM Plex Mono', monospace" }}>
+                {isEN ? "AI-GENERATED CONTENT" : "CONTENU GÉNÉRÉ PAR IA"}
+              </span>
+            </div>
+            <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.78rem", textAlign: "center", lineHeight: 1.5, marginBottom: "1.25rem", maxWidth: "280px" }}>
+              {isEN
+                ? "This video was produced using artificial intelligence. The fire safety procedures presented reflect IBM's official guidelines."
+                : "Cette vidéo a été réalisée à l'aide de l'intelligence artificielle. Les procédures de sécurité incendie présentées sont conformes aux consignes officielles IBM."}
+            </p>
+            <button
+              onClick={() => setAiDisclaimerDismissed(true)}
+              style={{
+                background: "#0043ce",
+                color: "#fff",
+                border: "none",
+                borderRadius: "0.5rem",
+                padding: "0.55rem 1.4rem",
+                fontSize: "0.78rem",
+                fontWeight: 700,
+                cursor: "pointer",
+                letterSpacing: "0.03em",
+              }}
+            >
+              {isEN ? "Understood — Watch video" : "Compris — Voir la vidéo"}
+            </button>
+          </div>
+        )}
         {/* Play overlay */}
-        {!playing && (
+        {!playing && aiDisclaimerDismissed && (
           <button
             onClick={togglePlay}
             className="absolute inset-0 flex items-center justify-center transition-opacity hover:opacity-90"
