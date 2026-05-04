@@ -1,7 +1,7 @@
 /**
  * build-scorm-test-minimal.mjs
- * SCORM 1.2 minimal — sans schemaLocation (évite le timeout de validation XSD)
- * Compatible 360Learning
+ * SCORM 1.2 test — format exact compatible 360Learning
+ * Basé sur l'analyse du manifest qui fonctionne
  */
 
 import { mkdirSync } from "fs";
@@ -11,49 +11,36 @@ import archiver from "archiver";
 const OUTPUT_DIR  = "scorm-packages";
 const OUTPUT_FILE = `${OUTPUT_DIR}/test-minimal-scorm.zip`;
 
-// Manifest sans schemaLocation → évite que 360Learning tente de charger
-// les XSD depuis imsproject.org (souvent inaccessible → timeout)
+// Format EXACT identique au manifest qui marche dans 360Learning :
+// - version="1.2" sur <manifest> (pas "1" ni "1.0")
+// - isvisible="true" sur <item>
+// - xsi:schemaLocation présent
+// - PAS de imsmd:lom
 const manifest = `<?xml version="1.0" encoding="UTF-8"?>
-<manifest identifier="IBM_FIRE_TEST" version="1.0"
+<manifest identifier="IBM_FIRE_TEST_MINIMAL" version="1.2"
   xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
   xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
-  xmlns:imsmd="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd
+                      http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
 
   <metadata>
     <schema>ADL SCORM</schema>
     <schemaversion>1.2</schemaversion>
-    <imsmd:lom>
-      <imsmd:general>
-        <imsmd:identifier>IBM_FIRE_TEST</imsmd:identifier>
-        <imsmd:title>
-          <imsmd:langstring xml:lang="fr">Test SCORM IBM</imsmd:langstring>
-        </imsmd:title>
-        <imsmd:language>fr</imsmd:language>
-        <imsmd:description>
-          <imsmd:langstring xml:lang="fr">Test de compatibilité SCORM 1.2</imsmd:langstring>
-        </imsmd:description>
-      </imsmd:general>
-      <imsmd:lifecycle>
-        <imsmd:version>
-          <imsmd:langstring xml:lang="fr">1.0</imsmd:langstring>
-        </imsmd:version>
-      </imsmd:lifecycle>
-    </imsmd:lom>
   </metadata>
 
-  <organizations default="ORG_IBM">
-    <organization identifier="ORG_IBM">
-      <title>IBM Sécurité Incendie — Test</title>
-      <item identifier="ITEM_1" identifierref="RES_1">
-        <title>Test Module SCORM</title>
+  <organizations default="ORG_IBM_FIRE_TEST">
+    <organization identifier="ORG_IBM_FIRE_TEST">
+      <title>IBM Sécurité Incendie — Test Minimal</title>
+      <item identifier="ITEM_SCO_IBM_FIRE_TEST" identifierref="SCO_IBM_FIRE_TEST" isvisible="true">
+        <title>Test SCORM / SCORM Test</title>
         <adlcp:masteryscore>80</adlcp:masteryscore>
       </item>
     </organization>
   </organizations>
 
   <resources>
-    <resource identifier="RES_1" type="webcontent" adlcp:scormtype="sco" href="index.html">
+    <resource identifier="SCO_IBM_FIRE_TEST" type="webcontent" adlcp:scormtype="sco" href="index.html">
       <file href="index.html"/>
     </resource>
   </resources>
@@ -89,10 +76,8 @@ const indexHtml = `<!DOCTYPE html>
   <div class="status" id="st">Initialisation...</div>
   <button id="btn" onclick="finish()" disabled>Valider et terminer</button>
 </div>
-
 <script>
 var api = null;
-
 function findAPI(w) {
   var n = 0;
   while (n < 7) {
@@ -102,14 +87,11 @@ function findAPI(w) {
   }
   return null;
 }
-
 function init() {
   api = findAPI(window);
   if (!api && window.opener) { try { api = findAPI(window.opener); } catch(e) {} }
-
   var st = document.getElementById("st");
   var btn = document.getElementById("btn");
-
   if (api) {
     var r = api.LMSInitialize("");
     if (r === "true" || r === true) {
@@ -125,7 +107,6 @@ function init() {
   }
   btn.disabled = false;
 }
-
 function finish() {
   document.getElementById("btn").disabled = true;
   var st = document.getElementById("st");
@@ -142,7 +123,6 @@ function finish() {
     st.innerHTML = '<span class="ok">✓ Terminé (standalone)</span>';
   }
 }
-
 window.addEventListener("load", init);
 window.addEventListener("beforeunload", function() {
   if (api) { try { api.LMSSetValue("cmi.core.exit","suspend"); api.LMSFinish(""); } catch(e){} }
@@ -152,7 +132,7 @@ window.addEventListener("beforeunload", function() {
 </html>`;
 
 async function main() {
-  console.log("Génération SCORM test v2 (sans schemaLocation)...");
+  console.log("Génération SCORM test v3 (format exact 360Learning)...");
   mkdirSync(OUTPUT_DIR, { recursive: true });
 
   const output  = createWriteStream(OUTPUT_FILE);
@@ -169,6 +149,7 @@ async function main() {
 
   const kb = (statSync(OUTPUT_FILE).size / 1024).toFixed(1);
   console.log("Genere : " + OUTPUT_FILE + " (" + kb + " KB)");
+  console.log("Format : version=1.2 + isvisible=true + schemaLocation");
 }
 
 main().catch(err => { console.error(err); process.exit(1); });

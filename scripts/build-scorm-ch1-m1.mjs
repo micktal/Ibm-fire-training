@@ -1,160 +1,139 @@
 /**
  * build-scorm-ch1-m1.mjs
- * Génère un package SCORM 1.2 AUTONOME pour ch1-m1 — compatible 360Learning
- * L'app React complète est embarquée dans le ZIP (pas de dépendance externe).
+ * SCORM 1.2 pour ch1-m1 — format EXACT identique au package ch2-m3 qui marche dans 360Learning
  *
- * Usage: node scripts/build-scorm-ch1-m1.mjs
+ * Structure ZIP :
+ *   imsmanifest.xml          (version="1.2", isvisible="true")
+ *   index.html               (launcher avec iframe → dist/spa/index.html#/module/ch1-m1?scorm=1)
+ *   dist/spa/index.html      (React app bundlée)
+ *   dist/spa/assets/*.js/.css
  */
 
-import { mkdirSync, readdirSync, statSync, readFileSync } from "fs";
+import { mkdirSync, readdirSync, statSync } from "fs";
 import { createWriteStream } from "fs";
 import { join } from "path";
 import archiver from "archiver";
 
-// ── Config ───────────────────────────────────────────────────────────────────
-const MODULE_ID       = "ch1-m1";
-const MODULE_TITLE_FR = "Comprendre un départ de feu";
-const DIST            = "dist/spa";
-const OUTPUT_DIR      = "scorm-packages";
-const OUTPUT_FILE     = `${OUTPUT_DIR}/${MODULE_ID}-comprendre-depart-feu.zip`;
+const MODULE_ID    = "ch1-m1";
+const MODULE_TITLE = "Comprendre un départ de feu";
+const DIST         = "dist/spa";
+const OUTPUT_DIR   = "scorm-packages";
+const OUTPUT_FILE  = `${OUTPUT_DIR}/${MODULE_ID}-comprendre-depart-feu.zip`;
 
-// ── imsmanifest.xml ──────────────────────────────────────────────────────────
+// ── imsmanifest.xml — format EXACT du manifest ch2-m3 qui fonctionne ────────
 const manifest = `<?xml version="1.0" encoding="UTF-8"?>
-<manifest identifier="IBM_FIRE_CH1_M1" version="1"
+<manifest identifier="IBM_FIRE_CH1_M1" version="1.2"
   xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
   xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+  xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd
+                      http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+
   <metadata>
     <schema>ADL SCORM</schema>
     <schemaversion>1.2</schemaversion>
   </metadata>
-  <organizations default="ORG_IBM_CH1_M1">
-    <organization identifier="ORG_IBM_CH1_M1">
-      <title>IBM Sécurité Incendie — ${MODULE_TITLE_FR}</title>
-      <item identifier="ITEM_CH1_M1" identifierref="RES_CH1_M1">
-        <title>${MODULE_TITLE_FR}</title>
+
+  <organizations default="ORG_IBM_FIRE_CH1_M1">
+    <organization identifier="ORG_IBM_FIRE_CH1_M1">
+      <title>IBM Sécurité Incendie — Ch1 M1 · ${MODULE_TITLE}</title>
+      <item identifier="ITEM_SCO_IBM_FIRE_CH1_M1" identifierref="SCO_IBM_FIRE_CH1_M1" isvisible="true">
+        <title>${MODULE_TITLE} / Understanding a fire outbreak</title>
         <adlcp:masteryscore>80</adlcp:masteryscore>
-        <adlcp:timeLimitAction>continue,no message</adlcp:timeLimitAction>
       </item>
     </organization>
   </organizations>
+
   <resources>
-    <resource identifier="RES_CH1_M1" type="webcontent" adlcp:scormtype="sco" href="scorm-entry.html">
-      <file href="scorm-entry.html"/>
+    <resource identifier="SCO_IBM_FIRE_CH1_M1" type="webcontent" adlcp:scormtype="sco" href="index.html">
+      <file href="index.html"/>
     </resource>
   </resources>
+
 </manifest>`;
 
-// ── scorm-entry.html (sets initial route BEFORE React loads) ─────────────────
-// We read the actual built index.html to extract asset paths
-function buildScormEntry() {
-  const builtIndex = readFileSync(`${DIST}/index.html`, "utf-8");
-
-  // Extract CSS and JS links from the built index.html
-  const cssMatch  = builtIndex.match(/href="(\/assets\/[^"]+\.css)"/);
-  const jsMatch   = builtIndex.match(/src="(\/assets\/[^"]+\.js)"/);
-
-  const cssHref = cssMatch  ? cssMatch[1].replace(/^\//, "")  : "assets/index.css";
-  const jsSrc   = jsMatch   ? jsMatch[1].replace(/^\//, "")   : "assets/index.js";
-
-  return `<!DOCTYPE html>
+// ── index.html — launcher IDENTIQUE au ch2-m3 qui fonctionne ────────────────
+const launcher = `<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>${MODULE_TITLE_FR} — IBM Sécurité Incendie</title>
-  <link rel="stylesheet" href="${cssHref}"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IBM — Ch1 M1 · ${MODULE_TITLE}</title>
   <style>
-    body { margin: 0; background: #050a1a; }
-    #root { min-height: 100vh; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #061178; font-family: 'IBM Plex Sans', Arial, sans-serif; }
+    #splash {
+      position: fixed; inset: 0; z-index: 10;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 1rem; color: #fff; background: #061178;
+      transition: opacity 0.4s ease-out;
+    }
+    #splash .logo { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.05em; }
+    #splash .subtitle { font-size: 0.9rem; opacity: 0.7; }
+    #splash .spinner {
+      width: 36px; height: 36px;
+      border: 3px solid rgba(255,255,255,0.18);
+      border-top-color: #fff; border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: none; background: #fff; }
   </style>
 </head>
 <body>
-  <div id="root"></div>
+  <div id="splash">
+    <div class="logo">IBM</div>
+    <div class="subtitle">Sécurité Incendie &amp; Évacuation — Ch1 M1</div>
+    <div class="spinner"></div>
+  </div>
+
+  <iframe id="app" src="dist/spa/index.html#/module/${MODULE_ID}?scorm=1" allow="fullscreen" title="${MODULE_TITLE}"></iframe>
 
   <script>
-    /* ── Set initial route BEFORE React boots ── */
-    window.__SCORM_INITIAL_ROUTE = "/module/${MODULE_ID}?scorm=1";
-
-    /* ── SCORM 1.2 session ── */
-    var _scorm = {
-      api: null,
-      ok: false,
-      findAPI: function(w) {
-        var n = 0;
-        while (n < 7) {
-          try { if (w.API) return w.API; } catch(e) { return null; }
-          if (!w.parent || w.parent === w) break;
-          w = w.parent; n++;
-        }
-        return null;
-      },
-      init: function() {
-        this.api = this.findAPI(window);
-        if (!this.api && window.opener) {
-          try { this.api = this.findAPI(window.opener); } catch(e) {}
-        }
-        if (this.api) {
-          var r = this.api.LMSInitialize("");
-          this.ok = (r === "true" || r === true);
-          if (this.ok) {
-            this.api.LMSSetValue("cmi.core.lesson_status", "incomplete");
-            this.api.LMSSetValue("cmi.core.entry", "ab-initio");
-            this.api.LMSCommit("");
-          }
-        }
-      },
-      set: function(k, v) {
-        if (this.ok) { this.api.LMSSetValue(k, v); this.api.LMSCommit(""); }
-      },
-      finish: function(score) {
-        if (!this.ok) return;
-        score = score == null ? 100 : score;
-        this.api.LMSSetValue("cmi.core.score.raw",  String(score));
-        this.api.LMSSetValue("cmi.core.score.min",  "0");
-        this.api.LMSSetValue("cmi.core.score.max",  "100");
-        this.api.LMSSetValue("cmi.core.lesson_status", score >= 80 ? "passed" : "failed");
-        this.api.LMSCommit("");
-        this.api.LMSFinish("");
-        this.ok = false;
+    // ── SCORM 1.2 API discovery (LMS uses parent-window API) ───────────────
+    function findAPI(win) {
+      var tries = 0;
+      while (!win.API && win.parent && win.parent !== win && tries < 7) {
+        win = win.parent; tries++;
       }
-    };
+      return win.API || null;
+    }
+    function getAPI() {
+      var api = findAPI(window);
+      if (!api && window.opener) api = findAPI(window.opener);
+      return api;
+    }
 
-    /* ── Listen for completion from React app ── */
-    window.addEventListener("message", function(e) {
-      if (!e.data || e.data.type !== "scorm") return;
-      if (e.data.action === "complete") _scorm.finish(e.data.score);
-      if (e.data.action === "suspend")  _scorm.set("cmi.suspend_data", JSON.stringify(e.data.data || {}));
-      if (e.data.action === "progress") _scorm.set("cmi.suspend_data", JSON.stringify(e.data.data || {}));
-    });
+    var API = getAPI();
+    if (API) {
+      try { API.LMSInitialize(""); } catch(e) {}
+      // Auto-commit toutes les 60s pour ne rien perdre
+      setInterval(function(){ try { API.LMSCommit(""); } catch(e){} }, 60000);
+      // Finaliser proprement à la fermeture
+      window.addEventListener("beforeunload", function(){
+        try { API.LMSCommit(""); } catch(e) {}
+        try { API.LMSFinish(""); } catch(e) {}
+      });
+    }
 
-    window.addEventListener("load",          function() { _scorm.init(); });
-    window.addEventListener("beforeunload",   function() {
-      if (_scorm.ok) {
-        _scorm.api.LMSSetValue("cmi.core.exit", "suspend");
-        _scorm.api.LMSFinish("");
-      }
+    // Cacher splash quand l'iframe est chargée
+    document.getElementById("app").addEventListener("load", function(){
+      var s = document.getElementById("splash");
+      s.style.opacity = "0";
+      setTimeout(function(){ s.style.display = "none"; }, 400);
     });
   </script>
-
-  <!-- React app bundle (self-contained, no external deps) -->
-  <script type="module" src="${jsSrc}"></script>
 </body>
 </html>`;
-}
 
-// ── Add dist/spa folder recursively (except imsmanifest + index.html) ────────
+// ── Add dist/spa recursively ─────────────────────────────────────────────────
 function addFolder(archive, dirPath, zipBase) {
-  const entries = readdirSync(dirPath);
-  for (const entry of entries) {
+  for (const entry of readdirSync(dirPath)) {
     const full    = join(dirPath, entry);
     const zipPath = zipBase ? `${zipBase}/${entry}` : entry;
     if (statSync(full).isDirectory()) {
       addFolder(archive, full, zipPath);
     } else {
-      // Skip these — we handle them separately
-      if (entry === "imsmanifest.xml" || entry === "index.html") continue;
       archive.file(full, { name: zipPath });
     }
   }
@@ -162,11 +141,10 @@ function addFolder(archive, dirPath, zipBase) {
 
 // ── Build ─────────────────────────────────────────────────────────────────────
 async function main() {
-  console.log("Génération SCORM autonome pour 360Learning — " + MODULE_ID + "...\n");
+  console.log("Génération SCORM ch1-m1 (format identique ch2-m3)...\n");
 
-  // Verify build exists
   try { statSync(DIST); } catch {
-    console.error("Build client introuvable. Lancez d'abord: npm run build:client");
+    console.error("Build introuvable. Lancez: npm run build:client");
     process.exit(1);
   }
 
@@ -180,26 +158,19 @@ async function main() {
     archive.on("error", reject);
     archive.pipe(output);
 
-    // 1. imsmanifest.xml at ZIP root (required by SCORM)
     archive.append(manifest, { name: "imsmanifest.xml" });
+    archive.append(launcher, { name: "index.html" });
 
-    // 2. Custom scorm-entry.html (sets initial route + SCORM init)
-    archive.append(buildScormEntry(), { name: "scorm-entry.html" });
-
-    // 3. All compiled assets (JS, CSS, images, etc.)
-    addFolder(archive, DIST, "");
+    // Bundle full React app under dist/spa/
+    addFolder(archive, DIST, "dist/spa");
 
     archive.finalize();
   });
 
-  const size = statSync(OUTPUT_FILE).size;
-  const mb   = (size / 1024 / 1024).toFixed(2);
-
-  console.log("Package SCORM genere : " + OUTPUT_FILE);
-  console.log("Taille              : " + mb + " MB");
-  console.log("Compatibilite       : 360Learning, Moodle, SuccessFactors, Cornerstone");
-  console.log("\nProcedure 360Learning :");
-  console.log("  Catalogue > Ajouter un module > eLearning standard > importer ce ZIP");
+  const mb = (statSync(OUTPUT_FILE).size / 1024 / 1024).toFixed(2);
+  console.log("Package : " + OUTPUT_FILE + " (" + mb + " MB)");
+  console.log("Format  : version=1.2 + isvisible=true + iframe + hash routing");
+  console.log("URL     : dist/spa/index.html#/module/" + MODULE_ID + "?scorm=1");
 }
 
-main().catch(err => { console.error("Erreur:", err); process.exit(1); });
+main().catch(err => { console.error(err); process.exit(1); });

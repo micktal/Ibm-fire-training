@@ -5,6 +5,14 @@ import App from "./App";
 // Initialisation Builder.io — clé publique de l'espace IBM Fire Training
 builder.init("d93d9a0ec7824aa1ac4d890a1f90a2ec");
 
+// SCORM packaging: read hash (#/module/ch1-m1?scorm=1) to set initial route
+// This allows the React app to be bundled inside a SCORM ZIP and start
+// on the correct module when loaded as dist/spa/index.html#/module/ch1-m1
+const _hash = window.location.hash;
+if (_hash && _hash.startsWith("#/")) {
+  (window as any).__SCORM_INITIAL_ROUTE = _hash.slice(1);
+}
+
 const container = document.getElementById("root")!;
 // Guard against HMR re-running this module and calling createRoot() twice
 const root = (container as any).__reactRoot ?? createRoot(container);
