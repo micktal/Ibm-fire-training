@@ -130,7 +130,7 @@ export const PICTO_SEQUENCES: Record<string, PictoSequenceData> = {
     steps: [
       { icon: "ban",           labelFr: "Jamais l'ascenseur",  labelEn: "Never the elevator", sublabelFr: "Interdit",          sublabelEn: "Forbidden",         ...G.red },
       { icon: "move-down",     labelFr: "Escaliers",           labelEn: "Stairs",             sublabelFr: "À droite, calme",   sublabelEn: "Right side, calm",  ...G.blue },
-      { icon: "accessibility", labelFr: "EAS si besoin",       labelEn: "EWS if needed",      sublabelFr: "Palier + interphone", sublabelEn: "Landing + phone",  ...G.green },
+      { icon: "accessibility", labelFr: "EAS si besoin",       labelEn: "EWS if needed",      sublabelFr: "Palier + instructions", sublabelEn: "Landing + instructions",  ...G.green },
     ],
   },
 

@@ -416,11 +416,11 @@ export const SITUATION_ALERTS: SituationAlert[] = [
       },
       {
         key: "B",
-        label: "Se diriger vers l'espace d'attente sécurisé et appeler le 777",
-        labelEn: "Head to the safe waiting area and call 777",
+        label: "Se diriger vers l'EAS et suivre les instructions affichées",
+        labelEn: "Head to the EWS and follow the posted instructions",
         correct: true,
-        feedback: "Correct. L'espace d'attente sécurisé (palier d'escalier coupe-feu) est prévu pour les PMR. Les pompiers viendront.",
-        feedbackEn: "Correct. The safe waiting area (fire-door staircase landing) is designed for mobility-impaired persons. Fire services will come.",
+        feedback: "Correct. L'EAS (palier d'escalier coupe-feu) est prévu pour les PMR. Suivez les instructions affichées dans l'EAS — les pompiers interviendront en priorité.",
+        feedbackEn: "Correct. The EWS (fire-door staircase landing) is designed for mobility-impaired persons. Follow the posted instructions — fire services will prioritise this area.",
       },
       {
         key: "C",

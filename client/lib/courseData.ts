@@ -1246,13 +1246,13 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         correctKey: "B",
       },
       {
-        question: "Les personnes non évacuées se signalent :",
+        question: "Si un salarié ne peut pas évacuer par les escaliers, il doit :",
         choices: [
-          { key: "A", label: "Par SMS à son responsable" },
-          { key: "B", label: "Au responsable évacuation au point de rassemblement" },
-          { key: "C", label: "En appelant le 18" },
+          { key: "A", label: "Attendre dans son bureau que les secours arrivent" },
+          { key: "B", label: "Appeler le 18 lui-même depuis son téléphone" },
+          { key: "C", label: "Rejoindre l'EAS du palier et signaler sa position aux secours" },
         ],
-        correctKey: "B",
+        correctKey: "C",
       },
     ],
 
@@ -1270,7 +1270,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         bullets: [
           "Situés sur les paliers des escaliers de secours, signalés par un panneau spécifique",
           "Résistants au feu pendant au moins 30 minutes — zone protégée",
-          "Équipés d'un interphone ou d'un moyen de communication avec les secours",
+          "Suivre les instructions affichées dans l'EAS pour communiquer avec les secours",
           "Les sapeurs-pompiers sont formés pour intervenir en priorité sur ces zones",
           "Signaler la présence d'une personne en EAS au 777 (fixe) ou aux secours à l'extérieur",
         ],
@@ -1452,7 +1452,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         question: "Un espace sécurisé (refuge) est :",
         choices: [
           { key: "A", label: "N'importe quelle pièce fermée" },
-          { key: "B", label: "Une zone définie, protégée, avec communication vers les secours" },
+          { key: "B", label: "Une zone définie, protégée, avec des instructions affichées pour communiquer avec les secours" },
           { key: "C", label: "Une sortie de secours bloquée" },
         ],
         correctKey: "B",
@@ -1486,7 +1486,7 @@ La sécurité IBM vous y autorisera toujours si la sécurité des collaborateurs
         bullets: [
           "Zone compartimentée coupe-feu — résiste au moins 30 minutes au feu et à la fumée",
           "Signalée par un panneau normalisé (pictogramme EAS) sur chaque palier",
-          "Équipée d'un interphone ou d'un système de communication avec les secours",
+          "Équipée d'instructions affichées pour communiquer avec les secours",
           "Les pompiers sont formés et équipés pour intervenir en priorité dans les EAS",
           "Capacité variable selon les bâtiments — prévoir 1 à 2 personnes en fauteuil roulant",
         ],
