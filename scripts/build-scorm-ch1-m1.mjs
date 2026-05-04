@@ -1,21 +1,20 @@
 /**
  * build-scorm-ch1-m1.mjs
- * Génère un package SCORM 1.2 pour le module ch1-m1
- * "Comprendre un départ de feu"
+ * Génère un package SCORM 1.2 AUTONOME pour ch1-m1 — compatible 360Learning
+ * L'app React complète est embarquée dans le ZIP (pas de dépendance externe).
  *
  * Usage: node scripts/build-scorm-ch1-m1.mjs
- * Résultat: scorm-packages/ch1-m1-comprendre-depart-feu.zip
  */
 
-import { mkdirSync } from "fs";
+import { mkdirSync, readdirSync, statSync, readFileSync } from "fs";
 import { createWriteStream } from "fs";
+import { join } from "path";
 import archiver from "archiver";
 
 // ── Config ───────────────────────────────────────────────────────────────────
 const MODULE_ID       = "ch1-m1";
 const MODULE_TITLE_FR = "Comprendre un départ de feu";
-const NETLIFY_BASE    = "https://ibm-demo2.netlify.app";
-const MODULE_URL      = `${NETLIFY_BASE}/module/${MODULE_ID}?scorm=1`;
+const DIST            = "dist/spa";
 const OUTPUT_DIR      = "scorm-packages";
 const OUTPUT_FILE     = `${OUTPUT_DIR}/${MODULE_ID}-comprendre-depart-feu.zip`;
 
@@ -36,244 +35,171 @@ const manifest = `<?xml version="1.0" encoding="UTF-8"?>
       <item identifier="ITEM_CH1_M1" identifierref="RES_CH1_M1">
         <title>${MODULE_TITLE_FR}</title>
         <adlcp:masteryscore>80</adlcp:masteryscore>
-        <adlcp:datafromlms></adlcp:datafromlms>
         <adlcp:timeLimitAction>continue,no message</adlcp:timeLimitAction>
       </item>
     </organization>
   </organizations>
   <resources>
-    <resource identifier="RES_CH1_M1" type="webcontent" adlcp:scormtype="sco" href="index.html">
-      <file href="index.html"/>
+    <resource identifier="RES_CH1_M1" type="webcontent" adlcp:scormtype="sco" href="scorm-entry.html">
+      <file href="scorm-entry.html"/>
     </resource>
   </resources>
 </manifest>`;
 
-// ── index.html (SCO entry point) ─────────────────────────────────────────────
-const indexHtml = `<!DOCTYPE html>
+// ── scorm-entry.html (sets initial route BEFORE React loads) ─────────────────
+// We read the actual built index.html to extract asset paths
+function buildScormEntry() {
+  const builtIndex = readFileSync(`${DIST}/index.html`, "utf-8");
+
+  // Extract CSS and JS links from the built index.html
+  const cssMatch  = builtIndex.match(/href="(\/assets\/[^"]+\.css)"/);
+  const jsMatch   = builtIndex.match(/src="(\/assets\/[^"]+\.js)"/);
+
+  const cssHref = cssMatch  ? cssMatch[1].replace(/^\//, "")  : "assets/index.css";
+  const jsSrc   = jsMatch   ? jsMatch[1].replace(/^\//, "")   : "assets/index.js";
+
+  return `<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>${MODULE_TITLE_FR} — IBM Formation Sécurité Incendie</title>
+  <title>${MODULE_TITLE_FR} — IBM Sécurité Incendie</title>
+  <link rel="stylesheet" href="${cssHref}"/>
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    html,body{width:100%;height:100%;background:#050a1a;font-family:'Segoe UI',Arial,sans-serif;overflow:hidden}
-
-    /* ── Loading screen ── */
-    #splash{
-      position:fixed;inset:0;
-      display:flex;flex-direction:column;align-items:center;justify-content:center;
-      background:linear-gradient(135deg,#050a1a 0%,#0a1535 100%);
-      color:#fff;z-index:100;transition:opacity .5s;
-    }
-    #splash .logo{font-size:2.5rem;font-weight:900;letter-spacing:.12em;color:#0f62fe;margin-bottom:.5rem}
-    #splash .sub{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:2.5rem}
-    #splash .module-title{font-size:1.05rem;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:2rem;text-align:center;padding:0 2rem}
-    #splash .bar-wrap{width:220px;height:3px;background:rgba(15,98,254,.2);border-radius:2px;overflow:hidden;margin-bottom:2.5rem}
-    #splash .bar{height:100%;width:0;background:#0f62fe;border-radius:2px;transition:width .3s}
-    #splash .hint{font-size:.72rem;color:rgba(255,255,255,.35);text-align:center;max-width:260px;line-height:1.5}
-    #splash.hide{opacity:0;pointer-events:none}
-
-    /* ── Fallback (shown if iframe blocked) ── */
-    #fallback{
-      position:fixed;inset:0;
-      display:none;flex-direction:column;align-items:center;justify-content:center;
-      background:#050a1a;color:#fff;padding:2rem;text-align:center;
-    }
-    #fallback .logo{font-size:2rem;font-weight:900;letter-spacing:.12em;color:#0f62fe;margin-bottom:.5rem}
-    #fallback h2{font-size:1.1rem;margin-bottom:1rem;color:rgba(255,255,255,.9)}
-    #fallback p{font-size:.82rem;color:rgba(255,255,255,.5);margin-bottom:1.5rem;line-height:1.6;max-width:320px}
-    #fallback a{
-      display:inline-block;background:#0043ce;color:#fff;text-decoration:none;
-      padding:.7rem 1.8rem;border-radius:.5rem;font-weight:700;font-size:.85rem;
-    }
-    #fallback a:hover{background:#0f62fe}
-
-    /* ── iframe ── */
-    #frame{
-      position:fixed;inset:0;width:100%;height:100%;border:none;
-      opacity:0;transition:opacity .5s;
-    }
-    #frame.show{opacity:1}
+    body { margin: 0; background: #050a1a; }
+    #root { min-height: 100vh; }
   </style>
 </head>
 <body>
+  <div id="root"></div>
 
-<!-- Loading splash -->
-<div id="splash">
-  <div class="logo">IBM</div>
-  <div class="sub">Formation Sécurité Incendie</div>
-  <div class="module-title">${MODULE_TITLE_FR}</div>
-  <div class="bar-wrap"><div class="bar" id="bar"></div></div>
-  <div class="hint">Chargement du module en cours…</div>
-</div>
+  <script>
+    /* ── Set initial route BEFORE React boots ── */
+    window.__SCORM_INITIAL_ROUTE = "/module/${MODULE_ID}?scorm=1";
 
-<!-- Direct link fallback (if iframe is blocked) -->
-<div id="fallback">
-  <div class="logo">IBM</div>
-  <h2>${MODULE_TITLE_FR}</h2>
-  <p>Votre navigateur ne peut pas afficher ce module directement.<br>
-     Cliquez sur le bouton ci-dessous pour ouvrir la formation dans un nouvel onglet.</p>
-  <a href="${MODULE_URL}" target="_blank" rel="noopener">Ouvrir la formation →</a>
-</div>
-
-<!-- Module iframe -->
-<iframe id="frame" src="${MODULE_URL}" allow="autoplay; fullscreen; camera; microphone" allowfullscreen></iframe>
-
-<script>
-/* ════════════════════════════════════════════════
-   SCORM 1.2 — API discovery + session management
-   ════════════════════════════════════════════════ */
-var scorm = {
-  api: null,
-  initialized: false,
-
-  findAPI: function(win) {
-    var tries = 0;
-    while (tries < 7) {
-      try { if (win.API) return win.API; } catch(e) { break; }
-      if (!win.parent || win.parent === win) break;
-      win = win.parent; tries++;
-    }
-    return null;
-  },
-
-  init: function() {
-    this.api = this.findAPI(window);
-    if (!this.api && window.opener) {
-      try { this.api = this.findAPI(window.opener); } catch(e) {}
-    }
-    if (this.api) {
-      var r = this.api.LMSInitialize("");
-      if (r === "true" || r === true) {
-        this.initialized = true;
-        this.api.LMSSetValue("cmi.core.lesson_status", "incomplete");
-        this.api.LMSSetValue("cmi.core.entry", "ab-initio");
+    /* ── SCORM 1.2 session ── */
+    var _scorm = {
+      api: null,
+      ok: false,
+      findAPI: function(w) {
+        var n = 0;
+        while (n < 7) {
+          try { if (w.API) return w.API; } catch(e) { return null; }
+          if (!w.parent || w.parent === w) break;
+          w = w.parent; n++;
+        }
+        return null;
+      },
+      init: function() {
+        this.api = this.findAPI(window);
+        if (!this.api && window.opener) {
+          try { this.api = this.findAPI(window.opener); } catch(e) {}
+        }
+        if (this.api) {
+          var r = this.api.LMSInitialize("");
+          this.ok = (r === "true" || r === true);
+          if (this.ok) {
+            this.api.LMSSetValue("cmi.core.lesson_status", "incomplete");
+            this.api.LMSSetValue("cmi.core.entry", "ab-initio");
+            this.api.LMSCommit("");
+          }
+        }
+      },
+      set: function(k, v) {
+        if (this.ok) { this.api.LMSSetValue(k, v); this.api.LMSCommit(""); }
+      },
+      finish: function(score) {
+        if (!this.ok) return;
+        score = score == null ? 100 : score;
+        this.api.LMSSetValue("cmi.core.score.raw",  String(score));
+        this.api.LMSSetValue("cmi.core.score.min",  "0");
+        this.api.LMSSetValue("cmi.core.score.max",  "100");
+        this.api.LMSSetValue("cmi.core.lesson_status", score >= 80 ? "passed" : "failed");
         this.api.LMSCommit("");
-        console.log("[SCORM] Initialisé");
+        this.api.LMSFinish("");
+        this.ok = false;
       }
-    } else {
-      console.log("[SCORM] Hors LMS — mode standalone");
-    }
-  },
+    };
 
-  setValue: function(key, val) {
-    if (this.initialized) { this.api.LMSSetValue(key, val); this.api.LMSCommit(""); }
-  },
+    /* ── Listen for completion from React app ── */
+    window.addEventListener("message", function(e) {
+      if (!e.data || e.data.type !== "scorm") return;
+      if (e.data.action === "complete") _scorm.finish(e.data.score);
+      if (e.data.action === "suspend")  _scorm.set("cmi.suspend_data", JSON.stringify(e.data.data || {}));
+      if (e.data.action === "progress") _scorm.set("cmi.suspend_data", JSON.stringify(e.data.data || {}));
+    });
 
-  finish: function(score) {
-    if (!this.initialized) return;
-    score = score || 0;
-    this.api.LMSSetValue("cmi.core.score.raw", String(score));
-    this.api.LMSSetValue("cmi.core.score.min", "0");
-    this.api.LMSSetValue("cmi.core.score.max", "100");
-    this.api.LMSSetValue("cmi.core.lesson_status", score >= 80 ? "passed" : "failed");
-    this.api.LMSCommit("");
-    this.api.LMSFinish("");
-    this.initialized = false;
-    console.log("[SCORM] Terminé, score:", score);
-  }
-};
+    window.addEventListener("load",          function() { _scorm.init(); });
+    window.addEventListener("beforeunload",   function() {
+      if (_scorm.ok) {
+        _scorm.api.LMSSetValue("cmi.core.exit", "suspend");
+        _scorm.api.LMSFinish("");
+      }
+    });
+  </script>
 
-/* ════════════════════════════════════════
-   UI — loading bar + iframe reveal
-   ════════════════════════════════════════ */
-var splash = document.getElementById("splash");
-var frame  = document.getElementById("frame");
-var bar    = document.getElementById("bar");
-var fallbackDiv = document.getElementById("fallback");
-
-// Animate loading bar
-var pct = 0;
-var ticker = setInterval(function() {
-  pct = Math.min(pct + (Math.random() * 12), 85);
-  bar.style.width = pct + "%";
-}, 250);
-
-var frameLoaded = false;
-var fallbackTimer = setTimeout(function() {
-  // If iframe hasn't loaded in 8s → show fallback
-  if (!frameLoaded) {
-    clearInterval(ticker);
-    splash.style.display = "none";
-    fallbackDiv.style.display = "flex";
-  }
-}, 8000);
-
-frame.addEventListener("load", function() {
-  frameLoaded = true;
-  clearTimeout(fallbackTimer);
-  clearInterval(ticker);
-  bar.style.width = "100%";
-  setTimeout(function() {
-    frame.classList.add("show");
-    splash.classList.add("hide");
-    setTimeout(function() { splash.style.display = "none"; }, 500);
-  }, 300);
-});
-
-/* ════════════════════════════════════════
-   Messages from React app → SCORM
-   ════════════════════════════════════════ */
-window.addEventListener("message", function(e) {
-  if (!e.data || typeof e.data !== "object") return;
-  var d = e.data;
-  if (d.type !== "scorm") return;
-
-  if (d.action === "complete") {
-    scorm.finish(d.score != null ? d.score : 100);
-  }
-  if (d.action === "suspend") {
-    scorm.setValue("cmi.suspend_data", JSON.stringify(d.data || {}));
-    scorm.setValue("cmi.core.lesson_status", "incomplete");
-  }
-  if (d.action === "progress") {
-    scorm.setValue("cmi.suspend_data", JSON.stringify(d.data || {}));
-  }
-});
-
-/* ════════════════════════════
-   Init + cleanup
-   ════════════════════════════ */
-window.addEventListener("load", function() { scorm.init(); });
-window.addEventListener("beforeunload", function() {
-  if (scorm.initialized) {
-    scorm.api.LMSSetValue("cmi.core.exit", "suspend");
-    scorm.api.LMSFinish("");
-  }
-});
-</script>
+  <!-- React app bundle (self-contained, no external deps) -->
+  <script type="module" src="${jsSrc}"></script>
 </body>
 </html>`;
+}
 
-// ── Build ZIP ─────────────────────────────────────────────────────────────────
+// ── Add dist/spa folder recursively (except imsmanifest + index.html) ────────
+function addFolder(archive, dirPath, zipBase) {
+  const entries = readdirSync(dirPath);
+  for (const entry of entries) {
+    const full    = join(dirPath, entry);
+    const zipPath = zipBase ? `${zipBase}/${entry}` : entry;
+    if (statSync(full).isDirectory()) {
+      addFolder(archive, full, zipPath);
+    } else {
+      // Skip these — we handle them separately
+      if (entry === "imsmanifest.xml" || entry === "index.html") continue;
+      archive.file(full, { name: zipPath });
+    }
+  }
+}
+
+// ── Build ─────────────────────────────────────────────────────────────────────
 async function main() {
-  console.log("Génération du package SCORM 1.2 — " + MODULE_ID + "...\n");
+  console.log("Génération SCORM autonome pour 360Learning — " + MODULE_ID + "...\n");
+
+  // Verify build exists
+  try { statSync(DIST); } catch {
+    console.error("Build client introuvable. Lancez d'abord: npm run build:client");
+    process.exit(1);
+  }
 
   mkdirSync(OUTPUT_DIR, { recursive: true });
 
   const output  = createWriteStream(OUTPUT_FILE);
-  const archive = archiver("zip", { zlib: { level: 9 } });
+  const archive = archiver("zip", { zlib: { level: 6 } });
 
   await new Promise((resolve, reject) => {
     output.on("close", resolve);
     archive.on("error", reject);
     archive.pipe(output);
 
-    // imsmanifest.xml MUST be at ZIP root
-    archive.append(manifest,   { name: "imsmanifest.xml" });
-    archive.append(indexHtml,  { name: "index.html"      });
+    // 1. imsmanifest.xml at ZIP root (required by SCORM)
+    archive.append(manifest, { name: "imsmanifest.xml" });
+
+    // 2. Custom scorm-entry.html (sets initial route + SCORM init)
+    archive.append(buildScormEntry(), { name: "scorm-entry.html" });
+
+    // 3. All compiled assets (JS, CSS, images, etc.)
+    addFolder(archive, DIST, "");
 
     archive.finalize();
   });
 
-  const stats = (await import("fs")).statSync(OUTPUT_FILE);
-  const kb = (stats.size / 1024).toFixed(1);
+  const size = statSync(OUTPUT_FILE).size;
+  const mb   = (size / 1024 / 1024).toFixed(2);
 
-  console.log("Package genere : " + OUTPUT_FILE + " (" + kb + " KB)");
-  console.log("URL du module  : " + MODULE_URL);
-  console.log("\nImportez ce ZIP dans votre LMS SCORM 1.2 compatible.");
-  console.log("Score de validation : 80/100");
+  console.log("Package SCORM genere : " + OUTPUT_FILE);
+  console.log("Taille              : " + mb + " MB");
+  console.log("Compatibilite       : 360Learning, Moodle, SuccessFactors, Cornerstone");
+  console.log("\nProcedure 360Learning :");
+  console.log("  Catalogue > Ajouter un module > eLearning standard > importer ce ZIP");
 }
 
 main().catch(err => { console.error("Erreur:", err); process.exit(1); });
