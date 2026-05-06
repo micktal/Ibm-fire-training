@@ -200,11 +200,15 @@ export default function VideoPlayer({ url, title, captionsVtt, onComplete }: Vid
           src={url}
           className="w-full"
           style={{ maxHeight: "320px", display: "block" }}
+          preload="metadata"
           onTimeUpdate={handleTimeUpdate}
           onLoadedMetadata={() => setDuration(videoRef.current?.duration || 0)}
           onEnded={() => { setPlaying(false); setCompleted(true); onComplete?.(); }}
+          onStalled={() => { if (videoRef.current && playing) { videoRef.current.load(); videoRef.current.play().catch(() => {}); } }}
+          onError={() => { setPlaying(false); }}
           muted={muted}
           crossOrigin="anonymous"
+          playsInline
         >
           {captionsBlobUrl && (
             <track
