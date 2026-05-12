@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, MemoryRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, MemoryRouter, Routes, Route } from "react-router-dom";
 import { UserProvider } from "@/lib/userContext";
 import { LanguageProvider } from "@/lib/languageContext";
 import Index from "./pages/Index";
@@ -50,7 +50,7 @@ export default function App() {
                 <BottomNav />
               </MemoryRouter>
             ) : (
-              <BrowserRouter>
+              <HashRouter>
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/form" element={<Form />} />
@@ -68,7 +68,7 @@ export default function App() {
                   <Route path="*" element={<NotFound />} />
                 </Routes>
                 <BottomNav />
-              </BrowserRouter>
+              </HashRouter>
             )}
           </UserProvider>
         </LanguageProvider>
