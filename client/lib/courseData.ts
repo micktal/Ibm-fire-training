@@ -68,6 +68,7 @@ const CDN = "https://cdn.builder.io/api/v1/image/assets%2Fd93d9a0ec7824aa1ac4d89
 
 export const IBM_SITES = [
   "Montpellier Bellegarde (Flex)",
+  "Belfort (Meroux-Moval)",
   "Biot",
   "Blagnac",
   "Bois-Colombes (HQ France)",
