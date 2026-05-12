@@ -100,6 +100,7 @@ function makeIndex(mod, cssFile, jsFile) {
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>${mod.titleFr} — IBM Sécurité Incendie</title>
+  <link href="https://fonts.bunny.net/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="./assets/${cssFile}"/>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
