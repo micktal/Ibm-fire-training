@@ -77,11 +77,19 @@ export function UserProvider({ children }: { children: ReactNode }) {
     // Synchroniser avec Supabase
     const completedCountForSupabase = Object.values(updated).filter((p) => p.completed).length;
     const avgScoreForSupabase = completedCountForSupabase > 0
-      ? Math.round(Object.values(updated).reduce((s, p) => s + p.score, 0) / completedCountForSupabase)
+      ? Math.round(Object.values(updated).reduce((s, p) => s + p.score, 0) / TOTAL_MODULES)
       : 0;
+
+    // Auto-certifier : si tous les modules sont complétés, on accorde le certificat
+    // sans attendre que l'apprenant visite la page certificat
+    const allDone = completedCountForSupabase >= TOTAL_MODULES;
     updateProgression(getSessionId(), {
       completed_modules: completedCountForSupabase,
       average_score: avgScoreForSupabase,
+      ...(allDone && {
+        certificate_obtained: true,
+        completed_at: new Date().toISOString(),
+      }),
     }).catch(console.error);
 
     // Mettre à jour SCORM à chaque complétion de module

@@ -398,6 +398,10 @@ export default function AdminPage() {
                           {r.completed_modules ?? 0}
                         </span>
                         <span style={{ color: "#adb3c8" }}>/{r.total_modules ?? 14}</span>
+                        {/* Anomalie : tous modules faits mais pas de certificat */}
+                        {(r.completed_modules ?? 0) >= 14 && !r.certificate_obtained && (
+                          <span title="Formation complète mais certificat non accordé (données avant correctif)" style={{ marginLeft: 6, fontSize: "0.7rem", background: "rgba(180,83,9,0.12)", color: "#b45309", borderRadius: 4, padding: "1px 5px", fontWeight: 600 }}>!</span>
+                        )}
                       </td>
                       <td style={{ padding: "10px 14px", whiteSpace: "nowrap" }}>
                         <span style={{ fontFamily: "'IBM Plex Mono', monospace", color: (r.average_score ?? 0) >= 80 ? "#198038" : "#b45309", fontWeight: 700 }}>
@@ -408,6 +412,10 @@ export default function AdminPage() {
                         {r.certificate_obtained ? (
                           <span className="flex items-center gap-1 font-semibold text-xs" style={{ color: "#198038" }}>
                             <CheckCircle2 size={14} /> Obtenu
+                          </span>
+                        ) : (r.completed_modules ?? 0) >= 14 ? (
+                          <span className="flex items-center gap-1 text-xs font-semibold" style={{ color: "#b45309" }} title="Formation complète — certificat manquant (données historiques avant correctif)">
+                            <Clock size={14} /> À régulariser
                           </span>
                         ) : (
                           <span className="flex items-center gap-1 text-xs" style={{ color: "#adb3c8" }}>
