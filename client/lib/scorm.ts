@@ -103,13 +103,17 @@ export const Scorm = {
     return _api.LMSCommit("") === "true";
   },
 
-  /** Finish the SCORM session. Call on module exit. */
-  finish(): boolean {
-    if (!_api || !_initialized) return false;
+  /**
+   * Finish the SCORM session — commit session time and suspend state.
+   * We do NOT call LMSFinish() here: 360Learning (and most LMSes) manage
+   * the end of the session themselves. Calling LMSFinish() prematurely
+   * causes the learner to be logged out / the window to close.
+   */
+  finish(): void {
+    if (!_api || !_initialized) return;
     _saveSessionTime();
-    const result = _api.LMSFinish("") === "true";
-    _initialized = false;
-    return result;
+    Scorm.commit();
+    // LMSFinish intentionally omitted — let the LMS close the session
   },
 
   // ── Convenience helpers ────────────────────────────────────────────────────
@@ -224,9 +228,15 @@ function _saveSessionTime(): void {
   Scorm.setValue("cmi.core.session_time", timeStr);
 }
 
-// Auto-finish on page unload
+// Save progress when the learner switches tabs or minimises the window.
+// We use visibilitychange instead of beforeunload:
+//   - beforeunload fires LMSFinish → closes the LMS session → logs the learner out
+//   - visibilitychange just commits pending data safely
 if (typeof window !== "undefined") {
-  window.addEventListener("beforeunload", () => {
-    if (_initialized) Scorm.finish();
+  window.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden" && _initialized) {
+      _saveSessionTime();
+      Scorm.commit();
+    }
   });
 }
