@@ -59,8 +59,6 @@ class ScormWrapper {
         this.setValue("cmi.core.lesson_status", "incomplete");
         this.commit();
         console.info("[SCORM] Session initialisée");
-        // Terminer proprement quand l'apprenant ferme l'onglet
-        window.addEventListener("beforeunload", () => this.finish());
       }
       return this.initialized;
     } catch (e) {
